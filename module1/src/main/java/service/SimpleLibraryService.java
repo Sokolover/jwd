@@ -1,6 +1,5 @@
 package service;
 
-import dal.LibraryDao;
 import enums.Genre;
 import model.Library;
 import model.Publication;
@@ -11,7 +10,6 @@ import java.util.List;
 import static enums.Genre.fromString;
 
 public class SimpleLibraryService implements LibraryService {
-
 
     private final static Logger logger = Logger.getLogger(SimpleLibraryService.class.getName());
 
