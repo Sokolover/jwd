@@ -1,90 +1,61 @@
-2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - create library
-2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - get request param type
-2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - get page amount by genre
-2020-04-11 11:52:56 INFO  HTTPServer main - created server on localhost : 8080
-2020-04-11 11:52:56 INFO  HTTPServer main - created server context /library
-2020-04-11 11:52:56 INFO  HTTPServer main - server started on /127.0.0.1:8080
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - create library
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - get request param type
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - count pages by genre
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - get page amount by genre
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
-2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:02:34 INFO  HTTPServer main - created server on localhost:8080
-2020-04-11 12:02:34 INFO  HTTPServer main - created server context: /library
-2020-04-11 12:02:34 INFO  HTTPServer main - server started on /127.0.0.1:8080
-2020-04-11 12:02:48 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - create library
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - get request param type
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - count pages by genre
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - get page amount by genre
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
-2020-04-11 12:02:48 INFO  HtmlBuilder Thread-2 - build answer according to request: how many pages of what genre was found
-2020-04-11 12:02:48 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
-2020-04-11 12:02:48 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:12:53 INFO  HTTPServer main - created server on localhost:8080
-2020-04-11 12:12:53 INFO  HTTPServer main - created server context: /library
-2020-04-11 12:12:53 INFO  HTTPServer main - server started on /127.0.0.1:8080
-2020-04-11 12:12:59 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
-2020-04-11 12:12:59 INFO  LibraryDao Thread-2 - created new library
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - generate new publication list
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 0publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 1publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 2publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 3publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 4publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 5publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 6publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 7publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 8publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 9publication
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:12:59 INFO  LibraryDao Thread-2 - created new library
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - generate new publication list
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 0publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 1publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 2publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 3publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 4publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 5publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 6publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 7publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 8publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 9publication
-2020-04-11 12:12:59 INFO  LibraryDao Thread-2 - created new library
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - generate new publication list
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 0publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 1publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 2publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 3publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 4publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 5publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 6publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 7publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 8publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 9publication
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - create library
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - get request param type
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - count pages by genre
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - get page amount by genre
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
-2020-04-11 12:12:59 INFO  HtmlBuilder Thread-2 - build answer according to request: how many pages of what genre was found
-2020-04-11 12:12:59 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
-2020-04-11 12:12:59 INFO  LibraryDao Thread-2 - created new library
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - generate new publication list
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 0publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 1publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 2publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 3publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 4publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 5publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 6publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 7publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 8publication
-2020-04-11 12:12:59 INFO  DataGenerator Thread-2 - create 9publication
-2020-04-11 12:12:59 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:13:40 INFO  HTTPServer main - created server on localhost:8080
-2020-04-11 12:13:40 INFO  HTTPServer main - created server context: /library
-2020-04-11 12:13:40 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-11 12:16:05 INFO  HTTPServer main - created server on localhost:8080
+2020-04-11 12:16:05 INFO  HTTPServer main - created server context: /library
+2020-04-11 12:16:05 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-11 12:16:10 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
+2020-04-11 12:16:10 INFO  LibraryDao Thread-2 - created new library
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 0publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 1publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 2publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 3publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 4publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 5publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 6publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 7publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 8publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 9publication
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-11 12:16:10 INFO  LibraryDao Thread-2 - created new library
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 0publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 1publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 2publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 3publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 4publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 5publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 6publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 7publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 8publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 9publication
+2020-04-11 12:16:10 INFO  LibraryDao Thread-2 - created new library
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 0publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 1publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 2publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 3publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 4publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 5publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 6publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 7publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 8publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 9publication
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - create library
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-11 12:16:10 INFO  HtmlBuilder Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-11 12:16:10 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
+2020-04-11 12:16:10 INFO  LibraryDao Thread-2 - created new library
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 0publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 1publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 2publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 3publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 4publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 5publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 6publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 7publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 8publication
+2020-04-11 12:16:10 INFO  DataGenerator Thread-2 - create 9publication
+2020-04-11 12:16:10 INFO  SimpleLibraryService Thread-2 - find all publications

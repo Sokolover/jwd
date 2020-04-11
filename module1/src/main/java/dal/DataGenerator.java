@@ -19,7 +19,7 @@ class DataGenerator {
         List<Publication> publicationList = new ArrayList<>();
         logger.info("generate new publication list");
         for (int i = 0; i < 10; i++) {
-            logger.info("create " + i + "publication");
+            logger.info("create " + i + " publication");
             long id = i + 1;
             String name = "Publication_" + id;
             PublicationType type;
