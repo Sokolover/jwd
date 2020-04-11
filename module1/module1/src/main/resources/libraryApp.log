@@ -1,0 +1,32 @@
+2020-04-11 12:52:46 INFO  LibraryDao main - created new library
+2020-04-11 12:52:46 INFO  DataGenerator main - generate new publication list
+2020-04-11 12:52:46 INFO  DataGenerator main - create 0 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 1 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 2 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 3 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 4 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 5 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 6 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 7 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 8 publication
+2020-04-11 12:52:46 INFO  DataGenerator main - create 9 publication
+2020-04-11 12:52:46 INFO  SimpleLibraryService main - get request param type
+2020-04-11 12:52:46 INFO  SimpleLibraryService main - count pages by genre
+2020-04-11 12:52:46 INFO  SimpleLibraryService main - get page amount by genre
+2020-04-11 12:52:46 INFO  SimpleLibraryService main - generateResponseString() return Empty String
+2020-04-11 12:53:18 INFO  LibraryDao main - created new library
+2020-04-11 12:53:18 INFO  DataGenerator main - generate new publication list
+2020-04-11 12:53:18 INFO  DataGenerator main - create 0 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 1 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 2 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 3 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 4 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 5 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 6 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 7 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 8 publication
+2020-04-11 12:53:18 INFO  DataGenerator main - create 9 publication
+2020-04-11 12:53:18 INFO  SimpleLibraryService main - get request param type
+2020-04-11 12:53:18 INFO  SimpleLibraryService main - count pages by genre
+2020-04-11 12:53:18 INFO  SimpleLibraryService main - get page amount by genre
+2020-04-11 12:53:18 INFO  SimpleLibraryService main - generateResponseString() return Empty String

@@ -2,6 +2,8 @@ package controller;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import dal.LibraryDao;
+import model.Library;
 import org.apache.log4j.Logger;
 import presentation.HtmlBuilder;
 import service.LibraryService;
@@ -49,6 +51,9 @@ public class PublicationHandler implements HttpHandler {
         logger.info("start handling response");
         HtmlBuilder htmlBuilder = new HtmlBuilder();
 
+        logger.info("create library");
+        Library library = new LibraryDao().buildLibrary();
+
         String requestMethod = exchange.getRequestMethod();
         URI requestURI = exchange.getRequestURI();
         System.out.println("Received incoming request: " + requestMethod + " URI " + requestURI.toString());
@@ -64,11 +69,11 @@ public class PublicationHandler implements HttpHandler {
         String template = bufferedReader.lines().collect(Collectors.joining());
 
         logger.info("add publication list to response");
-        StringBuilder publicationResponse = htmlBuilder.addPublicationListToResponse();
+        StringBuilder publicationResponse = htmlBuilder.addPublicationListToResponse(library);
         logger.info("create new library service");
         LibraryService simpleLibraryService = new SimpleLibraryService();
         logger.info("get page amount according to genre");
-        String responseData = simpleLibraryService.getPageAmountByGenre(requestParamValue);
+        String responseData = simpleLibraryService.getPageAmountByGenre(library, requestParamValue);
         logger.info("build answer about page amount");
         String pageAmountResponse;
         if ("".equals(responseData)) {
@@ -79,7 +84,7 @@ public class PublicationHandler implements HttpHandler {
         logger.info("append page amount to answer");
         publicationResponse.append(pageAmountResponse);
         logger.info("append requested publication list");
-        StringBuilder requestedPublicationList = htmlBuilder.addRequestedPublicationList(requestParamValue);
+        StringBuilder requestedPublicationList = htmlBuilder.addRequestedPublicationList(library, requestParamValue);
         publicationResponse.append(requestedPublicationList);
 
         logger.info("format publication response view according to template");

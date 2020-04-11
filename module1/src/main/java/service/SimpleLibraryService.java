@@ -12,15 +12,11 @@ import static enums.Genre.fromString;
 
 public class SimpleLibraryService implements LibraryService {
 
-    private Library library = new LibraryDao().buildLibrary();
+
     private final static Logger logger = Logger.getLogger(SimpleLibraryService.class.getName());
 
     @Override
-    public String getPageAmountByGenre(String requestParamValue) {
-
-        LibraryDao libraryDao = new LibraryDao();
-        library = libraryDao.buildLibrary();
-        logger.info("create library");
+    public String getPageAmountByGenre(Library library, String requestParamValue) {
 
         Genre requestParamType = fromString(requestParamValue);
         logger.info("get request param type");
@@ -30,7 +26,7 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public List<Publication> findAllPublications() {
+    public List<Publication> findAllPublications(Library library) {
         logger.info("find all publications");
         return library.getPublicationList();
     }

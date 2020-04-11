@@ -1,6 +1,7 @@
 package presentation;
 
 import enums.Genre;
+import model.Library;
 import model.Publication;
 import org.apache.log4j.Logger;
 import service.LibraryService;
@@ -38,7 +39,7 @@ public class HtmlBuilder {
         return new String(htmlBuilder);
     }
 
-    public StringBuilder addRequestedPublicationList(String requestParamValue) {
+    public StringBuilder addRequestedPublicationList(Library library, String requestParamValue) {
         logger.info("build html answer: publication list selected according to request");
         StringBuilder publicationResponse = new StringBuilder();
         LibraryService simpleLibraryService = new SimpleLibraryService();
@@ -46,7 +47,7 @@ public class HtmlBuilder {
         publicationResponse.append("List of publications by selected genre:");
         publicationResponse.append("</h2>");
         publicationResponse.append("<ul>");
-        List<Publication> publicationList = simpleLibraryService.findAllPublications();
+        List<Publication> publicationList = simpleLibraryService.findAllPublications(library);
         for (Publication publication : publicationList) {
             if (Genre.fromString(requestParamValue) == publication.getGenre()) {
                 publicationResponse.append("<li>");
@@ -58,12 +59,12 @@ public class HtmlBuilder {
         return publicationResponse;
     }
 
-    public StringBuilder addPublicationListToResponse() {
+    public StringBuilder addPublicationListToResponse(Library library) {
         logger.info("build html answer: publication list with all publications");
         StringBuilder publicationResponse = new StringBuilder();
         LibraryService simpleLibraryService = new SimpleLibraryService();
         publicationResponse.append("<ul>");
-        List<Publication> publicationList = simpleLibraryService.findAllPublications();
+        List<Publication> publicationList = simpleLibraryService.findAllPublications(library);
         for (Publication publication : publicationList) {
             publicationResponse.append("<li>");
             publicationResponse.append(publication.toString());
