@@ -1,0 +1,13 @@
+2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - create library
+2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-11 11:43:47 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-11 11:52:56 INFO  HTTPServer main - created server on localhost : 8080
+2020-04-11 11:52:56 INFO  HTTPServer main - created server context /library
+2020-04-11 11:52:56 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - create library
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-11 11:53:48 INFO  SimpleLibraryService Thread-2 - find all publications

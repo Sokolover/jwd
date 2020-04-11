@@ -1,9 +1,10 @@
 package service;
 
-import dao.LibraryDao;
+import dal.LibraryDao;
 import enums.Genre;
 import model.Library;
 import model.Publication;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -12,21 +13,25 @@ import static enums.Genre.fromString;
 public class SimpleLibraryService implements LibraryService {
 
     private Library library = new LibraryDao().buildLibrary();
+    private final static Logger logger = Logger.getLogger(SimpleLibraryService.class.getName());
 
     @Override
     public String getPageAmountByGenre(String requestParamValue) {
 
         LibraryDao libraryDao = new LibraryDao();
         library = libraryDao.buildLibrary();
+        logger.info("create library");
 
         Genre requestParamType = fromString(requestParamValue);
+        logger.info("get request param type");
         int pageAmount = countPagesByGenre(library, requestParamType);
-
+        logger.info("get page amount by genre");
         return generateResponseString(requestParamType, pageAmount);
     }
 
     @Override
     public List<Publication> findAllPublications() {
+        logger.info("find all publications");
         return library.getPublicationList();
     }
 
@@ -35,14 +40,16 @@ public class SimpleLibraryService implements LibraryService {
         String result;
         if (pageAmount != 0) {
             result = "Books with genre " + requestParamType + " have " + pageAmount + " pages";
+            logger.info("generateResponseString() return Answer String");
         } else {
+            logger.info("generateResponseString() return Empty String");
             result = "";
         }
         return result;
     }
 
     private int countPagesByGenre(Library library, Genre requestParamType) {
-
+        logger.info("count pages by genre");
         int pageAmount = 0;
         for (Publication publication : library.getPublicationList()) {
             if (requestParamType == publication.getGenre()) {

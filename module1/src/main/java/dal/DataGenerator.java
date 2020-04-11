@@ -1,8 +1,9 @@
-package dao;
+package dal;
 
 import enums.Genre;
 import enums.PublicationType;
 import model.Publication;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,13 @@ import static enums.PublicationType.*;
 
 class DataGenerator {
 
+    private final static Logger logger = Logger.getLogger(DataGenerator.class.getName());
+
     List<Publication> generatePublications() {
         List<Publication> publicationList = new ArrayList<>();
-
+        logger.info("generate new publication list");
         for (int i = 0; i < 10; i++) {
+            logger.info("create " + i + "publication");
             long id = i + 1;
             String name = "Publication_" + id;
             PublicationType type;
