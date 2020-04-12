@@ -1,0 +1,120 @@
+2020-04-12 14:51:03 INFO  HTTPServer main - created server on localhost:8080
+2020-04-12 14:51:03 INFO  HTTPServer main - created server context: /library
+2020-04-12 14:51:03 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - handle GET request
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - start handling response
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - create library
+2020-04-12 14:51:09 INFO  LibraryDao Thread-2 - created new library
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 0 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 1 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 2 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 3 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 4 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 5 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 6 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 7 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 8 publication
+2020-04-12 14:51:09 INFO  DataGenerator Thread-2 - create 9 publication
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - Received incoming request: GET URI /library?t=humor
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - Queried: t=humor
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - get template from resource for html answer
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - add publication list to response
+2020-04-12 14:51:09 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - create new library service
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - get page amount according to genre
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - build answer about page amount
+2020-04-12 14:51:09 INFO  HtmlBuilder Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - append page amount to answer
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - append requested publication list
+2020-04-12 14:51:09 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
+2020-04-12 14:51:09 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - format publication response view according to template
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - send response headers
+2020-04-12 14:51:09 INFO  PublicationHandler Thread-2 - send html response
+2020-04-12 14:52:11 INFO  HTTPServer main - created server on localhost:8080
+2020-04-12 14:52:11 INFO  HTTPServer main - created server context: /library
+2020-04-12 14:52:11 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - handle GET request
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - start handling response
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - create library
+2020-04-12 14:52:22 INFO  LibraryDao Thread-2 - created new library
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 0 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 1 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 2 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 3 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 4 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 5 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 6 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 7 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 8 publication
+2020-04-12 14:52:22 INFO  DataGenerator Thread-2 - create 9 publication
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - Received incoming request: GET URI /library?t=humor
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - Queried: t=humor
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - get template from resource for html answer
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - add publication list to response
+2020-04-12 14:52:22 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - create new library service
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - get page amount according to genre
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - build answer about page amount
+2020-04-12 14:52:22 INFO  HtmlBuilder Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - append page amount to answer
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - append requested publication list
+2020-04-12 14:52:22 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
+2020-04-12 14:52:22 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - format publication response view according to template
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - send response headers
+2020-04-12 14:52:22 INFO  PublicationHandler Thread-2 - send html response
+2020-04-12 14:53:50 INFO  HTTPServer main - created server on localhost:8080
+2020-04-12 14:53:50 INFO  HTTPServer main - created server context: /library
+2020-04-12 14:53:50 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - handle GET request
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - start handling response
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - create library
+2020-04-12 14:54:03 INFO  LibraryDao Thread-2 - created new library
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - generate new publication list
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 0 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 1 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 2 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 3 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 4 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 5 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 6 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 7 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 8 publication
+2020-04-12 14:54:03 INFO  DataGenerator Thread-2 - create 9 publication
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - Received incoming request: GET URI /library?t=hum
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - Queried: t=hum
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - get template from resource for html answer
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - add publication list to response
+2020-04-12 14:54:03 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - create new library service
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - get page amount according to genre
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Empty String
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - build answer about page amount
+2020-04-12 14:54:03 INFO  HtmlBuilder Thread-2 - build default answer: no publications matching users request
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - append page amount to answer
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - append requested publication list
+2020-04-12 14:54:03 INFO  HtmlBuilder Thread-2 - build html answer: publication list selected according to request
+2020-04-12 14:54:03 INFO  SimpleLibraryService Thread-2 - find all publications
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - format publication response view according to template
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - send response headers
+2020-04-12 14:54:03 INFO  PublicationHandler Thread-2 - send html response
+2020-04-12 14:58:37 INFO  HTTPServer main - created server on localhost:8080
+2020-04-12 14:58:37 INFO  HTTPServer main - created server context: /library
+2020-04-12 14:58:37 INFO  HTTPServer main - server started on /127.0.0.1:8080
