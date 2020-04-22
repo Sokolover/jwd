@@ -1,6 +1,6 @@
-2020-04-11 12:53:33 INFO  HTTPServer main - created server on localhost:8080
-2020-04-11 12:53:33 INFO  HTTPServer main - created server context: /library
-2020-04-11 12:53:33 INFO  HTTPServer main - server started on /127.0.0.1:8080
+2020-04-11 12:53:33 INFO  LibraryHttpServer main - created by.training.sokolov.task1.server on localhost:8080
+2020-04-11 12:53:33 INFO  LibraryHttpServer main - created by.training.sokolov.task1.server context: /library
+2020-04-11 12:53:33 INFO  LibraryHttpServer main - by.training.sokolov.task1.server started on /127.0.0.1:8080
 2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - handle GET request
 2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - start handling response
 2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - create library
@@ -22,7 +22,7 @@
 2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - add publication list to response
 2020-04-11 12:53:36 INFO  HtmlBuilder Thread-2 - build html answer: publication list with all publications
 2020-04-11 12:53:36 INFO  SimpleLibraryService Thread-2 - find all publications
-2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - create new library service
+2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - create new library by.training.sokolov.task1.service
 2020-04-11 12:53:36 INFO  PublicationHandler Thread-2 - get page amount according to genre
 2020-04-11 12:53:36 INFO  SimpleLibraryService Thread-2 - get request param type
 2020-04-11 12:53:36 INFO  SimpleLibraryService Thread-2 - count pages by genre
