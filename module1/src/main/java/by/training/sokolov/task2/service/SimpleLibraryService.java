@@ -20,15 +20,12 @@ public class SimpleLibraryService implements LibraryService {
     @Override
     public String getPageAmountByGenre(Library library, String requestParamValue) {
 
-        Genre requestParamType = null;
-        try {
-            requestParamType = fromString(requestParamValue);
-        } catch (TypeNotExistException e) {
-            LOGGER.error("Invalid genre! " + e);
-        }
         LOGGER.info("get request param type");
-        int pageAmount = countPagesByGenre(library, requestParamType);
+        Genre requestParamType = fromString(requestParamValue);
+
         LOGGER.info("get page amount by genre");
+        int pageAmount = countPagesByGenre(library, requestParamType);
+
         return generateResponseString(requestParamType, pageAmount);
     }
 
@@ -75,11 +72,9 @@ public class SimpleLibraryService implements LibraryService {
             LOGGER.error("Invalid publication type! " + e);
         }
 
-        Genre genre = null;
-        try {
-            genre = Genre.fromString(params[3]);
-        } catch (TypeNotExistException e) {
-            LOGGER.error("Invalid genre! " + e);
+        Genre genre;
+        if ((genre = Genre.fromString(params[3])) == null) {
+            LOGGER.error("Invalid genre in file!");
         }
 
         int pageAmount = 0;
@@ -106,6 +101,7 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     private int countPagesByGenre(Library library, Genre requestParamType) {
+
         LOGGER.info("count pages by genre");
         int pageAmount = 0;
         for (Publication publication : library.getPublicationList()) {

@@ -1,7 +1,5 @@
 package by.training.sokolov.task2.enums;
 
-import by.training.sokolov.task2.command.TypeNotExistException;
-
 public enum Genre {
     ACTION("action"),
     ADVENTURE("adventure"),
@@ -13,7 +11,7 @@ public enum Genre {
         this.genreName = s;
     }
 
-    public static Genre fromString(String name) throws TypeNotExistException {
+    public static Genre fromString(String name) {
 
         final Genre[] values = Genre.values();
         for (Genre genre : values) {
@@ -22,6 +20,5 @@ public enum Genre {
             }
         }
         return null;
-//        throw new TypeNotExistException("error in method fromString() - " + Genre.class.getName());
     }
 }

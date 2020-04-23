@@ -14,7 +14,7 @@ import java.util.Map;
 public class AddRequestedPublicationListCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(AddRequestedPublicationListCommand.class.getName());
-    private final static String NAME = "add_requested_publication_list";
+    private final String name = LibraryAppConstants.ADD_REQUESTED_PUBLICATION_LIST_COMMAND;
 
     private LibraryService service;
 
@@ -22,40 +22,42 @@ public class AddRequestedPublicationListCommand implements Command {
         this.service = service;
     }
 
-
     @Override
     public String execute(Map<String, String> requestGetMap) {
         LOGGER.info("append requested publication list");
-        String result = new String(addRequestedPublicationList(service.getLibrary(), requestGetMap.get(LibraryAppConstants.URL_KEY_GENRE)));
-        return result;
+        return addRequestedPublicationList(service.getLibrary(), requestGetMap.get(LibraryAppConstants.QUERY_KEY_GENRE));
     }
 
-    private StringBuilder addRequestedPublicationList(Library library, String requestParamValue) {
+    private String addRequestedPublicationList(Library library, String requestParamValue) {
+
         LOGGER.info("build html answer: publication list selected according to request");
         StringBuilder publicationResponse = new StringBuilder();
         LibraryService simpleLibraryService = new SimpleLibraryService();
-        publicationResponse.append("<h2>");
-        publicationResponse.append("List of publications by selected genre:");
-        publicationResponse.append("</h2>");
+
+        publicationResponse
+                .append("<h2>")
+                .append("List of publications by selected genre:")
+                .append("</h2>");
+
         publicationResponse.append("<ul>");
         List<Publication> publicationList = simpleLibraryService.findAllPublications(library);
         for (Publication publication : publicationList) {
-            try {
-                if (Genre.fromString(requestParamValue) == publication.getGenre()) {
-                    publicationResponse.append("<li>");
-                    publicationResponse.append(publication.toString());
-                    publicationResponse.append("</li>");
-                }
-            } catch (TypeNotExistException e) {
+            if (Genre.fromString(requestParamValue) == publication.getGenre()) {
+                publicationResponse.append("<li>");
+                publicationResponse.append(publication.toString());
+                publicationResponse.append("</li>");
+            }
+            if (publication.toString() == null) {
                 LOGGER.error("addRequestedPublicationList() - publication genre don't exist!");
             }
         }
         publicationResponse.append("</ul>");
-        return publicationResponse;
+
+        return new String(publicationResponse);
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return name;
     }
 }

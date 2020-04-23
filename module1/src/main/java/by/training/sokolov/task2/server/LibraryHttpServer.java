@@ -43,7 +43,7 @@ public class LibraryHttpServer {
         LibraryAppHandler httpHandler = new LibraryAppHandler(commandFactory);
         server.createContext(LibraryAppConstants.CONTEXT_NAME_TASK2, httpHandler);
 
-        LOGGER.info("created server context: " + LibraryAppConstants.CONTEXT_NAME_TASK2);
+        LOGGER.info("create server context: " + LibraryAppConstants.CONTEXT_NAME_TASK2);
         LOGGER.info("server started on " + server.getAddress());
 
         server.start();

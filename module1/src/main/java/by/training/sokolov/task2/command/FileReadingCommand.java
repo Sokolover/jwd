@@ -17,7 +17,7 @@ import java.util.Map;
 public class FileReadingCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(FileReadingCommand.class.getName());
-    private final String name = "get_info";
+    private final String name = LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND;
 
     private LibraryService service;
 
@@ -31,9 +31,8 @@ public class FileReadingCommand implements Command {
 
     @Override
     public String execute(Map<String, String> requestGetMap) {
-        //key = path, value = "D://test.csv"
 
-        String path = requestGetMap.get(LibraryAppConstants.URL_KEY_PATH);
+        String path = requestGetMap.get(LibraryAppConstants.QUERY_KEY_PATH);
         String[] publicationParamsStringArray = readParamsFromFile(path);
 
         LibraryService libraryService = new SimpleLibraryService();
@@ -41,7 +40,9 @@ public class FileReadingCommand implements Command {
         Library library = new Library(publicationList);
         service.setLibrary(library);
 
-        return "got info from file: " + path;
+        String message = "got info from file: " + path;
+        LOGGER.info(message);
+        return message;
     }
 
     private String[] readParamsFromFile(String path) {
@@ -59,7 +60,7 @@ public class FileReadingCommand implements Command {
 
             fileReader.close();
         } catch (IOException e) {
-            LOGGER.error("no such file on your system! " + path + " " + e);
+            LOGGER.error("no such file on your system! " + path + " - " + e);
         }
 
         String[] publicationStringArray = new String[publicationParams.size()];

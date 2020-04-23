@@ -25,17 +25,15 @@ public class LibraryAppHandler implements HttpHandler {
         this.commandFactory = commandFactory;
     }
 
-    //  http://localhost:8080/form?command=FIND_PATH&path=D://test.csv&genre=humor
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        Map<String, String> requestMap = null;
+        Map<String, String> requestMap = new HashMap<>();
         if (LibraryAppConstants.HTTP_METHOD_GET.equals(exchange.getRequestMethod())) {
-            LOGGER.info("handle GET request");
+            LOGGER.info("parse GET request");
             requestMap = parseGetRequest(exchange);
         } else if (LibraryAppConstants.HTTP_METHOD_POST.equals(exchange.getRequestMethod())) {
-            LOGGER.info("handle POST request");
+            LOGGER.info("parse POST request");
             requestMap = parsePostRequest(exchange);
         }
 
@@ -50,7 +48,7 @@ public class LibraryAppHandler implements HttpHandler {
     private void handleRequest(HttpExchange exchange, Map<String, String> map) throws IOException {
 
         LOGGER.info("start handling request");
-        getInfoAboutRequestMethod(exchange);
+        getInfoAboutRequest(exchange);
 
         if (isEmptyQuery(exchange, map)) {
             return;
@@ -58,26 +56,34 @@ public class LibraryAppHandler implements HttpHandler {
 
         ControllerValidator controllerValidator = new ControllerValidator();
         if (!controllerValidator.isValidateUrl(map)) {
-            sendHandledResponse(exchange, new StringBuilder("try again"));
+            sendHandledResponse(exchange, new StringBuilder("Invalid file path or genre type. Try again"));
             return;
         }
 
-        //todo сделать html кнопку для сортировки
+        /*
+        todo сделать сортировку
+            1. показывается список критериев по которым сортируем
+            2. вводится в поле критерий
+            3. проверяется можно ли это сделать
+            4. делается
+         */
 
-        executeQueryCommand(map, LibraryAppConstants.URL_KEY_COMMAND_FILE_READ);
+        executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND);
 
         StringBuilder publicationResponse = new StringBuilder();
-
-        executeInMemoryCommand(map, LibraryAppConstants.SORT_PUBLICATION_LIST_BY_NAME_DESCENDING);
 
         String addPublicationListCommandResult = executeInMemoryCommand(map, LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND);
         publicationResponse.append(addPublicationListCommandResult);
 
-        String genreCommandResult = executeQueryCommand(map, LibraryAppConstants.URL_KEY_COMMAND_GENRE_COUNT);
+        String genreCommandResult = executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND);
         publicationResponse.append(genreCommandResult);
 
         String requestedPublicationList = executeInMemoryCommand(map, LibraryAppConstants.ADD_REQUESTED_PUBLICATION_LIST_COMMAND);
         publicationResponse.append(requestedPublicationList);
+
+        executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_SORT_BY);
+        addPublicationListCommandResult = executeInMemoryCommand(map, LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND);
+        publicationResponse.append(addPublicationListCommandResult);
 
         sendHandledResponse(exchange, publicationResponse);
 
@@ -92,7 +98,7 @@ public class LibraryAppHandler implements HttpHandler {
         return false;
     }
 
-    private void getInfoAboutRequestMethod(HttpExchange exchange) {
+    private void getInfoAboutRequest(HttpExchange exchange) {
         String requestMethod = exchange.getRequestMethod();
         URI requestURI = exchange.getRequestURI();
         LOGGER.info("Received incoming request: " + requestMethod + " URI " + requestURI.toString());
@@ -111,7 +117,7 @@ public class LibraryAppHandler implements HttpHandler {
         LOGGER.info("format publication response view according to template");
         String view = MessageFormat.format(template, publicationResponse);
 
-        LOGGER.info("send response headers");
+        LOGGER.info("add response headers");
         exchange.sendResponseHeaders(200, view.getBytes(StandardCharsets.UTF_8).length);
         OutputStream outputStream = exchange.getResponseBody();
         LOGGER.info("send html response");
@@ -129,7 +135,7 @@ public class LibraryAppHandler implements HttpHandler {
         return command.execute(map);
     }
 
-    private String executeQueryCommand(Map<String, String> map, String commandKey) {
+    private String executeFromQueryCommand(Map<String, String> map, String commandKey) {
 
         String commandName = map.get(commandKey);
         Command command = commandFactory.getCommand(commandName);
@@ -140,7 +146,7 @@ public class LibraryAppHandler implements HttpHandler {
 
     private Map<String, String> parsePostRequest(HttpExchange httpExchange) {
 
-        String keyValueSubstring = "";
+        String keyValueSubstring;
         try {
             keyValueSubstring = URLDecoder.
                     decode(
@@ -152,6 +158,7 @@ public class LibraryAppHandler implements HttpHandler {
                     );
         } catch (UnsupportedEncodingException e) {
             LOGGER.error(e);
+            return new HashMap<>();
         }
 
         return parseParamArray(keyValueSubstring);
@@ -159,24 +166,24 @@ public class LibraryAppHandler implements HttpHandler {
 
     private Map<String, String> parseGetRequest(HttpExchange httpExchange) {
 
-        String keyValueSubstring = httpExchange.
+        String requestURI = httpExchange.
                 getRequestURI().
                 toString();
 
-        if ('?' != keyValueSubstring.charAt(keyValueSubstring.length() - 1)) {
+        if ('?' != requestURI.charAt(requestURI.length() - 1)) {
             return new HashMap<>();
         }
 
-        keyValueSubstring = httpExchange
+        String query = httpExchange
                 .getRequestURI()
                 .getQuery();
 
-        return parseParamArray(keyValueSubstring);
+        return parseParamArray(query);
     }
 
-    private Map<String, String> parseParamArray(String keyValueSubstring) {
+    private Map<String, String> parseParamArray(String query) {
 
-        String[] paramStringArray = keyValueSubstring.split("&");
+        String[] paramStringArray = query.split("&");
         Map<String, String> paramMap = new HashMap<>();
 
         for (String keyValue : paramStringArray) {
@@ -185,10 +192,17 @@ public class LibraryAppHandler implements HttpHandler {
                 String value = keyValue.split("=")[1];
                 paramMap.put(key, value);
             } else {
-                LOGGER.error("not enough info from request - can't parse request key=value");
+                LOGGER.error("not enough info in request. Can't parse query key=value string");
                 return new HashMap<>();
             }
         }
+
+        //fixme пользоватьель должен вводить критерий по которому сортировать, а какой-то контроллер регулировать, какую сортироовку выбрать по какому критерию
+        //fixme хотя возможно тут это и стоит оставить в роле контроллера
+        if ("name".equals(paramMap.get(LibraryAppConstants.QUERY_KEY_SORT_BY))) {
+            paramMap.put(LibraryAppConstants.QUERY_KEY_SORT_BY, LibraryAppConstants.SORT_PUBLICATION_LIST_BY_NAME_DESCENDING_COMMAND);
+        }
+
         return paramMap;
     }
 }

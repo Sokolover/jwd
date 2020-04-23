@@ -8,10 +8,15 @@ import java.util.Map;
 
 public class SortByNameDescendingCommand implements Command {
 
-    private final static Logger LOGGER = Logger.getLogger(FileReadingCommand.class.getName());
-    private final static String NAME = LibraryAppConstants.SORT_PUBLICATION_LIST_BY_NAME_DESCENDING;
+    private final static Logger LOGGER = Logger.getLogger(SortByNameDescendingCommand.class.getName());
+    private final String name = LibraryAppConstants.SORT_PUBLICATION_LIST_BY_NAME_DESCENDING_COMMAND;
+    private final String sortParam = "name";
 
     private LibraryService service;
+
+    public SortByNameDescendingCommand(){
+
+    }
 
     public SortByNameDescendingCommand(LibraryService service) {
         this.service = service;
@@ -19,13 +24,20 @@ public class SortByNameDescendingCommand implements Command {
 
     @Override
     public String execute(Map<String, String> requestGetMap) {
+
+        String message = "sort publication list descending order in dao";
+        LOGGER.info(message);
         service.getLibrary().sortPublicationsByNameDescending();
-        LOGGER.info("sorted publication list descending order");
-        return "sorted publication list descending order";
+
+        return message;
+    }
+
+    public String getSortParam() {
+        return sortParam;
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return name;
     }
 }
