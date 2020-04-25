@@ -40,7 +40,7 @@ public class LibraryHttpServer {
         commandMap.put(sortByNameCommand.getName(), sortByNameCommand);
 
         CommandFactory commandFactory = new SimpleCommandFactory(commandMap);
-        LibraryAppHandler httpHandler = new LibraryAppHandler(commandFactory, libraryService);
+        LibraryAppHandler httpHandler = new LibraryAppHandler(commandFactory);
         server.createContext(LibraryAppConstants.CONTEXT_NAME_TASK2, httpHandler);
 
         LOGGER.info("create server context: " + LibraryAppConstants.CONTEXT_NAME_TASK2);

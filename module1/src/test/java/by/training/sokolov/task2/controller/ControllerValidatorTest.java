@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ControllerValidatorTest {
@@ -18,17 +19,42 @@ public class ControllerValidatorTest {
     }
 
     @Test
-    public void isValidateUrl() { // todo:доделать тест
-        Map<String, String> map = createMap();
+    public void isValidateUrl() {
+        Map<String, String> map = createValidateMap();
 
         boolean actual = controllerValidator.isValidateUrl(map);
 
         assertTrue(actual);
     }
 
-    private Map<String, String> createMap() {
+    @Test
+    public void isNotValidateUrl() {
+        Map<String, String> map = createNotValidateMap();
+
+        boolean actual = controllerValidator.isValidateUrl(map);
+
+        assertFalse(actual);
+    }
+
+    private Map<String, String> createNotValidateMap() {
         Map<String, String> map = new HashMap<>();
-        map.put("", "D://test.csv");
+        map.put("PATH", "D://test.csv");
+        map.put("GENRE_COUNT","GENRE_COUNT");
+        map.put("SORT_BY","SORT_BY_NAME");
+        map.put("GENRE","humor");
+        map.put("SORT_DIRECTION","descAnding");
+        map.put("FILE_READ","FILE_READ");
+        return map;
+    }
+
+    private Map<String, String> createValidateMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("PATH", "D://test.csv");
+        map.put("GENRE_COUNT","GENRE_COUNT");
+        map.put("SORT_BY","SORT_BY_NAME");
+        map.put("GENRE","humor");
+        map.put("SORT_DIRECTION","descEnding");
+        map.put("FILE_READ","FILE_READ");
         return map;
     }
 }

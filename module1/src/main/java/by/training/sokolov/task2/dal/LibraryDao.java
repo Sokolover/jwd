@@ -1,6 +1,5 @@
 package by.training.sokolov.task2.dal;
 
-import by.training.sokolov.task1.model.Library;
 import by.training.sokolov.task2.model.Publication;
 import org.apache.log4j.Logger;
 
@@ -12,17 +11,13 @@ public class LibraryDao {
     private final static Logger LOGGER = Logger.getLogger(LibraryDao.class.getName());
     private List<Publication> publicationList;
 
-    public LibraryDao(){
+    public LibraryDao() {
         this.publicationList = new ArrayList<>();
     }
 
     public void saveAll(List<Publication> publicationList) {
         LOGGER.info("saveAll() Dao method");
         this.publicationList.addAll(publicationList);
-    }
-
-    public List<Publication> findAll() {
-        return publicationList;
     }
 
     public void sortPublicationsByNameAscending() {
@@ -35,6 +30,10 @@ public class LibraryDao {
 
     public List<Publication> getPublicationList() {
         return publicationList;
+    }
+
+    public void setPublicationList(List<Publication> publicationList) {
+        this.publicationList = publicationList;
     }
 
 }

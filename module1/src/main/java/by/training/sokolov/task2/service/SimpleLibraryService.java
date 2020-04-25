@@ -36,12 +36,6 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public List<Publication> findAll(LibraryDao libraryDao) {
-        LOGGER.info("find all publications");
-        return libraryDao.getPublicationList();
-    }
-
-    @Override
     public String findInvalidPublicationNumbers(List<Publication> publicationList) {
 
         int indexCounter = 0;
@@ -56,7 +50,7 @@ public class SimpleLibraryService implements LibraryService {
             }
         }
 
-        if (publicationList.isEmpty()) {
+        if (indexList.isEmpty()) {
             return "";
         }
 
@@ -85,7 +79,6 @@ public class SimpleLibraryService implements LibraryService {
         return publicationList;
     }
 
-    //todo отправить пользователю уведомение, в каких строках ошибки
     @Override
     public Publication buildPublicationFromFile(String info) {
 
@@ -158,12 +151,12 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public void setLibraryDao(LibraryDao libraryDao) {
-        this.libraryDao = libraryDao;
+    public void saveAll(List<Publication> publicationList) {
+        libraryDao.saveAll(publicationList);
     }
 
     @Override
-    public void saveAll(List<Publication> publicationList) {
-        libraryDao.saveAll(publicationList);
+    public void removeAllPublicationsFromLibraryDao() {
+        libraryDao.setPublicationList(new ArrayList<>());
     }
 }

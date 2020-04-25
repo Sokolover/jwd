@@ -2,8 +2,6 @@ package by.training.sokolov.task2.controller;
 
 import by.training.sokolov.task2.command.Command;
 import by.training.sokolov.task2.command.CommandFactory;
-import by.training.sokolov.task2.dal.LibraryDao;
-import by.training.sokolov.task2.service.LibraryService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.log4j.Logger;
@@ -23,11 +21,9 @@ public class LibraryAppHandler implements HttpHandler {
 
     private final static Logger LOGGER = Logger.getLogger(LibraryAppHandler.class.getName());
     private CommandFactory commandFactory;
-    private LibraryService service;
 
-    public LibraryAppHandler(CommandFactory commandFactory, LibraryService service) {
+    public LibraryAppHandler(CommandFactory commandFactory) {
         this.commandFactory = commandFactory;
-        this.service = service;
     }
 
     @Override
@@ -61,7 +57,6 @@ public class LibraryAppHandler implements HttpHandler {
             return;
         }
 
-        service.setLibraryDao(new LibraryDao());
         StringBuilder response = new StringBuilder();
 
         String infoAboutInvalidPublications = executeFromQueryCommand(map, QUERY_KEY_FILE_READ_COMMAND);

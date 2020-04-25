@@ -3,7 +3,6 @@ package by.training.sokolov.task2.command;
 import by.training.sokolov.task2.LibraryAppConstants;
 import by.training.sokolov.task2.model.Publication;
 import by.training.sokolov.task2.service.LibraryService;
-import by.training.sokolov.task2.service.SimpleLibraryService;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -32,18 +31,20 @@ public class FileReadingCommand implements Command {
 
         String path = requestGetMap.get(LibraryAppConstants.QUERY_KEY_PATH);
         String[] publicationParamsStringArray = readParamsFromFile(path);
-
-        List<Publication> publicationList = service.createPublicationListFromFile(publicationParamsStringArray);
-        service.saveAll(publicationList);
-
-        //todo вынести этот метод в сервис
-        //      сделать вывод на html какие строки плохие
+        List<Publication> publicationList = saveNewPublicationListInDao(publicationParamsStringArray);
         String invalidPublicationNumbersAnswer = service.findInvalidPublicationNumbers(publicationList);
 
         String message = "got info from file: " + path + ". " + invalidPublicationNumbersAnswer;
         LOGGER.info(message);
 
         return invalidPublicationNumbersAnswer;
+    }
+
+    private List<Publication> saveNewPublicationListInDao(String[] publicationParamsStringArray) {
+        service.removeAllPublicationsFromLibraryDao();
+        List<Publication> publicationList = service.createPublicationListFromFile(publicationParamsStringArray);
+        service.saveAll(publicationList);
+        return publicationList;
     }
 
 

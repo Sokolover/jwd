@@ -3760,3 +3760,279 @@
 2020-04-25 02:06:16 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
 2020-04-25 02:06:16 INFO  LibraryAppHandler Thread-2 - add response headers
 2020-04-25 02:06:16 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:45:58 INFO  LibraryHttpServer main - create task2 server on localhost:8080
+2020-04-25 15:45:58 INFO  LibraryHttpServer main - create server context: /task2
+2020-04-25 15:45:58 INFO  LibraryHttpServer main - server started on /127.0.0.1:8080
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - parse GET request
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - Received incoming request: GET URI /task2
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:46:09 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:46:16 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 15:46:16 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 15:46:16 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 15:46:16 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 15:46:16 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:16 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 15:46:16 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 15:46:16 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 15:46:16 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 15:46:16 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 15:46:16 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 15:46:16 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 15:46:16 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 15:46:16 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:16 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:46:16 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:16 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:16 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:16 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:46:16 ERROR LibraryAppHandler Thread-2 - not enough info in request. Can't parse query key=value string
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:46:16 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:46:21 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 15:46:21 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 15:46:21 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 15:46:21 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 15:46:21 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:21 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 15:46:21 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 15:46:21 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 15:46:21 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 15:46:21 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 15:46:21 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 15:46:21 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 15:46:21 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 15:46:21 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:21 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:46:21 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:21 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:21 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:21 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:46:21 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:46:29 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 15:46:29 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 15:46:29 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 15:46:29 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 15:46:29 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:29 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 15:46:29 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 15:46:29 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 15:46:29 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 15:46:29 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 15:46:29 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 15:46:29 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 15:46:29 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 15:46:29 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:29 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:46:29 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:46:29 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:46:29 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:46:29 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:46:29 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:57:40 INFO  LibraryHttpServer main - create task2 server on localhost:8080
+2020-04-25 15:57:40 INFO  LibraryHttpServer main - create server context: /task2
+2020-04-25 15:57:40 INFO  LibraryHttpServer main - server started on /127.0.0.1:8080
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:57:52 ERROR ControllerValidator Thread-2 - invalid command name: <SORT_BY_NAME,SORT_BY_NAME>
+2020-04-25 15:57:52 ERROR ControllerValidator Thread-2 - invalid Value in query - java.lang.Exception: invalid command name: <SORT_BY_NAME,SORT_BY_NAME>
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:57:52 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:57:59 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 15:57:59 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 15:57:59 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 15:57:59 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 15:57:59 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:57:59 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 15:57:59 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 15:57:59 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 15:57:59 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 15:57:59 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 15:57:59 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 15:57:59 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 15:57:59 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 15:57:59 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:57:59 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:57:59 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:57:59 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:57:59 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:57:59 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:57:59 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 15:58:07 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 15:58:07 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 15:58:07 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 15:58:07 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 15:58:07 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:58:07 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 15:58:07 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 15:58:07 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 15:58:07 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 15:58:07 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 15:58:07 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 15:58:07 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 15:58:07 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 15:58:07 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:58:07 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 15:58:07 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 15:58:07 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 15:58:07 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 15:58:07 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 15:58:07 INFO  LibraryAppHandler Thread-2 - send html response
+2020-04-25 16:08:51 INFO  LibraryHttpServer main - create task2 server on localhost:8080
+2020-04-25 16:08:52 INFO  LibraryHttpServer main - create server context: /task2
+2020-04-25 16:08:52 INFO  LibraryHttpServer main - server started on /127.0.0.1:8080
+2020-04-25 16:08:59 INFO  LibraryAppHandler Thread-2 - parse POST request
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - start handling request
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - Received incoming request: POST URI /task2
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - Queried: null
+2020-04-25 16:14:17 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "1eee"
+2020-04-25 16:14:17 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "4f"
+2020-04-25 16:14:17 ERROR SimpleLibraryService Thread-2 - Invalid id format! java.lang.NumberFormatException: For input string: "90f"
+2020-04-25 16:14:17 INFO  LibraryDao Thread-2 - saveAll() Dao method
+2020-04-25 16:14:17 INFO  FileReadingCommand Thread-2 - got info from file: D://test.csv. Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <FILE_READ> is: Records with numbers [ 1, 4, 10, ] have invalid params!
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 16:14:17 INFO  GenreCountingCommand Thread-2 - get page amount according to genre
+2020-04-25 16:14:17 INFO  SimpleLibraryService Thread-2 - get request param type
+2020-04-25 16:14:17 INFO  SimpleLibraryService Thread-2 - get page amount by genre
+2020-04-25 16:14:17 INFO  SimpleLibraryService Thread-2 - count pages by genre
+2020-04-25 16:14:17 INFO  SimpleLibraryService Thread-2 - generateResponseString() return Answer String
+2020-04-25 16:14:17 INFO  GenreCountingCommand Thread-2 - build answer: page amount in publication genre - [humor]
+2020-04-25 16:14:17 INFO  GenreCountingCommand Thread-2 - build answer according to request: how many pages of what genre was found
+2020-04-25 16:14:17 INFO  GenreCountingCommand Thread-2 - append page amount to answer
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <GENRE_COUNT> is: <h2>Books with genre HUMOR have 150 pages</h2>
+2020-04-25 16:14:17 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 16:14:17 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_REQUESTED_PUBLICATION_LIST> is: <h2>List of publications by selected genre:</h2><ul><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li></ul>
+2020-04-25 16:14:17 INFO  AddRequestedPublicationListCommand Thread-2 - append requested publication list
+2020-04-25 16:14:17 INFO  AddRequestedPublicationListCommand Thread-2 - build html answer: publication list selected according to request
+2020-04-25 16:14:17 INFO  SortByNameCommand Thread-2 - sort publication list descending order in dao
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <SORT_BY_NAME> is: sort publication list descending order in dao
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - result of executing command <ADD_PUBLICATION_LIST> is: <h2>All publications:</h2><ul><li>Publication{id=9, name='Publication_9', type=MAGAZINE, genre=HUMOR, pageAmount=80}</li><li>Publication{id=8, name='Publication_8', type=ALBUM, genre=ADVENTURE, pageAmount=70}</li><li>Publication{id=7, name='Publication_7', type=BOOK, genre=ACTION, pageAmount=60}</li><li>Publication{id=6, name='Publication_6', type=MAGAZINE, genre=HUMOR, pageAmount=50}</li><li>Publication{id=5, name='Publication_5', type=ALBUM, genre=ADVENTURE, pageAmount=40}</li><li>Publication{id=3, name='Publication_3', type=MAGAZINE, genre=HUMOR, pageAmount=20}</li><li>Publication{id=2, name='Publication_2', type=ALBUM, genre=ADVENTURE, pageAmount=10}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li><li>Publication{id=0, name='', type=DEFAULT, genre=DEFAULT, pageAmount=0}</li></ul>
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - add publication list to response
+2020-04-25 16:14:17 INFO  AddPublicationListCommand Thread-2 - build html answer: publication list with all publications
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - get template from resource for html answer
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - format publication response view according to template
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - add response headers
+2020-04-25 16:14:17 INFO  LibraryAppHandler Thread-2 - send html response

@@ -11,15 +11,13 @@ public interface LibraryService {
 
     String getPageAmountByGenre(LibraryDao libraryDao, String requestParamValue);
 
-    List<Publication> findAll(LibraryDao libraryDao);
-
     List<Publication> createPublicationListFromFile(String[] publicationParams);
 
     Publication buildPublicationFromFile(String info);
 
     LibraryDao getLibraryDao();
 
-    void setLibraryDao(LibraryDao libraryDao);
-
     void saveAll(List<Publication> publicationList);
+
+    void removeAllPublicationsFromLibraryDao();
 }

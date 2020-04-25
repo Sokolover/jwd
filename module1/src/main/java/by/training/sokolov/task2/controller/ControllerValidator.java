@@ -1,6 +1,5 @@
 package by.training.sokolov.task2.controller;
 
-import by.training.sokolov.task2.LibraryAppConstants;
 import by.training.sokolov.task2.command.FileReadingCommand;
 import by.training.sokolov.task2.command.GenreCountingCommand;
 import by.training.sokolov.task2.command.SortByNameCommand;
@@ -65,12 +64,6 @@ class ControllerValidator {
             throw new Exception(validationError);
         }
     }
-
-//    long id;
-//    String name;
-//    PublicationType type;
-//    Genre genre;
-//    int pageAmount;
 
     private void validateUrlValues(Map<String, String> requestMap) throws Exception {
 

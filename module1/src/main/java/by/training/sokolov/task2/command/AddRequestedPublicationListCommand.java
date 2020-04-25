@@ -4,12 +4,13 @@ import by.training.sokolov.task2.LibraryAppConstants;
 import by.training.sokolov.task2.enums.Genre;
 import by.training.sokolov.task2.model.Publication;
 import by.training.sokolov.task2.service.LibraryService;
-import by.training.sokolov.task2.service.SimpleLibraryService;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.util.Objects.*;
 
 public class AddRequestedPublicationListCommand implements Command {
 
@@ -47,7 +48,7 @@ public class AddRequestedPublicationListCommand implements Command {
                         .append(publication.toString())
                         .append("</li>");
             }
-            if (Objects.isNull(Genre.fromString(requestParamValue))) {
+            if (isNull(Genre.fromString(requestParamValue))) {
                 LOGGER.error("addRequestedPublicationList() - publication genre don't exist!");
             }
         }

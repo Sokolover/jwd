@@ -9,7 +9,6 @@ import java.util.Map;
 public class GenreCountingCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(GenreCountingCommand.class.getName());
-    private final String name = LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND;
 
     private LibraryService service;
 
@@ -47,6 +46,6 @@ public class GenreCountingCommand implements Command {
 
     @Override
     public String getName() {
-        return name;
+        return LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND;
     }
 }

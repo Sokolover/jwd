@@ -9,7 +9,6 @@ import java.util.Map;
 public class SortByNameCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(SortByNameCommand.class.getName());
-    private final String name = LibraryAppConstants.SORT_COMMAND_NAME;
 
     private LibraryService service;
 
@@ -24,9 +23,6 @@ public class SortByNameCommand implements Command {
     @Override
     public String execute(Map<String, String> requestGetMap) {
 
-        String message = "sort publication list descending order in dao";
-        LOGGER.info(message);
-
         String sortDirection = requestGetMap.get(LibraryAppConstants.QUERY_KEY_SORT_DIRECTION);
         if (LibraryAppConstants.DESCENDING_DIRECTION.equalsIgnoreCase(sortDirection)) {
             service.getLibraryDao().sortPublicationsByNameDescending();
@@ -34,11 +30,14 @@ public class SortByNameCommand implements Command {
             service.getLibraryDao().sortPublicationsByNameAscending();
         }
 
+        String message = "sort publication list " + sortDirection + " order in dao";
+        LOGGER.info(message);
+
         return message;
     }
 
     @Override
     public String getName() {
-        return name;
+        return LibraryAppConstants.SORT_COMMAND_NAME;
     }
 }
