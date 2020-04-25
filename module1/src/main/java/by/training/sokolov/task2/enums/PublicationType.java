@@ -5,7 +5,8 @@ import by.training.sokolov.task2.command.TypeNotExistException;
 public enum PublicationType {
     BOOK("book"),
     MAGAZINE("magazine"),
-    ALBUM("album");
+    ALBUM("album"),
+    DEFAULT("");
 
     private final String typeName;
 

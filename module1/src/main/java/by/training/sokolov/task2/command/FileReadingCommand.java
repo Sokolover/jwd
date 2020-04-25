@@ -1,7 +1,6 @@
 package by.training.sokolov.task2.command;
 
 import by.training.sokolov.task2.LibraryAppConstants;
-import by.training.sokolov.task2.dal.Library;
 import by.training.sokolov.task2.model.Publication;
 import by.training.sokolov.task2.service.LibraryService;
 import by.training.sokolov.task2.service.SimpleLibraryService;
@@ -17,7 +16,6 @@ import java.util.Map;
 public class FileReadingCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(FileReadingCommand.class.getName());
-    private final String name = LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND;
 
     private LibraryService service;
 
@@ -35,15 +33,19 @@ public class FileReadingCommand implements Command {
         String path = requestGetMap.get(LibraryAppConstants.QUERY_KEY_PATH);
         String[] publicationParamsStringArray = readParamsFromFile(path);
 
-        LibraryService libraryService = new SimpleLibraryService();
-        List<Publication> publicationList = libraryService.createPublicationListFromFile(publicationParamsStringArray);
-        Library library = new Library(publicationList);
-        service.setLibrary(library);
+        List<Publication> publicationList = service.createPublicationListFromFile(publicationParamsStringArray);
+        service.saveAll(publicationList);
 
-        String message = "got info from file: " + path;
+        //todo вынести этот метод в сервис
+        //      сделать вывод на html какие строки плохие
+        String invalidPublicationNumbersAnswer = service.findInvalidPublicationNumbers(publicationList);
+
+        String message = "got info from file: " + path + ". " + invalidPublicationNumbersAnswer;
         LOGGER.info(message);
-        return message;
+
+        return invalidPublicationNumbersAnswer;
     }
+
 
     private String[] readParamsFromFile(String path) {
 
@@ -73,6 +75,6 @@ public class FileReadingCommand implements Command {
 
     @Override
     public String getName() {
-        return name;
+        return LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND;
     }
 }

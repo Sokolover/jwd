@@ -1,21 +1,25 @@
 package by.training.sokolov.task2.service;
 
-import by.training.sokolov.task2.dal.Library;
+import by.training.sokolov.task2.dal.LibraryDao;
 import by.training.sokolov.task2.model.Publication;
 
 import java.util.List;
 
 public interface LibraryService {
 
-    String getPageAmountByGenre(Library library, String requestParamValue);
+    String findInvalidPublicationNumbers(List<Publication> publicationList);
 
-    List<Publication> findAllPublications(Library library);
+    String getPageAmountByGenre(LibraryDao libraryDao, String requestParamValue);
+
+    List<Publication> findAll(LibraryDao libraryDao);
 
     List<Publication> createPublicationListFromFile(String[] publicationParams);
 
     Publication buildPublicationFromFile(String info);
 
-    Library getLibrary();
+    LibraryDao getLibraryDao();
 
-    void setLibrary(Library library);
+    void setLibraryDao(LibraryDao libraryDao);
+
+    void saveAll(List<Publication> publicationList);
 }

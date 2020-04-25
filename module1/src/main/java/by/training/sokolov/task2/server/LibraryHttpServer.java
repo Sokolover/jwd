@@ -31,16 +31,16 @@ public class LibraryHttpServer {
         GenreCountingCommand commandGenre = new GenreCountingCommand(libraryService);
         AddPublicationListCommand commandAddList = new AddPublicationListCommand(libraryService);
         AddRequestedPublicationListCommand commandAddRequestedList = new AddRequestedPublicationListCommand(libraryService);
-        SortByNameDescendingCommand commandSortByNameDescending = new SortByNameDescendingCommand(libraryService);
+        SortByNameCommand sortByNameCommand = new SortByNameCommand(libraryService);
 
         commandMap.put(commandFileGet.getName(), commandFileGet);
         commandMap.put(commandGenre.getName(), commandGenre);
         commandMap.put(commandAddList.getName(), commandAddList);
         commandMap.put(commandAddRequestedList.getName(), commandAddRequestedList);
-        commandMap.put(commandSortByNameDescending.getName(), commandSortByNameDescending);
+        commandMap.put(sortByNameCommand.getName(), sortByNameCommand);
 
         CommandFactory commandFactory = new SimpleCommandFactory(commandMap);
-        LibraryAppHandler httpHandler = new LibraryAppHandler(commandFactory);
+        LibraryAppHandler httpHandler = new LibraryAppHandler(commandFactory, libraryService);
         server.createContext(LibraryAppConstants.CONTEXT_NAME_TASK2, httpHandler);
 
         LOGGER.info("create server context: " + LibraryAppConstants.CONTEXT_NAME_TASK2);

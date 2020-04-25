@@ -3,7 +3,8 @@ package by.training.sokolov.task2.enums;
 public enum Genre {
     ACTION("action"),
     ADVENTURE("adventure"),
-    HUMOR("humor");
+    HUMOR("humor"),
+    DEFAULT("");
 
     private final String genreName;
 

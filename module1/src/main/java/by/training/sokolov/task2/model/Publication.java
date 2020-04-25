@@ -4,6 +4,7 @@ import by.training.sokolov.task2.enums.Genre;
 import by.training.sokolov.task2.enums.PublicationType;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Publication {
 
@@ -29,6 +30,12 @@ public class Publication {
     private PublicationType type;
     private Genre genre;
     private int pageAmount;
+
+    public Publication(){
+        this.name = "";
+        this.type = PublicationType.DEFAULT;
+        this.genre = Genre.DEFAULT;
+    }
 
     public Publication(long id, String name, PublicationType type, Genre genre, int pageAmount) {
         this.id = id;
@@ -57,4 +64,20 @@ public class Publication {
         return pageAmount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Publication that = (Publication) o;
+        return id == that.id &&
+                pageAmount == that.pageAmount &&
+                Objects.equals(name, that.name) &&
+                type == that.type &&
+                genre == that.genre;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, genre, pageAmount);
+    }
 }

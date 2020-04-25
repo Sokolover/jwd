@@ -3,7 +3,7 @@ package by.training.sokolov.task2.controller;
 import by.training.sokolov.task2.LibraryAppConstants;
 import by.training.sokolov.task2.command.FileReadingCommand;
 import by.training.sokolov.task2.command.GenreCountingCommand;
-import by.training.sokolov.task2.command.SortByNameDescendingCommand;
+import by.training.sokolov.task2.command.SortByNameCommand;
 import by.training.sokolov.task2.command.TypeNotExistException;
 import by.training.sokolov.task2.enums.Genre;
 import org.apache.log4j.Logger;
@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-class ControllerValidator {
+import static by.training.sokolov.task2.LibraryAppConstants.*;
 
-    //    todo: валидация строки запроса - command=FIND_PATH&path=D://test.csv&genre=humor
+class ControllerValidator {
 
     private final static Logger LOGGER = Logger.getLogger(ControllerValidator.class.getName());
 
@@ -39,28 +39,28 @@ class ControllerValidator {
 
     private void validateUlrKeys(Map<String, String> requestMap) throws Exception {
 
-        if (!requestMap.containsKey(LibraryAppConstants.QUERY_KEY_PATH)) {
-            String validationError = "can not find <" + LibraryAppConstants.QUERY_KEY_PATH + "> key in Query!";
+        if (!requestMap.containsKey(QUERY_KEY_PATH)) {
+            String validationError = "can not find <" + QUERY_KEY_PATH + "> key in Query!";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
-        if (!requestMap.containsKey(LibraryAppConstants.QUERY_KEY_GENRE)) {
-            String validationError = "can not find <" + LibraryAppConstants.QUERY_KEY_GENRE + "> key in Query!";
+        if (!requestMap.containsKey(QUERY_KEY_GENRE)) {
+            String validationError = "can not find <" + QUERY_KEY_GENRE + "> key in Query!";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
-        if (!requestMap.containsKey(LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND)) {
-            String validationError = "can not find <" + LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND + "> key in Query!";
+        if (!requestMap.containsKey(QUERY_KEY_GENRE_COUNT_COMMAND)) {
+            String validationError = "can not find <" + QUERY_KEY_GENRE_COUNT_COMMAND + "> key in Query!";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
-        if (!requestMap.containsKey(LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND)) {
-            String validationError = "can not find <" + LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND + "> key in Query!";
+        if (!requestMap.containsKey(QUERY_KEY_FILE_READ_COMMAND)) {
+            String validationError = "can not find <" + QUERY_KEY_FILE_READ_COMMAND + "> key in Query!";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
-        if (!requestMap.containsKey(LibraryAppConstants.QUERY_KEY_SORT_BY)) {
-            String validationError = "can not find <" + LibraryAppConstants.QUERY_KEY_SORT_BY + "> key in Query!";
+        if (!requestMap.containsKey(QUERY_KEY_SORT_BY)) {
+            String validationError = "can not find <" + QUERY_KEY_SORT_BY + "> key in Query!";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
@@ -74,7 +74,7 @@ class ControllerValidator {
 
     private void validateUrlValues(Map<String, String> requestMap) throws Exception {
 
-        String path = requestMap.get(LibraryAppConstants.QUERY_KEY_PATH);
+        String path = requestMap.get(QUERY_KEY_PATH);
         File file = new File(path);
         if (!file.exists()) {
             String validationError = "invalid file path in query. file on path \"" + path + "\" not exists";
@@ -82,30 +82,37 @@ class ControllerValidator {
             throw new FileNotFoundException(validationError);
         }
 
-        String genre = requestMap.get(LibraryAppConstants.QUERY_KEY_GENRE);
+        String genre = requestMap.get(QUERY_KEY_GENRE);
         if (Genre.fromString(genre) == null) {
             String validationError = "invalid genre in query. error in method fromString() in class " + Genre.class.getName();
             LOGGER.error(validationError);
             throw new TypeNotExistException(validationError);
         }
 
-        String commandName = requestMap.get(LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND);
+        String commandName = requestMap.get(QUERY_KEY_FILE_READ_COMMAND);
         if (!commandName.equals(new FileReadingCommand().getName())) {
-            String validationError = "invalid value in template.html: <" + LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND + "," + commandName + ">";
+            String validationError = "invalid value in template.html: <" + QUERY_KEY_FILE_READ_COMMAND + "," + commandName + ">";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
 
-        commandName = requestMap.get(LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND);
+        commandName = requestMap.get(QUERY_KEY_GENRE_COUNT_COMMAND);
         if (!commandName.equals(new GenreCountingCommand().getName())) {
-            String validationError = "invalid value in template.html: <" + LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND + "," + commandName + ">";
+            String validationError = "invalid value in template.html: <" + QUERY_KEY_GENRE_COUNT_COMMAND + "," + commandName + ">";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
 
-        commandName = requestMap.get(LibraryAppConstants.QUERY_KEY_SORT_BY);//fixme надо сделать чтобы приходило значение name по ключу SORT_BY и выбиралась сортировка по имени
-        if (!commandName.equals(new SortByNameDescendingCommand().getName())) {
-            String validationError = "invalid value in template.html: <" + LibraryAppConstants.QUERY_KEY_SORT_BY + "," + commandName + ">";
+        commandName = requestMap.get(QUERY_KEY_SORT_BY);
+        if (!commandName.equals(new SortByNameCommand().getName())) {
+            String validationError = "invalid command name: <" + SORT_COMMAND_NAME + "," + commandName + ">";
+            LOGGER.error(validationError);
+            throw new Exception(validationError);
+        }
+
+        String directionName = requestMap.get(QUERY_KEY_SORT_DIRECTION).toUpperCase();
+        if (!(directionName.equals(DESCENDING_DIRECTION) || directionName.equals(ASCENDING_DIRECTION))) {
+            String validationError = "invalid command name: <" + SORT_COMMAND_NAME + "," + commandName + ">";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }

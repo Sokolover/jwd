@@ -1,10 +1,8 @@
 package by.training.sokolov.task2.command;
 
 import by.training.sokolov.task2.LibraryAppConstants;
-import by.training.sokolov.task2.dal.Library;
 import by.training.sokolov.task2.model.Publication;
 import by.training.sokolov.task2.service.LibraryService;
-import by.training.sokolov.task2.service.SimpleLibraryService;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.Map;
 public class AddPublicationListCommand implements Command {
 
     private final static Logger LOGGER = Logger.getLogger(AddPublicationListCommand.class.getName());
-    private final String name = LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND;
 
     private LibraryService service;
 
@@ -24,14 +21,13 @@ public class AddPublicationListCommand implements Command {
     @Override
     public String execute(Map<String, String> requestGetMap) {
         LOGGER.info("add publication list to response");
-        return addPublicationListToResponse(service.getLibrary());
+        return addPublicationListToResponse();
     }
 
-    private String addPublicationListToResponse(Library library) {
+    private String addPublicationListToResponse() {
 
         LOGGER.info("build html answer: publication list with all publications");
         StringBuilder publicationResponse = new StringBuilder();
-        LibraryService simpleLibraryService = new SimpleLibraryService();
 
         publicationResponse
                 .append("<h2>")
@@ -39,14 +35,13 @@ public class AddPublicationListCommand implements Command {
                 .append("</h2>");
 
         publicationResponse.append("<ul>");
-        List<Publication> publicationList = simpleLibraryService.findAllPublications(library);
+        List<Publication> publicationList = service.getLibraryDao().getPublicationList();
+
         for (Publication publication : publicationList) {
-            publicationResponse.append("<li>");
-            publicationResponse.append(publication.toString());
-            publicationResponse.append("</li>");
-            if (publication.toString() == null) {
-                LOGGER.error("addRequestedPublicationList() - publication genre don't exist!");
-            }
+            publicationResponse
+                    .append("<li>")
+                    .append(publication.toString())
+                    .append("</li>");
         }
         publicationResponse.append("</ul>");
 
@@ -55,6 +50,6 @@ public class AddPublicationListCommand implements Command {
 
     @Override
     public String getName() {
-        return name;
+        return LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND;
     }
 }

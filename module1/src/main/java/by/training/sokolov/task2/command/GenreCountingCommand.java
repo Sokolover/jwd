@@ -26,7 +26,7 @@ public class GenreCountingCommand implements Command {
 
         LOGGER.info("get page amount according to genre");
         String requestedGenre = map.get(LibraryAppConstants.QUERY_KEY_GENRE);
-        String responseData = service.getPageAmountByGenre(service.getLibrary(), requestedGenre);
+        String responseData = service.getPageAmountByGenre(service.getLibraryDao(), requestedGenre);
 
         LOGGER.info("build answer: page amount in publication genre - [" + requestedGenre + "]");
         String pageAmountResponse = buildHtmlAnswer(responseData);

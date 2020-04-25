@@ -1,8 +1,9 @@
 package by.training.sokolov.task2.controller;
 
-import by.training.sokolov.task2.LibraryAppConstants;
 import by.training.sokolov.task2.command.Command;
 import by.training.sokolov.task2.command.CommandFactory;
+import by.training.sokolov.task2.dal.LibraryDao;
+import by.training.sokolov.task2.service.LibraryService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.log4j.Logger;
@@ -16,34 +17,33 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static by.training.sokolov.task2.LibraryAppConstants.*;
+
 public class LibraryAppHandler implements HttpHandler {
 
     private final static Logger LOGGER = Logger.getLogger(LibraryAppHandler.class.getName());
     private CommandFactory commandFactory;
+    private LibraryService service;
 
-    public LibraryAppHandler(CommandFactory commandFactory) {
+    public LibraryAppHandler(CommandFactory commandFactory, LibraryService service) {
         this.commandFactory = commandFactory;
+        this.service = service;
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
         Map<String, String> requestMap = new HashMap<>();
-        if (LibraryAppConstants.HTTP_METHOD_GET.equals(exchange.getRequestMethod())) {
+        if (HTTP_METHOD_GET.equals(exchange.getRequestMethod())) {
             LOGGER.info("parse GET request");
             requestMap = parseGetRequest(exchange);
-        } else if (LibraryAppConstants.HTTP_METHOD_POST.equals(exchange.getRequestMethod())) {
+        } else if (HTTP_METHOD_POST.equals(exchange.getRequestMethod())) {
             LOGGER.info("parse POST request");
             requestMap = parsePostRequest(exchange);
         }
 
         handleRequest(exchange, requestMap);
     }
-
-    /*
-        todo:
-              написать ещё хотя бы один вариант сортировки
-     */
 
     private void handleRequest(HttpExchange exchange, Map<String, String> map) throws IOException {
 
@@ -56,42 +56,48 @@ public class LibraryAppHandler implements HttpHandler {
 
         ControllerValidator controllerValidator = new ControllerValidator();
         if (!controllerValidator.isValidateUrl(map)) {
-            sendHandledResponse(exchange, new StringBuilder("Invalid file path or genre type. Try again"));
+            StringBuilder response = createAnswerForInvalidFieldInput();
+            sendHandledResponse(exchange, response);
             return;
         }
 
-        /*
-        todo сделать сортировку
-            1. показывается список критериев по которым сортируем
-            2. вводится в поле критерий
-            3. проверяется можно ли это сделать
-            4. делается
-         */
+        service.setLibraryDao(new LibraryDao());
+        StringBuilder response = new StringBuilder();
 
-        executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_FILE_READ_COMMAND);
+        String infoAboutInvalidPublications = executeFromQueryCommand(map, QUERY_KEY_FILE_READ_COMMAND);
+        response.append(infoAboutInvalidPublications);
 
-        StringBuilder publicationResponse = new StringBuilder();
+        String addPublicationListCommandResult = executeInMemoryCommand(map, ADD_PUBLICATION_LIST_COMMAND);
+        response.append(addPublicationListCommandResult);
 
-        String addPublicationListCommandResult = executeInMemoryCommand(map, LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND);
-        publicationResponse.append(addPublicationListCommandResult);
+        String genreCommandResult = executeFromQueryCommand(map, QUERY_KEY_GENRE_COUNT_COMMAND);
+        response.append(genreCommandResult);
 
-        String genreCommandResult = executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_GENRE_COUNT_COMMAND);
-        publicationResponse.append(genreCommandResult);
+        String requestedPublicationList = executeInMemoryCommand(map, ADD_REQUESTED_PUBLICATION_LIST_COMMAND);
+        response.append(requestedPublicationList);
 
-        String requestedPublicationList = executeInMemoryCommand(map, LibraryAppConstants.ADD_REQUESTED_PUBLICATION_LIST_COMMAND);
-        publicationResponse.append(requestedPublicationList);
+        executeFromQueryCommand(map, QUERY_KEY_SORT_BY);
+        addPublicationListCommandResult = executeInMemoryCommand(map, ADD_PUBLICATION_LIST_COMMAND);
+        response.append(addPublicationListCommandResult);
 
-        executeFromQueryCommand(map, LibraryAppConstants.QUERY_KEY_SORT_BY);
-        addPublicationListCommandResult = executeInMemoryCommand(map, LibraryAppConstants.ADD_PUBLICATION_LIST_COMMAND);
-        publicationResponse.append(addPublicationListCommandResult);
-
-        sendHandledResponse(exchange, publicationResponse);
+        sendHandledResponse(exchange, response);
 
     }
 
+    private StringBuilder createAnswerForInvalidFieldInput() {
+        return new StringBuilder("<pre>\n" +
+                "    Check one of this fields:\n" +
+                "        - file path\n" +
+                "        - genre type\n" +
+                "        - sort by publication field\n" +
+                "        - sort direction\n" +
+                "    And try again\n" +
+                "</pre>");
+    }
+
     private boolean isEmptyQuery(HttpExchange exchange, Map<String, String> map) throws IOException {
-        if ((map.isEmpty() && LibraryAppConstants.HTTP_METHOD_POST.equals(exchange.getRequestMethod())) ||
-                LibraryAppConstants.HTTP_METHOD_GET.equals(exchange.getRequestMethod())) {
+        if ((map.isEmpty() && HTTP_METHOD_POST.equals(exchange.getRequestMethod())) ||
+                HTTP_METHOD_GET.equals(exchange.getRequestMethod())) {
             sendHandledResponse(exchange, new StringBuilder());
             return true;
         }
@@ -197,12 +203,18 @@ public class LibraryAppHandler implements HttpHandler {
             }
         }
 
-        //fixme пользоватьель должен вводить критерий по которому сортировать, а какой-то контроллер регулировать, какую сортироовку выбрать по какому критерию
-        //fixme хотя возможно тут это и стоит оставить в роле контроллера
-        if ("name".equals(paramMap.get(LibraryAppConstants.QUERY_KEY_SORT_BY))) {
-            paramMap.put(LibraryAppConstants.QUERY_KEY_SORT_BY, LibraryAppConstants.SORT_PUBLICATION_LIST_BY_NAME_DESCENDING_COMMAND);
-        }
+        buildSortCommandName(paramMap);
 
         return paramMap;
+    }
+
+    private void buildSortCommandName(Map<String, String> paramMap) {
+
+        String sortField = paramMap.get(QUERY_KEY_SORT_BY);
+
+        String sortByCommandName = QUERY_KEY_SORT_BY +
+                "_" + sortField.toUpperCase();
+
+        paramMap.put(QUERY_KEY_SORT_BY, sortByCommandName);
     }
 }
