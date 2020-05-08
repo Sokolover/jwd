@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gem</title>
+</head>
+
+<body>
+
+<div>
+    <h1>Gem XML parsing application</h1>
+    <h3>Enter file path and choose parser type</h3>
+</div>
+
+<div>
+    <form action="/task3" method="POST">
+        <p>Path: <input name="PATH"/></p>
+        <p><input name="PARSER_TYPE" type="radio" value="DOM"> DOM</p>
+        <p><input name="PARSER_TYPE" type="radio" value="SAX"> SAX</p>
+        <p><input name="PARSER_TYPE" type="radio" value="StAX"> StAX</p>
+        <input type="hidden" name="FILE_PARSE" value="FILE_PARSE"/>
+        <p><input type="submit" value="submit"/></p>
+    </form>
+</div>
+
+{0}
+
+</body>
+
+</html>

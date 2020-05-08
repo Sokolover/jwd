@@ -1,7 +1,11 @@
-package by.training.sokolov.task2.controller;
+package by.training.sokolov.task3.controller;
 
-import by.training.sokolov.task2.command.Command;
-import by.training.sokolov.task2.command.CommandFactory;
+import by.training.sokolov.task3.controller.commands.Command;
+import by.training.sokolov.task3.controller.commands.CommandFactory;
+import by.training.sokolov.task3.controller.validators.PathValidator;
+import by.training.sokolov.task3.controller.validators.XMLValidator;
+import by.training.sokolov.task3.model.Gem;
+import by.training.sokolov.task3.service.GemService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.log4j.Logger;
@@ -12,18 +16,21 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static by.training.sokolov.task2.LibraryAppConstants.*;
+import static by.training.sokolov.task3.GemAppConstants.*;
 
-public class LibraryAppHandler implements HttpHandler {
+public class GemAppHandler implements HttpHandler {
 
-    private final static Logger LOGGER = Logger.getLogger(LibraryAppHandler.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(GemAppHandler.class.getName());
+    private GemService service;
     private CommandFactory commandFactory;
 
-    public LibraryAppHandler(CommandFactory commandFactory) {
+    public GemAppHandler(CommandFactory commandFactory, GemService service) {
         this.commandFactory = commandFactory;
+        this.service = service;
     }
 
     @Override
@@ -50,44 +57,91 @@ public class LibraryAppHandler implements HttpHandler {
             return;
         }
 
-        ControllerValidator controllerValidator = new ControllerValidator();
-        if (!controllerValidator.isValidateUrl(map)) {
-            StringBuilder response = createAnswerForInvalidFieldInput();
-            sendHandledResponse(exchange, response);
+        StringBuilder response = new StringBuilder();
+
+        if (!PathValidator.validateFilePath(map.get(QUERY_KEY_PATH))) {
+            String message = "invalid file path from POST request";
+            LOGGER.error(message);
+            response.append(message);
             return;
         }
 
-        StringBuilder response = new StringBuilder();
+        if (!XMLValidator.checkXMLbyXSD(map.get(QUERY_KEY_PATH))) {
+            String message = "error in checkXMLbyXSD() method";
+            LOGGER.error(message);
+            response.append(message);
+            return;
+        }
 
-        String infoAboutInvalidPublications = executeFromQueryCommand(map, QUERY_KEY_FILE_READ_COMMAND);
-        response.append(infoAboutInvalidPublications);
-
-        String addPublicationListCommandResult = executeInMemoryCommand(map, ADD_PUBLICATION_LIST_COMMAND);
-        response.append(addPublicationListCommandResult);
-
-        String genreCommandResult = executeFromQueryCommand(map, QUERY_KEY_GENRE_COUNT_COMMAND);
-        response.append(genreCommandResult);
-
-        String requestedPublicationList = executeInMemoryCommand(map, ADD_REQUESTED_PUBLICATION_LIST_COMMAND);
-        response.append(requestedPublicationList);
-
-        executeFromQueryCommand(map, QUERY_KEY_SORT_BY);
-        addPublicationListCommandResult = executeInMemoryCommand(map, ADD_PUBLICATION_LIST_COMMAND);
-        response.append(addPublicationListCommandResult);
+        executeFromQueryCommand(map, QUERY_KEY_FILE_PARSE_COMMAND);
+        response.append(createGemHtmlTable());
 
         sendHandledResponse(exchange, response);
-
     }
 
-    private StringBuilder createAnswerForInvalidFieldInput() {
-        return new StringBuilder("<pre>\n" +
-                "    Check one of this fields:\n" +
-                "        - file path\n" +
-                "        - genre type\n" +
-                "        - sort by publication field\n" +
-                "        - sort direction\n" +
-                "    And try again\n" +
-                "</pre>");
+    private String createGemHtmlTable() {
+
+        StringBuilder response = new StringBuilder();
+
+        response.append("<table border=\"1\">\n" +
+                "    <caption>Gems table</caption>\n" +
+                "    <tr>\n" +
+                "        <th rowspan=\"2\" class=\"first\">id</th>\n" +
+                "        <th rowspan=\"2\">Name</th>\n" +
+                "        <th rowspan=\"2\">Preciousness</th>\n" +
+                "        <th rowspan=\"2\">Origin</th>\n" +
+                "        <th colspan=\"3\">Visual parameters</th>\n" +
+                "        <th rowspan=\"2\">Value</th>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <th class=\"first\">Color</th>\n" +
+                "        <th class=\"first\">Transparency</th>\n" +
+                "        <th class=\"first\">Number of faces</th>\n" +
+                "    </tr>\n");
+
+        List<Gem> gems = service.findAll();
+        for (Gem gem : gems) {
+            response.append("<tr><td>")
+                    .append(gem.getId())
+                    .append("</td><td>")
+                    .append(gem.getName())
+                    .append("</td><td>")
+                    .append(gem.getPreciousness())
+                    .append("</td><td>")
+                    .append(gem.getOrigin())
+                    .append("</td><td>")
+                    .append(gem.getColor())
+                    .append("</td><td>")
+                    .append(gem.getTransparency())
+                    .append("</td><td>")
+                    .append(gem.getNumberOfFaces())
+                    .append("</td><td>")
+                    .append(gem.getValue())
+                    .append("</td></tr>");
+        }
+
+        return new String(response);
+    }
+
+
+    private void sendHandledResponse(HttpExchange exchange, StringBuilder publicationResponse) throws IOException {
+
+        LOGGER.info("get template from resource for html answer");
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(HTML_TEMPLATE_PATH_TASK3);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
+        String template = bufferedReader.lines().collect(Collectors.joining());
+
+        LOGGER.info("format publication response view according to template");
+        String view = MessageFormat.format(template, publicationResponse);
+
+        LOGGER.info("add response headers");
+        exchange.sendResponseHeaders(200, view.getBytes(StandardCharsets.UTF_8).length);
+        OutputStream outputStream = exchange.getResponseBody();
+        LOGGER.info("send html response");
+        outputStream.write(view.getBytes(StandardCharsets.UTF_8));
+
+        outputStream.flush();
+        outputStream.close();
     }
 
     private boolean isEmptyQuery(HttpExchange exchange, Map<String, String> map) throws IOException {
@@ -108,41 +162,12 @@ public class LibraryAppHandler implements HttpHandler {
         LOGGER.info("Queried: " + query);
     }
 
-    private void sendHandledResponse(HttpExchange exchange, StringBuilder publicationResponse) throws IOException {
-
-        LOGGER.info("get template from resource for html answer");
-        InputStream resourceAsStream = this.getClass().getResourceAsStream("/templateTask2.html");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
-        String template = bufferedReader.lines().collect(Collectors.joining());
-
-        LOGGER.info("format publication response view according to template");
-        String view = MessageFormat.format(template, publicationResponse);
-
-        LOGGER.info("add response headers");
-        exchange.sendResponseHeaders(200, view.getBytes(StandardCharsets.UTF_8).length);
-        OutputStream outputStream = exchange.getResponseBody();
-        LOGGER.info("send html response");
-        outputStream.write(view.getBytes(StandardCharsets.UTF_8));
-
-        outputStream.flush();
-        outputStream.close();
-    }
-
-    private String executeInMemoryCommand(Map<String, String> map, String commandName) {
-
-        Command command = commandFactory.getCommand(commandName);
-        String commandResult = command.execute(map);
-        LOGGER.info("result of executing command <" + command.getName() + "> is: " + commandResult);
-        return command.execute(map);
-    }
-
-    private String executeFromQueryCommand(Map<String, String> map, String commandKey) {
+    private void executeFromQueryCommand(Map<String, String> map, String commandKey) {
 
         String commandName = map.get(commandKey);
         Command command = commandFactory.getCommand(commandName);
         String commandResult = command.execute(map);
         LOGGER.info("result of executing command <" + command.getName() + "> is: " + commandResult);
-        return commandResult;
     }
 
     private Map<String, String> parsePostRequest(HttpExchange httpExchange) {
@@ -198,18 +223,7 @@ public class LibraryAppHandler implements HttpHandler {
             }
         }
 
-        buildSortCommandName(paramMap);
-
         return paramMap;
     }
 
-    private void buildSortCommandName(Map<String, String> paramMap) {
-
-        String sortField = paramMap.get(QUERY_KEY_SORT_BY);
-
-        String sortByCommandName = QUERY_KEY_SORT_BY +
-                "_" + sortField.toUpperCase();
-
-        paramMap.put(QUERY_KEY_SORT_BY, sortByCommandName);
-    }
 }

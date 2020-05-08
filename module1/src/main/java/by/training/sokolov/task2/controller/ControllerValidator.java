@@ -84,14 +84,14 @@ class ControllerValidator {
 
         String commandName = requestMap.get(QUERY_KEY_FILE_READ_COMMAND);
         if (!commandName.equals(new FileReadingCommand().getName())) {
-            String validationError = "invalid value in template.html: <" + QUERY_KEY_FILE_READ_COMMAND + "," + commandName + ">";
+            String validationError = "invalid value in templateTask2.html: <" + QUERY_KEY_FILE_READ_COMMAND + "," + commandName + ">";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }
 
         commandName = requestMap.get(QUERY_KEY_GENRE_COUNT_COMMAND);
         if (!commandName.equals(new GenreCountingCommand().getName())) {
-            String validationError = "invalid value in template.html: <" + QUERY_KEY_GENRE_COUNT_COMMAND + "," + commandName + ">";
+            String validationError = "invalid value in templateTask2.html: <" + QUERY_KEY_GENRE_COUNT_COMMAND + "," + commandName + ">";
             LOGGER.error(validationError);
             throw new Exception(validationError);
         }

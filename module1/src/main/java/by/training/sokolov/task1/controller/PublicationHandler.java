@@ -64,7 +64,7 @@ public class PublicationHandler implements HttpHandler {
         logger.info("Queried: " + query);
 
         logger.info("get template from resource for html answer");
-        InputStream resourceAsStream = this.getClass().getResourceAsStream("/template.html");
+        InputStream resourceAsStream = this.getClass().getResourceAsStream("/templateTask2.html");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
         String template = bufferedReader.lines().collect(Collectors.joining());
 
