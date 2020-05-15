@@ -1,30 +1,26 @@
-package by.training.sokolov.task3.controller;
+package by.training.sokolov.controller;
 
-import by.training.sokolov.task3.contants.GemAppConstants;
-import by.training.sokolov.task3.controller.commands.Command;
-import by.training.sokolov.task3.controller.commands.CommandFactory;
-import by.training.sokolov.task3.controller.commands.SimpleCommandFactory;
-import by.training.sokolov.task3.dal.GemDao;
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.service.GemService;
-import by.training.sokolov.task3.service.SimpleGemService;
+import by.training.sokolov.contants.GemAppConstants;
+import by.training.sokolov.controller.commands.Command;
+import by.training.sokolov.controller.commands.CommandFactory;
+import by.training.sokolov.controller.commands.SimpleCommandFactory;
+import by.training.sokolov.dal.GemDao;
+import by.training.sokolov.service.GemService;
+import by.training.sokolov.service.SimpleGemService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import static by.training.sokolov.task3.contants.GemAppConstants.HTML_TEMPLATE_PATH_TASK3;
 
 
 @MultipartConfig
@@ -49,7 +45,7 @@ public class GemAppController extends HttpServlet {
         response.setContentType("text/html");
 
         LOGGER.info("get template from resource for html answer");
-        InputStream resourceAsStream = this.getClass().getResourceAsStream(HTML_TEMPLATE_PATH_TASK3);
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(GemAppConstants.HTML_TEMPLATE_PATH_TASK3);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
         String template = bufferedReader.lines().collect(Collectors.joining());
 
@@ -72,7 +68,7 @@ public class GemAppController extends HttpServlet {
         String message = command.execute(request, response);
 
         LOGGER.info("get template from resource for html answer");
-        InputStream resourceAsStream = this.getClass().getResourceAsStream(HTML_TEMPLATE_PATH_TASK3);
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(GemAppConstants.HTML_TEMPLATE_PATH_TASK3);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
         String template = bufferedReader.lines().collect(Collectors.joining());
 
@@ -81,8 +77,6 @@ public class GemAppController extends HttpServlet {
 
         response.getWriter().write(formatedResponse);
     }
-
-
 
 
 //    @Override

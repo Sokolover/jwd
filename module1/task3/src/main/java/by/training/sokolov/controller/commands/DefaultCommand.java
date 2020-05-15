@@ -1,4 +1,4 @@
-package by.training.sokolov.task3.controller.commands;
+package by.training.sokolov.controller.commands;
 
 import org.apache.log4j.Logger;
 

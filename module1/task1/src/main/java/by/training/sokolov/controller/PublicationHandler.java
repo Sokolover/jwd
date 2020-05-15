@@ -1,13 +1,13 @@
-package by.training.sokolov.task1.controller;
+package by.training.sokolov.controller;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import by.training.sokolov.task1.dal.LibraryDao;
+import by.training.sokolov.dal.LibraryDao;
 import by.training.sokolov.task1.model.Library;
-import org.apache.log4j.Logger;
 import by.training.sokolov.task1.presentation.HtmlBuilder;
 import by.training.sokolov.task1.service.LibraryService;
 import by.training.sokolov.task1.service.SimpleLibraryService;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.URI;

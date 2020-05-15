@@ -1,7 +1,7 @@
-package by.training.sokolov.task1.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task1.model.Library;
-import by.training.sokolov.task1.model.Publication;
+import by.training.sokolov.model.Library;
+import by.training.sokolov.model.Publication;
 
 import java.util.List;
 

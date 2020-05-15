@@ -1,7 +1,7 @@
-package by.training.sokolov.task2.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task2.dal.LibraryDao;
-import by.training.sokolov.task2.model.Publication;
+import by.training.sokolov.dal.LibraryDao;
+import by.training.sokolov.model.Publication;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package by.training.sokolov.task3.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.dal.GemDao;
+import by.training.sokolov.dal.GemDao;
+import by.training.sokolov.model.Gem;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -26,7 +26,7 @@ public interface GemService {
 
     List<Gem> inMemoryDom(Document document) throws ParserConfigurationException, IOException, SAXException;
 
-    List<Gem> inMemorySax() throws ParserConfigurationException, SAXException, IOException;
+    List<Gem> inMemorySax(String filePath) throws ParserConfigurationException, SAXException, IOException;
 
     List<Gem> inMemoryStax() throws XMLStreamException;
 }

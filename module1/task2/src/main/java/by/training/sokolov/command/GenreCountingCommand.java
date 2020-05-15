@@ -1,7 +1,7 @@
-package by.training.sokolov.task2.command;
+package by.training.sokolov.command;
 
-import by.training.sokolov.task2.LibraryAppConstants;
-import by.training.sokolov.task2.service.LibraryService;
+import by.training.sokolov.LibraryAppConstants;
+import by.training.sokolov.service.LibraryService;
 import org.apache.log4j.Logger;
 
 import java.util.Map;

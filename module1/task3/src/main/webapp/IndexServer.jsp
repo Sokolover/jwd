@@ -1,41 +1,41 @@
-<%@ page import="by.asite.secondeditionserver.AppConstants" %>
-<%@ page import="by.asite.secondeditionserver.commands.CommandName" %>
+<%@ page import="by.training.sokolov.contants.GemAppConstants" %>
+<%@ page import="by.training.sokolov.controller.commands.CommandEnum" %>
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8"/>
-    <title>JSP Application</title>
+    <title>Gem Application</title>
 </head>
 <body>
-<h2>Available commands</h2>
-<form method="post" enctype="multipart/form-data">
-    <input type="hidden" value="<%=CommandName.ADD_COMMAND_DOM.stringName%>" name="<%=AppConstants.COMMAND_PARAM%>">
+
+<h1>Available commands xxx</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="command" value="dom">
     <input type="file" name="uploadfile"/>
     <button type="submit">DOM</button>
 </form>
-<form method="post" enctype="multipart/form-data">
-    <input type="hidden" value="<%=CommandName.ADD_COMMAND_SAX.stringName%>" name="<%=AppConstants.COMMAND_PARAM%>">
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="<%=GemAppConstants.QUERY_KEY_COMMAND%>" value="<%=CommandEnum.SAX_COMMAND.getValue()%>">
     <input type="file" name="uploadfile"/>
     <button type="submit">SAX</button>
 </form>
-<form method="post" enctype="multipart/form-data">
-    <input type="hidden" value="<%=CommandName.ADD_COMMAND_STAX.stringName%>" name="<%=AppConstants.COMMAND_PARAM%>">
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="<%=GemAppConstants.QUERY_KEY_COMMAND%>" value="<%=CommandEnum.STAX_COMMAND.getValue()%>">
     <input type="file" name="uploadfile"/>
     <button type="submit">STAX</button>
 </form>
-<form method="post">
-    <input type="hidden" value="<%=CommandName.DELETE_COMMAND.stringName%>" name="<%=AppConstants.COMMAND_PARAM%>">
-    <button type="submit">DELETE ALL</button>
-</form>
+
 <h2>Current data</h2>
 
-<c:forEach var="tarif" items="${returndata}">
+<c:forEach var="gem" items="${returndata}">
     <br/>
-    <c:out value="${tarif}"/>
+    <c:out value="${gem}"/>
 </c:forEach>
-
 
 </body>
 </html>

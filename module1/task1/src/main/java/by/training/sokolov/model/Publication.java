@@ -1,4 +1,4 @@
-package by.training.sokolov.task1.model;
+package by.training.sokolov.model;
 
 import by.training.sokolov.task1.enums.Genre;
 import by.training.sokolov.task1.enums.PublicationType;
@@ -11,7 +11,7 @@ public class Publication {
     private Genre genre;
     private int pageAmount;
 
-    public Publication(){
+    public Publication() {
 
     }
 

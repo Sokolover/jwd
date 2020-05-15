@@ -1,4 +1,4 @@
-package by.training.sokolov.task3.controller.commands;
+package by.training.sokolov.controller.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

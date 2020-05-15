@@ -1,4 +1,4 @@
-package by.training.sokolov.task2.enums;
+package by.training.sokolov.enums;
 
 public enum Genre {
     ACTION("action"),

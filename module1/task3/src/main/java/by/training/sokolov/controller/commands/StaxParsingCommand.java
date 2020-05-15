@@ -1,7 +1,7 @@
-package by.training.sokolov.task3.controller.commands;
+package by.training.sokolov.controller.commands;
 
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.service.GemService;
+import by.training.sokolov.model.Gem;
+import by.training.sokolov.service.GemService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
 import java.util.List;
 
-public class StaxParsingCommand implements Command{
+public class StaxParsingCommand implements Command {
 
 
     private final static Logger LOGGER = Logger.getLogger(SaxParsingCommand.class.getName());

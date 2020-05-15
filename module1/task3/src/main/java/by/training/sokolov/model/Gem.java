@@ -1,4 +1,4 @@
-package by.training.sokolov.task3.model;
+package by.training.sokolov.model;
 
 public class Gem {
 

@@ -1,6 +1,6 @@
-package by.training.sokolov.task3.controller.commands;
+package by.training.sokolov.controller.commands;
 
-import by.training.sokolov.task3.service.GemService;
+import by.training.sokolov.service.GemService;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package by.training.sokolov.task2;
+package by.training.sokolov;
 
-import by.training.sokolov.task2.server.LibraryHttpServer;
+import by.training.sokolov.server.LibraryHttpServer;
 
 import java.io.IOException;
 

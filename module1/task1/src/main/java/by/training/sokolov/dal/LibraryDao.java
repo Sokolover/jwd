@@ -1,4 +1,4 @@
-package by.training.sokolov.task1.dal;
+package by.training.sokolov.dal;
 
 import by.training.sokolov.task1.model.Library;
 import by.training.sokolov.task1.model.Publication;

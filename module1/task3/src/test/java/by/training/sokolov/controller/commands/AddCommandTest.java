@@ -1,16 +1,13 @@
-package by.asite.secondeditionserver.commands;
+package by.training.sokolov.controller.commands;
 
-import by.asite.secondeditionserver.AppConstants;
-import by.asite.secondeditionserver.dao.TariffsData;
-import by.asite.secondeditionserver.dao.TariffsDataImpl;
-import by.asite.secondeditionserver.services.SAXHandler;
-import by.asite.secondeditionserver.services.TariffsService;
-import by.asite.secondeditionserver.services.TariffsServiceImpl;
+import by.training.sokolov.controller.GemAppController;
+import by.training.sokolov.dal.GemDao;
+import by.training.sokolov.service.SaxGemHandler;
+import by.training.sokolov.service.SimpleGemService;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -21,55 +18,50 @@ import java.io.IOException;
 import java.io.InputStream;
 
 class AddCommandTest {
-    static final Logger LOGGER = AppConstants.COMMANDS_LOGGER;
-    static TariffsService tariffsService;
-    static CommandsFactory commandsFactory;
+    private static final Logger LOGGER = Logger.getLogger(GemAppController.class.getName());
+    private static SimpleGemService gemService;
+    private static SimpleCommandFactory commandFactory;
 
-    @BeforeAll
-    static void beforeAll() {
-        TariffsData tariffsData = new TariffsDataImpl();
-        tariffsService = new TariffsServiceImpl(tariffsData);
-        commandsFactory = new CommandsFactoryImpl(tariffsService);
+
+    @Before
+    public void beforeDom() {
+        GemDao gemDao = new GemDao();
+        gemService = new SimpleGemService(gemDao);
+        commandFactory = new SimpleCommandFactory(gemService);
+        gemService.removeAll();
         LOGGER.info("init test server");
     }
 
-    @BeforeEach
-    void clean() {
-        tariffsService.deleteAllData();
-    }
-
     @Test
-    void addDOM() throws IOException, SAXException, ParserConfigurationException {
+    public void domParsing() throws IOException, SAXException, ParserConfigurationException {
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        File file = new File(this.getClass().getClassLoader().getResource("input.xml").getPath());
+        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
         Document document = builder.parse(file);
-        try {
-            tariffsService.domToData(document);
-            Assert.assertEquals(tariffsService.getTariffsData().getTariffsListFromDAL().size(), 3);
-        } catch (Exception e) {
-            LOGGER.error("test add dom error", e);
-        }
+
+        gemService.inMemoryDom(document);
+
     }
 
     @Test
-    void addSAX() throws IOException, SAXException, ParserConfigurationException {
+    public void saxParsing() throws IOException, SAXException, ParserConfigurationException {
+
         SAXParserFactory parserFactor = SAXParserFactory.newInstance();
         SAXParser parser = parserFactor.newSAXParser();
-        SAXHandler handler = new SAXHandler(tariffsService);
-        File file = new File(this.getClass().getClassLoader().getResource("input.xml").getPath());
+        SaxGemHandler handler = new SaxGemHandler();
+        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
         parser.parse(file, handler);
-        Assert.assertEquals(tariffsService.getTariffsData().getTariffsListFromDAL().size(), 3);
+        Assert.assertEquals(gemService.findAll().size(), 2);
     }
 
     @Test
-    void addSTAX() throws IOException, SAXException, ParserConfigurationException {
+    void staxParsing() throws IOException, SAXException, ParserConfigurationException {
 
-        File file = new File(this.getClass().getClassLoader().getResource("input.xml").getPath());
+        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
         InputStream targetStream = new FileInputStream(file);
+//        gemService.inMemoryStax(targetStream);
 
-        String x = tariffsService.doaddstax(targetStream);
-
-        Assert.assertEquals(tariffsService.getTariffsData().getTariffsListFromDAL().size(), 3);
+        Assert.assertEquals(gemService.findAll().size(), 2);
     }
 }

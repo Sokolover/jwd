@@ -1,4 +1,4 @@
-package by.training.sokolov.task2;
+package by.training.sokolov;
 
 public class LibraryAppConstants {
 

@@ -1,8 +1,8 @@
-package by.training.sokolov.task3.controller.commands;
+package by.training.sokolov.controller.commands;
 
-import by.training.sokolov.task3.controller.validators.XmlValidator;
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.service.GemService;
+import by.training.sokolov.controller.validators.XmlValidator;
+import by.training.sokolov.model.Gem;
+import by.training.sokolov.service.GemService;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -18,7 +18,7 @@ import java.io.*;
 import java.util.Collection;
 import java.util.List;
 
-import static by.training.sokolov.task3.contants.GemAppConstants.TMP_DIR;
+import static by.training.sokolov.contants.GemAppConstants.TMP_DIR;
 
 public class DomParsingCommand implements Command {
 
@@ -43,8 +43,7 @@ public class DomParsingCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         LOGGER.info("*** DOM parser works ***");
-
-        InputStream inputStream;
+        //todo сделать наследование GemParsingCommand и вынести общие методы для считывания файла и валидации xsd
         String filePath = null;
         try {
             Collection<Part> parts = request.getParts();
@@ -71,6 +70,7 @@ public class DomParsingCommand implements Command {
             return msg;
         }
 
+        InputStream inputStream;
         try {
             inputStream = new FileInputStream(filePath);
         } catch (FileNotFoundException e) {

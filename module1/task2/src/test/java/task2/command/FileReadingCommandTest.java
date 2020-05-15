@@ -1,8 +1,8 @@
 package task2.command;
 
-import by.training.sokolov.task2.command.FileReadingCommand;
-import by.training.sokolov.task2.service.LibraryService;
-import by.training.sokolov.task2.service.SimpleLibraryService;
+import by.training.sokolov.command.FileReadingCommand;
+import by.training.sokolov.service.LibraryService;
+import by.training.sokolov.service.SimpleLibraryService;
 import org.junit.Before;
 import org.junit.Test;
 

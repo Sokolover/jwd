@@ -1,6 +1,6 @@
 package task2.controller;
 
-import by.training.sokolov.task2.controller.ControllerValidator;
+import by.training.sokolov.controller.ControllerValidator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,22 +40,22 @@ public class ControllerValidatorTest {
     private Map<String, String> createNotValidateMap() {
         Map<String, String> map = new HashMap<>();
         map.put("PATH", "D://test.csv");
-        map.put("GENRE_COUNT","GENRE_COUNT");
-        map.put("SORT_BY","SORT_BY_NAME");
-        map.put("GENRE","humor");
-        map.put("SORT_DIRECTION","descAnding");
-        map.put("FILE_READ","FILE_READ");
+        map.put("GENRE_COUNT", "GENRE_COUNT");
+        map.put("SORT_BY", "SORT_BY_NAME");
+        map.put("GENRE", "humor");
+        map.put("SORT_DIRECTION", "descAnding");
+        map.put("FILE_READ", "FILE_READ");
         return map;
     }
 
     private Map<String, String> createValidateMap() {
         Map<String, String> map = new HashMap<>();
         map.put("PATH", "D://test.csv");
-        map.put("GENRE_COUNT","GENRE_COUNT");
-        map.put("SORT_BY","SORT_BY_NAME");
-        map.put("GENRE","humor");
-        map.put("SORT_DIRECTION","descEnding");
-        map.put("FILE_READ","FILE_READ");
+        map.put("GENRE_COUNT", "GENRE_COUNT");
+        map.put("SORT_BY", "SORT_BY_NAME");
+        map.put("GENRE", "humor");
+        map.put("SORT_DIRECTION", "descEnding");
+        map.put("FILE_READ", "FILE_READ");
         return map;
     }
 }

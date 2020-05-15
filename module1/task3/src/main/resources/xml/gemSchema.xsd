@@ -6,8 +6,8 @@
 
     <xs:element name="gems">
         <xs:complexType>
-            <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="gem" type="gemType"/>
+            <xs:sequence>
+                <xs:element name="gem" type="gemType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -1,6 +1,6 @@
-package by.training.sokolov.task3.dal;
+package by.training.sokolov.dal;
 
-import by.training.sokolov.task3.model.Gem;
+import by.training.sokolov.model.Gem;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class GemDao {
     private final static Logger LOGGER = Logger.getLogger(GemDao.class.getName());
     List<Gem> gemList;
 
-    public GemDao(){
+    public GemDao() {
         gemList = new ArrayList<>();
     }
 

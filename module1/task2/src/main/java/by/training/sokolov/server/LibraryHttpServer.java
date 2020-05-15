@@ -1,10 +1,10 @@
-package by.training.sokolov.task2.server;
+package by.training.sokolov.server;
 
-import by.training.sokolov.task2.LibraryAppConstants;
-import by.training.sokolov.task2.command.*;
-import by.training.sokolov.task2.controller.LibraryAppHandler;
-import by.training.sokolov.task2.service.LibraryService;
-import by.training.sokolov.task2.service.SimpleLibraryService;
+import by.training.sokolov.LibraryAppConstants;
+import by.training.sokolov.command.*;
+import by.training.sokolov.controller.LibraryAppHandler;
+import by.training.sokolov.service.LibraryService;
+import by.training.sokolov.service.SimpleLibraryService;
 import com.sun.net.httpserver.HttpServer;
 import org.apache.log4j.Logger;
 

@@ -1,7 +1,7 @@
-package by.training.sokolov.task2.controller;
+package by.training.sokolov.controller;
 
-import by.training.sokolov.task2.command.Command;
-import by.training.sokolov.task2.command.CommandFactory;
+import by.training.sokolov.command.Command;
+import by.training.sokolov.command.CommandFactory;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.log4j.Logger;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static by.training.sokolov.task2.LibraryAppConstants.*;
+import static by.training.sokolov.LibraryAppConstants.*;
 
 public class LibraryAppHandler implements HttpHandler {
 

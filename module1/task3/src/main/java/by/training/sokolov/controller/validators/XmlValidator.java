@@ -1,6 +1,6 @@
-package by.training.sokolov.task3.controller.validators;
+package by.training.sokolov.controller.validators;
 
-import by.training.sokolov.task3.contants.GemAppConstants;
+import by.training.sokolov.contants.GemAppConstants;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 

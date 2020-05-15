@@ -1,7 +1,7 @@
-package by.training.sokolov.task1.server;
+package by.training.sokolov.server;
 
+import by.training.sokolov.controller.PublicationHandler;
 import com.sun.net.httpserver.HttpServer;
-import by.training.sokolov.task1.controller.PublicationHandler;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

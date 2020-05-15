@@ -1,17 +1,17 @@
-package by.training.sokolov.task2.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task2.command.TypeNotExistException;
-import by.training.sokolov.task2.dal.LibraryDao;
-import by.training.sokolov.task2.enums.Genre;
-import by.training.sokolov.task2.enums.PublicationType;
-import by.training.sokolov.task2.model.Publication;
+import by.training.sokolov.command.TypeNotExistException;
+import by.training.sokolov.dal.LibraryDao;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.enums.PublicationType;
+import by.training.sokolov.model.Publication;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static by.training.sokolov.task2.enums.Genre.fromString;
+import static by.training.sokolov.enums.Genre.fromString;
 import static java.util.Objects.isNull;
 
 public class SimpleLibraryService implements LibraryService {

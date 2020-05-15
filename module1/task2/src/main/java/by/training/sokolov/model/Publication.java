@@ -1,7 +1,7 @@
-package by.training.sokolov.task2.model;
+package by.training.sokolov.model;
 
-import by.training.sokolov.task2.enums.Genre;
-import by.training.sokolov.task2.enums.PublicationType;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.enums.PublicationType;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class Publication {
     private Genre genre;
     private int pageAmount;
 
-    public Publication(){
+    public Publication() {
         this.name = "";
         this.type = PublicationType.DEFAULT;
         this.genre = Genre.DEFAULT;

@@ -1,6 +1,6 @@
-package by.training.sokolov.task2.dal;
+package by.training.sokolov.dal;
 
-import by.training.sokolov.task2.model.Publication;
+import by.training.sokolov.model.Publication;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

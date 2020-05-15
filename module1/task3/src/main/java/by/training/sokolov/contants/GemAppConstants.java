@@ -1,4 +1,4 @@
-package by.training.sokolov.task3.contants;
+package by.training.sokolov.contants;
 
 public class GemAppConstants {
 

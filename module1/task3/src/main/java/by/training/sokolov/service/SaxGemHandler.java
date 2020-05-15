@@ -1,7 +1,7 @@
-package by.training.sokolov.task3.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.model.GemEnum;
+import by.training.sokolov.model.Gem;
+import by.training.sokolov.model.GemEnum;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -16,7 +16,7 @@ public class SaxGemHandler extends DefaultHandler {
     private GemEnum currentEnum;
     private EnumSet<GemEnum> withText;
 
-    SaxGemHandler() {
+    public SaxGemHandler() {
         this.gems = new ArrayList<>();
         withText = EnumSet.range(GemEnum.PRECIOUSNESS, GemEnum.VALUE);
     }

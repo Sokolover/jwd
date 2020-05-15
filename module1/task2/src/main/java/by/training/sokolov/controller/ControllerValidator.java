@@ -1,17 +1,17 @@
-package by.training.sokolov.task2.controller;
+package by.training.sokolov.controller;
 
-import by.training.sokolov.task2.command.FileReadingCommand;
-import by.training.sokolov.task2.command.GenreCountingCommand;
-import by.training.sokolov.task2.command.SortByNameCommand;
-import by.training.sokolov.task2.command.TypeNotExistException;
-import by.training.sokolov.task2.enums.Genre;
+import by.training.sokolov.command.FileReadingCommand;
+import by.training.sokolov.command.GenreCountingCommand;
+import by.training.sokolov.command.SortByNameCommand;
+import by.training.sokolov.command.TypeNotExistException;
+import by.training.sokolov.enums.Genre;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-import static by.training.sokolov.task2.LibraryAppConstants.*;
+import static by.training.sokolov.LibraryAppConstants.*;
 
 public class ControllerValidator {
 

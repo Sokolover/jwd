@@ -1,15 +1,15 @@
-package by.training.sokolov.task2.command;
+package by.training.sokolov.command;
 
-import by.training.sokolov.task2.LibraryAppConstants;
-import by.training.sokolov.task2.enums.Genre;
-import by.training.sokolov.task2.model.Publication;
-import by.training.sokolov.task2.service.LibraryService;
+import by.training.sokolov.LibraryAppConstants;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.model.Publication;
+import by.training.sokolov.service.LibraryService;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
 
 public class AddRequestedPublicationListCommand implements Command {
 

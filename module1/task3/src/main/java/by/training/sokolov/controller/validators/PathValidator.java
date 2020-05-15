@@ -1,4 +1,4 @@
-package by.training.sokolov.task3.controller.validators;
+package by.training.sokolov.controller.validators;
 
 import java.io.File;
 

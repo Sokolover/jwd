@@ -1,4 +1,4 @@
-package by.training.sokolov.task2.command;
+package by.training.sokolov.command;
 
 public interface CommandFactory {
 

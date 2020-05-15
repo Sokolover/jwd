@@ -1,8 +1,8 @@
-package by.training.sokolov.task3.service;
+package by.training.sokolov.service;
 
-import by.training.sokolov.task3.dal.GemDao;
-import by.training.sokolov.task3.model.Gem;
-import by.training.sokolov.task3.model.GemEnum;
+import by.training.sokolov.dal.GemDao;
+import by.training.sokolov.model.Gem;
+import by.training.sokolov.model.GemEnum;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,7 +10,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -21,9 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static by.training.sokolov.task3.model.GemEnum.GEM;
-import static by.training.sokolov.task3.model.GemEnum.GEMS;
 
 public class SimpleGemService implements GemService {
 
@@ -89,11 +88,11 @@ public class SimpleGemService implements GemService {
             int event = reader.next();
             switch (event) {
                 case XMLStreamConstants.START_ELEMENT:
-                    if (GemEnum.fromString(reader.getLocalName()) == GEM) {
+                    if (GemEnum.fromString(reader.getLocalName()) == GemEnum.GEM) {
                         currentGem = new Gem();
                         currentGem.setId(reader.getAttributeValue(0));
                     }
-                    if (GemEnum.fromString(reader.getLocalName()) == GEMS) {
+                    if (GemEnum.fromString(reader.getLocalName()) == GemEnum.GEMS) {
                         gemList = new ArrayList<>();
                     }
                     break;
@@ -138,12 +137,12 @@ public class SimpleGemService implements GemService {
     }
 
     @Override
-    public List<Gem> inMemorySax() throws ParserConfigurationException, SAXException, IOException {
+    public List<Gem> inMemorySax(String filePath) throws ParserConfigurationException, SAXException, IOException {
 
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         SAXParser parser = parserFactory.newSAXParser();
         SaxGemHandler handler = new SaxGemHandler();
-        parser.parse("ПЕРЕДАТЬ ПУТЬ ИЛИ ФЙЛ С РЕКУЭСТ", handler);
+        parser.parse(filePath, handler);
 
         return handler.getGems();
     }

@@ -1,4 +1,4 @@
-package by.training.sokolov.task1.model;
+package by.training.sokolov.model;
 
 import java.util.List;
 
