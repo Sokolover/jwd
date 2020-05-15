@@ -12,10 +12,10 @@
 </head>
 <body>
 
-<h1>Available commands xxx</h1>
+<h1>Parsing commands</h1>
 
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="command" value="dom">
+    <input type="hidden" name="<%=GemAppConstants.QUERY_KEY_COMMAND%>" value="<%=CommandEnum.DOM_COMMAND.getValue()%>">
     <input type="file" name="uploadfile"/>
     <button type="submit">DOM</button>
 </form>
@@ -32,9 +32,8 @@
 
 <h2>Current data</h2>
 
-<c:forEach var="gem" items="${returndata}">
-    <br/>
-    <c:out value="${gem}"/>
+<c:forEach var="gem" items="${gems}">
+    <c:out value="${gem}"/><br/>
 </c:forEach>
 
 </body>
