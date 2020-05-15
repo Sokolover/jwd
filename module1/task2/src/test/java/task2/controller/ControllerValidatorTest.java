@@ -1,5 +1,6 @@
-package by.training.sokolov.task2.controller;
+package task2.controller;
 
+import by.training.sokolov.task2.controller.ControllerValidator;
 import org.junit.Before;
 import org.junit.Test;
 

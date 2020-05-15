@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sokolov</groupId>
-    <artifactId>SimpleHTTPServerLibrary</artifactId>
+    <artifactId>module1</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -19,6 +20,11 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>task1</module>
+        <module>task2</module>
+        <module>task3</module>
+    </modules>
 
     <dependencies>
 
