@@ -11,7 +11,8 @@ public class DefaultCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("default command");
-        return "default";
+        String message = "default command";
+        LOGGER.info(message);
+        return message;
     }
 }

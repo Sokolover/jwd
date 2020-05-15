@@ -34,21 +34,6 @@ public class SimpleGemService implements GemService {
     }
 
     @Override
-    public List<Gem> createGemListFromFile(String[] publicationParams) {
-        return null;
-    }
-
-    @Override
-    public Gem buildGemFromFile(String info) {
-        return null;
-    }
-
-    @Override
-    public GemDao getGemDao() {
-        return null;
-    }
-
-    @Override
     public void saveAll(List<Gem> gems) {
         gemDao.saveAll(gems);
     }
@@ -66,20 +51,19 @@ public class SimpleGemService implements GemService {
     }
 
     @Override
-    public List<Gem> inMemoryStax() throws XMLStreamException {
+    public void inMemoryStax(String filePath) throws XMLStreamException {
 
-        List<Gem> gemList = null;
+        List<Gem> gems = null;
         Gem currentGem = null;
         String tagContent = null;
 
-        //todo сделать чтобы читалось из String path а не из "xml/gem.xml" !!!
         XMLInputFactory factory = XMLInputFactory.newInstance();
         FileInputStream inputStream;
         try {
-            inputStream = new FileInputStream(new File("ПЕРЕДАТЬ ПУТЬ ИЛИ ФЙЛ С РЕКУЭСТ"));
+            inputStream = new FileInputStream(new File(filePath));
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage());
-            return new ArrayList<>();
+            return;
         }
 
         XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
@@ -93,7 +77,7 @@ public class SimpleGemService implements GemService {
                         currentGem.setId(reader.getAttributeValue(0));
                     }
                     if (GemEnum.fromString(reader.getLocalName()) == GemEnum.GEMS) {
-                        gemList = new ArrayList<>();
+                        gems = new ArrayList<>();
                     }
                     break;
                 case XMLStreamConstants.CHARACTERS:
@@ -102,7 +86,7 @@ public class SimpleGemService implements GemService {
                 case XMLStreamConstants.END_ELEMENT:
                     switch (GemEnum.fromString(reader.getLocalName())) {
                         case GEM:
-                            gemList.add(currentGem);
+                            gems.add(currentGem);
                             break;
                         case NAME:
                             currentGem.setName(tagContent);
@@ -128,30 +112,38 @@ public class SimpleGemService implements GemService {
                     }
                     break;
                 case XMLStreamConstants.START_DOCUMENT:
-                    gemList = new ArrayList<>();
+                    gems = new ArrayList<>();
                     break;
             }
         }
 
-        return gemList;
+        LOGGER.info("remove all records from table");
+        this.removeAll();
+        LOGGER.info("add new records to table");
+        this.saveAll(gems);
+
     }
 
     @Override
-    public List<Gem> inMemorySax(String filePath) throws ParserConfigurationException, SAXException, IOException {
+    public void inMemorySax(String filePath) throws ParserConfigurationException, SAXException, IOException {
 
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         SAXParser parser = parserFactory.newSAXParser();
         SaxGemHandler handler = new SaxGemHandler();
         parser.parse(filePath, handler);
 
-        return handler.getGems();
+        LOGGER.info("remove all records from table");
+        this.removeAll();
+        LOGGER.info("add new records to table");
+        List<Gem> gems = handler.getGems();
+        this.saveAll(gems);
     }
 
     @Override
-    public List<Gem> inMemoryDom(Document document) throws ParserConfigurationException, IOException, SAXException {
+    public void inMemoryDom(Document document) throws ParserConfigurationException, IOException, SAXException {
         NodeList nodeList = document.getDocumentElement().getChildNodes();
 
-        List<Gem> gemList = new ArrayList<>();
+        List<Gem> gems = new ArrayList<>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
@@ -187,11 +179,14 @@ public class SimpleGemService implements GemService {
                         }
                     }
                 }
-                gemList.add(gem);
+                gems.add(gem);
             }
         }
+        LOGGER.info("remove all records from table");
+        this.removeAll();
+        LOGGER.info("add new records to table");
+        this.saveAll(gems);
 
-        return gemList;
     }
 
     private void parseVisualParams(Gem gem, Node childNode) {

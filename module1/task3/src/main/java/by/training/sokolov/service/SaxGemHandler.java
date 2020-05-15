@@ -16,7 +16,7 @@ public class SaxGemHandler extends DefaultHandler {
     private GemEnum currentEnum;
     private EnumSet<GemEnum> withText;
 
-    public SaxGemHandler() {
+    SaxGemHandler() {
         this.gems = new ArrayList<>();
         withText = EnumSet.range(GemEnum.PRECIOUSNESS, GemEnum.VALUE);
     }

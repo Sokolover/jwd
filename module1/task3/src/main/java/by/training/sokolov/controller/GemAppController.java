@@ -35,46 +35,6 @@ public class GemAppController extends HttpServlet {
         LOGGER.info("init server");
     }
 
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        LOGGER.info("doGet method handle");
-//        response.setContentType("text/html");
-//
-//        LOGGER.info("get template from resource for html answer");
-//        InputStream resourceAsStream = this.getClass().getResourceAsStream(GemAppConstants.HTML_TEMPLATE_PATH_TASK3);
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
-//        String template = bufferedReader.lines().collect(Collectors.joining());
-//
-//        LOGGER.info("format publication response view according to template");
-//        String view = MessageFormat.format(template, "<h3>\n" +
-//                "    here you will see gem table\n" +
-//                "</h3>");
-//
-//        response.setContentLength(view.getBytes().length);
-//        response.getWriter().write(view);
-//    }
-//
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        LOGGER.info("doPost method handle");
-//        response.setContentType("text/html");
-//
-//        String commandName = request.getParameter(GemAppConstants.QUERY_KEY_COMMAND);
-//        Command command = commandFactory.getCommand(commandName);
-//        String message = command.execute(request, response);
-//
-//        LOGGER.info("get template from resource for html answer");
-//        InputStream resourceAsStream = this.getClass().getResourceAsStream(GemAppConstants.HTML_TEMPLATE_PATH_TASK3);
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
-//        String template = bufferedReader.lines().collect(Collectors.joining());
-//
-//        LOGGER.info("format publication response view according to template");
-//        String formatedResponse = MessageFormat.format(template, message);
-//
-//        response.getWriter().write(formatedResponse);
-//    }
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         LOGGER.info("doGet method handle");
@@ -89,19 +49,10 @@ public class GemAppController extends HttpServlet {
 
         String commandName = request.getParameter(QUERY_KEY_COMMAND);
         Command command = commandFactory.getCommand(commandName);
-        doWork(request, response, command);
-    }
-
-    private void doWork(HttpServletRequest request, HttpServletResponse response, Command command) {
-        try {
-            String returnData = command.execute(request, response);
-            request.setAttribute("gems", returnData);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/parsers.jsp");
-            requestDispatcher.forward(request, response);
-        } catch (Exception e) {
-            LOGGER.error("fatal error", e);
-            request.setAttribute("returndata", "error on doWork() watch logs");
-        }
+        command.execute(request, response);
+        request.setAttribute("gems", gemService.findAll());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/parsers.jsp");
+        requestDispatcher.forward(request, response);
     }
 
 }

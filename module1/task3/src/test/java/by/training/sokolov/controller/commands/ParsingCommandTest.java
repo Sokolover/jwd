@@ -1,9 +1,7 @@
-/*
 package by.training.sokolov.controller.commands;
 
 import by.training.sokolov.controller.GemAppController;
 import by.training.sokolov.dal.GemDao;
-import by.training.sokolov.service.SaxGemHandler;
 import by.training.sokolov.service.SimpleGemService;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -12,25 +10,23 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-class AddCommandTest {
+public class ParsingCommandTest {
     private static final Logger LOGGER = Logger.getLogger(GemAppController.class.getName());
     private static SimpleGemService gemService;
-    private static SimpleCommandFactory commandFactory;
 
 
     @Before
-    public void beforeDom() {
+    public void beforeStax() {
         GemDao gemDao = new GemDao();
         gemService = new SimpleGemService(gemDao);
-        commandFactory = new SimpleCommandFactory(gemService);
         gemService.removeAll();
-        LOGGER.info("init test server");
     }
 
     @Test
@@ -38,31 +34,40 @@ class AddCommandTest {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
+        File file = new File(this.getClass().getClassLoader().getResource("xml/gem.xml").getPath());
         Document document = builder.parse(file);
-
         gemService.inMemoryDom(document);
 
+        Assert.assertEquals(gemService.findAll().size(), 2);
+    }
+
+    @Before
+    public void beforeSax() {
+        GemDao gemDao = new GemDao();
+        gemService = new SimpleGemService(gemDao);
+        gemService.removeAll();
     }
 
     @Test
     public void saxParsing() throws IOException, SAXException, ParserConfigurationException {
 
-        SAXParserFactory parserFactor = SAXParserFactory.newInstance();
-        SAXParser parser = parserFactor.newSAXParser();
-        SaxGemHandler handler = new SaxGemHandler();
-        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
-        parser.parse(file, handler);
+        gemService.inMemorySax(this.getClass().getClassLoader().getResource("xml/gem.xml").getPath());
+
         Assert.assertEquals(gemService.findAll().size(), 2);
+    }
+
+    @Before
+    public void beforeDom() {
+        GemDao gemDao = new GemDao();
+        gemService = new SimpleGemService(gemDao);
+        gemService.removeAll();
     }
 
     @Test
-    void staxParsing() throws IOException, SAXException, ParserConfigurationException {
+    public void staxParsing() throws XMLStreamException {
 
-        File file = new File(this.getClass().getClassLoader().getResource("gem.xml").getPath());
-        InputStream targetStream = new FileInputStream(file);
-//        gemService.inMemoryStax(targetStream);
+        gemService.inMemoryStax(this.getClass().getClassLoader().getResource("xml/gem.xml").getPath());
 
         Assert.assertEquals(gemService.findAll().size(), 2);
     }
-}*/
+}

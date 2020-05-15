@@ -4,9 +4,7 @@ public enum CommandEnum {
     DOM_COMMAND("dom"),
     SAX_COMMAND("sax"),
     STAX_COMMAND("stax"),
-    DEFAULT_COMMAND("default"),
-    SHOW_COMMAND("show"),
-    DELETE_COMMAND("delete");
+    DEFAULT_COMMAND("default");
 
     private String value;
 
