@@ -1,15 +1,15 @@
 package by.training.sokolov.dal;
 
-import by.training.sokolov.task1.enums.Genre;
-import by.training.sokolov.task1.enums.PublicationType;
-import by.training.sokolov.task1.model.Publication;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.enums.PublicationType;
+import by.training.sokolov.model.Publication;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.training.sokolov.task1.enums.Genre.*;
-import static by.training.sokolov.task1.enums.PublicationType.*;
+import static by.training.sokolov.enums.Genre.*;
+import static by.training.sokolov.enums.PublicationType.*;
 
 class DataGenerator {
 

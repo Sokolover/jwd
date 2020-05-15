@@ -2,9 +2,9 @@ package by.training.sokolov.presentation;
 
 import by.training.sokolov.model.Library;
 import by.training.sokolov.model.Publication;
-import by.training.sokolov.task1.enums.Genre;
-import by.training.sokolov.task1.service.LibraryService;
-import by.training.sokolov.task1.service.SimpleLibraryService;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.service.LibraryService;
+import by.training.sokolov.service.SimpleLibraryService;
 import org.apache.log4j.Logger;
 
 import java.util.List;

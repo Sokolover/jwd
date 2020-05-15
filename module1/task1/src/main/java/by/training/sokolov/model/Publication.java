@@ -1,7 +1,7 @@
 package by.training.sokolov.model;
 
-import by.training.sokolov.task1.enums.Genre;
-import by.training.sokolov.task1.enums.PublicationType;
+import by.training.sokolov.enums.Genre;
+import by.training.sokolov.enums.PublicationType;
 
 public class Publication {
 

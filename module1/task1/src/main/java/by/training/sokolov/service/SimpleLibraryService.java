@@ -2,12 +2,12 @@ package by.training.sokolov.service;
 
 import by.training.sokolov.model.Library;
 import by.training.sokolov.model.Publication;
-import by.training.sokolov.task1.enums.Genre;
+import by.training.sokolov.enums.Genre;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 
-import static by.training.sokolov.task1.enums.Genre.fromString;
+import static by.training.sokolov.enums.Genre.fromString;
 
 public class SimpleLibraryService implements LibraryService {
 
