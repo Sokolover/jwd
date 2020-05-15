@@ -24,7 +24,7 @@ public class StaxParsingCommand extends GemParsingCommand implements Command {
 
         String filePath = getFilePath(request);
 
-        if (!XmlValidator.checkXMLbyXSD(filePath)) {
+        if (XmlValidator.checkXMLbyXSD(filePath)) {
             String msg = "XML is NOT corresponds to XSD";
             LOGGER.error(msg);
             return msg;
@@ -36,9 +36,9 @@ public class StaxParsingCommand extends GemParsingCommand implements Command {
             LOGGER.error(e.getMessage());
         }
 
-        String message = "got info from file";
-        LOGGER.info(message);
+        String msg = "got info from file";
+        LOGGER.info(msg);
 
-        return service.findAll().toString();
+        return msg;
     }
 }

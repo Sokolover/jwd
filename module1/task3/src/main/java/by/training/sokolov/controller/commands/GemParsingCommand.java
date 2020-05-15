@@ -12,6 +12,7 @@ import java.util.Collection;
 import static by.training.sokolov.contants.GemAppConstants.TMP_DIR;
 
 class GemParsingCommand {
+
     private final static Logger LOGGER = Logger.getLogger(GemParsingCommand.class.getName());
 
     String getFilePath(HttpServletRequest request) {

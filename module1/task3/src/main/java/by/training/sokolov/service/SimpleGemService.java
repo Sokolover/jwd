@@ -140,9 +140,9 @@ public class SimpleGemService implements GemService {
     }
 
     @Override
-    public void inMemoryDom(Document document) throws ParserConfigurationException, IOException, SAXException {
-        NodeList nodeList = document.getDocumentElement().getChildNodes();
+    public void inMemoryDom(Document document) {
 
+        NodeList nodeList = document.getDocumentElement().getChildNodes();
         List<Gem> gems = new ArrayList<>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -182,6 +182,7 @@ public class SimpleGemService implements GemService {
                 gems.add(gem);
             }
         }
+
         LOGGER.info("remove all records from table");
         this.removeAll();
         LOGGER.info("add new records to table");

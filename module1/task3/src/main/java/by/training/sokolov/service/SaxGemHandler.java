@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static by.training.sokolov.model.GemEnum.GEM;
+import static by.training.sokolov.model.GemEnum.ID;
+
 public class SaxGemHandler extends DefaultHandler {
 
     private List<Gem> gems;
@@ -23,9 +26,9 @@ public class SaxGemHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        if ("gem".equals(qName)) {
+        if (GEM.getValue().equals(qName)) {
             currentGem = new Gem();
-            String id = attributes.getValue("id");
+            String id = attributes.getValue(ID.getValue());
             currentGem.setId(id);
         } else {
             GemEnum temp = GemEnum.fromString(qName);
@@ -38,7 +41,7 @@ public class SaxGemHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) {
 
-        if ("gem".equals(qName)) {
+        if (GEM.getValue().equals(qName)) {
             gems.add(currentGem);
         }
     }

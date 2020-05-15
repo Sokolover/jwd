@@ -32,7 +32,7 @@ public class DomParsingCommand extends GemParsingCommand implements Command {
 
         String filePath = getFilePath(request);
 
-        if (!XmlValidator.checkXMLbyXSD(filePath)) {
+        if (XmlValidator.checkXMLbyXSD(filePath)) {
             String msg = "XML is NOT corresponds to XSD";
             LOGGER.error(msg);
             return msg;
@@ -77,7 +77,7 @@ public class DomParsingCommand extends GemParsingCommand implements Command {
 
         try {
             service.inMemoryDom(document);
-        } catch (SAXException e) {
+        } catch (ParserConfigurationException e) {
             String msg = "SAXException while parsing document in " + this.getClass();
             LOGGER.error(msg, e);
             return msg;
@@ -85,7 +85,7 @@ public class DomParsingCommand extends GemParsingCommand implements Command {
             String msg = "IOException while parsing document in " + this.getClass();
             LOGGER.error(msg, e);
             return msg;
-        } catch (Exception e) {
+        } catch (SAXException e) {
             String msg = "Exception while parsing document in " + this.getClass();
             LOGGER.error(msg, e);
             return msg;
@@ -94,6 +94,6 @@ public class DomParsingCommand extends GemParsingCommand implements Command {
         String msg = "got info from file";
         LOGGER.info(msg);
 
-        return service.findAll().toString();
+        return msg;
     }
 }

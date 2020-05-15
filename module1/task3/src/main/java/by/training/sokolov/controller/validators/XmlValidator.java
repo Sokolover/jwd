@@ -26,12 +26,12 @@ public class XmlValidator {
 
             if (!xml.exists()) {
                 LOGGER.info("haven't found XML " + pathXml);
-                return false;
+                return true;
             }
 
             if (!xsd.exists()) {
                 LOGGER.info("haven't found XSD " + xsd);
-                return false;
+                return true;
             }
 
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -39,11 +39,12 @@ public class XmlValidator {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(pathXml));
             LOGGER.info("XML corresponds to XSD.");
-            return true;
+            return false;
 
         } catch (SAXException | IOException e) {
+
             LOGGER.error(e.getMessage());
-            return false;
+            return true;
         }
 
     }

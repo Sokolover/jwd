@@ -49,8 +49,10 @@ public class GemAppController extends HttpServlet {
 
         String commandName = request.getParameter(QUERY_KEY_COMMAND);
         Command command = commandFactory.getCommand(commandName);
-        command.execute(request, response);
+        String commandResult = command.execute(request, response);
+        request.setAttribute("message", commandResult);
         request.setAttribute("gems", gemService.findAll());
+        gemService.removeAll();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/parsers.jsp");
         requestDispatcher.forward(request, response);
     }

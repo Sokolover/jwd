@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GemDao {
     private final static Logger LOGGER = Logger.getLogger(GemDao.class.getName());
-    List<Gem> gemList;
+    private List<Gem> gemList;
 
     public GemDao() {
         gemList = new ArrayList<>();
