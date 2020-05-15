@@ -1,7 +1,6 @@
 package by.training.sokolov.oop.basic_of_oop.task1;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {

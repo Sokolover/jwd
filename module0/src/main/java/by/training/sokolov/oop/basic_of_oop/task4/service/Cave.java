@@ -1,7 +1,6 @@
 package by.training.sokolov.oop.basic_of_oop.task4.service;
 
 import by.training.sokolov.oop.basic_of_oop.task4.model.Treasure;
-import by.training.sokolov.oop.basic_of_oop.task4.service.CaveSelectionService;
 
 import java.util.ArrayList;
 import java.util.List;

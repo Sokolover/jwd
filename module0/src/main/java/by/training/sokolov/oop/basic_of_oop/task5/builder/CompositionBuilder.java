@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CompositionBuilder {
 
-    public static Composition buildComposition(){
+    public static Composition buildComposition() {
 
         List<Flower> flowerList = createFlowerList();
         List<Wrapper> wrapperList = createWrapperList();

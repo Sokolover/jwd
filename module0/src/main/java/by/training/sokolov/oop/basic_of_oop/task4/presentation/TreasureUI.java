@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class TreasureUI {
 
-    public static void showTask(){
+    public static void showTask() {
         System.out.println("Дракон и его сокровища.\n" +
                 "Создать программу, позволяющую обрабатывать сведения о 100 сокровищах в пещере дракона.\n" +
                 "Реализовать возможность\n" +
@@ -42,11 +42,12 @@ public class TreasureUI {
         System.out.println();
     }
 
-    public static int enterUserSum(){
+    public static int enterUserSum() {
         System.out.println("Введите сумму, на которую вы хотите приобрести сокровища:");
         return enterInt();
     }
-    public static int enterTreasureAmount(){
+
+    public static int enterTreasureAmount() {
         System.out.println("Введите количество сокровищ в пещере дракона:");
         return enterInt();
     }

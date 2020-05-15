@@ -1,7 +1,5 @@
 package by.training.sokolov.oop.basic_of_oop.task2;
 
-import java.util.Scanner;
-
 public class Payment {
     private String name;
     private int overallCost;
@@ -13,7 +11,7 @@ public class Payment {
         System.out.println("_______________");
     }
 
-    public Payment(){
+    public Payment() {
 
     }
 

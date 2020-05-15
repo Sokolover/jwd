@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CompositionUI {
 
-    public void showTask(){
+    public void showTask() {
         System.out.println("Цветочная композиция. \n" +
                 "Реализовать приложение, позволяющее создавать цветочные композиции \n" +
                 "(объект, представляющий собой цветочную композицию). \n" +

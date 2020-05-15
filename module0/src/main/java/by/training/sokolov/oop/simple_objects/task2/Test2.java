@@ -10,7 +10,7 @@ public class Test2 {
         this.b = b;
     }
 
-    public Test2(){
+    public Test2() {
         this.a = 5;
         this.b = 10;
     }

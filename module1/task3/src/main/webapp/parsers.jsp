@@ -62,7 +62,7 @@
 </table>
 
 <br/>
-<c:set var="message" value="${message}" />
+<c:set var="message" value="${message}"/>
 <c:out value="${message}"/>
 
 </body>

@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         task2();
     }
+
     static void task2() {
         System.out.println("2. Создйте класс Test2 двумя переменными. \n" +
                 "Добавьте конструктор с входными параметрами. \n" +

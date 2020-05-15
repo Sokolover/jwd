@@ -9,7 +9,7 @@ public enum WheelName {
 
     private String wheelNumber;
     private String wheelRussianName;
-            
+
     WheelName(String number, String russianName) {
         this.wheelNumber = number;
         this.wheelRussianName = russianName;

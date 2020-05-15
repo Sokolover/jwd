@@ -21,7 +21,7 @@ public class Operators {
         outputResult(result);
     }
 
-    private static void outputResult(double result){
+    private static void outputResult(double result) {
         System.out.printf("Ответ: %.3f\n", result);
     }
 }

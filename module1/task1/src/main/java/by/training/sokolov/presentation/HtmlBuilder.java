@@ -1,8 +1,8 @@
 package by.training.sokolov.presentation;
 
+import by.training.sokolov.enums.Genre;
 import by.training.sokolov.model.Library;
 import by.training.sokolov.model.Publication;
-import by.training.sokolov.enums.Genre;
 import by.training.sokolov.service.LibraryService;
 import by.training.sokolov.service.SimpleLibraryService;
 import org.apache.log4j.Logger;

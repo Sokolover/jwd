@@ -1,6 +1,6 @@
 package by.training.sokolov.oop.agregation_and_composition.task2.model;
 
-public class Wheel{
+public class Wheel {
 
     private WheelName wheelName;
 
