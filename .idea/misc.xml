@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/module1/task3" />
+    <file type="web" url="file://$PROJECT_DIR$/module2/xml_parsing_task" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
