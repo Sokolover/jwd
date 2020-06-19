@@ -1,5 +1,7 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.dao.wallet;
 
+import by.training.sokolov.dao.GenericDao;
+import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.model.Wallet;
 import org.apache.log4j.Logger;
 
@@ -11,13 +13,13 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class WalletDao extends GenericDao<Wallet> {
+public class WalletDaoImpl extends GenericDao<Wallet> implements WalletDao {
 
-    private final static Logger LOGGER = Logger.getLogger(WalletDao.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(WalletDaoImpl.class.getName());
     private static final String TABLE_NAME = "wallet";
     private final Lock connectionLock = new ReentrantLock();
 
-    public WalletDao() {
+    public WalletDaoImpl() {
         super(TABLE_NAME, getWalletRowMapper());
     }
 

@@ -5,10 +5,10 @@ import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandFactoryImpl;
 import by.training.sokolov.command.CommandUtil;
 import by.training.sokolov.dao.CRUDDao;
-import by.training.sokolov.dao.UserDaoImpl;
-import by.training.sokolov.dto.user.UserDto;
+import by.training.sokolov.dao.user.UserDaoImpl;
+import by.training.sokolov.model.User;
 import by.training.sokolov.service.GenericService;
-import by.training.sokolov.service.UserService;
+import by.training.sokolov.service.user.UserServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -28,12 +28,12 @@ public class IndexController extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger(IndexController.class.getName());
     private CommandFactory commandFactory;
-    private GenericService<UserDto> userService;
+    private GenericService<User> userService;
 
     @Override
     public void init() {
-        CRUDDao<UserDto> userDao = new UserDaoImpl();
-        userService = new UserService(userDao);
+        CRUDDao<User> userDao = new UserDaoImpl();
+        userService = new UserServiceImpl(userDao);
         commandFactory= new CommandFactoryImpl(userService);
         LOGGER.info("init server");
     }

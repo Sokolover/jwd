@@ -1,5 +1,7 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.dao.dish;
 
+import by.training.sokolov.dao.GenericDao;
+import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.model.Dish;
 
 import java.sql.PreparedStatement;
@@ -8,9 +10,13 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-public class DishDaoParams {
+public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     private static final String TABLE_NAME = "dish";
+
+    public DishDaoImpl() {
+        super(TABLE_NAME, getDishRowMapper());
+    }
 
     public static String getTableName() {
         return TABLE_NAME;

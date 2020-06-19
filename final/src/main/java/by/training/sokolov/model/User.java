@@ -1,4 +1,4 @@
-package by.training.sokolov.dto.user;
+package by.training.sokolov.model;
 
 import by.training.sokolov.dao.IdentifiedRow;
 import by.training.sokolov.model.Loyalty;
@@ -8,7 +8,7 @@ import by.training.sokolov.model.Wallet;
 
 import java.util.List;
 
-public class UserDto implements IdentifiedRow {
+public class User implements IdentifiedRow {
 
     private Long id;
     private String name;
@@ -16,14 +16,13 @@ public class UserDto implements IdentifiedRow {
     private String email;
     private boolean isActive;
     private String phoneNumber;
-//    private List<String> roles;
 
     private List<UserRole> roles;
     private Loyalty loyalty;
     private Wallet wallet;
     private UserAddress userAddress;
 
-    public UserDto() {
+    public User() {
         loyalty = new Loyalty();
         wallet = new Wallet();
         userAddress = new UserAddress();

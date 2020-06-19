@@ -8,31 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.bunis.um.command.CommandType" %>
 <div class="container">
     <div class="content">
         <table class="table is-striped is-hoverable is-narrow is-fullwidth">
             <thead>
-            <fmt:message key="user.loginName" var="loginName"/>
-            <fmt:message key="user.firstName" var="firstName"/>
-            <fmt:message key="user.lastName" var="lastName"/>
+            <fmt:message key="user.name" var="name"/>
             <fmt:message key="user.email" var="email"/>
-            <th><abbr title="${loginName}">${loginName}</abbr></th>
-            <th><abbr title="${firstName}">${firstName}</abbr></th>
-            <th><abbr title="${lastName}">${lastName}</abbr></th>
+            <fmt:message key="user.phoneNumber" var="phoneNumber"/>
+            <fmt:message key="user.active" var="active"/>
+            <th><abbr title="${name}">${name}</abbr></th>
             <th><abbr title="${email}">${email}</abbr></th>
+            <th><abbr title="${phoneNumber}">${phoneNumber}</abbr></th>
+            <th><abbr title="${active}">${active}</abbr></th>
             </thead>
             <tbody>
             <c:forEach items="${userList}" var="user">
                 <tr>
-                    <td>
-                        <a href="?_command=${CommandType.VIEW_USER_DETAILS}&id=${user.id}">
-                            <c:out value="${user.loginName}"/>
-                        </a>
-                    </td>
-                    <td><c:out value="${user.firstName}"/></td>
-                    <td><c:out value="${user.lastName}"/></td>
+                    <td><c:out value="${user.name}"/></td>
                     <td><c:out value="${user.email}"/></td>
+                    <td><c:out value="${user.phoneNumber}"/></td>
+                    <td><c:out value="${user.active}"/></td>
                 </tr>
             </c:forEach>
             </tbody>

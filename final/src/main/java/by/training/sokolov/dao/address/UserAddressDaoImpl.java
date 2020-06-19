@@ -1,5 +1,7 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.dao.address;
 
+import by.training.sokolov.dao.GenericDao;
+import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.model.UserAddress;
 import org.apache.log4j.Logger;
 

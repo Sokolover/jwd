@@ -1,10 +1,12 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.dao.user;
 
+import by.training.sokolov.dao.GenericDao;
+import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.dto.user.UserDto;
+import by.training.sokolov.model.User;
 import by.training.sokolov.model.UserRole;
 import by.training.sokolov.service.GenericService;
-import by.training.sokolov.service.UserRoleServiceImpl;
+import by.training.sokolov.service.role.UserRoleServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
+public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
     private final static Logger LOGGER = Logger.getLogger(UserDaoImpl.class.getName());
     private static final String TABLE_NAME = "user_account";
@@ -28,24 +30,24 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
         super(TABLE_NAME, getUserRowMapper());
     }
 
-    private static IdentifiedRowMapper<UserDto> getUserRowMapper() {
+    private static IdentifiedRowMapper<User> getUserRowMapper() {
 
         //todo поменять таблицы чтобы пользоваьтель мог с них читать (роль и фидбек)
-        return new IdentifiedRowMapper<UserDto>() {
+        return new IdentifiedRowMapper<User>() {
 
             @Override
-            public UserDto map(ResultSet resultSet) throws SQLException {
-                UserDto userDto = new UserDto();
-                userDto.setId(resultSet.getLong("id"));
-                userDto.setName(resultSet.getString("user_name"));
-                userDto.setPassword(resultSet.getString("user_password"));
-                userDto.setEmail(resultSet.getString("user_email"));
-                userDto.setActive(resultSet.getBoolean("is_active"));
-                userDto.setPhoneNumber(resultSet.getString("user_phone_number"));
-                userDto.getLoyalty().setId(resultSet.getLong("loyalty_points_id"));
-                userDto.getWallet().setId(resultSet.getLong("wallet_id"));
-                userDto.getUserAddress().setId(resultSet.getLong("user_address_id"));
-                return userDto;
+            public User map(ResultSet resultSet) throws SQLException {
+                User user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setName(resultSet.getString("user_name"));
+                user.setPassword(resultSet.getString("user_password"));
+                user.setEmail(resultSet.getString("user_email"));
+                user.setActive(resultSet.getBoolean("is_active"));
+                user.setPhoneNumber(resultSet.getString("user_phone_number"));
+                user.getLoyalty().setId(resultSet.getLong("loyalty_points_id"));
+                user.getWallet().setId(resultSet.getLong("wallet_id"));
+                user.getUserAddress().setId(resultSet.getLong("user_address_id"));
+                return user;
             }
 
             @Override
@@ -61,7 +63,7 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
             }
 
             @Override
-            public void populateStatement(PreparedStatement statement, UserDto entity) throws SQLException {
+            public void populateStatement(PreparedStatement statement, User entity) throws SQLException {
 
                 statement.setString(1, entity.getName());
                 statement.setString(2, entity.getPassword());
@@ -75,7 +77,7 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
         };
     }
 
-    private void getUserRoles(UserDto userDto) throws SQLException {
+    private void getUserRoles(User user) throws SQLException {
 
         final String SELECT_ROLES_ID = "SELECT user_role.id\n" +
                 "FROM user_role,\n" +
@@ -87,7 +89,7 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
 
         connectionLock.lock();
         try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            String sql = MessageFormat.format(SELECT_ROLES_ID, userDto.getId());
+            String sql = MessageFormat.format(SELECT_ROLES_ID, user.getId());
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = statement.executeQuery();
                 List<UserRole> roles = new ArrayList<>();
@@ -96,21 +98,21 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
                     UserRole userRole = userRoleService.getById(resultSet.getLong("id"));
                     roles.add(userRole);
                 }
-                userDto.setRoles(roles);
+                user.setRoles(roles);
             }
         } finally {
             connectionLock.unlock();
         }
     }
 
-    private void setUserRoles(UserDto userDto) throws SQLException {
+    private void setUserRoles(User user) throws SQLException {
 
         final String INSERT_ROLES = "INSERT INTO account_to_roles (user_account_id, user_role_id) VALUES ({0}, {1})";
 
         connectionLock.lock();
         try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            for (UserRole role : userDto.getRoles()) {
-                String sql = MessageFormat.format(INSERT_ROLES, userDto.getId(), role.getId());
+            for (UserRole role : user.getRoles()) {
+                String sql = MessageFormat.format(INSERT_ROLES, user.getId(), role.getId());
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     statement.executeUpdate();
                 }
@@ -121,7 +123,7 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
     }
 
     @Override
-    public Long save(UserDto entity) throws SQLException {
+    public Long save(User entity) throws SQLException {
 
         Long userId = super.save(entity);
         entity.setId(userId);
@@ -131,19 +133,19 @@ public class UserDaoImpl extends GenericDao<UserDto> implements UserDao {
     }
 
     @Override
-    public List<UserDto> findAll() throws SQLException {
+    public List<User> findAll() throws SQLException {
 
-        List<UserDto> userDtos = super.findAll();
+        List<User> users = super.findAll();
 
-        for (UserDto userDto : userDtos) {
-            getUserRoles(userDto);
+        for (User user : users) {
+            getUserRoles(user);
         }
 
         //todo достать из других юзеровских таблиц инфу
 
 
 
-        return userDtos;
+        return users;
     }
 
 }

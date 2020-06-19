@@ -1,25 +1,25 @@
-package by.training.sokolov.service;
+package by.training.sokolov.service.role;
 
-import by.training.sokolov.dao.CRUDDao;
-import by.training.sokolov.dao.UserRoleDao;
-import by.training.sokolov.dao.UserRoleDaoImpl;
+import by.training.sokolov.dao.role.UserRoleDao;
+import by.training.sokolov.dao.role.UserRoleDaoImpl;
 import by.training.sokolov.model.UserRole;
+import by.training.sokolov.service.GenericServiceImpl;
 
 import java.sql.SQLException;
 
-public class UserRoleServiceImpl extends GenericServiceImpl<UserRole> implements UserRoleService{
+public class UserRoleServiceImpl extends GenericServiceImpl<UserRole> implements UserRoleService {
 
     private static UserRoleService userRoleService;
     private UserRoleDao userRoleDao;
 
-    private UserRoleServiceImpl(CRUDDao<UserRole> dao) {
+    private UserRoleServiceImpl(UserRoleDao dao) {
         super(dao);
-        this.userRoleDao = (UserRoleDao) dao;
+        this.userRoleDao = dao;
     }
 
     public static UserRoleService getInstance() {
         if (userRoleService == null) {
-            CRUDDao<UserRole> userRoleDao = new UserRoleDaoImpl();
+            UserRoleDao userRoleDao = new UserRoleDaoImpl();
             userRoleService = new UserRoleServiceImpl(userRoleDao);
         }
         return userRoleService;

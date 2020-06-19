@@ -1,23 +1,16 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.dao.UserRoleDao;
-import by.training.sokolov.dao.UserRoleDaoImpl;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.dto.user.UserDto;
+import by.training.sokolov.model.User;
 import by.training.sokolov.model.UserRole;
 import by.training.sokolov.service.GenericService;
-import by.training.sokolov.service.UserRoleService;
-import by.training.sokolov.service.UserRoleServiceImpl;
+import by.training.sokolov.service.role.UserRoleService;
+import by.training.sokolov.service.role.UserRoleServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -26,20 +19,20 @@ import java.util.concurrent.locks.ReentrantLock;
 public class RegisterUserCommand implements Command {
 
     private Lock connectionLock = new ReentrantLock();
-    private GenericService<UserDto> userService;
+    private GenericService<User> userService;
 
-    public RegisterUserCommand(GenericService<UserDto> userService) {
+    public RegisterUserCommand(GenericService<User> userService) {
         this.userService = userService;
     }
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
-        List<UserDto> userDtos = userService.findAll();
+        List<User> users = userService.findAll();
 
         String name = request.getParameter("user.name");
-        for (UserDto userDto : userDtos) {
-            if (userDto.getName().equals(name)) {
+        for (User user : users) {
+            if (user.getName().equals(name)) {
                 request.setAttribute("error", "user with this name has been registered");
                 return "login";
             }
@@ -50,22 +43,22 @@ public class RegisterUserCommand implements Command {
         String phoneNumber = request.getParameter("user.phoneNumber");
         String address = request.getParameter("user.address");
 
-        UserDto userDto = new UserDto();
-        userDto.setName(name);
-        userDto.setPassword(password);
-        userDto.setEmail(email);
-        userDto.setPhoneNumber(phoneNumber);
-        userDto.setActive(true);
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setActive(true);
 
         UserRole userRole = new UserRole("CLIENT");
         UserRoleService userRoleService = UserRoleServiceImpl.getInstance();
         Long roleId = userRoleService.getIdByRoleName(userRole);
         userRole.setId(roleId);
-        userDto.setRoles(Collections.singletonList(userRole));
+        user.setRoles(Collections.singletonList(userRole));
 
-        userDto.getUserAddress().setFullAddress(address);
+        user.getUserAddress().setFullAddress(address);
 
-        userService.save(userDto);
+        userService.save(user);
 
         return "redirect:?_command=" + CommandType.INDEX;
     }
