@@ -9,7 +9,7 @@ public class Wallet implements IdentifiedRow {
     private Long id;
     private BigDecimal moneyAmount;
 
-    public Wallet(){
+    public Wallet() {
 
     }
 

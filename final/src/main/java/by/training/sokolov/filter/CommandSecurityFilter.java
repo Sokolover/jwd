@@ -13,10 +13,8 @@ import java.util.Optional;
 @WebFilter(servletNames = {"index"}, filterName = "security")
 public class CommandSecurityFilter implements Filter {
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
 
     }
 

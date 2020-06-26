@@ -7,7 +7,7 @@ public class UserRole implements IdentifiedRow {
     private Long id;
     private String roleName;
 
-    public UserRole(){
+    public UserRole() {
 
     }
 

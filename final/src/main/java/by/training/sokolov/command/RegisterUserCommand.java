@@ -1,10 +1,10 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.model.User;
+import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.model.UserRole;
-import by.training.sokolov.service.GenericService;
-import by.training.sokolov.service.role.UserRoleService;
-import by.training.sokolov.service.role.UserRoleServiceImpl;
+import by.training.sokolov.role.service.UserRoleService;
+import by.training.sokolov.user.model.User;
+import by.training.sokolov.user.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,22 +19,18 @@ import java.util.concurrent.locks.ReentrantLock;
 public class RegisterUserCommand implements Command {
 
     private Lock connectionLock = new ReentrantLock();
-    private GenericService<User> userService;
-
-    public RegisterUserCommand(GenericService<User> userService) {
-        this.userService = userService;
-    }
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
+        UserService userService = BeanFactory.getUserService();
         List<User> users = userService.findAll();
 
         String name = request.getParameter("user.name");
         for (User user : users) {
             if (user.getName().equals(name)) {
                 request.setAttribute("error", "user with this name has been registered");
-                return "login";
+                return "user_register";
             }
         }
 
@@ -51,7 +47,8 @@ public class RegisterUserCommand implements Command {
         user.setActive(true);
 
         UserRole userRole = new UserRole("CLIENT");
-        UserRoleService userRoleService = UserRoleServiceImpl.getInstance();
+
+        UserRoleService userRoleService = BeanFactory.getUserRoleService();
         Long roleId = userRoleService.getIdByRoleName(userRole);
         userRole.setId(roleId);
         user.setRoles(Collections.singletonList(userRole));
@@ -60,7 +57,8 @@ public class RegisterUserCommand implements Command {
 
         userService.save(user);
 
-        return "redirect:?_command=" + CommandType.INDEX;
+//        return "redirect:?_command=" + CommandType.INDEX;
+        return "delivery";
     }
 
 

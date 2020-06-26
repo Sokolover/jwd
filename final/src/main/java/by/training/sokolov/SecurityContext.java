@@ -1,8 +1,8 @@
 package by.training.sokolov;
 
 import by.training.sokolov.command.CommandType;
-import by.training.sokolov.model.User;
 import by.training.sokolov.model.UserRole;
+import by.training.sokolov.user.model.User;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
@@ -26,8 +26,8 @@ public class SecurityContext {
         try (InputStream propertyStream = SecurityContext.class.getResourceAsStream("/security.properties")) {
             properties.load(propertyStream);
         } catch (IOException e) {
-            properties.setProperty("error", e.getMessage());
-            //throw new IllegalStateException("Failed to read security properties", e);
+//            properties.setProperty("error", e.getMessage());
+            throw new IllegalStateException("Failed to read security properties", e);
         }
     }
 
@@ -41,6 +41,10 @@ public class SecurityContext {
 
     public void login(User user, String sessionId) {
         userDtoMap.put(sessionId, user);
+    }
+
+    public void logout(String sessionId){
+        userDtoMap.remove(sessionId);
     }
 
     public User getCurrentUser() {

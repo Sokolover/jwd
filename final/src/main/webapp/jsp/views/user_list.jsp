@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nbu
-  Date: 2019-02-11
-  Time: 21:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,6 +15,7 @@
             <th><abbr title="${active}">${active}</abbr></th>
             </thead>
             <tbody>
+            <jsp:useBean id="userList" scope="request" type="java.util.List"/>
             <c:forEach items="${userList}" var="user">
                 <tr>
                     <td><c:out value="${user.name}"/></td>

@@ -18,11 +18,9 @@ public class LangFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         if (request instanceof HttpServletRequest) {
-
             String lang = request.getParameter("lang");
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             if (("en".equalsIgnoreCase(lang) || "ru".equalsIgnoreCase(lang))) {
@@ -39,7 +37,6 @@ public class LangFilter implements Filter {
                 httpRequest.setAttribute("lang", lang);
                 ((HttpServletResponse) response).addCookie(langCookie);
             }
-
         }
         chain.doFilter(request, response);
     }

@@ -1,21 +1,19 @@
 package by.training.sokolov.service;
 
-import by.training.sokolov.dao.CRUDDao;
+import by.training.sokolov.dao.CrudDao;
 import by.training.sokolov.dao.IdentifiedRow;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class GenericServiceImpl<T extends IdentifiedRow> implements GenericService<T> {
 
     private final static Logger LOGGER = Logger.getLogger(GenericServiceImpl.class.getName());
 
-    private CRUDDao<T> crudDao;
+    private CrudDao<T> crudDao;
 
-    public GenericServiceImpl(CRUDDao<T> crudDao) {
+    public GenericServiceImpl(CrudDao<T> crudDao) {
 
         this.crudDao = crudDao;
     }

@@ -59,8 +59,7 @@ public class BasicConnectionPool implements ConnectionPool {
     }
 
     private static Connection createConnection() {
-        LOGGER.info("Trying to create connection to database");
-
+//        LOGGER.info("Trying to create connection to database");
         try {
             String url = properties.get(URL);
             String username = properties.get(USERNAME);
@@ -141,6 +140,7 @@ public class BasicConnectionPool implements ConnectionPool {
     public void releaseConnection(Connection connection) {
         try {
             connectionLock.lock();
+            //availableConnections.size() > POOL_CAPACITY
             if (availableConnections.size() >= POOL_CAPACITY) {
                 throw new IllegalStateException("Release Maximum pool size was reached");
             }

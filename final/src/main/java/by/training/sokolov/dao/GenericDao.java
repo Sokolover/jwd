@@ -3,6 +3,7 @@ package by.training.sokolov.dao;
 import by.training.sokolov.db.BasicConnectionPool;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
-public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
+public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
 
     private final static Logger LOGGER = Logger.getLogger(GenericDao.class.getName());
 
@@ -57,7 +58,6 @@ public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
                     id.set(generatedKeys.getLong(1));
                 }
             }
-            BasicConnectionPool.getInstance().releaseConnection(connection);
             return id.get();
         } finally {
             connectionLock.unlock();
@@ -81,8 +81,6 @@ public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
                 statement.setLong(columnNames.size() + 1, entity.getId());
                 statement.executeUpdate();
             }
-            BasicConnectionPool.getInstance().releaseConnection(connection);
-
         } finally {
             connectionLock.unlock();
         }
@@ -100,8 +98,6 @@ public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
                 statement.setLong(1, entity.getId());
                 statement.executeUpdate();
             }
-            BasicConnectionPool.getInstance().releaseConnection(connection);
-
         } finally {
             connectionLock.unlock();
         }
@@ -119,11 +115,13 @@ public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
                 statement.setLong(1, id);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    result.set(rowMapper.map(resultSet));
+                    try {
+                        result.set(rowMapper.map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
                 }
             }
-            BasicConnectionPool.getInstance().releaseConnection(connection);
-
             return result.get();
         } finally {
             connectionLock.unlock();
@@ -141,11 +139,13 @@ public class GenericDao<T extends IdentifiedRow> implements CRUDDao<T> {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    result.add(rowMapper.map(resultSet));
+                    try {
+                        result.add(rowMapper.map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
                 }
             }
-            BasicConnectionPool.getInstance().releaseConnection(connection);
-
             return result;
         } finally {
             connectionLock.unlock();
