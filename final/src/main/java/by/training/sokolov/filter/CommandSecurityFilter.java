@@ -23,12 +23,18 @@ public class CommandSecurityFilter implements Filter {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         SecurityContext securityContext = SecurityContext.getInstance();
-        securityContext.setCurrentSessionId(servletRequest.getSession().getId());
+        /*
+        fixme не использовать
+                private final ThreadLocal<String> currentSessionIdStorage = new ThreadLocal<>();
+                и всё что с этим связано
+                сессия != поток выполнения
+        */
+//        securityContext.setCurrentSessionId(servletRequest.getSession().getId());
         String command = servletRequest.getParameter("_command");
 
         Optional<CommandType> commandType = CommandType.of(command);
 
-        if (commandType.isPresent() && securityContext.canExecute(commandType.get())) {
+        if (commandType.isPresent() && securityContext.canExecute(commandType.get(), servletRequest.getSession().getId())) {
             chain.doFilter(request, response);
         } else if (!commandType.isPresent()) {
             chain.doFilter(request, response);

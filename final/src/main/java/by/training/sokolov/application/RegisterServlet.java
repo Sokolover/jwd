@@ -1,5 +1,6 @@
 package by.training.sokolov.application;
 
+import by.training.sokolov.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandFactoryImpl;
@@ -34,6 +35,12 @@ public class RegisterServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
+        boolean flag = false;
+        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
+            flag = true;
+        }
+        req.setAttribute("flag", flag);
+
         switch (viewName) {
             case "login":
             case "menu":
@@ -50,17 +57,7 @@ public class RegisterServlet extends HttpServlet {
                 break;
         }
 
-//        //todo написать другие команды, более прозоичные и понятные
-//        String commandFromRequest = CommandUtil.getCommandFromRequest(req);
-//        Command command = commandFactory.getCommand(commandFromRequest);
-//        String viewName = command.apply(req, resp);
-//        if (viewName.startsWith("redirect:")) {
-//            resp.sendRedirect(req.getContextPath());
-//        } else {
-//            req.setAttribute("viewName", "user_register");
-//            req.setAttribute("category", "index");
-//            req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-//        }
+
     }
 
     @Override

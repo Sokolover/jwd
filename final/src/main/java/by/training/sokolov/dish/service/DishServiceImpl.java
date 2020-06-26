@@ -20,11 +20,6 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
         this.dishDao = dao;
     }
 
-    /*
-    fixme:
-        2. сделать сервлет на каждую функцию (логин, регистрация, меню)
-    */
-
     @Override
     public List<Dish> findAll() throws SQLException {
         List<Dish> dishes = super.findAll();

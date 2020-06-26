@@ -1,5 +1,6 @@
 package by.training.sokolov.application;
 
+import by.training.sokolov.SecurityContext;
 import by.training.sokolov.command.*;
 import org.apache.log4j.Logger;
 
@@ -31,6 +32,12 @@ public class MenuServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
+        boolean flag = false;
+        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
+            flag = true;
+        }
+        req.setAttribute("flag", flag);
+
         switch (viewName) {
             case "login":
             case "user_register":
@@ -49,21 +56,6 @@ public class MenuServlet extends HttpServlet {
                 req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
                 break;
         }
-
-//        String commandShowMenu = String.valueOf(CommandType.DISH_MENU_SUBMIT);
-//        Command command = commandFactory.getCommand(commandShowMenu);
-//        String viewName = command.apply(req, resp);
-//        if (viewName.startsWith("redirect:")) {
-//            resp.sendRedirect(req.getContextPath());
-//        } else if (viewName.equals(DISH_MENU)) {
-//            req.setAttribute("viewName", "dish_list");
-//            req.setAttribute("category", "dish_category");
-//            req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-//        } else {
-//            req.setAttribute("viewName", "index");
-//            req.setAttribute("category", "index");
-//            req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-//        }
 
     }
 

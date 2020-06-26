@@ -1,6 +1,7 @@
 package by.training.sokolov.application;
 
 import by.training.sokolov.ApplicationModule;
+import by.training.sokolov.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandFactoryImpl;
@@ -23,8 +24,6 @@ import java.sql.SQLException;
         понять что тут происходит, почему логаут появляется только если
         @WebServlet(urlPatterns = "/", name = "index")
         при name = "index"
-        @
-        настроить разные сервлеты для разных заданий!
  */
 @WebServlet(urlPatterns = "/", name = "index")
 public class IndexController extends HttpServlet {
@@ -49,11 +48,11 @@ public class IndexController extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        /*
-        fixme когда я залогинился и нажмаю Dish menu
-              каким-то образом проникает незалогининая сессия в nav_bar,
-              и nav_bar отображает список для незалогининого юзера
-         */
+        boolean flag = false;
+        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
+            flag = true;
+        }
+        req.setAttribute("flag", flag);
 
         switch (viewName) {
             case "login":
@@ -71,22 +70,6 @@ public class IndexController extends HttpServlet {
                 break;
         }
 
-        //todo иф с логаутом и редирект а не приём команды а потом редирект
-
-
-//        if (viewName.startsWith("redirect:")) {
-//            String redirect = viewName.replace("redirect:", "delivery/");
-////            String redirect = viewName.replace("redirect:", req.getContextPath());
-//            resp.sendRedirect(redirect);
-//        } else if (viewName.equals(DISH_MENU)) {
-//            req.setAttribute("viewName", "dish_list");
-//            req.setAttribute("category", "dish_category");
-//            req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-//        } else {
-//            req.setAttribute("viewName", viewName);
-//            req.setAttribute("category", "index");
-//            req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-//        }
     }
 
     @Override

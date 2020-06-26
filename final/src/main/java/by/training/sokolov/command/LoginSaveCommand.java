@@ -40,10 +40,15 @@ public class LoginSaveCommand implements Command {
             return "login";
         }
 
-        //fixme костыль для удержания сессии...
-        //  не работает!
         HttpSession httpSession = request.getSession();
         SecurityContext.getInstance().login(user, httpSession.getId());
+
+        /*
+        todo 1. сделать проверку в сервлете menu (где зарегестрированный пользователь)
+                есть ли сешнАйДи, которая принята с реквеста в мапе
+                2. сетать в переменну jsp результат проверки пункта 1
+         */
+
 
         return "delivery";
 //        return "redirect:?_command=" + CommandType.INDEX;

@@ -15,10 +15,15 @@ public class SecurityContext {
     private static final SecurityContext SECURITY_CONTEXT = new SecurityContext();
     private final Map<String, User> userDtoMap = new ConcurrentHashMap<>(1000);
     private final ThreadLocal<String> currentSessionIdStorage = new ThreadLocal<>();
+    public Long sessionIdStorage;
     private Properties properties = new Properties();
 
     public static SecurityContext getInstance() {
         return SECURITY_CONTEXT;
+    }
+
+    public Map<String, User> getUserMap() {
+        return userDtoMap;
     }
 
     public void initialize(ServletContext servletContext) {
@@ -31,29 +36,31 @@ public class SecurityContext {
         }
     }
 
-    public String getCurrentSessionId() {
-        return currentSessionIdStorage.get();
-    }
+//    public String getCurrentSessionId() {
+//
+//        return currentSessionIdStorage.get();
+//    }
 
-    public void setCurrentSessionId(String sessionId) {
-        currentSessionIdStorage.set(sessionId);
-    }
+//    public void setCurrentSessionId(String sessionId) {
+//        currentSessionIdStorage.set(sessionId);
+//    }
 
     public void login(User user, String sessionId) {
         userDtoMap.put(sessionId, user);
     }
 
-    public void logout(String sessionId){
+    public void logout(String sessionId) {
         userDtoMap.remove(sessionId);
     }
 
-    public User getCurrentUser() {
-        String currentSessionId = getCurrentSessionId();
-        return currentSessionId != null ? userDtoMap.get(currentSessionId) : null;
+    public User getCurrentUser(String sessionId) {
+
+        return sessionId != null ? userDtoMap.get(sessionId) : null;
     }
 
-    public boolean canExecute(CommandType commandType) {
-        User currentUser = getCurrentUser();
+    public boolean canExecute(CommandType commandType, String sessionId) {
+
+        User currentUser = getCurrentUser(sessionId);
         return canExecute(currentUser, commandType);
     }
 
@@ -78,10 +85,9 @@ public class SecurityContext {
         return false;
     }
 
-    public boolean isLoggedIn() {
-
-        return getCurrentUser() != null;
-    }
-
+//    public boolean isLoggedIn(String sessionId) {
+//
+//        return getCurrentUser(sessionId) != null;
+//    }
 
 }
