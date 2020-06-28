@@ -2,7 +2,6 @@ package by.training.sokolov.command;
 
 import by.training.sokolov.SecurityContext;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,12 +10,11 @@ public class CommandFactoryImpl implements CommandFactory {
     private static final Map<CommandType, Command> commands = new ConcurrentHashMap<>(CommandType.values().length);
 
     public CommandFactoryImpl() {
-//        commands.put(CommandType.VIEW_USER_DETAILS, new ViewUserDetail());
-//        commands.put(CommandType.EDIT_VIEW_USER, new EditUserViewCommand());
-//        commands.put(CommandType.EDIT_SAVE_USER, new EditUserSaveCommand());
-//        commands.put(CommandType.DELETE_USER, new DeleteUserCommand());
-//        commands.put(CommandType.DISH_CATEGORY_DISPLAY, new ViewCategoryListCommand());
-//        commands.put(CommandType.DISH_CATEGORY_SUBMIT, ((request, response) -> "dish_category"));
+
+        commands.put(CommandType.CREATE_ORDER, new CreateOrderCommand());
+
+        commands.put(CommandType.BASKET_ITEM_ADD, new BasketItemAddCommand());
+        commands.put(CommandType.BASKET_DISPLAY, (request, response) -> "basket");
         commands.put(CommandType.DISH_MENU_DISPLAY, (request, response) -> "menu");
         commands.put(CommandType.DISH_MENU_SUBMIT, new ViewMenuCommand());
 //        commands.put(CommandType.DISH_MENU_DISPLAY, new ViewMenuCommand());

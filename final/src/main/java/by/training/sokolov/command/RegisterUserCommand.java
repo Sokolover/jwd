@@ -1,7 +1,7 @@
 package by.training.sokolov.command;
 
 import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.model.UserRole;
+import by.training.sokolov.role.model.UserRole;
 import by.training.sokolov.role.service.UserRoleService;
 import by.training.sokolov.user.model.User;
 import by.training.sokolov.user.service.UserService;

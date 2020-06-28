@@ -1,6 +1,5 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.ApplicationModule;
 import by.training.sokolov.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
@@ -42,24 +41,23 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String test = req.getParameter(ApplicationModule.COMMAND_PARAM);
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
-
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean flag = false;
-        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
-            flag = true;
-        }
+        boolean flag = SecurityContext.getInstance().isUserLoggedIn(req);
         req.setAttribute("flag", flag);
 
+        /*
+        todo заменить возвращаетмые значения команд константами
+         */
         switch (viewName) {
             case "login":
             case "user_register":
             case "menu":
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
+            case "create_order":
             case "logout":
                 resp.sendRedirect(req.getContextPath());
                 break;

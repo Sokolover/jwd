@@ -7,8 +7,7 @@ import by.training.sokolov.db.BasicConnectionPool;
 import by.training.sokolov.loyalty.dao.LoyaltyDao;
 import by.training.sokolov.loyalty.dao.LoyaltyDaoImpl;
 import by.training.sokolov.loyalty.model.Loyalty;
-import by.training.sokolov.model.UserRole;
-import by.training.sokolov.model.Wallet;
+import by.training.sokolov.role.model.UserRole;
 import by.training.sokolov.role.service.UserRoleService;
 import by.training.sokolov.user.model.User;
 import by.training.sokolov.useraddress.dao.UserAddressDao;
@@ -16,6 +15,7 @@ import by.training.sokolov.useraddress.dao.UserAddressDaoImpl;
 import by.training.sokolov.useraddress.model.UserAddress;
 import by.training.sokolov.wallet.dao.WalletDao;
 import by.training.sokolov.wallet.dao.WalletDaoImpl;
+import by.training.sokolov.wallet.model.Wallet;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

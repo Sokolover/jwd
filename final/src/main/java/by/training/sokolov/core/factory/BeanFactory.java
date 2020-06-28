@@ -12,6 +12,11 @@ import by.training.sokolov.loyalty.dao.LoyaltyDao;
 import by.training.sokolov.loyalty.dao.LoyaltyDaoImpl;
 import by.training.sokolov.loyalty.service.LoyaltyService;
 import by.training.sokolov.loyalty.service.LoyaltyServiceImpl;
+import by.training.sokolov.order.dao.UserOrderDao;
+import by.training.sokolov.order.dao.UserOrderDaoImpl;
+import by.training.sokolov.order.model.UserOrder;
+import by.training.sokolov.order.service.UserOrderService;
+import by.training.sokolov.order.service.UserOrderServiceImpl;
 import by.training.sokolov.role.dao.UserRoleDao;
 import by.training.sokolov.role.dao.UserRoleDaoImpl;
 import by.training.sokolov.role.service.UserRoleService;
@@ -66,5 +71,8 @@ public class BeanFactory {
         return new DishCategoryServiceImpl(dishCategoryDao);
     }
 
-
+    public static UserOrderService getUserOrderService(){
+        UserOrderDao userOrderDao = new UserOrderDaoImpl();
+        return new UserOrderServiceImpl(userOrderDao);
+    }
 }

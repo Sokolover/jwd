@@ -1,7 +1,7 @@
 package by.training.sokolov.role.dao;
 
 import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.model.UserRole;
+import by.training.sokolov.role.model.UserRole;
 
 import java.sql.SQLException;
 

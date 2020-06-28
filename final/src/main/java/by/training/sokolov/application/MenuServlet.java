@@ -32,10 +32,7 @@ public class MenuServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean flag = false;
-        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
-            flag = true;
-        }
+        boolean flag = SecurityContext.getInstance().isUserLoggedIn(req);
         req.setAttribute("flag", flag);
 
         switch (viewName) {

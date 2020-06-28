@@ -3,7 +3,6 @@ package by.training.sokolov.user.service;
 import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.loyalty.model.Loyalty;
 import by.training.sokolov.loyalty.service.LoyaltyService;
-import by.training.sokolov.model.Wallet;
 import by.training.sokolov.service.GenericServiceImpl;
 import by.training.sokolov.user.dao.UserDao;
 import by.training.sokolov.user.model.User;
@@ -11,6 +10,7 @@ import by.training.sokolov.useraddress.model.UserAddress;
 import by.training.sokolov.useraddress.service.UserAddressService;
 import by.training.sokolov.wallet.dao.WalletDao;
 import by.training.sokolov.wallet.dao.WalletDaoImpl;
+import by.training.sokolov.wallet.model.Wallet;
 import by.training.sokolov.wallet.service.WalletService;
 import by.training.sokolov.wallet.service.WalletServiceImpl;
 
@@ -19,7 +19,6 @@ import java.sql.SQLException;
 
 public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
 
-    private static UserService userService;
     private UserDao userDao;
 
     public UserServiceImpl(UserDao dao) {

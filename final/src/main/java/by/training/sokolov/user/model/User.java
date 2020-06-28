@@ -2,9 +2,9 @@ package by.training.sokolov.user.model;
 
 import by.training.sokolov.dao.IdentifiedRow;
 import by.training.sokolov.loyalty.model.Loyalty;
-import by.training.sokolov.model.UserRole;
-import by.training.sokolov.model.Wallet;
+import by.training.sokolov.role.model.UserRole;
 import by.training.sokolov.useraddress.model.UserAddress;
+import by.training.sokolov.wallet.model.Wallet;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ public class User implements IdentifiedRow {
     private UserAddress userAddress;
 
     public User() {
-        loyalty = new Loyalty();
-        wallet = new Wallet();
-        userAddress = new UserAddress();
+        this.loyalty = new Loyalty();
+        this.wallet = new Wallet();
+        this.userAddress = new UserAddress();
     }
 
     public Long getId() {

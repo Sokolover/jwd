@@ -1,4 +1,4 @@
-package by.training.sokolov.model;
+package by.training.sokolov.wallet.model;
 
 import by.training.sokolov.dao.IdentifiedRow;
 

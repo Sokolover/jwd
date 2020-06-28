@@ -3,7 +3,7 @@ package by.training.sokolov.role.dao;
 import by.training.sokolov.dao.GenericDao;
 import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.model.UserRole;
+import by.training.sokolov.role.model.UserRole;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

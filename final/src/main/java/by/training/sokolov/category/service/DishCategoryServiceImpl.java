@@ -6,7 +6,6 @@ import by.training.sokolov.service.GenericServiceImpl;
 
 public class DishCategoryServiceImpl extends GenericServiceImpl<DishCategory> implements DishCategoryService {
 
-    private static DishCategoryService dishCategoryService;
     private DishCategoryDao dishCategoryDao;
 
     public DishCategoryServiceImpl(DishCategoryDao dao) {

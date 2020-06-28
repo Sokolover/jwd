@@ -15,7 +15,7 @@ public class Dish implements IdentifiedRow {
     private DishCategory dishCategory;
 
     public Dish() {
-        dishCategory = new DishCategory();
+        this.dishCategory = new DishCategory();
     }
 
     @Override

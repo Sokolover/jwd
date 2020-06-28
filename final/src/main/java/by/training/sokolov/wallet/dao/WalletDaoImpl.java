@@ -2,7 +2,7 @@ package by.training.sokolov.wallet.dao;
 
 import by.training.sokolov.dao.GenericDao;
 import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.model.Wallet;
+import by.training.sokolov.wallet.model.Wallet;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishService {
 
-    private static DishService dishService;
     private DishDao dishDao;
 
     public DishServiceImpl(DishDao dao) {

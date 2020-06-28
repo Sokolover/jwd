@@ -10,9 +10,10 @@
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.SecurityContext"/>
     <ul class="menu-list">
         <jsp:useBean id="flag" scope="request" type="java.lang.Boolean"/>
+        <%--        <jsp:useBean id="sessionId" scope="request" type="java.lang.String"/>--%>
         <c:choose>
-            <%--            <c:when test="${securityContext.loggedIn}">--%>
             <c:when test="${flag}">
+                <%--                todo сделать чтобы работал метод securityContext.canExecute, придумать как передать в него sessionId из jsp--%>
                 <%--                <c:if test="${securityContext.canExecute(CommandType.VIEW_USER_LIST)}">--%>
                 <%--                    <li>--%>
                 <%--                        <a href="?_command=${CommandType.VIEW_USER_LIST}"><fmt:message key="links.person.list"/></a>--%>
@@ -24,6 +25,12 @@
                 <li>
                     <a href="?_command=${CommandType.DISH_MENU_DISPLAY}"><fmt:message
                             key="links.dish.menu"/></a>
+                </li>
+                <li>
+                    <a href="?_command=${CommandType.BASKET_DISPLAY}"><fmt:message key="links.basket.display"/></a>
+                </li>
+                <li>
+                    <a href="?_command=${CommandType.CREATE_ORDER}"><fmt:message key="links.order.create"/></a>
                 </li>
             </c:when>
             <c:otherwise>

@@ -1,7 +1,10 @@
 package by.training.sokolov.application;
 
 import by.training.sokolov.SecurityContext;
-import by.training.sokolov.command.*;
+import by.training.sokolov.command.Command;
+import by.training.sokolov.command.CommandFactory;
+import by.training.sokolov.command.CommandFactoryImpl;
+import by.training.sokolov.command.CommandUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -32,10 +35,7 @@ public class LoginServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean flag = false;
-        if(SecurityContext.getInstance().getCurrentUser(req.getSession().getId()) != null){
-            flag = true;
-        }
+        boolean flag = SecurityContext.getInstance().isUserLoggedIn(req);
         req.setAttribute("flag", flag);
 
         switch (viewName) {

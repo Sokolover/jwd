@@ -6,7 +6,6 @@ import by.training.sokolov.service.GenericServiceImpl;
 
 public class LoyaltyServiceImpl extends GenericServiceImpl<Loyalty> implements LoyaltyService {
 
-    private static LoyaltyService loyaltyService;
     private LoyaltyDao loyaltyDao;
 
     public LoyaltyServiceImpl(LoyaltyDao dao) {
