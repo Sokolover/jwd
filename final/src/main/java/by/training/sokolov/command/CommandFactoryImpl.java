@@ -11,10 +11,12 @@ public class CommandFactoryImpl implements CommandFactory {
 
     public CommandFactoryImpl() {
 
-        commands.put(CommandType.CREATE_ORDER, new CreateOrderCommand());
+        commands.put(CommandType.DELETE_DISH_FROM_ORDER, new DeleteDishFromOrder());
 
+        commands.put(CommandType.CREATE_ORDER, new CreateOrderCommand());
+        commands.put(CommandType.ORDER_DISH_LIST_DISPLAY, new DisplayOrderDishListCommand());
         commands.put(CommandType.BASKET_ITEM_ADD, new BasketItemAddCommand());
-        commands.put(CommandType.BASKET_DISPLAY, (request, response) -> "basket");
+        commands.put(CommandType.BASKET_DISPLAY, (request, response) -> "order_basket");
         commands.put(CommandType.DISH_MENU_DISPLAY, (request, response) -> "menu");
         commands.put(CommandType.DISH_MENU_SUBMIT, new ViewMenuCommand());
 //        commands.put(CommandType.DISH_MENU_DISPLAY, new ViewMenuCommand());

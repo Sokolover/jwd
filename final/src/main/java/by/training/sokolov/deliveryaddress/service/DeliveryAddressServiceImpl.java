@@ -4,7 +4,7 @@ import by.training.sokolov.deliveryaddress.dao.DeliveryAddressDao;
 import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.service.GenericServiceImpl;
 
-public class DeliveryAddressServiceImpl extends GenericServiceImpl<DeliveryAddress> implements DeliveryAddressDao {
+public class DeliveryAddressServiceImpl extends GenericServiceImpl<DeliveryAddress> implements DeliveryAddressService {
 
     private DeliveryAddressDao deliveryAddressDao;
 

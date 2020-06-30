@@ -4,6 +4,10 @@ import by.training.sokolov.category.dao.DishCategoryDao;
 import by.training.sokolov.category.dao.DishCategoryDaoImpl;
 import by.training.sokolov.category.service.DishCategoryService;
 import by.training.sokolov.category.service.DishCategoryServiceImpl;
+import by.training.sokolov.deliveryaddress.dao.DeliveryAddressDao;
+import by.training.sokolov.deliveryaddress.dao.DeliveryAddressDaoImpl;
+import by.training.sokolov.deliveryaddress.service.DeliveryAddressService;
+import by.training.sokolov.deliveryaddress.service.DeliveryAddressServiceImpl;
 import by.training.sokolov.dish.dao.DishDao;
 import by.training.sokolov.dish.dao.DishDaoImpl;
 import by.training.sokolov.dish.service.DishService;
@@ -17,6 +21,10 @@ import by.training.sokolov.order.dao.UserOrderDaoImpl;
 import by.training.sokolov.order.model.UserOrder;
 import by.training.sokolov.order.service.UserOrderService;
 import by.training.sokolov.order.service.UserOrderServiceImpl;
+import by.training.sokolov.orderitem.dao.OrderItemDao;
+import by.training.sokolov.orderitem.dao.OrderItemDaoImpl;
+import by.training.sokolov.orderitem.service.OrderItemService;
+import by.training.sokolov.orderitem.service.OrderItemServiceImpl;
 import by.training.sokolov.role.dao.UserRoleDao;
 import by.training.sokolov.role.dao.UserRoleDaoImpl;
 import by.training.sokolov.role.service.UserRoleService;
@@ -74,5 +82,15 @@ public class BeanFactory {
     public static UserOrderService getUserOrderService(){
         UserOrderDao userOrderDao = new UserOrderDaoImpl();
         return new UserOrderServiceImpl(userOrderDao);
+    }
+
+    public static OrderItemService getOrderItemService(){
+        OrderItemDao orderItemDao = new OrderItemDaoImpl();
+        return new OrderItemServiceImpl(orderItemDao);
+    }
+
+    public static DeliveryAddressService getDeliveryAddressService(){
+        DeliveryAddressDao deliveryAddressDao = new DeliveryAddressDaoImpl();
+        return new DeliveryAddressServiceImpl(deliveryAddressDao);
     }
 }

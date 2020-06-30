@@ -3,6 +3,7 @@ package by.training.sokolov.command;
 import by.training.sokolov.SecurityContext;
 import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.deliveryaddress.service.DeliveryAddressService;
 import by.training.sokolov.order.constants.OrderStatus;
 import by.training.sokolov.order.model.UserOrder;
 import by.training.sokolov.order.service.UserOrderService;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 
 public class CreateOrderCommand implements Command {
 
@@ -30,17 +32,15 @@ public class CreateOrderCommand implements Command {
                             и кидать туда currentUser.getId()
          */
 
-        String currentSessionId = request.getSession().getId();
-        User currentUser = SecurityContext.getInstance().getCurrentUser(currentSessionId);
-        UserOrderService userOrderService = BeanFactory.getUserOrderService();
-        UserOrder currentUserOrder = userOrderService.findInProgressUserOrder(currentUser.getId());
-
-        boolean inProgress = currentUserOrder.getInProgress();
-        if (!inProgress) {
+        UserOrder currentUserOrder = getCurrentUserOrder(request);
+        if (Objects.isNull(currentUserOrder) || !currentUserOrder.getInProgress()) {
             createNewOrder(request);
+            request.setAttribute("msg", "order has been created now");
+        } else {
+            request.setAttribute("msg", "order is already exist");
         }
 
-        return "create_order";
+        return "order_created";
     }
 
     private void createNewOrder(HttpServletRequest request) throws SQLException {
@@ -60,11 +60,23 @@ public class CreateOrderCommand implements Command {
         String defaultOrderStatus = OrderStatus.START_TO_PROCESS;
         userOrder.setOrderStatus(defaultOrderStatus);
 
-        DeliveryAddress deliveryAddress = new DeliveryAddress();
-        deliveryAddress.setUserAddress(currentUser.getUserAddress());
-        userOrder.setDeliveryAddress(deliveryAddress);
+        DeliveryAddress userDeliveryAddress = new DeliveryAddress();
+        userDeliveryAddress.setUserAddress(currentUser.getUserAddress());
+        DeliveryAddressService deliveryAddressService = BeanFactory.getDeliveryAddressService();
+        Long deliveryAddressId = deliveryAddressService.save(userDeliveryAddress);
+        userDeliveryAddress.setId(deliveryAddressId);
+        userOrder.setDeliveryAddress(userDeliveryAddress);
+
+        userOrder.setInProgress(true);
 
         UserOrderService userOrderService = BeanFactory.getUserOrderService();
         userOrderService.save(userOrder);
+    }
+
+    private UserOrder getCurrentUserOrder(HttpServletRequest request) throws SQLException {
+        String currentSessionId = request.getSession().getId();
+        User currentUser = SecurityContext.getInstance().getCurrentUser(currentSessionId);
+        UserOrderService userOrderService = BeanFactory.getUserOrderService();
+        return userOrderService.findInProgressUserOrder(currentUser.getId());
     }
 }

@@ -58,9 +58,9 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
 
                 statement.setTimestamp(1, entity.getTimeOfDelivery());
                 statement.setString(2, entity.getOrderStatus());
-                statement.setLong(3, entity.getUser().getId());
-                statement.setLong(4, entity.getDeliveryAddress().getId());
-                statement.setBoolean(5, entity.getInProgress());
+                statement.setBoolean(3, entity.getInProgress());
+                statement.setLong(4, entity.getUser().getId());
+                statement.setLong(5, entity.getDeliveryAddress().getId());
             }
         };
     }

@@ -32,6 +32,9 @@
                 <li>
                     <a href="?_command=${CommandType.CREATE_ORDER}"><fmt:message key="links.order.create"/></a>
                 </li>
+                <li>
+                    <a href="?_command=${CommandType.BASKET_DISPLAY}"><fmt:message key="links.order.display"/></a>
+                </li>
             </c:when>
             <c:otherwise>
                 <li>

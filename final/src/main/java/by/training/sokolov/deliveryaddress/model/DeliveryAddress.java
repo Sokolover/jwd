@@ -1,17 +1,15 @@
 package by.training.sokolov.deliveryaddress.model;
 
-import by.training.sokolov.customdeliveryaddress.model.CustomDeliveryAddress;
 import by.training.sokolov.dao.IdentifiedRow;
 import by.training.sokolov.useraddress.model.UserAddress;
 
 public class DeliveryAddress implements IdentifiedRow {
 
     private Long id;
-    private CustomDeliveryAddress customDeliveryAddress;
+    private String customDeliveryAddress;
     private UserAddress userAddress;
 
-    public DeliveryAddress(){
-        this.customDeliveryAddress = new CustomDeliveryAddress();
+    public DeliveryAddress() {
         this.userAddress = new UserAddress();
     }
 
@@ -23,11 +21,11 @@ public class DeliveryAddress implements IdentifiedRow {
         this.id = id;
     }
 
-    public CustomDeliveryAddress getCustomDeliveryAddress() {
+    public String getCustomDeliveryAddress() {
         return customDeliveryAddress;
     }
 
-    public void setCustomDeliveryAddress(CustomDeliveryAddress customDeliveryAddress) {
+    public void setCustomDeliveryAddress(String customDeliveryAddress) {
         this.customDeliveryAddress = customDeliveryAddress;
     }
 

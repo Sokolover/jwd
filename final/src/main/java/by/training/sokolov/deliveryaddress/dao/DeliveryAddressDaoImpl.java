@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implements DeliveryAddressDao {
 
-    private final static Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
     private static final String TABLE_NAME = "delivery_address";
     private final Lock connectionLock = new ReentrantLock();
 
@@ -29,25 +29,26 @@ public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implemen
 
             @Override
             public DeliveryAddress map(ResultSet resultSet) throws SQLException {
-                DeliveryAddress DeliveryAddress = new DeliveryAddress();
-                DeliveryAddress.setId(resultSet.getLong("id"));
-                DeliveryAddress.getCustomDeliveryAddress().setId(resultSet.getLong("custom_address_id"));
-                DeliveryAddress.getUserAddress().setId(resultSet.getLong("user_address_id"));
-                return DeliveryAddress;
+                DeliveryAddress deliveryAddress = new DeliveryAddress();
+                deliveryAddress.setId(resultSet.getLong("id"));
+                deliveryAddress.setCustomDeliveryAddress(resultSet.getString("custom_address_string"));
+                deliveryAddress.getUserAddress().setId(resultSet.getLong("user_address_id"));
+                return deliveryAddress;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("custom_address_id",
+                return Arrays.asList("custom_address_string",
                         "user_address_id");
             }
 
             @Override
             public void populateStatement(PreparedStatement statement, DeliveryAddress entity) throws SQLException {
 
-                statement.setLong(1, entity.getCustomDeliveryAddress().getId());
+                statement.setString(1, entity.getCustomDeliveryAddress());
                 statement.setLong(2, entity.getUserAddress().getId());
             }
         };
     }
+
 }

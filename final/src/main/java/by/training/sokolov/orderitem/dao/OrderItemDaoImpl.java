@@ -2,6 +2,9 @@ package by.training.sokolov.orderitem.dao;
 
 import by.training.sokolov.dao.GenericDao;
 import by.training.sokolov.dao.IdentifiedRowMapper;
+import by.training.sokolov.dish.dao.DishDao;
+import by.training.sokolov.dish.dao.DishDaoImpl;
+import by.training.sokolov.dish.model.Dish;
 import by.training.sokolov.orderitem.model.OrderItem;
 
 import java.io.IOException;
@@ -51,5 +54,29 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
                 statement.setLong(4, entity.getUserOrder().getId());
             }
         };
+    }
+
+    @Override
+    public List<OrderItem> findAll() throws SQLException {
+
+        List<OrderItem> orderItems = super.findAll();
+        DishDao dishDao = new DishDaoImpl();
+        for (OrderItem orderItem : orderItems) {
+            Long itemDishId = orderItem.getDish().getId();
+            Dish dish = dishDao.getById(itemDishId);
+            orderItem.setDish(dish);
+        }
+        return orderItems;
+    }
+
+    @Override
+    public OrderItem getById(Long id) throws SQLException {
+
+        OrderItem orderItem = super.getById(id);
+        Long itemDishId = orderItem.getDish().getId();
+        DishDao dishDao = new DishDaoImpl();
+        Dish dish = dishDao.getById(itemDishId);
+        orderItem.setDish(dish);
+        return orderItem;
     }
 }

@@ -1,10 +1,7 @@
 package by.training.sokolov.application;
 
 import by.training.sokolov.SecurityContext;
-import by.training.sokolov.command.Command;
-import by.training.sokolov.command.CommandFactory;
-import by.training.sokolov.command.CommandFactoryImpl;
-import by.training.sokolov.command.CommandUtil;
+import by.training.sokolov.command.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -31,6 +28,13 @@ public class OrderBasketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String mainLayoutPath = "/jsp/main_layout.jsp";
+
+        /*
+        todo придумать, как упростить добавление переходов между сервлетами,
+            наверное добавить константы или энамы
+         */
+
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
@@ -45,12 +49,18 @@ public class OrderBasketServlet extends HttpServlet {
             case "logout":
                 resp.sendRedirect(req.getContextPath());
                 break;
-            case "basket_add":
-            case "basket":
+//            case "basket_add":
+            case "order_basket":
+            case "delete_dish_from_order":
             default:
-                req.setAttribute("viewName", "basket");
-                req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
+                String commandShowOrderList = String.valueOf(CommandType.ORDER_DISH_LIST_DISPLAY);
+                command = commandFactory.getCommand(commandShowOrderList);
+                command.apply(req, resp);
+                req.setAttribute("viewName", "order_item_list");
+                req.setAttribute("category", "dish_category");
+                req.getRequestDispatcher(mainLayoutPath).forward(req, resp);
                 break;
+
         }
 
     }

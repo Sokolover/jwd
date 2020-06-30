@@ -1,10 +1,7 @@
 package by.training.sokolov.application;
 
 import by.training.sokolov.SecurityContext;
-import by.training.sokolov.command.Command;
-import by.training.sokolov.command.CommandFactory;
-import by.training.sokolov.command.CommandFactoryImpl;
-import by.training.sokolov.command.CommandUtil;
+import by.training.sokolov.command.*;
 import by.training.sokolov.db.BasicConnectionPool;
 import org.apache.log4j.Logger;
 
@@ -51,20 +48,30 @@ public class IndexController extends HttpServlet {
         /*
         todo заменить возвращаетмые значения команд константами
          */
+        String mainLayoutPath = "/jsp/main_layout.jsp";
         switch (viewName) {
             case "login":
             case "user_register":
             case "menu":
+            case "order_basket":
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case "create_order":
+            case "order_created":
+                req.setAttribute("viewName", viewName);
+                req.setAttribute("category", "index");
+                req.getRequestDispatcher(mainLayoutPath).forward(req, resp);
+                break;
             case "logout":
                 resp.sendRedirect(req.getContextPath());
                 break;
+
+
+
+
             default:
                 req.setAttribute("viewName", "index");
                 req.setAttribute("category", "index");
-                req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
+                req.getRequestDispatcher(mainLayoutPath).forward(req, resp);
                 break;
         }
 

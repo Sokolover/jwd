@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="module0" />
         <module name="final" />
-        <module name="task1" />
-        <module name="task2" />
         <module name="xml_parsing_task" />
+        <module name="task2" />
+        <module name="task1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
