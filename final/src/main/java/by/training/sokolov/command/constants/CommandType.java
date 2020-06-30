@@ -1,4 +1,4 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.constants;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -6,15 +6,15 @@ import java.util.stream.Stream;
 public enum CommandType {
 
     INDEX,
-    LOGIN_DISPLAY,
+    LOGIN_SERVLET_SWITCH,
     LOGIN_SUBMIT,
     LOGOUT,
-    REGISTER_DISPLAY,
-    REGISTER_SUBMIT,
-    DISH_MENU_DISPLAY,
-    DISH_MENU_SUBMIT,
-    BASKET_ITEM_ADD,
-    BASKET_DISPLAY,
+    REGISTER_SERVLET_SWITCH,
+    REGISTER_USER,
+    MENU_SERVLET_SWITCH,
+    VIEW_DISH_MENU,
+    ORDER_ITEM_ADD,
+    ORDER_BASKET_SERVLET_SWITCH,
     ORDER_DISH_LIST_DISPLAY,
     CREATE_ORDER,
 

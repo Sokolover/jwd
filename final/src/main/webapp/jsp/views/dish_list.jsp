@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="by.training.sokolov.command.CommandType" %>
+<%@ page import="by.training.sokolov.command.constants.CommandType" %>
 
 <aside class="menu">
 
@@ -17,10 +17,10 @@
     </p>
 
     <ul class="menu-list">
-        <jsp:useBean id="dishList" scope="request" type="java.util.List"/>
-        <c:forEach items="${dishList}" var="dish">
+        <jsp:useBean id="dishes" scope="request" type="java.util.List"/>
+        <c:forEach items="${dishes}" var="dish">
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                <input type="hidden" name="_command" value="${CommandType.BASKET_ITEM_ADD}">
+                <input type="hidden" name="_command" value="${CommandType.ORDER_ITEM_ADD}">
                 <li>
                     <input type="hidden" name="dish.id" value="${dish.id}">
                     <ul>
@@ -48,17 +48,23 @@
                         </li>
                     </ul>
 
-                    <label class="label">
-                        <fmt:message key="order.menu.amount"/>
-                        <div class="control">
-                            <input class="input" name="order.menu.amount" type="text" placeholder="input amount">
-                        </div>
-                    </label>
+                    <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
+                    <c:if test="${userLoggedIn}">
+                        <label class="label">
+                            <fmt:message key="order.menu.amount"/>
+                            <div class="control">
+                                    <%--                            <input class="input" name="order.dish.amount" type="text" placeholder="input amount">--%>
+                                <input class="input" name="order.dish.amount" value="1" type="number" step="1" min="1"
+                                       max="10" autocomplete="on">
+                            </div>
+                        </label>
 
-                    <div class="control">
-                        <fmt:message var="add_label" key="links.dish.add"/>
-                        <input class="button is-primary" type="submit" value="${add_label}">
-                    </div>
+                        <div class="control">
+                            <fmt:message var="add_label" key="links.dish.add"/>
+                            <input class="button is-primary" type="submit" value="${add_label}">
+                        </div>
+                    </c:if>
+
                 </li>
             </form>
         </c:forEach>

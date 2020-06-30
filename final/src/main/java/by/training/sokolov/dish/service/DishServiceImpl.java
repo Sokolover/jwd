@@ -19,19 +19,5 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
         this.dishDao = dao;
     }
 
-    @Override
-    public List<Dish> findAll() throws SQLException {
-        List<Dish> dishes = super.findAll();
 
-        for (Dish dish : dishes) {
-
-            Long idCategory = dish.getDishCategory().getId();
-
-            DishCategoryService dishCategoryService = BeanFactory.getDishCategoryService();
-            DishCategory dishCategory = dishCategoryService.getById(idCategory);
-            dish.getDishCategory().setCategoryName(dishCategory.getCategoryName());
-        }
-
-        return dishes;
-    }
 }

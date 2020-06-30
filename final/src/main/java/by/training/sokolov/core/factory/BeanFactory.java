@@ -18,7 +18,6 @@ import by.training.sokolov.loyalty.service.LoyaltyService;
 import by.training.sokolov.loyalty.service.LoyaltyServiceImpl;
 import by.training.sokolov.order.dao.UserOrderDao;
 import by.training.sokolov.order.dao.UserOrderDaoImpl;
-import by.training.sokolov.order.model.UserOrder;
 import by.training.sokolov.order.service.UserOrderService;
 import by.training.sokolov.order.service.UserOrderServiceImpl;
 import by.training.sokolov.orderitem.dao.OrderItemDao;
@@ -79,17 +78,17 @@ public class BeanFactory {
         return new DishCategoryServiceImpl(dishCategoryDao);
     }
 
-    public static UserOrderService getUserOrderService(){
+    public static UserOrderService getUserOrderService() {
         UserOrderDao userOrderDao = new UserOrderDaoImpl();
         return new UserOrderServiceImpl(userOrderDao);
     }
 
-    public static OrderItemService getOrderItemService(){
+    public static OrderItemService getOrderItemService() {
         OrderItemDao orderItemDao = new OrderItemDaoImpl();
         return new OrderItemServiceImpl(orderItemDao);
     }
 
-    public static DeliveryAddressService getDeliveryAddressService(){
+    public static DeliveryAddressService getDeliveryAddressService() {
         DeliveryAddressDao deliveryAddressDao = new DeliveryAddressDaoImpl();
         return new DeliveryAddressServiceImpl(deliveryAddressDao);
     }

@@ -1,6 +1,6 @@
-package by.training.sokolov;
+package by.training.sokolov.core.security;
 
-import by.training.sokolov.command.CommandType;
+import by.training.sokolov.command.constants.CommandType;
 import by.training.sokolov.role.model.UserRole;
 import by.training.sokolov.user.model.User;
 

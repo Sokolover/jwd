@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
-<%@ page import="by.training.sokolov.command.CommandType" %>
+<%@ page import="by.training.sokolov.command.constants.CommandType" %>
 
 <div class="container">
 
@@ -11,7 +11,7 @@
     </c:if>
 
     <form action="${pageContext.request.contextPath}/user_register" method="post">
-        <input type="hidden" name="_command" value="${CommandType.REGISTER_SUBMIT}">
+        <input type="hidden" name="_command" value="${CommandType.REGISTER_USER}">
         <div class="field">
 
             <label class="label">

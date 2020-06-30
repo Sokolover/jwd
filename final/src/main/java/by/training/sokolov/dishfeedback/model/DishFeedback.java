@@ -12,7 +12,7 @@ public class DishFeedback implements IdentifiedRow {
     private User user;
     private Dish dish;
 
-    public DishFeedback(){
+    public DishFeedback() {
         this.user = new User();
         this.dish = new Dish();
     }

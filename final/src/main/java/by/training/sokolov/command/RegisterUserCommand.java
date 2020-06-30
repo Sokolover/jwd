@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
+import static by.training.sokolov.application.constants.JspName.USER_REGISTER_JSP;
+import static by.training.sokolov.application.constants.ServletName.DELIVERY_SERVLET;
+import static by.training.sokolov.role.constants.RoleName.CLIENT;
 
 public class RegisterUserCommand implements Command {
-
-    private Lock connectionLock = new ReentrantLock();
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -30,10 +30,13 @@ public class RegisterUserCommand implements Command {
         for (User user : users) {
             if (user.getName().equals(name)) {
                 request.setAttribute("error", "user with this name has been registered");
-                return "user_register";
+                return USER_REGISTER_JSP;
             }
         }
-
+        /*
+        TODO добвавить константы для параметров jsp!!!
+            "user.password" и т.д.
+         */
         String password = request.getParameter("user.password");
         String email = request.getParameter("user.email");
         String phoneNumber = request.getParameter("user.phoneNumber");
@@ -46,7 +49,7 @@ public class RegisterUserCommand implements Command {
         user.setPhoneNumber(phoneNumber);
         user.setActive(true);
 
-        UserRole userRole = new UserRole("CLIENT");
+        UserRole userRole = new UserRole(CLIENT);
 
         UserRoleService userRoleService = BeanFactory.getUserRoleService();
         Long roleId = userRoleService.getIdByRoleName(userRole);
@@ -57,9 +60,6 @@ public class RegisterUserCommand implements Command {
 
         userService.save(user);
 
-//        return "redirect:?_command=" + CommandType.INDEX;
-        return "delivery";
+        return DELIVERY_SERVLET;
     }
-
-
 }

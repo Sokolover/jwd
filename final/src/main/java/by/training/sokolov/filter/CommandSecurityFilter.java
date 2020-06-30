@@ -1,7 +1,7 @@
 package by.training.sokolov.filter;
 
-import by.training.sokolov.SecurityContext;
-import by.training.sokolov.command.CommandType;
+import by.training.sokolov.core.security.SecurityContext;
+import by.training.sokolov.command.constants.CommandType;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

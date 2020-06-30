@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.user.model.User;
 import by.training.sokolov.user.service.UserService;
@@ -14,7 +14,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LoginSaveCommand implements Command {
+import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
+import static by.training.sokolov.application.constants.ServletName.DELIVERY_SERVLET;
+
+public class LoginSubmitCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -29,7 +32,7 @@ public class LoginSaveCommand implements Command {
 
         if (users.size() != 1) {
             request.setAttribute("error", "login invalid");
-            return "login";
+            return LOGIN_JSP;
         }
 
         User user = users.get(0);
@@ -37,20 +40,12 @@ public class LoginSaveCommand implements Command {
         String reqPassword = request.getParameter("user.password");
         if (!user.getPassword().equals(reqPassword)) {
             request.setAttribute("error", "password invalid");
-            return "login";
+            return LOGIN_JSP;
         }
 
         HttpSession httpSession = request.getSession();
         SecurityContext.getInstance().login(user, httpSession.getId());
 
-        /*
-        todo 1. сделать проверку в сервлете menu (где зарегестрированный пользователь)
-                есть ли сешнАйДи, которая принята с реквеста в мапе
-                2. сетать в переменну jsp результат проверки пункта 1
-         */
-
-
-        return "delivery";
-//        return "redirect:?_command=" + CommandType.INDEX;
+        return DELIVERY_SERVLET;
     }
 }

@@ -12,7 +12,7 @@ public class DateTest {
         return new Timestamp(date.getTime());
     }
 
-    private static Date convert1(Timestamp timestamp){
+    private static Date convert1(Timestamp timestamp) {
         return new Date(String.valueOf(timestamp.toString()));
     }
 

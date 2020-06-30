@@ -16,17 +16,14 @@ import java.util.List;
 
 import static by.training.sokolov.ApplicationModule.DISH_MENU;
 
-public class ViewMenuCommand implements Command {
+public class ViewDishMenuCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
         /*
-        todo
-            1. посылать по нажатию кнопки _category1=p, _category2=b ...
-            2. CommandUtil.getCategoryFromRequest(request) возвращает список категорий, которые потом будут участвовать
-            в фильтрации
-         */
+            todo разбить команду на 2 команды: показ категорий и показ меню
+        */
 
         Enumeration<String> parameterNames = request.getParameterNames();
         List<String> paramList = new ArrayList<>();
@@ -57,11 +54,16 @@ public class ViewMenuCommand implements Command {
             }
         }
 
-        //todo сделать чтобы фильтровал + кнопку которая покажет все блюда
+        /*
+        todo сделать чтобы, если в фильтре стоят блюда
+            а в списке их нет, то показывать пустоту
+            + checkbox который покажет все блюда
+         */
+
         if (filteredDishes.isEmpty()) {
-            request.setAttribute("dishList", dishes);
+            request.setAttribute("dishes", dishes);
         } else {
-            request.setAttribute("dishList", filteredDishes);
+            request.setAttribute("dishes", filteredDishes);
         }
 
         DishCategoryService dishCategoryService = BeanFactory.getDishCategoryService();

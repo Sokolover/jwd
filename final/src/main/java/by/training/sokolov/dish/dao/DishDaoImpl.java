@@ -1,5 +1,8 @@
 package by.training.sokolov.dish.dao;
 
+import by.training.sokolov.category.dao.DishCategoryDao;
+import by.training.sokolov.category.dao.DishCategoryDaoImpl;
+import by.training.sokolov.category.model.DishCategory;
 import by.training.sokolov.dao.GenericDao;
 import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.BasicConnectionPool;
@@ -87,5 +90,28 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
         outputStream.close();
 
         return stringPicture;
+    }
+
+    @Override
+    public List<Dish> findAll() throws SQLException {
+
+        List<Dish> dishes = super.findAll();
+        DishCategoryDao dishCategoryDao = new DishCategoryDaoImpl();
+        for (Dish dish : dishes) {
+            Long categoryId = dish.getDishCategory().getId();
+            DishCategory dishCategory = dishCategoryDao.getById(categoryId);
+            dish.setDishCategory(dishCategory);
+        }
+        return dishes;
+    }
+
+    @Override
+    public Dish getById(Long id) throws SQLException {
+
+        Dish dish = super.getById(id);
+        DishCategoryDao dishCategoryDao = new DishCategoryDaoImpl();
+        DishCategory dishCategory = dishCategoryDao.getById(dish.getDishCategory().getId());
+        dish.setDishCategory(dishCategory);
+        return dish;
     }
 }

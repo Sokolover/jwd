@@ -1,10 +1,7 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.SecurityContext;
-import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandFactoryImpl;
-import by.training.sokolov.command.CommandUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -14,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
+
 @WebServlet(urlPatterns = "/login", name = "LoginServlet")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet implements FormServlet {
 
     private static final long serialVersionUID = 1845229810562352696L;
 
-    private final static Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private CommandFactory commandFactory;
 
     @Override
@@ -31,33 +30,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String commandFromRequest = CommandUtil.getCommandFromRequest(req);
-        Command command = commandFactory.getCommand(commandFromRequest);
-        String viewName = command.apply(req, resp);
-
-        boolean flag = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("flag", flag);
-
-        switch (viewName) {
-            case "menu":
-            case "user_register":
-                resp.sendRedirect(req.getContextPath() + "/" + viewName);
-                break;
-            case "delivery":
-                resp.sendRedirect(req.getContextPath());
-                break;
-            case "login":
-            default:
-                req.setAttribute("viewName", "login");
-                req.setAttribute("category", "index");
-                req.getRequestDispatcher("/jsp/main_layout.jsp").forward(req, resp);
-                break;
-        }
-
-        /*
-        todo написать другие команды, более прозоичные и понятные
-         */
-
+        formServletProcess(req, resp, commandFactory, LOGIN_JSP);
     }
 
     @Override

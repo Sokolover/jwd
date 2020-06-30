@@ -1,9 +1,11 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.order;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.category.model.DishCategory;
 import by.training.sokolov.category.service.DishCategoryService;
+import by.training.sokolov.command.Command;
 import by.training.sokolov.core.factory.BeanFactory;
+import by.training.sokolov.dish.model.Dish;
 import by.training.sokolov.order.model.UserOrder;
 import by.training.sokolov.order.service.UserOrderService;
 import by.training.sokolov.orderitem.model.OrderItem;
@@ -16,7 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+
+import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_DISH_LIST_DISPLAY;
 
 public class DisplayOrderDishListCommand implements Command {
 
@@ -28,10 +34,33 @@ public class DisplayOrderDishListCommand implements Command {
             текущему order'y!!!
          */
 
+        /*
+        todo DisplayOrderDishListCommand и ViewDishMenuCommand должны иметь фильтрацию
+            по категориям и их необходимо унифицировать в плане фильтра блюд!
+            фильтр по категориям необходимо оптимизировать
+         */
+
+        Enumeration<String> parameterNames = request.getParameterNames();
+        List<String> paramList = new ArrayList<>();
+        List<String[]> paramValues = new ArrayList<>();
+
+        while (parameterNames.hasMoreElements()) {
+
+            String paramName = parameterNames.nextElement();
+            paramValues.add(request.getParameterValues(paramName));
+//            paramList.add(paramName);
+        }
+
+        List<String> reqValues = new ArrayList<>();
+        for (String[] paramValue : paramValues) {
+            reqValues.addAll(Arrays.asList(paramValue));
+        }
+
         UserOrder currentUserOrder = getCurrentUserOrder(request);
         OrderItemService orderItemService = BeanFactory.getOrderItemService();
         List<OrderItem> orderItems = orderItemService.findAll();
         List<OrderItem> userOrderItems = new ArrayList<>();
+        List<OrderItem> filteredUserOrderItems = new ArrayList<>();
 
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getUserOrder().getId().equals(currentUserOrder.getId())) {
@@ -39,13 +68,25 @@ public class DisplayOrderDishListCommand implements Command {
             }
         }
 
-        request.setAttribute("orderItems", userOrderItems);
+        for (String categoryName : reqValues) {
+            for (OrderItem orderItem : orderItems) {
+                if (orderItem.getDish().getDishCategory().getCategoryName().equals(categoryName)) {
+                    filteredUserOrderItems.add(orderItem);
+                }
+            }
+        }
+
+        if (filteredUserOrderItems.isEmpty()) {
+            request.setAttribute("orderItems", userOrderItems);
+        } else {
+            request.setAttribute("orderItems", filteredUserOrderItems);
+        }
 
         DishCategoryService dishCategoryService = BeanFactory.getDishCategoryService();
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);
 
-        return "order_dish_list_display";
+        return ORDER_DISH_LIST_DISPLAY;
     }
 
     private UserOrder getCurrentUserOrder(HttpServletRequest request) throws SQLException {

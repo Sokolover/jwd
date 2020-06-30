@@ -1,6 +1,6 @@
 package by.training.sokolov.listener;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

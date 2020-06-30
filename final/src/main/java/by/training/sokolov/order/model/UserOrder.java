@@ -5,7 +5,6 @@ import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.user.model.User;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class UserOrder implements IdentifiedRow {
 
@@ -16,7 +15,7 @@ public class UserOrder implements IdentifiedRow {
     private User user;
     private DeliveryAddress deliveryAddress;
 
-    public UserOrder(){
+    public UserOrder() {
         this.user = new User();
         this.deliveryAddress = new DeliveryAddress();
     }

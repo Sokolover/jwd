@@ -1,7 +1,8 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.*;
+import by.training.sokolov.command.constants.CommandType;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -11,12 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.training.sokolov.application.constants.JspName.*;
+import static by.training.sokolov.application.constants.ServletName.MENU_SERVLET;
+import static by.training.sokolov.application.constants.ServletName.ORDER_BASKET_SERVLET;
+import static by.training.sokolov.command.constants.CommandReturnValues.*;
+
 @WebServlet(urlPatterns = "/order_basket", name = "OrderBasketServlet")
 public class OrderBasketServlet extends HttpServlet {
 
     private static final long serialVersionUID = -79412450294725257L;
 
-    private final static Logger LOGGER = Logger.getLogger(OrderBasketServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OrderBasketServlet.class.getName());
     private CommandFactory commandFactory;
 
     @Override
@@ -28,37 +34,35 @@ public class OrderBasketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String mainLayoutPath = "/jsp/main_layout.jsp";
-
-        /*
-        todo придумать, как упростить добавление переходов между сервлетами,
-            наверное добавить константы или энамы
-         */
-
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean flag = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("flag", flag);
+        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
+        req.setAttribute("userLoggedIn", userLoggedIn);
 
         switch (viewName) {
-            case "menu":
+            case MENU_SERVLET:
+            case ORDER_BASKET_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case "logout":
+            case LOGOUT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-//            case "basket_add":
-            case "order_basket":
-            case "delete_dish_from_order":
+            case ORDER_CREATED_JSP:
+                req.setAttribute("viewName", viewName);
+                req.setAttribute("category", INDEX_JSP);
+                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
+                break;
+            case BASKET_ADD_ITEM:
+            case DELETE_DISH_FROM_ORDER:
             default:
                 String commandShowOrderList = String.valueOf(CommandType.ORDER_DISH_LIST_DISPLAY);
                 command = commandFactory.getCommand(commandShowOrderList);
                 command.apply(req, resp);
-                req.setAttribute("viewName", "order_item_list");
-                req.setAttribute("category", "dish_category");
-                req.getRequestDispatcher(mainLayoutPath).forward(req, resp);
+                req.setAttribute("viewName", ORDER_ITEM_LIST_JSP);
+                req.setAttribute("category", DISH_CATEGORY_JSP);
+                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
 
         }

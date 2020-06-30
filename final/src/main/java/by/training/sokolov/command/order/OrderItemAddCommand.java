@@ -1,6 +1,7 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.order;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
+import by.training.sokolov.command.Command;
 import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.dish.model.Dish;
 import by.training.sokolov.dish.service.DishService;
@@ -18,15 +19,15 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
-public class BasketItemAddCommand implements Command {
+import static by.training.sokolov.command.constants.CommandReturnValues.BASKET_ADD_ITEM;
+
+public class OrderItemAddCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
         Long currentUserOrderId = getCurrentUserOrderId(request);
-/*
-todo !!! протестить BasketItemAddCommand и DisplayOrderDishListCommand
- */
+
         List<OrderItem> orderItems = BeanFactory.getOrderItemService().findAll();
 
         String dishIdString = request.getParameter("dish.id");
@@ -36,14 +37,18 @@ todo !!! протестить BasketItemAddCommand и DisplayOrderDishListComman
         todo в дальнейшем заменить каким-то запросом в OrderItemDao, если буду оставлять логику
             "нельзя добавлять блюдо в заказ если оно уже есть в заказе, можно только удалить
             весь OrderItem и добавить новый"
+            @
+            этот цикл  не работает так как надо и описано выше
+            @
+            надо сделать запрос в бд
          */
 
         if (orderItems.isEmpty()) {
             addNewOrderItem(request, currentUserOrderId);
         } else {
             for (OrderItem orderItem : orderItems) {
-                if (!orderItem.getUserOrder().getId().equals(currentUserOrderId)
-                        && orderItem.getDish().getId().equals(dishIdLong)) {
+                if (orderItem.getUserOrder().getId().equals(currentUserOrderId)
+                        && !orderItem.getDish().getId().equals(dishIdLong)) {
                     addNewOrderItem(request, currentUserOrderId);
                 }
             }
@@ -51,14 +56,17 @@ todo !!! протестить BasketItemAddCommand и DisplayOrderDishListComman
 
         /*
         todo part2
-            8.1 сделать проверку можно ли добавлять в список блюда, если они уже есть в списке +/-
-            8.2 сделать просмотр item'ов заказа и возможность их удаления из заказа
+            8.1 сделать проверку можно ли добавлять в список блюда, если они уже есть в списке !
+            8.2 сделать просмотр item'ов заказа и возможность их удаления из заказа +
+            8.3 может быть надо сделать возможность удаления заказа
+
+         todo part3
             9. сделать вкладку оформления заказа где
                 9.1 обязательно будет таблица с перечислением блюд, форма куда и как доставлять
                 9.2 будет всё остальное с прототипа UI
          */
 
-        return "basket_add_item";
+        return BASKET_ADD_ITEM;
     }
 
     /*
@@ -91,7 +99,7 @@ todo !!! протестить BasketItemAddCommand и DisplayOrderDishListComman
         Dish dish = dishService.getById(dishIdLong);
         orderItem.getDish().setId(dishIdLong);
 
-        String dishAmountString = request.getParameter("order.menu.amount");
+        String dishAmountString = request.getParameter("order.dish.amount");
         Integer dishAmountInteger = Integer.parseInt(dishAmountString);
         orderItem.setDishAmount(dishAmountInteger);
 

@@ -1,6 +1,7 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.order;
 
-import by.training.sokolov.SecurityContext;
+import by.training.sokolov.core.security.SecurityContext;
+import by.training.sokolov.command.Command;
 import by.training.sokolov.core.factory.BeanFactory;
 import by.training.sokolov.order.model.UserOrder;
 import by.training.sokolov.order.service.UserOrderService;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteDishFromOrder implements Command {
+public class DeleteDishFromOrderCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -41,7 +42,7 @@ public class DeleteDishFromOrder implements Command {
         Long itemIdLong = Long.parseLong(itemIdString);
 
         for (OrderItem orderItem : userOrderItems) {
-            if(orderItem.getId().equals(itemIdLong)){
+            if (orderItem.getId().equals(itemIdLong)) {
                 BeanFactory.getOrderItemService().delete(orderItem);
             }
         }
