@@ -1,4 +1,4 @@
-package by.training.sokolov.filter;
+package by.training.sokolov.core.filter;
 
 import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.constants.CommandType;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter(servletNames = {"index"}, filterName = "security")
+@WebFilter(servletNames = {"IndexServlet"}, filterName = "security")
 public class CommandSecurityFilter implements Filter {
 
     @Override

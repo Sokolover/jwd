@@ -1,4 +1,4 @@
-package by.training.sokolov.filter;
+package by.training.sokolov.core.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@WebFilter(servletNames = {"index"}, filterName = "lang_filter")
+@WebFilter(servletNames = {"IndexServlet"}, filterName = "lang_filter")
 public class LangFilter implements Filter {
 
     @Override

@@ -1,13 +1,12 @@
-package by.training.sokolov.orderitem.dao;
+package by.training.sokolov.jdbc;
 
-import by.training.sokolov.dao.GenericDao;
 import by.training.sokolov.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.dish.dao.DishDao;
-import by.training.sokolov.dish.dao.DishDaoImpl;
-import by.training.sokolov.dish.model.Dish;
+import by.training.sokolov.orderitem.dao.OrderItemDaoImpl;
 import by.training.sokolov.orderitem.model.OrderItem;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,21 +20,11 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItemDao {
+public class OrderItemDaoTest {
 
     private static final Logger LOGGER = Logger.getLogger(OrderItemDaoImpl.class.getName());
     private static final String TABLE_NAME = "order_item";
     private final Lock connectionLock = new ReentrantLock();
-
-    private static final String FIND_ALL_ITEMS_BY_ORDER_ID_QUERY =
-            "SELECT {0}.*\n" +
-                    "FROM {0}, user_order\n" +
-                    "WHERE {0}.user_order_id = user_order_id\n" +
-                    "AND {0}.user_order_id = ?";
-
-    public OrderItemDaoImpl() {
-        super(TABLE_NAME, getOrderItemRowMapper());
-    }
 
     private static IdentifiedRowMapper<OrderItem> getOrderItemRowMapper() {
 
@@ -71,37 +60,25 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
         };
     }
 
-    @Override
-    public List<OrderItem> findAll() throws SQLException {
+    @Test
+    public void testQuery1() throws SQLException {
 
-        List<OrderItem> orderItems = super.findAll();
-        findOrderItemsDish(orderItems);
-        return orderItems;
-    }
+        List<OrderItem> orderItemList = findAllItemsByOrderId(5L);
 
-    private void findOrderItemsDish(List<OrderItem> orderItems) throws SQLException {
-        DishDao dishDao = new DishDaoImpl();
-        for (OrderItem orderItem : orderItems) {
-            Long itemDishId = orderItem.getDish().getId();
-            Dish dish = dishDao.getById(itemDishId);
-            orderItem.setDish(dish);
+        for (OrderItem orderItem : orderItemList) {
+            System.out.println(orderItem);
         }
-    }
 
-    @Override
-    public OrderItem getById(Long id) throws SQLException {
-
-        OrderItem orderItem = super.getById(id);
-
-        DishDao dishDao = new DishDaoImpl();
-        Long itemDishId = orderItem.getDish().getId();
-        Dish dish = dishDao.getById(itemDishId);
-        orderItem.setDish(dish);
-
-        return orderItem;
+        Assert.assertEquals(2, orderItemList.size());
     }
 
     public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException {
+
+        String FIND_ALL_ITEMS_BY_ORDER_ID_QUERY =
+                "SELECT {0}.*\n" +
+                        "FROM {0}, user_order\n" +
+                        "WHERE {0}.user_order_id = user_order_id\n" +
+                        "AND {0}.user_order_id = ?";
 
         connectionLock.lock();
         LOGGER.info("findAllItemsByOrderId()");
@@ -119,11 +96,9 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
                     }
                 }
             }
-            findOrderItemsDish(result);
             return result;
         } finally {
             connectionLock.unlock();
         }
     }
-
 }

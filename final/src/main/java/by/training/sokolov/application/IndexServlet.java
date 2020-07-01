@@ -29,6 +29,11 @@ import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
         при name = "index"
         @
         сейчас (30.06) всё работает при названии IndexController
+        @
+        название сервлета должно быть index:
+        1. так удобнее
+        2. фильтры его используют:
+            @WebFilter(servletNames = {"index"}, filterName = "lang_filter")
  */
 @WebServlet(urlPatterns = "/", name = "IndexServlet")
 public class IndexServlet extends HttpServlet {

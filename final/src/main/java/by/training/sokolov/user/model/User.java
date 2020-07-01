@@ -110,7 +110,7 @@ public class User implements IdentifiedRow {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +

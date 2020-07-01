@@ -9,6 +9,8 @@ public interface GenericService<T> {
 
     void update(T entity) throws SQLException;
 
+    void deleteById(Long id) throws SQLException;
+
     void delete(T entity) throws SQLException;
 
     T getById(Long id) throws SQLException;

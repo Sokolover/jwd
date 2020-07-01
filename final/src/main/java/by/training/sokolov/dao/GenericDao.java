@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 
 public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
 
-    private final static Logger LOGGER = Logger.getLogger(GenericDao.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GenericDao.class.getName());
+    private final Lock connectionLock = new ReentrantLock();
 
     private static final String SELECT_ALL_QUERY = "SELECT * FROM {0}";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM {0} WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO {0} ({1}) VALUES ({2})";
     private static final String UPDATE_QUERY = "UPDATE {0} SET {1} WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM {0} WHERE id = ?";
+    private static final String DELETE_BY_ID_QUERY = "DELETE FROM {0} WHERE id = ?";
     private static final String SELECT_MAX_ID_QUERY = "SELECT MAX(ID) FROM {0}";
-
-    private final Lock connectionLock = new ReentrantLock();
 
     private final String tableName;
     private final IdentifiedRowMapper<T> rowMapper;
@@ -86,6 +86,21 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
         }
     }
 
+    @Override
+    public void deleteById(Long id) throws SQLException {
+
+        connectionLock.lock();
+        LOGGER.info("deleteById()--" + id);
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+            String sql = MessageFormat.format(DELETE_BY_ID_QUERY, tableName);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setLong(1, id);
+                statement.executeUpdate();
+            }
+        } finally {
+            connectionLock.unlock();
+        }
+    }
 
     @Override
     public void delete(T entity) throws SQLException {

@@ -4,7 +4,7 @@ import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.constants.CommandType;
 import by.training.sokolov.command.order.CreateOrderCommand;
 import by.training.sokolov.command.order.DeleteDishFromOrderCommand;
-import by.training.sokolov.command.order.DisplayOrderDishListCommand;
+import by.training.sokolov.command.order.OrderDishListDisplayCommand;
 import by.training.sokolov.command.order.OrderItemAddCommand;
 
 import java.util.Map;
@@ -23,7 +23,7 @@ public class CommandFactoryImpl implements CommandFactory {
 
         commands.put(CommandType.DELETE_DISH_FROM_ORDER, new DeleteDishFromOrderCommand());
         commands.put(CommandType.CREATE_ORDER, new CreateOrderCommand());
-        commands.put(CommandType.ORDER_DISH_LIST_DISPLAY, new DisplayOrderDishListCommand());
+        commands.put(CommandType.ORDER_DISH_LIST_DISPLAY, new OrderDishListDisplayCommand());
         commands.put(CommandType.ORDER_ITEM_ADD, new OrderItemAddCommand());
 
         commands.put(CommandType.VIEW_DISH_MENU, new ViewDishMenuCommand());

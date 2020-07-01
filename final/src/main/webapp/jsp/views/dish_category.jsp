@@ -22,6 +22,7 @@
             </c:forEach>
             <input type="submit" value="OK"/>
             <input type="reset" value="Reset"/>
+            <input type="submit" name="_category" value="all"/>
         </form>
     </ul>
 

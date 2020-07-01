@@ -4,7 +4,7 @@ import by.training.sokolov.dishfeedback.dao.DishFeedbackDao;
 import by.training.sokolov.dishfeedback.model.DishFeedback;
 import by.training.sokolov.service.GenericServiceImpl;
 
-public class DishFeedbackServiceImpl extends GenericServiceImpl<DishFeedback> implements DishFeedbackDao {
+public class DishFeedbackServiceImpl extends GenericServiceImpl<DishFeedback> implements DishFeedbackService {
 
     private DishFeedbackDao dishFeedbackDao;
 
@@ -12,4 +12,5 @@ public class DishFeedbackServiceImpl extends GenericServiceImpl<DishFeedback> im
         super(dao);
         this.dishFeedbackDao = dao;
     }
+
 }

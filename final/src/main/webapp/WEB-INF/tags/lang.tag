@@ -1,5 +1,20 @@
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<nav class="navbar">
+    <div class="navbar-menu">
+        <div class="navbar-end">
+            <c:forTokens items="en,ru" delims="," var="lang">
+                <span class="navbar-item">
+                    <a class="button is-light is-inverted" href="?lang=${lang}">
+                        <span><fmt:message key="links.lang.${lang}"/></span>
+                    </a>
+                </span>
+            </c:forTokens>
+        </div>
+    </div>
+</nav>
+
 <%--<c:choose>--%>
 <%--    <c:when test="${not empty requestScope.get('lang')}">--%>
 <%--        <fmt:setLocale value="${requestScope.get('lang')}"/>--%>
@@ -8,6 +23,7 @@
 <%--        <fmt:setLocale value="${cookie['lang'].value}"/>--%>
 <%--    </c:otherwise>--%>
 <%--</c:choose>--%>
+
 <%--<nav class="navbar">--%>
 <%--    <div class="navbar-menu">--%>
 <%--        <div class="navbar-end">--%>
@@ -28,7 +44,7 @@
 
 <%--            <c:forTokens items="en,ru,de" delims="," var="lang">--%>
 <%--                <span class="navbar-item">--%>
-<%--                    <a class="button is-light is-inverted" href="${url}${lang}">--%>
+<%--                    <a class="button is-light is-inverted" href="${url}?lang=${lang}">--%>
 <%--                        <span><fmt:message key="links.lang.${lang}"/></span>--%>
 <%--                    </a>--%>
 <%--                </span>--%>
@@ -37,21 +53,13 @@
 <%--    </div>--%>
 <%--</nav>--%>
 
+<%--<c:choose>--%>
+<%--    <c:when test="${not empty requestScope.get('lang')}">--%>
+<%--        <fmt:setLocale value="${requestScope.get('lang')}"/>--%>
+<%--    </c:when>--%>
+<%--    <c:otherwise>--%>
+<%--        <fmt:setLocale value="${cookie['lang'].value}"/>--%>
+<%--    </c:otherwise>--%>
+<%--</c:choose>--%>
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<nav class="navbar">
-    <div class="navbar-menu">
-        <div class="navbar-end">
-            <span class="navbar-item">
-                <a class="button is-light is-inverted" href="?lang=en">
-                    <span><fmt:message key="links.lang.en"/></span>
-                </a>
-            </span>
-            <span class="navbar-item">
-                <a class="button is-light is-inverted" href="?lang=ru">
-                    <span><fmt:message key="links.lang.ru"/></span>
-                </a>
-            </span>
-        </div>
-    </div>
-</nav>
+

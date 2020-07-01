@@ -21,6 +21,18 @@ public class UserOrder implements IdentifiedRow {
     }
 
     @Override
+    public String toString() {
+        return "UserOrder{" +
+                "id=" + id +
+                ", timeOfDelivery=" + timeOfDelivery +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", inProgress=" + inProgress +
+                ", user=" + user +
+                ", deliveryAddress=" + deliveryAddress +
+                '}';
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

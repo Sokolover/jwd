@@ -32,6 +32,12 @@ public class GenericServiceImpl<T extends IdentifiedRow> implements GenericServi
         crudDao.update(entity);
     }
 
+    public void deleteById(Long id) throws SQLException{
+
+        LOGGER.info("deleteById(Long id)--" + id);
+        crudDao.deleteById(id);
+    }
+
     @Override
     public void delete(T entity) throws SQLException {
 

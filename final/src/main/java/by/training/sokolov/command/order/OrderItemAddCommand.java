@@ -1,8 +1,8 @@
 package by.training.sokolov.command.order;
 
-import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.core.factory.BeanFactory;
+import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.dish.model.Dish;
 import by.training.sokolov.dish.service.DishService;
 import by.training.sokolov.order.model.UserOrder;
@@ -26,48 +26,52 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
-        Long currentUserOrderId = getCurrentUserOrderId(request);
-
-        List<OrderItem> orderItems = BeanFactory.getOrderItemService().findAll();
+        UserOrder currentUserOrder = getCurrentUserOrder(request);
+        Long currentUserOrderId = currentUserOrder.getId();
+        List<OrderItem> currentOrderItems = BeanFactory.getOrderItemService().findAllItemsByOrderId(currentUserOrderId);
 
         String dishIdString = request.getParameter("dish.id");
         Long dishIdLong = Long.parseLong(dishIdString);
 
         /*
-        todo в дальнейшем заменить каким-то запросом в OrderItemDao, если буду оставлять логику
+        todo СДЕЛАНО
             "нельзя добавлять блюдо в заказ если оно уже есть в заказе, можно только удалить
-            весь OrderItem и добавить новый"
-            @
-            этот цикл  не работает так как надо и описано выше
-            @
-            надо сделать запрос в бд
+            OrderItem и добавить новый"
          */
 
-        if (orderItems.isEmpty()) {
+        if (currentOrderItems.isEmpty()) {
             addNewOrderItem(request, currentUserOrderId);
-        } else {
-            for (OrderItem orderItem : orderItems) {
-                if (orderItem.getUserOrder().getId().equals(currentUserOrderId)
-                        && !orderItem.getDish().getId().equals(dishIdLong)) {
-                    addNewOrderItem(request, currentUserOrderId);
-                }
+            return BASKET_ADD_ITEM;
+        }
+
+        boolean dishInOrder = false;
+
+        for (OrderItem orderItem : currentOrderItems) {
+            if (orderItem.getDish().getId().equals(dishIdLong)) {
+                dishInOrder = true;
+                break;
             }
         }
 
-        /*
+        if (!dishInOrder) {
+            addNewOrderItem(request, currentUserOrderId);
+        }
+
+        return BASKET_ADD_ITEM;
+
+    }
+
+            /*
         todo part2
-            8.1 сделать проверку можно ли добавлять в список блюда, если они уже есть в списке !
+            8.1 сделать проверку можно ли добавлять в список блюда, если они уже есть в списке +
             8.2 сделать просмотр item'ов заказа и возможность их удаления из заказа +
             8.3 может быть надо сделать возможность удаления заказа
 
-         todo part3
+        todo part3
             9. сделать вкладку оформления заказа где
                 9.1 обязательно будет таблица с перечислением блюд, форма куда и как доставлять
                 9.2 будет всё остальное с прототипа UI
          */
-
-        return BASKET_ADD_ITEM;
-    }
 
     /*
             todo проверить всё ли сделано по part1
@@ -112,11 +116,11 @@ public class OrderItemAddCommand implements Command {
         orderItemService.save(orderItem);
     }
 
-    private Long getCurrentUserOrderId(HttpServletRequest request) throws SQLException {
+    private UserOrder getCurrentUserOrder(HttpServletRequest request) throws SQLException {
+
         String currentSessionId = request.getSession().getId();
         User currentUser = SecurityContext.getInstance().getCurrentUser(currentSessionId);
         UserOrderService userOrderService = BeanFactory.getUserOrderService();
-        UserOrder currentUserOrder = userOrderService.findInProgressUserOrder(currentUser.getId());
-        return currentUserOrder.getId();
+        return userOrderService.findInProgressUserOrder(currentUser.getId());
     }
 }

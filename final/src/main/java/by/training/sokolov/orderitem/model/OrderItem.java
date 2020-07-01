@@ -20,6 +20,17 @@ public class OrderItem implements IdentifiedRow {
     }
 
     @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", dishAmount=" + dishAmount +
+                ", itemCost=" + itemCost +
+                ", dish=" + dish +
+                ", userOrder=" + userOrder +
+                '}';
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

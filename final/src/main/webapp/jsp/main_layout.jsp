@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bulma.css">
 </head>
 <body>
+
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>
