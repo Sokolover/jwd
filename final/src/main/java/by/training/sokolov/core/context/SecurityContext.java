@@ -1,8 +1,8 @@
 package by.training.sokolov.core.security;
 
 import by.training.sokolov.command.constants.CommandType;
-import by.training.sokolov.role.model.UserRole;
-import by.training.sokolov.user.model.User;
+import by.training.sokolov.core.context.AppContext;import by.training.sokolov.entity.role.model.UserRole;
+import by.training.sokolov.entity.user.model.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,18 +13,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SecurityContext {
 
-    private static final SecurityContext SECURITY_CONTEXT = new SecurityContext();
+    private static final AppContext.SecurityContext SECURITY_CONTEXT = new AppContext.SecurityContext();
     private final Map<String, User> userDtoMap = new ConcurrentHashMap<>(1000);
     //    private final ThreadLocal<String> currentSessionIdStorage = new ThreadLocal<>();
     private Properties properties = new Properties();
 
-    public static SecurityContext getInstance() {
+    public static AppContext.SecurityContext getInstance() {
         return SECURITY_CONTEXT;
     }
 
     public void initialize(ServletContext servletContext) {
 
-        try (InputStream propertyStream = SecurityContext.class.getResourceAsStream("/security.properties")) {
+        try (InputStream propertyStream = AppContext.SecurityContext.class.getResourceAsStream("/security.properties")) {
             properties.load(propertyStream);
         } catch (IOException e) {
             throw new IllegalStateException("Failed to read security properties", e);

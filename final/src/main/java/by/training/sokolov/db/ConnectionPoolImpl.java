@@ -65,7 +65,7 @@ public class BasicConnectionPool implements ConnectionPool {
             String username = properties.get(USERNAME);
             String password = properties.get(PASSWORD);
             Connection connection = DriverManager.getConnection(url, username, password);
-            LOGGER.info("Connection has been created");
+//            LOGGER.info("Connection has been created");
             return connection;
         } catch (SQLException ex) {
             LOGGER.error("Connection can't be created");

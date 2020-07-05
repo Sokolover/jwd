@@ -1,5 +1,7 @@
 package by.training.sokolov.dao;
 
+import by.training.sokolov.db.ConnectionException;
+
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,5 +14,5 @@ public interface IdentifiedRowMapper<T extends IdentifiedRow> {
 
     List<String> getColumnNames();
 
-    void populateStatement(PreparedStatement statement, T entity) throws SQLException;
+    void populateStatement(PreparedStatement statement, T entity) throws SQLException, ConnectionException;
 }

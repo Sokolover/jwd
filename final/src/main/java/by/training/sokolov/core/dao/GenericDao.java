@@ -1,6 +1,7 @@
 package by.training.sokolov.dao;
 
-import by.training.sokolov.db.BasicConnectionPool;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.db.ConnectionManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -29,20 +30,22 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
 
     private final String tableName;
     private final IdentifiedRowMapper<T> rowMapper;
+    private final ConnectionManager connectionManager;
 
-    public GenericDao(String tableName, IdentifiedRowMapper<T> rowMapper) {
+    public GenericDao(String tableName, IdentifiedRowMapper<T> rowMapper, ConnectionManager connectionManager) {
         this.tableName = tableName;
         this.rowMapper = rowMapper;
+        this.connectionManager = connectionManager;
     }
 
     @Override
-    public Long save(T entity) throws SQLException {
+    public Long save(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("save()--" + entity.toString());
         AtomicLong id = new AtomicLong(-1L);
 
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             List<String> columnNames = rowMapper.getColumnNames();
             String columns = String.join(", ", columnNames);
             String wildcards = columnNames.stream()
@@ -65,11 +68,11 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     }
 
     @Override
-    public void update(T entity) throws SQLException {
+    public void update(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("update()--" + entity.toString());
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             List<String> columnNames = rowMapper.getColumnNames();
             String columns = columnNames.stream()
                     .map(column -> column + " = ?")
@@ -87,11 +90,11 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     }
 
     @Override
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("deleteById()--" + id);
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(DELETE_BY_ID_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, id);
@@ -103,11 +106,11 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     }
 
     @Override
-    public void delete(T entity) throws SQLException {
+    public void delete(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("delete()--" + entity.toString());
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(DELETE_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, entity.getId());
@@ -119,12 +122,12 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     }
 
     @Override
-    public T getById(Long id) throws SQLException {
+    public T getById(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("getById()--" + id);
         AtomicReference<T> result = new AtomicReference<>();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_ID_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, id);
@@ -144,12 +147,12 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     }
 
     @Override
-    public List<T> findAll() throws SQLException {
+    public List<T> findAll() throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("findAll()");
         List<T> result = new ArrayList<>();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_ALL_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = statement.executeQuery();
