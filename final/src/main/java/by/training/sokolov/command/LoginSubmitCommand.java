@@ -1,9 +1,9 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.security.SecurityContext;
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.user.model.User;
-import by.training.sokolov.user.service.UserService;
+import by.training.sokolov.core.context.SecurityContext;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.user.model.User;
+import by.training.sokolov.entity.user.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,35 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
 import static by.training.sokolov.application.constants.ServletName.DELIVERY_SERVLET;
 
 public class LoginSubmitCommand implements Command {
 
+    private final UserService userService;
+
+    public LoginSubmitCommand(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        String login = request.getParameter("user.name");
-        UserService userService = BeanFactory.getUserService();
-        List<User> users = userService.findAll();
-        users = users
-                .stream()
-                .filter(u -> u.getName().equalsIgnoreCase(login))
-                .collect(Collectors.toList());
+        String name = request.getParameter("user.name");
+        String password = request.getParameter("user.password");
 
-        if (users.size() != 1) {
-            request.setAttribute("error", "login invalid");
-            return LOGIN_JSP;
-        }
+        User user = userService.login(name, password);
 
-        User user = users.get(0);
-
-        String reqPassword = request.getParameter("user.password");
-        if (!user.getPassword().equals(reqPassword)) {
-            request.setAttribute("error", "password invalid");
+        if (Objects.isNull(user)) {
+            request.setAttribute("error", "wrong email address or password");
             return LOGIN_JSP;
         }
 

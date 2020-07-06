@@ -1,7 +1,7 @@
-package by.training.sokolov.dish.model;
+package by.training.sokolov.entity.dish.model;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.category.model.DishCategory;
 
 import java.math.BigDecimal;
 

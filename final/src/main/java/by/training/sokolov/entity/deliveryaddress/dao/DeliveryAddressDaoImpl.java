@@ -1,8 +1,9 @@
-package by.training.sokolov.deliveryaddress.dao;
+package by.training.sokolov.entity.deliveryaddress.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -10,17 +11,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implements DeliveryAddressDao {
 
     private static final Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
     private static final String TABLE_NAME = "delivery_address";
-    private final Lock connectionLock = new ReentrantLock();
 
-    public DeliveryAddressDaoImpl() {
-        super(TABLE_NAME, getDeliveryAddressRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public DeliveryAddressDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getDeliveryAddressRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<DeliveryAddress> getDeliveryAddressRowMapper() {

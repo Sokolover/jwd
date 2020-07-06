@@ -1,11 +1,10 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
-import by.training.sokolov.command.CommandFactoryImpl;
 import by.training.sokolov.command.CommandUtil;
-import by.training.sokolov.db.BasicConnectionPool;
+import by.training.sokolov.core.context.ApplicationContext;
+import by.training.sokolov.core.context.SecurityContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -14,40 +13,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import static by.training.sokolov.application.constants.JspName.*;
 import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
 
-/*
-    fixme тут надо имя сделать как название класса сервлета,
-        и команда переадресации на этот сервлет должна быть такого же имени,
-        @
-        понять что тут происходит, почему логаут появляется только если
-        @WebServlet(urlPatterns = "/", name = "index")
-        при name = "index"
-        @
-        сейчас (30.06) всё работает при названии IndexController
-        @
-        название сервлета должно быть index:
-        1. так удобнее
-        2. фильтры его используют:
-            @WebFilter(servletNames = {"index"}, filterName = "lang_filter")
- */
-@WebServlet(urlPatterns = "/", name = "IndexServlet")
+@WebServlet(urlPatterns = "/", name = "index")
 public class IndexServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6154677369722697748L;
 
     private static final Logger LOGGER = Logger.getLogger(IndexServlet.class.getName());
-    private CommandFactory commandFactory;
-
-    @Override
-    public void init() {
-        commandFactory = new CommandFactoryImpl();
-        LOGGER.info("init server");
-    }
+    private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,6 +41,7 @@ public class IndexServlet extends HttpServlet {
             case USER_REGISTER_SERVLET:
             case MENU_SERVLET:
             case ORDER_BASKET_SERVLET:
+            case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
             case ORDER_CREATED_JSP:
@@ -89,14 +67,4 @@ public class IndexServlet extends HttpServlet {
         doGet(req, resp);
     }
 
-    @Override
-    public void destroy() {
-
-        try {
-            BasicConnectionPool.getInstance().shutdown();
-            LOGGER.info("cp shutdown");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

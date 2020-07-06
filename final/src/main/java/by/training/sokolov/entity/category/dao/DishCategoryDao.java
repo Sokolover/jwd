@@ -1,7 +1,7 @@
-package by.training.sokolov.category.dao;
+package by.training.sokolov.entity.category.dao;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.dao.CrudDao;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.entity.category.model.DishCategory;
 
 public interface DishCategoryDao extends CrudDao<DishCategory> {
 }

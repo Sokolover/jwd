@@ -1,8 +1,9 @@
-package by.training.sokolov.category.dao;
+package by.training.sokolov.entity.category.dao;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.category.model.DishCategory;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -18,9 +19,11 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
     private final static Logger LOGGER = Logger.getLogger(DishCategoryDaoImpl.class.getName());
     private static final String TABLE_NAME = "dish_category";
     private final Lock connectionLock = new ReentrantLock();
+    private final ConnectionManager connectionManager;
 
-    public DishCategoryDaoImpl() {
-        super(TABLE_NAME, getDishCategoryRowMapper());
+    public DishCategoryDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getDishCategoryRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<DishCategory> getDishCategoryRowMapper() {

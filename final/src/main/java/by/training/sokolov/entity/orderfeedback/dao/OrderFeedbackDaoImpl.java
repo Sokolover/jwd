@@ -1,8 +1,9 @@
-package by.training.sokolov.orderfeedback.dao;
+package by.training.sokolov.entity.orderfeedback.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.orderfeedback.model.OrderFeedback;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.orderfeedback.model.OrderFeedback;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -15,8 +16,11 @@ public class OrderFeedbackDaoImpl extends GenericDao<OrderFeedback> implements O
 
     private static final String TABLE_NAME = "order_feedback";
 
-    public OrderFeedbackDaoImpl() {
-        super(TABLE_NAME, getOrderFeedbackRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public OrderFeedbackDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getOrderFeedbackRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<OrderFeedback> getOrderFeedbackRowMapper() {

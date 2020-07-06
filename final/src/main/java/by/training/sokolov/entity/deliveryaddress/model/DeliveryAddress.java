@@ -1,7 +1,7 @@
-package by.training.sokolov.deliveryaddress.model;
+package by.training.sokolov.entity.deliveryaddress.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
-import by.training.sokolov.useraddress.model.UserAddress;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.useraddress.model.UserAddress;
 
 public class DeliveryAddress implements IdentifiedRow {
 

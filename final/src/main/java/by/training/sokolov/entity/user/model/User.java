@@ -1,10 +1,10 @@
-package by.training.sokolov.user.model;
+package by.training.sokolov.entity.user.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
-import by.training.sokolov.loyalty.model.Loyalty;
-import by.training.sokolov.role.model.UserRole;
-import by.training.sokolov.useraddress.model.UserAddress;
-import by.training.sokolov.wallet.model.Wallet;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.loyalty.model.Loyalty;
+import by.training.sokolov.entity.role.model.UserRole;
+import by.training.sokolov.entity.useraddress.model.UserAddress;
+import by.training.sokolov.entity.wallet.model.Wallet;
 
 import java.util.List;
 

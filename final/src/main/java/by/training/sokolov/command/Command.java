@@ -1,5 +1,7 @@
 package by.training.sokolov.command;
 
+import by.training.sokolov.db.ConnectionException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +12,7 @@ import java.util.function.BiFunction;
 @FunctionalInterface
 public interface Command extends BiFunction<HttpServletRequest, HttpServletResponse, String> {
 
-    String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException;
+    String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException;
 
     @Override
     default String apply(HttpServletRequest request, HttpServletResponse response) {

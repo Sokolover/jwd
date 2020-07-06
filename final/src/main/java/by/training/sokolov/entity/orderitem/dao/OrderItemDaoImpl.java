@@ -1,12 +1,10 @@
-package by.training.sokolov.orderitem.dao;
+package by.training.sokolov.entity.orderitem.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.dish.dao.DishDao;
-import by.training.sokolov.dish.dao.DishDaoImpl;
-import by.training.sokolov.dish.model.Dish;
-import by.training.sokolov.orderitem.model.OrderItem;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.orderitem.model.OrderItem;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -18,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,16 +24,30 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
     private static final Logger LOGGER = Logger.getLogger(OrderItemDaoImpl.class.getName());
     private static final String TABLE_NAME = "order_item";
-    private final Lock connectionLock = new ReentrantLock();
-
-    private static final String FIND_ALL_ITEMS_BY_ORDER_ID_QUERY =
+    private static final String SELECT_BY_DISH_ID = "" +
+            "SELECT *\n" +
+            "FROM {0}\n" +
+            "WHERE {0}.dish_id = ?";
+    private static final String SELECT_BY_DISH_CATEGORY_NAME_QUERY = "" +
             "SELECT {0}.*\n" +
-                    "FROM {0}, user_order\n" +
-                    "WHERE {0}.user_order_id = user_order_id\n" +
-                    "AND {0}.user_order_id = ?";
+            "FROM {0},\n" +
+            "     dish,\n" +
+            "     dish_category\n" +
+            "WHERE {0}.dish_id = dish.id\n" +
+            "  AND dish.dish_category_id = dish_category.id\n" +
+            "  AND dish_category.category_name = ?";
+    private static final String SELECT_ALL_BY_ORDER_ID_QUERY = "" +
+            "SELECT {0}.*\n" +
+            "FROM {0},\n" +
+            "     user_order\n" +
+            "WHERE {0}.user_order_id = user_order.id\n" +
+            "  AND user_order.id = ?";
+    private final Lock connectionLock = new ReentrantLock();
+    private final ConnectionManager connectionManager;
 
-    public OrderItemDaoImpl() {
-        super(TABLE_NAME, getOrderItemRowMapper());
+    public OrderItemDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getOrderItemRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<OrderItem> getOrderItemRowMapper() {
@@ -72,42 +85,13 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public List<OrderItem> findAll() throws SQLException {
-
-        List<OrderItem> orderItems = super.findAll();
-        findOrderItemsDish(orderItems);
-        return orderItems;
-    }
-
-    private void findOrderItemsDish(List<OrderItem> orderItems) throws SQLException {
-        DishDao dishDao = new DishDaoImpl();
-        for (OrderItem orderItem : orderItems) {
-            Long itemDishId = orderItem.getDish().getId();
-            Dish dish = dishDao.getById(itemDishId);
-            orderItem.setDish(dish);
-        }
-    }
-
-    @Override
-    public OrderItem getById(Long id) throws SQLException {
-
-        OrderItem orderItem = super.getById(id);
-
-        DishDao dishDao = new DishDaoImpl();
-        Long itemDishId = orderItem.getDish().getId();
-        Dish dish = dishDao.getById(itemDishId);
-        orderItem.setDish(dish);
-
-        return orderItem;
-    }
-
-    public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException {
+    public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("findAllItemsByOrderId()");
         List<OrderItem> result = new ArrayList<>();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            String sql = MessageFormat.format(FIND_ALL_ITEMS_BY_ORDER_ID_QUERY, TABLE_NAME);
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_ALL_BY_ORDER_ID_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, orderId);
                 ResultSet resultSet = statement.executeQuery();
@@ -119,8 +103,58 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
                     }
                 }
             }
-            findOrderItemsDish(result);
             return result;
+        } finally {
+            connectionLock.unlock();
+        }
+    }
+
+    @Override
+    public OrderItem getByDishId(Long id) throws ConnectionException, SQLException {
+
+        connectionLock.lock();
+        LOGGER.info("getById()--" + id);
+        AtomicReference<OrderItem> result = new AtomicReference<>();
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_BY_DISH_ID, TABLE_NAME);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setLong(1, id);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    try {
+                        result.set(getOrderItemRowMapper().map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
+                }
+            }
+            return result.get();
+        } finally {
+            connectionLock.unlock();
+        }
+    }
+
+    @Override
+    public OrderItem getByDishCategoryName(String categoryName) throws ConnectionException, SQLException {
+
+        connectionLock.lock();
+        LOGGER.info("getByDishCategoryName(String categoryName)");
+        AtomicReference<OrderItem> result = new AtomicReference<>();
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+//                statement.setString(1, "'" + categoryName + "'");
+                statement.setString(1, categoryName);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    try {
+                        result.set(getOrderItemRowMapper().map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
+                }
+            }
+            return result.get();
         } finally {
             connectionLock.unlock();
         }

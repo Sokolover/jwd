@@ -1,8 +1,8 @@
-package by.training.sokolov.orderitem.model;
+package by.training.sokolov.entity.orderitem.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
-import by.training.sokolov.dish.model.Dish;
-import by.training.sokolov.order.model.UserOrder;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.dish.model.Dish;
+import by.training.sokolov.entity.order.model.UserOrder;
 
 import java.math.BigDecimal;
 

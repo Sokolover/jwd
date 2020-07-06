@@ -1,4 +1,4 @@
-package by.sadko.training.exception;
+package by.training.sokolov.db;
 
 public class ConnectionException extends Exception {
 

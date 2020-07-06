@@ -1,6 +1,6 @@
-package by.training.sokolov.useraddress.model;
+package by.training.sokolov.entity.useraddress.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 public class UserAddress implements IdentifiedRow {
 

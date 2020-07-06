@@ -1,8 +1,6 @@
 package by.training.sokolov.jdbc;
 
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.dish.model.Dish;
-import by.training.sokolov.dish.service.DishService;
+import by.training.sokolov.entity.dish.model.Dish;
 import org.junit.Test;
 
 import java.io.File;
@@ -33,7 +31,7 @@ public class BlobInsertTest {
 
         System.out.println(dish.toString());
 
-        DishService dishService = BeanFactory.getDishService();
-        dishService.update(dish);
+//        DishService dishService = BeanFactory.getDishService();
+//        dishService.update(dish);
     }
 }

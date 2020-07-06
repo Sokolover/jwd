@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@WebFilter(servletNames = {"IndexServlet"}, filterName = "lang_filter")
+@WebFilter(urlPatterns = "/*", filterName = "lang_filter")
 public class LangFilter implements Filter {
 
     @Override
@@ -19,6 +19,10 @@ public class LangFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        /*
+        todo сделать более универсальным, для многих языков
+         */
 
         if (request instanceof HttpServletRequest) {
             String lang = request.getParameter("lang");

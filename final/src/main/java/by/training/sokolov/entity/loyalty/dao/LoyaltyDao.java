@@ -1,7 +1,7 @@
-package by.training.sokolov.loyalty.dao;
+package by.training.sokolov.entity.loyalty.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.loyalty.model.Loyalty;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.entity.loyalty.model.Loyalty;
 
 public interface LoyaltyDao extends CrudDao<Loyalty> {
 

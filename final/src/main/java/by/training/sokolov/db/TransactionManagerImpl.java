@@ -1,19 +1,17 @@
-package by.sadko.training.connection;
+package by.training.sokolov.db;
 
-import by.sadko.training.exception.ConnectionException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class BasicTransactionManager implements TransactionManager {
+public class TransactionManagerImpl implements TransactionManager {
 
-    private static final Logger LOGGER = LogManager.getLogger(BasicTransactionManager.class);
-    private final ConnectionPool<Connection> connectionPool;
+    private static final Logger LOGGER = Logger.getLogger(TransactionManagerImpl.class);
+    private final ConnectionPool connectionPool;
     private final ThreadLocal<Connection> currentConnection = new ThreadLocal<>();
 
-    public BasicTransactionManager(ConnectionPool<Connection> connectionPool) {
+    public TransactionManagerImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 

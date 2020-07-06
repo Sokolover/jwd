@@ -1,7 +1,7 @@
-package by.training.sokolov.deliveryaddress.dao;
+package by.training.sokolov.entity.deliveryaddress.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 
 public interface DeliveryAddressDao extends CrudDao<DeliveryAddress> {
 }

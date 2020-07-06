@@ -1,6 +1,6 @@
-package by.training.sokolov.wallet.model;
+package by.training.sokolov.entity.wallet.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 import java.math.BigDecimal;
 

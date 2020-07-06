@@ -1,7 +1,7 @@
-package by.training.sokolov.useraddress.service;
+package by.training.sokolov.entity.useraddress.service;
 
-import by.training.sokolov.service.GenericService;
-import by.training.sokolov.useraddress.model.UserAddress;
+import by.training.sokolov.entity.useraddress.model.UserAddress;
+import by.training.sokolov.core.service.GenericService;
 
 public interface UserAddressService extends GenericService<UserAddress> {
 

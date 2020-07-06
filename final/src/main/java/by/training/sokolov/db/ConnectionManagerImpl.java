@@ -1,57 +1,27 @@
-package by.sadko.training.connection;
+package by.training.sokolov.db;
 
-import by.sadko.training.exception.ConnectionException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class BasicConnectionManager implements ConnectionManager {
+public class ConnectionManagerImpl implements ConnectionManager {
 
-    private static final Logger LOGGER = LogManager.getLogger(BasicConnectionManager.class);
-    private final ConnectionPool<Connection> connectionPool;
+    private static final Logger LOGGER = Logger.getLogger(ConnectionManagerImpl.class.getName());
+    private final ConnectionPool connectionPool;
     private final TransactionManager transactionManager;
 
-    public BasicConnectionManager(ConnectionPool<Connection> connectionPool, TransactionManager transactionManager) {
+    public ConnectionManagerImpl(ConnectionPool connectionPool, TransactionManager transactionManager) {
         this.connectionPool = connectionPool;
         this.transactionManager = transactionManager;
     }
 
     @Override
-    public Connection getConnection() throws ConnectionException {
+    public Connection getConnection() throws ConnectionException, SQLException {
         if (transactionManager.isEmpty()) {
             return connectionPool.getConnection();
         } else {
             return transactionManager.getConnection();
         }
     }
-
-    /*@Override
-    public void beginTransaction(Connection connection) throws SQLException, ConnectionException {
-        if (!connection.isClosed()) {
-            connection.setAutoCommit(false);
-            LOGGER.info("Transaction has been started");
-        }
-        LOGGER.info("Connection is closed");
-    }
-
-    @Override
-    public void commitTransaction(Connection connection) throws SQLException {
-        if (!connection.isClosed()) {
-            connection.commit();
-            connection.close();
-            LOGGER.info("Transaction was committed");
-        }
-        LOGGER.info("Connection is closed");
-    }
-
-    @Override
-    public void rollbackTransaction(Connection connection) throws SQLException {
-        if (!connection.isClosed()) {
-            connection.rollback();
-            connection.close();
-            LOGGER.info("Transaction was rolled back");
-        }
-        LOGGER.info("Connection is closed");
-    }*/
 }

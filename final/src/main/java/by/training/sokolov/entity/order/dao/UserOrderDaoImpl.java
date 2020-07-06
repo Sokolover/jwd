@@ -1,9 +1,10 @@
-package by.training.sokolov.order.dao;
+package by.training.sokolov.entity.order.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.order.model.UserOrder;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.order.model.UserOrder;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -22,10 +23,16 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
 
     private static final Logger LOGGER = Logger.getLogger(UserOrderDaoImpl.class.getName());
     private static final String TABLE_NAME = "user_order";
+    private static final String SELECT_IN_PROGRESS_ORDER_BY_USER_ID_QUERY = "SELECT *\n" +
+            "FROM {0}\n" +
+            "WHERE user_account_id = ?\n" +
+            "AND {0}.in_progress = 1";
     private final Lock connectionLock = new ReentrantLock();
+    private final ConnectionManager connectionManager;
 
-    public UserOrderDaoImpl() {
-        super(TABLE_NAME, getUserOrderRowMapper());
+    public UserOrderDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getUserOrderRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<UserOrder> getUserOrderRowMapper() {
@@ -66,15 +73,13 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
     }
 
     @Override
-    public UserOrder findInProgressUserOrder(Long id) throws SQLException {
-
-        final String SELECT_USER_ORDER_BY_USER_ID_QUERY = "SELECT * FROM {0} WHERE user_account_id = ?";
+    public UserOrder findInProgressUserOrder(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
         LOGGER.info("findInProgressUserOrder(Long id)--" + id);
         AtomicReference<UserOrder> result = new AtomicReference<>();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            String sql = MessageFormat.format(SELECT_USER_ORDER_BY_USER_ID_QUERY, TABLE_NAME);
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_IN_PROGRESS_ORDER_BY_USER_ID_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, id);
                 ResultSet resultSet = statement.executeQuery();
@@ -90,6 +95,5 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
         } finally {
             connectionLock.unlock();
         }
-
     }
 }

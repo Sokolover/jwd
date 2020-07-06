@@ -1,7 +1,7 @@
-package by.training.sokolov.dishfeedback.dao;
+package by.training.sokolov.entity.dishfeedback.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.dishfeedback.model.DishFeedback;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
 
 public interface DishFeedbackDao extends CrudDao<DishFeedback> {
 }

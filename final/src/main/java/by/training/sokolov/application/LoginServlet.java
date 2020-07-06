@@ -1,7 +1,7 @@
 package by.training.sokolov.application;
 
 import by.training.sokolov.command.CommandFactory;
-import by.training.sokolov.command.CommandFactoryImpl;
+import by.training.sokolov.core.context.ApplicationContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,13 +19,7 @@ public class LoginServlet extends HttpServlet implements FormServlet {
     private static final long serialVersionUID = 1845229810562352696L;
 
     private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
-    private CommandFactory commandFactory;
-
-    @Override
-    public void init() {
-        commandFactory = new CommandFactoryImpl();
-        LOGGER.info("init server");
-    }
+    private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

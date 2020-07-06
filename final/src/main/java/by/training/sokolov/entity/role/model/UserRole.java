@@ -1,6 +1,6 @@
-package by.training.sokolov.role.model;
+package by.training.sokolov.entity.role.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 public class UserRole implements IdentifiedRow {
 

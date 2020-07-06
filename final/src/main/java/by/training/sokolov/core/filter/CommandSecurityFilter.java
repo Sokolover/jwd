@@ -1,7 +1,7 @@
 package by.training.sokolov.core.filter;
 
-import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.constants.CommandType;
+import by.training.sokolov.core.context.SecurityContext;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter(servletNames = {"IndexServlet"}, filterName = "security")
+@WebFilter(urlPatterns = "/*", filterName = "security")
 public class CommandSecurityFilter implements Filter {
 
     @Override
@@ -30,6 +30,10 @@ public class CommandSecurityFilter implements Filter {
                 сессия != поток выполнения
         */
 //        securityContext.setCurrentSessionId(servletRequest.getSession().getId());
+
+/*
+todo посмотреть видео по security и прикрутить рабочее security вместе с security.properties
+ */
         String command = servletRequest.getParameter("_command");
 
         Optional<CommandType> commandType = CommandType.of(command);

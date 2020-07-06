@@ -1,4 +1,4 @@
-package by.training.sokolov.role.constants;
+package by.training.sokolov.entity.role.constants;
 
 public class RoleName {
 

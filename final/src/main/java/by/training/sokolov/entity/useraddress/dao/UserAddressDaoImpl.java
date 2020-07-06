@@ -1,8 +1,9 @@
-package by.training.sokolov.useraddress.dao;
+package by.training.sokolov.entity.useraddress.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.useraddress.model.UserAddress;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.useraddress.model.UserAddress;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -19,8 +20,11 @@ public class UserAddressDaoImpl extends GenericDao<UserAddress> implements UserA
     private static final String TABLE_NAME = "user_address";
     private final Lock connectionLock = new ReentrantLock();
 
-    public UserAddressDaoImpl() {
-        super(TABLE_NAME, getUserAddressRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public UserAddressDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getUserAddressRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<UserAddress> getUserAddressRowMapper() {

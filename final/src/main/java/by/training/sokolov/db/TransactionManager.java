@@ -1,6 +1,4 @@
-package by.sadko.training.connection;
-
-import by.sadko.training.exception.ConnectionException;
+package by.training.sokolov.db;
 
 import java.sql.Connection;
 

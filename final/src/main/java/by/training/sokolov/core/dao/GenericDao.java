@@ -1,4 +1,4 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.core.dao;
 
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.ConnectionManager;

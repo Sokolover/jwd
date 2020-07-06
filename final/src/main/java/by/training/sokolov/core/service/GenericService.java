@@ -1,4 +1,4 @@
-package by.training.sokolov.service;
+package by.training.sokolov.core.service;
 
 import by.training.sokolov.db.ConnectionException;
 

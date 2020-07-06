@@ -1,6 +1,6 @@
-package by.training.sokolov.orderfeedback.model;
+package by.training.sokolov.entity.orderfeedback.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 public class OrderFeedback implements IdentifiedRow {
 

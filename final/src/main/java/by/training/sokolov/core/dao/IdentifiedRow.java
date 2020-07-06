@@ -1,4 +1,4 @@
-package by.training.sokolov.dao;
+package by.training.sokolov.core.dao;
 
 public interface IdentifiedRow {
 

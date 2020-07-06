@@ -1,11 +1,12 @@
-package by.training.sokolov.role.service;
+package by.training.sokolov.entity.role.service;
 
-import by.training.sokolov.role.model.UserRole;
-import by.training.sokolov.service.GenericService;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.role.model.UserRole;
+import by.training.sokolov.core.service.GenericService;
 
 import java.sql.SQLException;
 
 public interface UserRoleService extends GenericService<UserRole> {
 
-    Long getIdByRoleName(UserRole userRole) throws SQLException;
+    UserRole getByRoleName(String roleName) throws SQLException, ConnectionException;
 }

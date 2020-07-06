@@ -1,27 +1,39 @@
-package by.training.sokolov.dish.dao;
+package by.training.sokolov.entity.dish.dao;
 
-import by.training.sokolov.category.dao.DishCategoryDao;
-import by.training.sokolov.category.dao.DishCategoryDaoImpl;
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.dish.model.Dish;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.dish.model.Dish;
+import org.apache.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
+    private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class.getName());
     private static final String TABLE_NAME = "dish";
+    private static final String SELECT_BY_DISH_CATEGORY_QUERY = "SELECT {0}.*\n" +
+            "FROM {0},\n" +
+            "     dish_category\n" +
+            "WHERE {0}.dish_category_id = dish_category.id\n" +
+            "AND dish_category.category_name = ?";
+    private static ConnectionManager connectionManager;
+    private final Lock connectionLock = new ReentrantLock();
 
-    public DishDaoImpl() {
-        super(TABLE_NAME, getDishRowMapper());
+    public DishDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getDishRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Dish> getDishRowMapper() {
@@ -50,7 +62,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
             }
 
             @Override
-            public void populateStatement(PreparedStatement statement, Dish entity) throws SQLException {
+            public void populateStatement(PreparedStatement statement, Dish entity) throws SQLException, ConnectionException {
 
                 statement.setString(1, entity.getName());
                 statement.setBigDecimal(2, entity.getCost());
@@ -61,9 +73,9 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
         };
     }
 
-    private static Blob convertStringToBlob(String stringPicture) throws SQLException {
+    private static Blob convertStringToBlob(String stringPicture) throws SQLException, ConnectionException {
         byte[] byteData = stringPicture.getBytes(StandardCharsets.UTF_8);
-        Connection connection = BasicConnectionPool.getInstance().getConnection();
+        Connection connection = connectionManager.getConnection();
         Blob blobPicture = connection.createBlob();
         blobPicture.setBytes(1, byteData);
         return blobPicture;
@@ -74,15 +86,13 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
         InputStream inputStream = blob.getBinaryStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
+        int bufferSize = 4096;
+        byte[] buffer = new byte[bufferSize];
         int bytesRead = -1;
 
         while ((bytesRead = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, bytesRead);
         }
-
-//        byte[] imageBytes = outputStream.toByteArray();
-//        String stringPicture = Base64.getEncoder().encodeToString(imageBytes);
 
         String stringPicture = outputStream.toString();
 
@@ -93,25 +103,34 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
     }
 
     @Override
-    public List<Dish> findAll() throws SQLException {
+    public List<Dish> getByCategory(String categoryName) throws ConnectionException, SQLException {
 
-        List<Dish> dishes = super.findAll();
-        DishCategoryDao dishCategoryDao = new DishCategoryDaoImpl();
-        for (Dish dish : dishes) {
-            Long categoryId = dish.getDishCategory().getId();
-            DishCategory dishCategory = dishCategoryDao.getById(categoryId);
-            dish.setDishCategory(dishCategory);
+        connectionLock.lock();
+        LOGGER.info("findAll()");
+        List<Dish> result = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_QUERY, TABLE_NAME);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+//                statement.setString(1, "'" + categoryName + "'");
+                statement.setString(1, categoryName);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    try {
+                        result.add(getDishRowMapper().map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
+                }
+            }
+            return result;
+        } finally {
+            connectionLock.unlock();
         }
-        return dishes;
     }
 
-    @Override
-    public Dish getById(Long id) throws SQLException {
-
-        Dish dish = super.getById(id);
-        DishCategoryDao dishCategoryDao = new DishCategoryDaoImpl();
-        DishCategory dishCategory = dishCategoryDao.getById(dish.getDishCategory().getId());
-        dish.setDishCategory(dishCategory);
-        return dish;
-    }
+    /*
+    todo DONE дао делает только дао-операции. сервиса содержат в себе несколько
+     дао и сервисов и выполняют зависимую от
+     нескольких дао логику, как в этом методе
+     */
 }

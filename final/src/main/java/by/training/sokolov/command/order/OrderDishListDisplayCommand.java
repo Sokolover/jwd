@@ -1,63 +1,57 @@
 package by.training.sokolov.command.order;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.category.service.DishCategoryService;
 import by.training.sokolov.command.CategoryNameUtil;
 import by.training.sokolov.command.Command;
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.core.security.SecurityContext;
-import by.training.sokolov.order.model.UserOrder;
-import by.training.sokolov.order.service.UserOrderService;
-import by.training.sokolov.orderitem.model.OrderItem;
-import by.training.sokolov.orderitem.service.OrderItemService;
-import by.training.sokolov.user.model.User;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.category.model.DishCategory;
+import by.training.sokolov.entity.category.service.DishCategoryService;
+import by.training.sokolov.entity.order.model.UserOrder;
+import by.training.sokolov.entity.order.service.UserOrderService;
+import by.training.sokolov.entity.orderitem.model.OrderItem;
+import by.training.sokolov.entity.orderitem.service.OrderItemService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static by.training.sokolov.ApplicationModule.DISH_MENU;
 import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_DISH_LIST_DISPLAY;
 
 public class OrderDishListDisplayCommand implements Command {
 
+    private final UserOrderService userOrderService;
+    private final OrderItemService orderItemService;
+    private final DishCategoryService dishCategoryService;
+
+    public OrderDishListDisplayCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
+        this.userOrderService = userOrderService;
+        this.orderItemService = orderItemService;
+        this.dishCategoryService = dishCategoryService;
+    }
+
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-
-        /*
-        todo ВРОДЕ СДЕЛАНО DisplayOrderDishListCommand и ViewDishMenuCommand должны иметь фильтрацию
-            по категориям и их необходимо унифицировать в плане фильтра блюд!
-            фильтр по категориям необходимо оптимизировать
-         */
-
-        OrderItemService orderItemService = BeanFactory.getOrderItemService();
-        UserOrder userOrder = getCurrentUserOrder(request);
-        List<OrderItem> userOrderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         setCategoriesToRequest(request);
-
         List<String> categoryNames = CategoryNameUtil.getCategoryNames(request);
 
-        if (categoryNames.isEmpty() || categoryNames.get(0).equals("all")) {
+        if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
-            request.setAttribute("orderItems", userOrderItems);
-            return DISH_MENU;
+            UserOrder userOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
+            List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
+            request.setAttribute("orderItems", orderItems);
+            return ORDER_DISH_LIST_DISPLAY;
         }
 
         List<OrderItem> filteredUserOrderItems = new ArrayList<>();
-
-        List<OrderItem> orderItems = orderItemService.findAll();
-
         for (String categoryName : categoryNames) {
-            for (OrderItem orderItem : orderItems) {
-                if (orderItem.getDish().getDishCategory().getCategoryName().equals(categoryName)) {
-                    filteredUserOrderItems.add(orderItem);
-                }
+            OrderItem orderItem = orderItemService.getByDishCategoryName(categoryName);
+            if (Objects.isNull(orderItem)) {
+                continue;
             }
+            filteredUserOrderItems.add(orderItem);
         }
 
         request.setAttribute("orderItems", filteredUserOrderItems);
@@ -65,18 +59,9 @@ public class OrderDishListDisplayCommand implements Command {
         return ORDER_DISH_LIST_DISPLAY;
     }
 
-    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException {
+    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
 
-        DishCategoryService dishCategoryService = BeanFactory.getDishCategoryService();
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);
-    }
-
-    private UserOrder getCurrentUserOrder(HttpServletRequest request) throws SQLException {
-
-        String currentSessionId = request.getSession().getId();
-        User currentUser = SecurityContext.getInstance().getCurrentUser(currentSessionId);
-        UserOrderService userOrderService = BeanFactory.getUserOrderService();
-        return userOrderService.findInProgressUserOrder(currentUser.getId());
     }
 }

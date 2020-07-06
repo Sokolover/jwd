@@ -27,18 +27,3 @@
     </ul>
 
 </aside>
-
-<%--<c:set var="count" value="0" scope="page"/>--%>
-<%--<a href="?${pageContext.request.queryString}&_category${count}=<c:out value="${category.categoryName}"/>">--%>
-<%--    ${category.categoryName}--%>
-<%--</a>--%>
-<%--<c:set var="count" value="${count + 1}" scope="page"/>--%>
-
-<%--<form name="travel" action="http://ab-w.net/info.php" method="get">--%>
-<%--    <input type="checkbox" name="transport" value="airplane" checked="checked"/> Самолет<br/>--%>
-<%--    <input type="checkbox" name="transport" value="train"/> Поезд<br/>--%>
-<%--    <input type="checkbox" name="transport" value="car"/> Автомобиль<br/>--%>
-<%--    <input type="checkbox" name="transport" value="bus"/> Автобус<br/>--%>
-<%--    <input type="submit" value="OK"/>--%>
-<%--    <input type="reset" value="Reset"/>--%>
-<%--</form>--%>

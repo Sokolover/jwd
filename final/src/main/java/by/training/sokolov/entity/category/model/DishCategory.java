@@ -1,6 +1,6 @@
-package by.training.sokolov.category.model;
+package by.training.sokolov.entity.category.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 public class DishCategory implements IdentifiedRow {
 

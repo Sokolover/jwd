@@ -1,10 +1,10 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.category.service.DishCategoryService;
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.dish.model.Dish;
-import by.training.sokolov.dish.service.DishService;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.category.model.DishCategory;
+import by.training.sokolov.entity.category.service.DishCategoryService;
+import by.training.sokolov.entity.dish.model.Dish;
+import by.training.sokolov.entity.dish.service.DishService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,48 +12,46 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.training.sokolov.ApplicationModule.DISH_MENU;
+import static by.training.sokolov.command.constants.CommandReturnValues.DISH_MENU_DISPLAY;
 
 public class ViewDishMenuCommand implements Command {
 
+    private final DishService dishService;
+    private final DishCategoryService dishCategoryService;
+
+    public ViewDishMenuCommand(DishService dishService, DishCategoryService dishCategoryService) {
+        this.dishService = dishService;
+        this.dishCategoryService = dishCategoryService;
+    }
+
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         /*
             todo разбить команду на 2 команды: показ категорий и показ меню
         */
 
         setCategoriesToRequest(request);
-
-        DishService dishService = BeanFactory.getDishService();
-        List<Dish> dishes = dishService.findAll();
-
         List<String> categoryNames = CategoryNameUtil.getCategoryNames(request);
 
-        if (categoryNames.isEmpty() || categoryNames.get(0).equals("all")) {
+        if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
-            request.setAttribute("dishes", dishes);
-            return DISH_MENU;
+            request.setAttribute("dishes", dishService.findAll());
+            return DISH_MENU_DISPLAY;
         }
 
         List<Dish> filteredDishes = new ArrayList<>();
         for (String categoryName : categoryNames) {
-            for (Dish dish : dishes) {
-                if (dish.getDishCategory().getCategoryName().equals(categoryName)) {
-                    filteredDishes.add(dish);
-                }
-            }
+            filteredDishes.addAll(dishService.getByCategory(categoryName));
         }
 
         request.setAttribute("dishes", filteredDishes);
 
-        return DISH_MENU;
+        return DISH_MENU_DISPLAY;
     }
 
-    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException {
-        DishCategoryService dishCategoryService = BeanFactory.getDishCategoryService();
+    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);
     }
-
 }

@@ -1,9 +1,9 @@
 package by.training.sokolov.jdbc;
 
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.orderitem.dao.OrderItemDaoImpl;
-import by.training.sokolov.orderitem.model.OrderItem;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionPoolImpl;
+import by.training.sokolov.entity.orderitem.dao.OrderItemDaoImpl;
+import by.training.sokolov.entity.orderitem.model.OrderItem;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,7 +83,7 @@ public class OrderItemDaoTest {
         connectionLock.lock();
         LOGGER.info("findAllItemsByOrderId()");
         List<OrderItem> result = new ArrayList<>();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = ConnectionPoolImpl.getInstance().getConnection()) {
             String sql = MessageFormat.format(FIND_ALL_ITEMS_BY_ORDER_ID_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, orderId);

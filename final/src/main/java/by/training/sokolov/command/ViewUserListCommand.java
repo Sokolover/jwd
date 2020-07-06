@@ -1,21 +1,23 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.user.model.User;
-import by.training.sokolov.user.service.UserService;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ViewUserListCommand implements Command {
 
+    private final UserService userService;
+
+    public ViewUserListCommand(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        UserService userService = BeanFactory.getUserService();
-        List<User> allUsers = userService.findAll();
-        request.setAttribute("userList", allUsers);
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
+        request.setAttribute("userList", userService.findAll());
         return "user_list";
     }
 }

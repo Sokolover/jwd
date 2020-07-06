@@ -7,7 +7,7 @@
     <p class="menu-label">
         <fmt:message key="links.group.navigation"/>
     </p>
-    <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.security.SecurityContext"/>
+    <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
     <ul class="menu-list">
         <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
         <%--        <jsp:useBean id="sessionId" scope="request" type="java.lang.String"/>--%>
@@ -32,6 +32,9 @@
                 </li>
                 <li>
                     <a href="?_command=${CommandType.CREATE_ORDER}"><fmt:message key="links.order.create"/></a>
+                </li>
+                <li>
+                    <a href="?_command=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message key="links.order.checkout"/></a>
                 </li>
             </c:when>
             <c:otherwise>

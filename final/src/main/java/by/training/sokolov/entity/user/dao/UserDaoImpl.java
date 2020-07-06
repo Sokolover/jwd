@@ -1,42 +1,38 @@
-package by.training.sokolov.user.dao;
+package by.training.sokolov.entity.user.dao;
 
-import by.training.sokolov.core.factory.BeanFactory;
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.BasicConnectionPool;
-import by.training.sokolov.loyalty.dao.LoyaltyDao;
-import by.training.sokolov.loyalty.dao.LoyaltyDaoImpl;
-import by.training.sokolov.loyalty.model.Loyalty;
-import by.training.sokolov.role.model.UserRole;
-import by.training.sokolov.role.service.UserRoleService;
-import by.training.sokolov.user.model.User;
-import by.training.sokolov.useraddress.dao.UserAddressDao;
-import by.training.sokolov.useraddress.dao.UserAddressDaoImpl;
-import by.training.sokolov.useraddress.model.UserAddress;
-import by.training.sokolov.wallet.dao.WalletDao;
-import by.training.sokolov.wallet.dao.WalletDaoImpl;
-import by.training.sokolov.wallet.model.Wallet;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
-    private final static Logger LOGGER = Logger.getLogger(UserDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class.getName());
     private static final String TABLE_NAME = "user_account";
+    private static final String SELECT_BY_NAME = "" +
+            "SELECT {0}.*\n" +
+            "FROM {0}\n" +
+            "WHERE {0}.user_name = ?";
     private final Lock connectionLock = new ReentrantLock();
+    private final ConnectionManager connectionManager;
 
-    public UserDaoImpl() {
-        super(TABLE_NAME, getUserRowMapper());
+    public UserDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getUserRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<User> getUserRowMapper() {
@@ -85,86 +81,27 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
         };
     }
 
-    private void getUserRoles(User user) throws SQLException {
-
-        final String SELECT_ROLES_ID = "SELECT user_role.id\n" +
-                "FROM user_role,\n" +
-                "     user_account,\n" +
-                "     account_to_roles\n" +
-                "WHERE user_account.id = account_to_roles.user_account_id\n" +
-                "  AND account_to_roles.user_role_id = user_role.id\n" +
-                "  AND user_account.id = {0}";
-
+    public User getByName(String name) throws SQLException, ConnectionException {
         connectionLock.lock();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            String sql = MessageFormat.format(SELECT_ROLES_ID, user.getId());
+        LOGGER.info("getByName(String name)");
+        AtomicReference<User> result = new AtomicReference<>();
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(SELECT_BY_NAME, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, name);
                 ResultSet resultSet = statement.executeQuery();
-                List<UserRole> roles = new ArrayList<>();
-                UserRoleService userRoleService = BeanFactory.getUserRoleService();
-                while (resultSet.next()) {
-                    UserRole userRole = userRoleService.getById(resultSet.getLong("id"));
-                    roles.add(userRole);
+                if (resultSet.next()) {
+                    try {
+                        result.set(getUserRowMapper().map(resultSet));
+                    } catch (IOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
                 }
-                user.setRoles(roles);
             }
+            return result.get();
         } finally {
             connectionLock.unlock();
         }
-    }
-
-    private void setUserRoles(User user) throws SQLException {
-
-        final String INSERT_ROLES = "INSERT INTO account_to_roles (user_account_id, user_role_id) VALUES ({0}, {1})";
-
-        connectionLock.lock();
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection()) {
-            for (UserRole role : user.getRoles()) {
-                String sql = MessageFormat.format(INSERT_ROLES, user.getId(), role.getId());
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.executeUpdate();
-                }
-            }
-        } finally {
-            connectionLock.unlock();
-        }
-    }
-
-    @Override
-    public Long save(User entity) throws SQLException {
-
-        Long userId = super.save(entity);
-        entity.setId(userId);
-        setUserRoles(entity);
-
-        return entity.getId();
-    }
-
-    @Override
-    public List<User> findAll() throws SQLException {
-
-        List<User> users = super.findAll();
-
-        for (User user : users) {
-            getUserRoles(user);
-
-            Long idLoyalty = user.getLoyalty().getId();
-            LoyaltyDao loyaltyDao = new LoyaltyDaoImpl();
-            Loyalty loyalty = loyaltyDao.getById(idLoyalty);
-            user.getLoyalty().setPointsAmount(loyalty.getPointsAmount());
-
-            Long idWallet = user.getWallet().getId();
-            WalletDao walletDao = new WalletDaoImpl();
-            Wallet wallet = walletDao.getById(idWallet);
-            user.getWallet().setMoneyAmount(wallet.getMoneyAmount());
-
-            Long idAddress = user.getUserAddress().getId();
-            UserAddressDao userAddressDao = new UserAddressDaoImpl();
-            UserAddress userAddress = userAddressDao.getById(idAddress);
-            user.getUserAddress().setFullAddress(userAddress.getFullAddress());
-        }
-
-        return users;
     }
 
 }

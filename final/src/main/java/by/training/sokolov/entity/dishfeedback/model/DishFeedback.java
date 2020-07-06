@@ -1,8 +1,8 @@
-package by.training.sokolov.dishfeedback.model;
+package by.training.sokolov.entity.dishfeedback.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
-import by.training.sokolov.dish.model.Dish;
-import by.training.sokolov.user.model.User;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.dish.model.Dish;
+import by.training.sokolov.entity.user.model.User;
 
 public class DishFeedback implements IdentifiedRow {
 

@@ -1,8 +1,9 @@
-package by.training.sokolov.wallet.dao;
+package by.training.sokolov.entity.wallet.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.wallet.model.Wallet;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.wallet.model.Wallet;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -19,8 +20,11 @@ public class WalletDaoImpl extends GenericDao<Wallet> implements WalletDao {
     private static final String TABLE_NAME = "wallet";
     private final Lock connectionLock = new ReentrantLock();
 
-    public WalletDaoImpl() {
-        super(TABLE_NAME, getWalletRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public WalletDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getWalletRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Wallet> getWalletRowMapper() {

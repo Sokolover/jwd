@@ -1,8 +1,9 @@
-package by.training.sokolov.loyalty.dao;
+package by.training.sokolov.entity.loyalty.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.loyalty.model.Loyalty;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.loyalty.model.Loyalty;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -19,8 +20,11 @@ public class LoyaltyDaoImpl extends GenericDao<Loyalty> implements LoyaltyDao {
     private static final String TABLE_NAME = "loyalty_points";
     private final Lock connectionLock = new ReentrantLock();
 
-    public LoyaltyDaoImpl() {
-        super(TABLE_NAME, getLoyaltyRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public LoyaltyDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getLoyaltyRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Loyalty> getLoyaltyRowMapper() {

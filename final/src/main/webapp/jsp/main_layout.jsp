@@ -1,14 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="lang" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bulma.css">
 </head>
 <body>
+
+<%--fixme в сессию сетается язык только в delivery сервлете--%>
 
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
@@ -40,6 +41,12 @@
         <div class="column is-one-quarter">
             <jsp:include page="nav_bar.jsp"/>
         </div>
+        <%--        todo переделать как в этом комментарии--%>
+        <%--        <c:if test="${not empty viewName}">--%>
+        <%--            <div class="column is-three-quarters">--%>
+        <%--                <jsp:include page="views/${viewName}.jsp"/>--%>
+        <%--            </div>--%>
+        <%--        </c:if>--%>
         <div class="column is-two-quarters">
             <jsp:include page="views/${viewName}.jsp"/>
         </div>

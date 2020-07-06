@@ -1,6 +1,6 @@
-package by.training.sokolov.loyalty.model;
+package by.training.sokolov.entity.loyalty.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.IdentifiedRow;
 
 public class Loyalty implements IdentifiedRow {
 

@@ -1,8 +1,11 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.core.security.SecurityContext;
-import by.training.sokolov.command.*;
+import by.training.sokolov.command.Command;
+import by.training.sokolov.command.CommandFactory;
+import by.training.sokolov.command.CommandUtil;
 import by.training.sokolov.command.constants.CommandType;
+import by.training.sokolov.core.context.ApplicationContext;
+import by.training.sokolov.core.context.SecurityContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -23,13 +26,7 @@ public class OrderBasketServlet extends HttpServlet {
     private static final long serialVersionUID = -79412450294725257L;
 
     private static final Logger LOGGER = Logger.getLogger(OrderBasketServlet.class.getName());
-    private CommandFactory commandFactory;
-
-    @Override
-    public void init() {
-        commandFactory = new CommandFactoryImpl();
-        LOGGER.info("init server");
-    }
+    private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,7 +54,7 @@ public class OrderBasketServlet extends HttpServlet {
             case BASKET_ADD_ITEM:
             case DELETE_DISH_FROM_ORDER:
             default:
-                String commandShowOrderList = String.valueOf(CommandType.ORDER_DISH_LIST_DISPLAY);
+                String commandShowOrderList = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
                 command = commandFactory.getCommand(commandShowOrderList);
                 command.apply(req, resp);
                 req.setAttribute("viewName", ORDER_ITEM_LIST_JSP);
@@ -74,6 +71,5 @@ public class OrderBasketServlet extends HttpServlet {
 
         doGet(req, resp);
     }
-
 
 }

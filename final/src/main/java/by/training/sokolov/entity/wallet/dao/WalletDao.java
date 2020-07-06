@@ -1,7 +1,7 @@
-package by.training.sokolov.wallet.dao;
+package by.training.sokolov.entity.wallet.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.wallet.model.Wallet;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.entity.wallet.model.Wallet;
 
 public interface WalletDao extends CrudDao<Wallet> {
 }

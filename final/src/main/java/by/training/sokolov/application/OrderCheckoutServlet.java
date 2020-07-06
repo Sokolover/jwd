@@ -19,12 +19,12 @@ import static by.training.sokolov.application.constants.JspName.*;
 import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
 
-@WebServlet(urlPatterns = "/menu", name = "MenuServlet")
-public class MenuServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/order_checkout", name = "OrderCheckoutServlet")
+public class OrderCheckoutServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 3075146766217683919L;
+    private static final long serialVersionUID = -8741776007076420891L;
 
-    private static final Logger LOGGER = Logger.getLogger(MenuServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OrderCheckoutServlet.class.getName());
     private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
@@ -42,22 +42,24 @@ public class MenuServlet extends HttpServlet {
             case USER_REGISTER_SERVLET:
             case ORDER_BASKET_SERVLET:
             case MENU_SERVLET:
+            case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
             case LOGOUT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-            case ORDER_CREATED_JSP:
+            case ORDER_ACCEPTED_JSP:
                 req.setAttribute("viewName", viewName);
                 req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
+            case CHECKOUT_JSP:
             default:
-                String commandShowMenu = String.valueOf(CommandType.VIEW_DISH_MENU);
+                String commandShowMenu = String.valueOf(CommandType.CHECKOUT_ORDER_FORM_DISPLAY);
                 command = commandFactory.getCommand(commandShowMenu);
                 command.apply(req, resp);
-                req.setAttribute("viewName", DISH_LIST_JSP);
-                req.setAttribute("category", DISH_CATEGORY_JSP);
+                req.setAttribute("viewName", CHECKOUT_JSP);
+                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

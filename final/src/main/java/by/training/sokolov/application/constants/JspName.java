@@ -10,4 +10,6 @@ public class JspName {
     public static final String USER_REGISTER_JSP = "user_register_form";
     public static final String ORDER_CREATED_JSP = "order_created";
     public static final String ORDER_ITEM_LIST_JSP = "order_item_list";
+    public static final String CHECKOUT_JSP = "checkout";
+    public static final String ORDER_ACCEPTED_JSP = "order_accepted";
 }

@@ -64,7 +64,6 @@
                             <input class="button is-primary" type="submit" value="${add_label}">
                         </div>
                     </c:if>
-
                 </li>
             </form>
         </c:forEach>

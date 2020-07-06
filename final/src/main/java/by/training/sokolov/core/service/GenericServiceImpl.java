@@ -1,7 +1,7 @@
-package by.training.sokolov.service;
+package by.training.sokolov.core.service;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.dao.IdentifiedRow;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.db.ConnectionException;
 import org.apache.log4j.Logger;
 

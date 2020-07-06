@@ -1,11 +1,12 @@
-package by.training.sokolov.order.dao;
+package by.training.sokolov.entity.order.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.order.model.UserOrder;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.order.model.UserOrder;
 
 import java.sql.SQLException;
 
 public interface UserOrderDao extends CrudDao<UserOrder> {
 
-    UserOrder findInProgressUserOrder(Long id) throws SQLException;
+    UserOrder findInProgressUserOrder(Long id) throws SQLException, ConnectionException;
 }

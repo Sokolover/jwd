@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.toMap;
 final class PropertyHolder {
 
     private static Map<String, String> dataBaseProperties;
-    private final static Logger LOGGER = Logger.getLogger(PropertyHolder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PropertyHolder.class.getName());
 
     static Map<String, String> getProperties() {
         if (dataBaseProperties == null) {

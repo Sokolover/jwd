@@ -1,9 +1,9 @@
 package by.training.sokolov.application;
 
-import by.training.sokolov.core.security.SecurityContext;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandUtil;
+import by.training.sokolov.core.context.SecurityContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,9 @@ import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
 
 public interface FormServlet {
-
+/*
+todo узнать у Саши норм тут делать метод или нет
+ */
     default void formServletProcess(HttpServletRequest req, HttpServletResponse resp, CommandFactory commandFactory, String formJspName) throws IOException, ServletException {
 
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);

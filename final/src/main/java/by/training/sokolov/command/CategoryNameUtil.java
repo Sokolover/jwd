@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.ApplicationModule;
+import by.training.sokolov.core.QueryParamConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CategoryNameUtil {
 
-    private static final String ALL_CATEGORIES = "all";
+    public static final String ALL_CATEGORIES = "all";
 
     public static List<String> getCategoryNames(HttpServletRequest request) {
 
@@ -20,7 +20,7 @@ public class CategoryNameUtil {
 
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
-            if (ApplicationModule.CATEGORY_PARAM.equals(paramName)) {
+            if (QueryParamConstants.CATEGORY_PARAM.equals(paramName)) {
                 paramValues = request.getParameterValues(paramName);
 
                 for (String paramValue : paramValues) {

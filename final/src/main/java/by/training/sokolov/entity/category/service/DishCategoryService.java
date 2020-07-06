@@ -1,7 +1,7 @@
-package by.training.sokolov.category.service;
+package by.training.sokolov.entity.category.service;
 
-import by.training.sokolov.category.model.DishCategory;
-import by.training.sokolov.service.GenericService;
+import by.training.sokolov.entity.category.model.DishCategory;
+import by.training.sokolov.core.service.GenericService;
 
 public interface DishCategoryService extends GenericService<DishCategory> {
 

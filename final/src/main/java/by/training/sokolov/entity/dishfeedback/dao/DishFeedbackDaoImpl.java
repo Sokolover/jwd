@@ -1,8 +1,9 @@
-package by.training.sokolov.dishfeedback.dao;
+package by.training.sokolov.entity.dishfeedback.dao;
 
-import by.training.sokolov.dao.GenericDao;
-import by.training.sokolov.dao.IdentifiedRowMapper;
-import by.training.sokolov.dishfeedback.model.DishFeedback;
+import by.training.sokolov.core.dao.GenericDao;
+import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -19,8 +20,11 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
     private static final String TABLE_NAME = "dish_feedback";
     private final Lock connectionLock = new ReentrantLock();
 
-    public DishFeedbackDaoImpl() {
-        super(TABLE_NAME, getDishFeedbackRowMapper());
+    private final ConnectionManager connectionManager;
+
+    public DishFeedbackDaoImpl(ConnectionManager connectionManager) {
+        super(TABLE_NAME, getDishFeedbackRowMapper(), connectionManager);
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<DishFeedback> getDishFeedbackRowMapper() {

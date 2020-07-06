@@ -1,8 +1,8 @@
-package by.training.sokolov.order.model;
+package by.training.sokolov.entity.order.model;
 
-import by.training.sokolov.dao.IdentifiedRow;
-import by.training.sokolov.deliveryaddress.model.DeliveryAddress;
-import by.training.sokolov.user.model.User;
+import by.training.sokolov.core.dao.IdentifiedRow;
+import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.entity.user.model.User;
 
 import java.sql.Timestamp;
 

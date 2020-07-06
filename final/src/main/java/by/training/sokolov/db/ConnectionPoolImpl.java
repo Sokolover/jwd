@@ -19,9 +19,9 @@ import static by.training.sokolov.db.PropertyHolder.getProperties;
 import static by.training.sokolov.db.constants.PropertyName.*;
 
 
-public class BasicConnectionPool implements ConnectionPool {
+public class ConnectionPoolImpl implements ConnectionPool {
 
-    private final static Logger LOGGER = Logger.getLogger(BasicConnectionPool.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ConnectionPoolImpl.class.getName());
     private static final Lock connectionLockStatic = new ReentrantLock();
     private static Map<String, String> properties;
     private static int POOL_CAPACITY;
@@ -32,7 +32,7 @@ public class BasicConnectionPool implements ConnectionPool {
     private BlockingQueue<Connection> availableConnections;
     private BlockingQueue<Connection> usedConnections;
 
-    private BasicConnectionPool() {
+    private ConnectionPoolImpl() {
         properties = getProperties();
         registerDriver();
 
@@ -50,7 +50,7 @@ public class BasicConnectionPool implements ConnectionPool {
         connectionLockStatic.lock();
         try {
             if (basicConnectionPool == null) {
-                basicConnectionPool = new BasicConnectionPool();
+                basicConnectionPool = new ConnectionPoolImpl();
             }
             return basicConnectionPool;
         } finally {

@@ -1,8 +1,12 @@
-package by.training.sokolov.user.dao;
+package by.training.sokolov.entity.user.dao;
 
-import by.training.sokolov.dao.CrudDao;
-import by.training.sokolov.user.model.User;
+import by.training.sokolov.core.dao.CrudDao;
+import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.user.model.User;
+
+import java.sql.SQLException;
 
 public interface UserDao extends CrudDao<User> {
 
+    User getByName(String name) throws SQLException, ConnectionException;
 }
