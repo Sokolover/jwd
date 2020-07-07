@@ -42,6 +42,7 @@ public class MenuServlet extends HttpServlet {
             case USER_REGISTER_SERVLET:
             case ORDER_BASKET_SERVLET:
             case MENU_SERVLET:
+            case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
             case LOGOUT:
@@ -49,15 +50,15 @@ public class MenuServlet extends HttpServlet {
                 break;
             case ORDER_CREATED_JSP:
                 req.setAttribute("viewName", viewName);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             default:
-                String commandShowMenu = String.valueOf(CommandType.VIEW_DISH_MENU);
-                command = commandFactory.getCommand(commandShowMenu);
-                command.apply(req, resp);
-                req.setAttribute("viewName", DISH_LIST_JSP);
-                req.setAttribute("category", DISH_CATEGORY_JSP);
+                String commandName = String.valueOf(CommandType.VIEW_DISH_MENU);
+                command = commandFactory.getCommand(commandName);
+                String commandResult = command.apply(req, resp);
+                req.setAttribute("viewName", commandResult);
+//                req.setAttribute("category", DISH_CATEGORY_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

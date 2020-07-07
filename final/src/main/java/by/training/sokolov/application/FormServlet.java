@@ -38,7 +38,7 @@ todo узнать у Саши норм тут делать метод или н�
                 break;
             default:
                 req.setAttribute("viewName", formJspName);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

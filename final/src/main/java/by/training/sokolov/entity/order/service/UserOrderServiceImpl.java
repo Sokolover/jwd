@@ -3,8 +3,8 @@ package by.training.sokolov.entity.order.service;
 import by.training.sokolov.core.context.SecurityContext;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.Transactional;
-import by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressDao;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.entity.deliveryaddress.service.DeliveryAddressService;
 import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.dao.UserOrderDao;
 import by.training.sokolov.entity.order.model.UserOrder;
@@ -16,26 +16,22 @@ import by.training.sokolov.core.service.GenericServiceImpl;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implements UserOrderService {
 
     private final UserOrderDao userOrderDao;
-    private final DeliveryAddressDao deliveryAddressDao;
+    private final DeliveryAddressService deliveryAddressService;
     private final OrderItemService orderItemService;
 
-    public UserOrderServiceImpl(UserOrderDao userOrderDao, DeliveryAddressDao deliveryAddressDao, OrderItemService orderItemService) {
+    public UserOrderServiceImpl(UserOrderDao userOrderDao, DeliveryAddressService deliveryAddressService, OrderItemService orderItemService) {
         super(userOrderDao);
         this.userOrderDao = userOrderDao;
-        this.deliveryAddressDao = deliveryAddressDao;
+        this.deliveryAddressService = deliveryAddressService;
         this.orderItemService = orderItemService;
-    }
-
-    @Override
-    public UserOrder findInProgressUserOrder(Long id) throws SQLException, ConnectionException {
-
-        return userOrderDao.findInProgressUserOrder(id);
     }
 
     /*
@@ -49,16 +45,16 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         UserOrder userOrder = new UserOrder();
         userOrder.getUser().setId(user.getId());
 
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
-        userOrder.setTimeOfDelivery(timestamp);
+//        Date date = new Date();
+//        Timestamp timestamp = new Timestamp(date.getTime());
+        LocalDateTime localDateTime = LocalDateTime.now();
+        userOrder.setTimeOfDelivery(localDateTime);
 
-        userOrder.setInProgress(true);
-        userOrder.setOrderStatus(OrderStatus.START_TO_PROCESS);
+        userOrder.setOrderStatus(OrderStatus.BUILD_UP);
 
         DeliveryAddress userDeliveryAddress = new DeliveryAddress();
         userDeliveryAddress.setUserAddress(user.getUserAddress());
-        Long deliveryAddressId = deliveryAddressDao.save(userDeliveryAddress);
+        Long deliveryAddressId = deliveryAddressService.save(userDeliveryAddress);
         userDeliveryAddress.setId(deliveryAddressId);
 
         userOrder.setDeliveryAddress(userDeliveryAddress);
@@ -70,7 +66,14 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     public UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException {
 
         User currentUser = SecurityContext.getInstance().getCurrentUser(id);
-        return userOrderDao.findInProgressUserOrder(currentUser.getId());
+        UserOrder userOrder = userOrderDao.findBuildingUpUserOrder(currentUser.getId());
+        if(Objects.isNull(userOrder)){
+            return null;
+        }
+        DeliveryAddress deliveryAddress = deliveryAddressService.getById(userOrder.getDeliveryAddress().getId());
+        userOrder.setDeliveryAddress(deliveryAddress);
+
+        return userOrder;
     }
 
     @Transactional
@@ -83,9 +86,14 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(order.getId());
         BigDecimal orderCost = new BigDecimal(0);
         for(OrderItem orderItem:orderItems){
-            orderCost.add(orderItem.getItemCost());
+            orderCost = orderCost.add(orderItem.getItemCost());
         }
         return orderCost;
     }
 
+    @Override
+    public void update(UserOrder entity) throws SQLException, ConnectionException {
+
+        super.update(entity);
+    }
 }

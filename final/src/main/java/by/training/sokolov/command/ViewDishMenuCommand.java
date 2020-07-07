@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.DISH_MENU_DISPLAY;
+import static by.training.sokolov.application.constants.JspName.DISH_CATEGORY_JSP;
+import static by.training.sokolov.application.constants.JspName.DISH_LIST_JSP;
 
 public class ViewDishMenuCommand implements Command {
 
@@ -37,7 +38,7 @@ public class ViewDishMenuCommand implements Command {
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             request.setAttribute("dishes", dishService.findAll());
-            return DISH_MENU_DISPLAY;
+            return DISH_LIST_JSP;
         }
 
         List<Dish> filteredDishes = new ArrayList<>();
@@ -47,10 +48,11 @@ public class ViewDishMenuCommand implements Command {
 
         request.setAttribute("dishes", filteredDishes);
 
-        return DISH_MENU_DISPLAY;
+        return DISH_LIST_JSP;
     }
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
+        request.setAttribute("category", DISH_CATEGORY_JSP);
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);
     }

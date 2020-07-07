@@ -26,6 +26,7 @@
         </thead>
         <tbody>
         <c:set var="i" value="1"/>
+        <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
         <c:forEach items="${itemList}" var="item">
             <tr>
                 <td><c:out value="${i}"/>
@@ -68,11 +69,13 @@
                     <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
                 </div>
             </label>
-            <label class="label">
-                <fmt:message key="user.email"/>
-                <div class="control">
-                    <input class="input" name="user.email" type="text" placeholder="Text input">
-                </div>
+            <label class="checkbox">
+                <input type="checkbox" name="default.user.name" value="users">
+                send user name
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="default.user.phoneNumber" value="users">
+                send user phone number
             </label>
             <%--ввод времени доставки--%>
             <label class="label">
@@ -106,10 +109,13 @@
                 <%--                    </div>--%>
                 <%--                </div>--%>
                 <%--            </div>--%>
-                <select name="select">
-                    <option name="order.timeOfDelivery" value="08:00">8:00</option>
-                    <option name="order.timeOfDelivery" value="15:00">15:00</option>
-                    <option name="order.timeOfDelivery" value="19:00">19:00</option>
+<%--                fixme сделать заказы на следующий день если на этот уже нет--%>
+<%--                 или обработать исключение что на сегодня заказывать мольше нельзя--%>
+                <select name="order.timeOfDelivery">
+                    <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
+                    <c:forEach items="${timeList}" var="time">
+                        <option value="${time}">${time}</option>
+                    </c:forEach>
                 </select>
             </label>
             <%--ввод адреса--%>
@@ -150,6 +156,10 @@
                 <div class="control">
                     <input class="input" name="order.address.floor" type="text" placeholder="Text input">
                 </div>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="default.order.address" value="users">
+                send user address
             </label>
         </div>
         <div class="field is-grouped">

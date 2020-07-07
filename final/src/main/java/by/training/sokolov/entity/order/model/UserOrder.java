@@ -2,18 +2,21 @@ package by.training.sokolov.entity.order.model;
 
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
+import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.user.model.User;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class UserOrder implements IdentifiedRow {
 
     private Long id;
-    private Timestamp timeOfDelivery;
-    private String orderStatus;
-    private Boolean inProgress;
+    private LocalDateTime timeOfDelivery;
+    private OrderStatus orderStatus;
     private User user;
     private DeliveryAddress deliveryAddress;
+    private String customerName;
+    private String customerPhoneNumber;
 
     public UserOrder() {
         this.user = new User();
@@ -25,10 +28,11 @@ public class UserOrder implements IdentifiedRow {
         return "UserOrder{" +
                 "id=" + id +
                 ", timeOfDelivery=" + timeOfDelivery +
-                ", orderStatus='" + orderStatus + '\'' +
-                ", inProgress=" + inProgress +
+                ", orderStatus=" + orderStatus +
                 ", user=" + user +
                 ", deliveryAddress=" + deliveryAddress +
+                ", customerName='" + customerName + '\'' +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
                 '}';
     }
 
@@ -42,28 +46,20 @@ public class UserOrder implements IdentifiedRow {
         this.id = id;
     }
 
-    public Timestamp getTimeOfDelivery() {
+    public LocalDateTime getTimeOfDelivery() {
         return timeOfDelivery;
     }
 
-    public void setTimeOfDelivery(Timestamp timeOfDelivery) {
+    public void setTimeOfDelivery(LocalDateTime timeOfDelivery) {
         this.timeOfDelivery = timeOfDelivery;
     }
 
-    public String getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
-    }
-
-    public Boolean getInProgress() {
-        return inProgress;
-    }
-
-    public void setInProgress(Boolean inProgress) {
-        this.inProgress = inProgress;
     }
 
     public User getUser() {
@@ -80,5 +76,21 @@ public class UserOrder implements IdentifiedRow {
 
     public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
+    }
+
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 }

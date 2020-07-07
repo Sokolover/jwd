@@ -10,8 +10,6 @@ import java.sql.SQLException;
 
 public interface UserOrderService extends GenericService<UserOrder> {
 
-    UserOrder findInProgressUserOrder(Long id) throws SQLException, ConnectionException;
-
     void createNewOrder(User user) throws SQLException, ConnectionException;
 
     UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException;

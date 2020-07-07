@@ -46,15 +46,15 @@ public class IndexServlet extends HttpServlet {
                 break;
             case ORDER_CREATED_JSP:
                 req.setAttribute("viewName", viewName);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case LOGOUT:
                 resp.sendRedirect(req.getContextPath());
                 break;
             default:
-                req.setAttribute("viewName", INDEX_JSP);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("viewName", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

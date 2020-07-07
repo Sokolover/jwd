@@ -8,5 +8,5 @@ import java.sql.SQLException;
 
 public interface UserOrderDao extends CrudDao<UserOrder> {
 
-    UserOrder findInProgressUserOrder(Long id) throws SQLException, ConnectionException;
+    UserOrder findBuildingUpUserOrder(Long id) throws SQLException, ConnectionException;
 }

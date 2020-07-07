@@ -37,13 +37,20 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
+        /*
+        fixme добавить ошибку на джп что если заказ не создан то его нужно создать
+         */
         UserOrder currentUserOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
         Long currentUserOrderId = currentUserOrder.getId();
 
         String dishIdString = request.getParameter("dish.id");
         Long dishIdLong = Long.parseLong(dishIdString);
 
-        if (Objects.isNull(orderItemService.getByDishId(dishIdLong))) {
+        /*
+        todo этот метод должен доставать ИТЕМ по ид блюда ИЗ ТЕКУЩЕГО ЗАКАЗА
+         */
+
+        if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 
             OrderItem orderItem = new OrderItem();
             orderItem.getUserOrder().setId(currentUserOrderId);

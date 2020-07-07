@@ -11,7 +11,7 @@ public interface OrderItemDao extends CrudDao<OrderItem> {
 
     List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException, ConnectionException;
 
-    OrderItem getByDishId(Long id) throws ConnectionException, SQLException;
+    OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException;
 
     OrderItem getByDishCategoryName(String categoryName) throws ConnectionException, SQLException;
 }

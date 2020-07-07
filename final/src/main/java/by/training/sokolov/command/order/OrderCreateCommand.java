@@ -3,6 +3,7 @@ package by.training.sokolov.command.order;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.core.context.SecurityContext;
 import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.user.model.User;
@@ -17,13 +18,13 @@ import java.util.Objects;
 
 import static by.training.sokolov.application.constants.JspName.ORDER_CREATED_JSP;
 
-public class CreateOrderCommand implements Command {
+public class OrderCreateCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateOrderCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OrderCreateCommand.class.getName());
 
     private final UserOrderService userOrderService;
 
-    public CreateOrderCommand(UserOrderService userOrderService) {
+    public OrderCreateCommand(UserOrderService userOrderService) {
         this.userOrderService = userOrderService;
     }
 
@@ -31,7 +32,10 @@ public class CreateOrderCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
         UserOrder currentUserOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-        if (Objects.isNull(currentUserOrder) || !currentUserOrder.getInProgress()) {
+        /*
+        fixme замена на enum OrderStatus
+         */
+        if (Objects.isNull(currentUserOrder) || !currentUserOrder.getOrderStatus().equals(OrderStatus.BUILD_UP)) {
             String currentSessionId = request.getSession().getId();
             User user = SecurityContext.getInstance().getCurrentUser(currentSessionId);
             userOrderService.createNewOrder(user);

@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.training.sokolov.application.constants.JspName.*;
-import static by.training.sokolov.application.constants.ServletName.MENU_SERVLET;
-import static by.training.sokolov.application.constants.ServletName.ORDER_BASKET_SERVLET;
+import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.*;
 
 @WebServlet(urlPatterns = "/order_basket", name = "OrderBasketServlet")
@@ -41,6 +40,7 @@ public class OrderBasketServlet extends HttpServlet {
         switch (viewName) {
             case MENU_SERVLET:
             case ORDER_BASKET_SERVLET:
+            case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
             case LOGOUT:
@@ -48,19 +48,32 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
             case ORDER_CREATED_JSP:
                 req.setAttribute("viewName", viewName);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case BASKET_ADD_ITEM:
             case DELETE_DISH_FROM_ORDER:
             default:
-                String commandShowOrderList = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
-                command = commandFactory.getCommand(commandShowOrderList);
-                command.apply(req, resp);
-                req.setAttribute("viewName", ORDER_ITEM_LIST_JSP);
-                req.setAttribute("category", DISH_CATEGORY_JSP);
+                String commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
+                command = commandFactory.getCommand(commandName);
+                String commandResult = command.apply(req, resp);
+                req.setAttribute("viewName", commandResult);
+//                req.setAttribute("category", DISH_CATEGORY_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
+                /*
+                todo сделать менее колходное создание заказа по дефолту,
+                 если его нет, а он нужен!!!
+                 */
+//                if(commandResult.equals(CommandType.CREATE_ORDER.name())){
+//                    String commandCreateOrder = String.valueOf(CommandType.CREATE_ORDER);
+//                    command = commandFactory.getCommand(commandCreateOrder);
+//                    command.apply(req, resp);
+//                    commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
+//                    command = commandFactory.getCommand(commandName);
+//                    command.apply(req, resp);
+//                }
+
 
         }
 

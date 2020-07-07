@@ -9,6 +9,8 @@ import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.category.service.DishCategoryServiceImpl;
 import by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressDao;
 import by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressDaoImpl;
+import by.training.sokolov.entity.deliveryaddress.service.DeliveryAddressService;
+import by.training.sokolov.entity.deliveryaddress.service.DeliveryAddressServiceImpl;
 import by.training.sokolov.entity.dish.dao.DishDao;
 import by.training.sokolov.entity.dish.dao.DishDaoImpl;
 import by.training.sokolov.entity.dish.service.DishService;
@@ -141,7 +143,8 @@ public class ApplicationContext {
         //service
         DishService dishService = new DishServiceImpl(dishDao, dishCategoryDao);
         OrderItemService orderItemService = new OrderItemServiceImpl(orderItemDao, dishService);
-        UserOrderService userOrderService = new UserOrderServiceImpl(userOrderDao, deliveryAddressDao, orderItemService);
+        DeliveryAddressService deliveryAddressService = new DeliveryAddressServiceImpl(deliveryAddressDao, userAddressDao);
+        UserOrderService userOrderService = new UserOrderServiceImpl(userOrderDao, deliveryAddressService, orderItemService);
         UserService userService = new UserServiceImpl(userDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
         DishCategoryService dishCategoryService = new DishCategoryServiceImpl(dishCategoryDao);
 
@@ -172,14 +175,15 @@ public class ApplicationContext {
                 (getClass().getClassLoader(), dishCategoryServiceHandler, DishCategoryService.class);
 
         //commands
-        Command createOrderCommand = new CreateOrderCommand(userOrderProxyService);
+        Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
         Command deleteDishFromOrderCommand = new DeleteDishFromOrderCommand(orderItemProxyService);
         Command orderDishListDisplayCommand = new OrderDishListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
         Command loginSubmitCommand = new LoginSubmitCommand(userProxyService);
         Command registerUserCommand = new RegisterUserCommand(userProxyService);
         Command viewDishMenuCommand = new ViewDishMenuCommand(dishProxyService, dishCategoryProxyService);
-        Command orderCheckoutCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
+        Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
+        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(orderItemProxyService, userOrderProxyService, userService);
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -195,7 +199,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(CREATE_ORDER, createOrderCommand);
         commandFactory.registerCommand(VIEW_ORDER_DISH_LIST, orderDishListDisplayCommand);
         commandFactory.registerCommand(ORDER_ITEM_ADD, orderItemAddCommand);
-        commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutCommand);
+        commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
+        commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
 
         commandFactory.registerCommand(VIEW_DISH_MENU, viewDishMenuCommand);
 

@@ -1,10 +1,32 @@
 package by.training.sokolov.entity.order.constants;
 
-public class OrderStatus {
+public enum OrderStatus {
 
-    public static final String START_TO_PROCESS = "start";
-    public static final String SUBMITTED = "submitted";
-    public static final String IN_PROCESS = "process";
-    public static final String END_TO_PROCESS = "end";
+    BUILD_UP("build_up"),
+    SUBMITTED("submitted"),
+    START_TO_PROCESS("start"),
+    IN_PROCESS("process"),
+    END_TO_PROCESS("end"),
+    DEFAULT("default");
+
+    private String value;
+
+    OrderStatus(String value) {
+        this.value = value;
+    }
+
+    public static OrderStatus fromString(String name) {
+        final OrderStatus[] values = OrderStatus.values();
+        for (OrderStatus orderStatus : values) {
+            if (orderStatus.value.equalsIgnoreCase(name) || orderStatus.name().equalsIgnoreCase(name)) {
+                return orderStatus;
+            }
+        }
+        return DEFAULT;
+    }
+
+    public String getValue() {
+        return value;
+    }
 
 }

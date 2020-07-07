@@ -8,4 +8,5 @@ public class CommandReturnValues {
     public static final String BASKET_ADD_ITEM = "basket_add_item";
     public static final String DISH_MENU_DISPLAY = "dish_menu_display";
     public static final String CHECKOUT = "checkout";
+    public static final String ERROR = "error";
 }

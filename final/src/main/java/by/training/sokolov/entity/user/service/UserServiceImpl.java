@@ -44,7 +44,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     @Override
     public User login(String name, String password) throws ConnectionException, SQLException {
 
-        User user = userDao.getByName(name);
+        User user = this.getByName(name);
 
         if (!Objects.isNull(user) && user.getPassword().equals(password)) {
             LOGGER.info("user " + user.getName() + " logged in");
@@ -72,25 +72,38 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     public List<User> findAll() throws SQLException, ConnectionException {
 
         List<User> users = super.findAll();
-
         for (User user : users) {
-
-            user.setRoles(userRoleDao.getUserRoles(user));
-
-            Long idLoyalty = user.getLoyalty().getId();
-            Loyalty loyalty = loyaltyDao.getById(idLoyalty);
-            user.setLoyalty(loyalty);
-
-            Long idWallet = user.getWallet().getId();
-            Wallet wallet = walletDao.getById(idWallet);
-            user.setWallet(wallet);
-
-            Long idAddress = user.getUserAddress().getId();
-            UserAddress userAddress = userAddressDao.getById(idAddress);
-            user.setUserAddress(userAddress);
+            getUserAttributes(user);
         }
 
         return users;
+    }
+
+    private void getUserAttributes(User user) throws SQLException, ConnectionException {
+
+        user.setRoles(userRoleDao.getUserRoles(user));
+
+        Long idLoyalty = user.getLoyalty().getId();
+        Loyalty loyalty = loyaltyDao.getById(idLoyalty);
+        user.setLoyalty(loyalty);
+
+        Long idWallet = user.getWallet().getId();
+        Wallet wallet = walletDao.getById(idWallet);
+        user.setWallet(wallet);
+
+        Long idAddress = user.getUserAddress().getId();
+        UserAddress userAddress = userAddressDao.getById(idAddress);
+        user.setUserAddress(userAddress);
+    }
+
+    @Transactional
+
+    public User getByName(String name) throws ConnectionException, SQLException {
+
+        User user = userDao.getByName(name);
+        this.getUserAttributes(user);
+
+        return user;
     }
 
     @Transactional

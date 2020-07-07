@@ -13,7 +13,7 @@ public interface OrderItemService extends GenericService<OrderItem> {
 
     void addNewOrderItem(OrderItem orderItem) throws SQLException, ConnectionException;
 
-    OrderItem getByDishId(Long id) throws ConnectionException, SQLException;
+    OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException;
 
     OrderItem getByDishCategoryName(String categoryName) throws ConnectionException, SQLException;
 

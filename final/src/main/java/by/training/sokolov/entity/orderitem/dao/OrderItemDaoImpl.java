@@ -24,10 +24,11 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
     private static final Logger LOGGER = Logger.getLogger(OrderItemDaoImpl.class.getName());
     private static final String TABLE_NAME = "order_item";
-    private static final String SELECT_BY_DISH_ID = "" +
-            "SELECT *\n" +
+    private static final String SELECT_BY_DISH_ID_AND_USER_ORDER_ID = "" +
+            "SELECT {0}.*\n" +
             "FROM {0}\n" +
-            "WHERE {0}.dish_id = ?";
+            "WHERE {0}.dish_id = ?\n" +
+            "  AND {0}.user_order_id = ?";
     private static final String SELECT_BY_DISH_CATEGORY_NAME_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
@@ -110,15 +111,16 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public OrderItem getByDishId(Long id) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-        LOGGER.info("getById()--" + id);
+        LOGGER.info("getById()--" + dishId);
         AtomicReference<OrderItem> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_DISH_ID, TABLE_NAME);
+            String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setLong(1, id);
+                statement.setLong(1, dishId);
+                statement.setLong(2, userOrderId);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     try {

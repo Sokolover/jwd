@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_DISH_LIST_DISPLAY;
+import static by.training.sokolov.application.constants.JspName.*;
 
 public class OrderDishListDisplayCommand implements Command {
 
@@ -40,9 +40,17 @@ public class OrderDishListDisplayCommand implements Command {
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             UserOrder userOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
+            /*
+            fixme придумать как обработать опцию, если заказ ещё не создан (userOrder == null)
+             */
+            if (Objects.isNull(userOrder)) {
+                request.setAttribute("error", "please, create order");
+//                return CommandType.CREATE_ORDER.name();
+                return INDEX_JSP;
+            }
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
             request.setAttribute("orderItems", orderItems);
-            return ORDER_DISH_LIST_DISPLAY;
+            return ORDER_ITEM_LIST_JSP;
         }
 
         List<OrderItem> filteredUserOrderItems = new ArrayList<>();
@@ -56,11 +64,11 @@ public class OrderDishListDisplayCommand implements Command {
 
         request.setAttribute("orderItems", filteredUserOrderItems);
 
-        return ORDER_DISH_LIST_DISPLAY;
+        return ORDER_ITEM_LIST_JSP;
     }
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
-
+        request.setAttribute("category", DISH_CATEGORY_JSP);
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);
     }

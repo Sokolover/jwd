@@ -41,18 +41,18 @@
         <div class="column is-one-quarter">
             <jsp:include page="nav_bar.jsp"/>
         </div>
-        <%--        todo переделать как в этом комментарии--%>
-        <%--        <c:if test="${not empty viewName}">--%>
-        <%--            <div class="column is-three-quarters">--%>
-        <%--                <jsp:include page="views/${viewName}.jsp"/>--%>
-        <%--            </div>--%>
-        <%--        </c:if>--%>
-        <div class="column is-two-quarters">
-            <jsp:include page="views/${viewName}.jsp"/>
-        </div>
-        <div class="column is-one-quarter">
-            <jsp:include page="views/${category}.jsp"/>
-        </div>
+        <%--        <jsp:useBean id="viewName" scope="application" type="java.lang.String"/>--%>
+        <%--        <jsp:useBean id="category" scope="application" type="java.lang.String"/>--%>
+        <c:if test="${not empty viewName}">
+            <div class="column is-two-quarters">
+                <jsp:include page="views/${viewName}.jsp"/>
+            </div>
+        </c:if>
+        <c:if test="${not empty category}">
+            <div class="column is-one-quarter">
+                <jsp:include page="views/${category}.jsp"/>
+            </div>
+        </c:if>
     </div>
 </section>
 <section class="footer">

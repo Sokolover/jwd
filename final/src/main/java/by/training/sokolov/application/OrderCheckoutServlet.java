@@ -38,7 +38,6 @@ public class OrderCheckoutServlet extends HttpServlet {
         req.setAttribute("userLoggedIn", userLoggedIn);
 
         switch (viewName) {
-            case LOGIN_SERVLET:
             case USER_REGISTER_SERVLET:
             case ORDER_BASKET_SERVLET:
             case MENU_SERVLET:
@@ -48,18 +47,19 @@ public class OrderCheckoutServlet extends HttpServlet {
             case LOGOUT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-            case ORDER_ACCEPTED_JSP:
+            case ORDER_CREATED_JSP:
+            case ORDER_SUBMITTED_JSP:
                 req.setAttribute("viewName", viewName);
-                req.setAttribute("category", INDEX_JSP);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case CHECKOUT_JSP:
             default:
-                String commandShowMenu = String.valueOf(CommandType.CHECKOUT_ORDER_FORM_DISPLAY);
-                command = commandFactory.getCommand(commandShowMenu);
-                command.apply(req, resp);
-                req.setAttribute("viewName", CHECKOUT_JSP);
-                req.setAttribute("category", INDEX_JSP);
+                String commandName = String.valueOf(CommandType.CHECKOUT_ORDER_FORM_DISPLAY);
+                command = commandFactory.getCommand(commandName);
+                String commandResult = command.apply(req, resp);
+                req.setAttribute("viewName", commandResult);
+//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

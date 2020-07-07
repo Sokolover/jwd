@@ -54,9 +54,9 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     }
 
     @Override
-    public OrderItem getByDishId(Long id) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException {
 
-        return orderItemDao.getByDishId(id);
+        return orderItemDao.getFromCurrentOrderByDishId(dishId, userOrderId);
     }
 
     @Transactional
