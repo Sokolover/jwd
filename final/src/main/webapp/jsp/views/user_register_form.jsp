@@ -13,49 +13,44 @@
     <form action="${pageContext.request.contextPath}/user_register" method="post">
         <input type="hidden" name="_command" value="${CommandType.REGISTER_USER}">
         <div class="field">
-
-            <label class="label">
-                <fmt:message key="user.name"/>
+            <div class="column is-one-third">
                 <div class="control">
-                    <input class="input" name="user.name" type="text" placeholder="Text input">
+                    <label class="label">
+                        <fmt:message key="user.name"/>
+                        <input class="input" name="user.name" type="text" placeholder="Text input">
+                    </label>
                 </div>
-            </label>
-
-            <label class="label">
-                <fmt:message key="user.password"/>
                 <div class="control">
-                    <input class="input" name="user.password" type="password" placeholder="Text input">
+                    <label class="label">
+                        <fmt:message key="user.password"/>
+                        <input class="input" name="user.password" type="password" placeholder="Password input">
+                    </label>
                 </div>
-            </label>
-
-            <label class="label">
-                <fmt:message key="user.email"/>
                 <div class="control">
-                    <input class="input" name="user.email" type="text" placeholder="Text input">
+                    <label class="label">
+                        <fmt:message key="user.email"/>
+                        <input class="input" name="user.email" type="text" placeholder="Text input">
+                    </label>
                 </div>
-            </label>
-
-            <label class="label">
-                <fmt:message key="user.phoneNumber"/>
                 <div class="control">
-                    <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
+                    <label class="label">
+                        <fmt:message key="user.phoneNumber"/>
+                        <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
+                    </label>
                 </div>
-            </label>
-
-            <label class="label">
-                <fmt:message key="user.address"/>
                 <div class="control">
-                    <input class="input" name="user.address" type="text" placeholder="Text input">
+                    <label class="label">
+                        <fmt:message key="user.address"/>
+                        <input class="input" name="user.address" type="text" placeholder="Text input">
+                    </label>
                 </div>
-            </label>
-
+            </div>
             <div class="field is-grouped">
                 <div class="control">
                     <fmt:message var="register_label" key="links.register"/>
                     <input class="button is-primary" type="submit" value="${register_label}">
                 </div>
             </div>
-
         </div>
     </form>
 </div>

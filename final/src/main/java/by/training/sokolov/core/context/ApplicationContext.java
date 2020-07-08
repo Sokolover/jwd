@@ -17,6 +17,8 @@ import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.entity.dish.service.DishServiceImpl;
 import by.training.sokolov.entity.dishfeedback.dao.DishFeedbackDao;
 import by.training.sokolov.entity.dishfeedback.dao.DishFeedbackDaoImpl;
+import by.training.sokolov.entity.dishfeedback.service.DishFeedbackService;
+import by.training.sokolov.entity.dishfeedback.service.DishFeedbackServiceImpl;
 import by.training.sokolov.entity.loyalty.dao.LoyaltyDao;
 import by.training.sokolov.entity.loyalty.dao.LoyaltyDaoImpl;
 import by.training.sokolov.entity.order.dao.UserOrderDao;
@@ -147,6 +149,7 @@ public class ApplicationContext {
         UserOrderService userOrderService = new UserOrderServiceImpl(userOrderDao, deliveryAddressService, orderItemService);
         UserService userService = new UserServiceImpl(userDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
         DishCategoryService dishCategoryService = new DishCategoryServiceImpl(dishCategoryDao);
+        DishFeedbackService dishFeedbackService = new DishFeedbackServiceImpl(dishFeedbackDao);
 
         //proxy of services
         InvocationHandler dishServiceHandler = createTransactionalInvocationHandler
@@ -184,6 +187,8 @@ public class ApplicationContext {
         Command viewDishMenuCommand = new ViewDishMenuCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
         Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(orderItemProxyService, userOrderProxyService, userService);
+        Command dishFeedbackSubmitCommand = new DishFeedbackSubmitCommand(dishFeedbackService);
+        Command dishFeedbackWriteCommand = new DishFeedbackWriteCommand(dishProxyService);
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -192,7 +197,7 @@ public class ApplicationContext {
         commandFactory.registerCommand(MENU_SERVLET_SWITCH, (request, response) -> MENU_SERVLET);
         commandFactory.registerCommand(REGISTER_SERVLET_SWITCH, (request, response) -> USER_REGISTER_SERVLET);
         commandFactory.registerCommand(LOGIN_SERVLET_SWITCH, (request, response) -> LOGIN_SERVLET);
-        commandFactory.registerCommand(ORDER_CHECKOUT_SERVLET_SWITCH, ((request, response) -> ORDER_CHECKOUT_SERVLET));
+        commandFactory.registerCommand(ORDER_CHECKOUT_SERVLET_SWITCH, (request, response) -> ORDER_CHECKOUT_SERVLET);
         commandFactory.registerCommand(INDEX, (request, response) -> INDEX_SERVLET);
 
         commandFactory.registerCommand(DELETE_DISH_FROM_ORDER, deleteDishFromOrderCommand);
@@ -202,6 +207,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
 
+        commandFactory.registerCommand(DISH_FEEDBACK_WRITE, dishFeedbackWriteCommand);
+        commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
         commandFactory.registerCommand(VIEW_DISH_MENU, viewDishMenuCommand);
 
         commandFactory.registerCommand(REGISTER_USER, registerUserCommand);
@@ -211,7 +218,6 @@ public class ApplicationContext {
             SecurityContext.getInstance().logout(request.getSession().getId());
             return "logout";
         });
-
 
         //bean command provider
         beans.put(CommandFactory.class, commandFactory);

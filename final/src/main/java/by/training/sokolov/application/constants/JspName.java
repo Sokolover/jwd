@@ -12,4 +12,5 @@ public class JspName {
     public static final String ORDER_ITEM_LIST_JSP = "order_item_list";
     public static final String CHECKOUT_JSP = "checkout";
     public static final String ORDER_SUBMITTED_JSP = "order_accepted";
+    public static final String DISH_FEEDBACK_WRITE_JSP = "dish_feedback_write";
 }

@@ -49,6 +49,7 @@ public class MenuServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case ORDER_CREATED_JSP:
+            case DISH_FEEDBACK_WRITE_JSP:
                 req.setAttribute("viewName", viewName);
 //                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
