@@ -32,9 +32,7 @@ public class OrderCreateCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
         UserOrder currentUserOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-        /*
-        fixme замена на enum OrderStatus
-         */
+
         if (Objects.isNull(currentUserOrder) || !currentUserOrder.getOrderStatus().equals(OrderStatus.BUILD_UP)) {
             String currentSessionId = request.getSession().getId();
             User user = SecurityContext.getInstance().getCurrentUser(currentSessionId);

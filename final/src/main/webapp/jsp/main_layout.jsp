@@ -9,8 +9,6 @@
 </head>
 <body>
 
-<%--fixme в сессию сетается язык только в delivery сервлете--%>
-
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>

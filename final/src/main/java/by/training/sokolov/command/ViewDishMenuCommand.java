@@ -28,10 +28,6 @@ public class ViewDishMenuCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
-        /*
-            todo разбить команду на 2 команды: показ категорий и показ меню
-        */
-
         setCategoriesToRequest(request);
         List<String> categoryNames = CategoryNameUtil.getCategoryNames(request);
 

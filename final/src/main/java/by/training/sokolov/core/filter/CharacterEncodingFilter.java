@@ -16,13 +16,10 @@ public class CharacterEncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        //fixme сделать нормальное отображение русского
+        //fixme ПРОВЕРИТЬ нормальное отображение русского
         String characterEncoding = request.getCharacterEncoding();
-        String cp1251 = "windows-1251";
         String utf8 = StandardCharsets.UTF_8.name();
         if (!utf8.equalsIgnoreCase(characterEncoding)) {
-//            response.setCharacterEncoding(cp1251);
-//            response.setContentType("text/html;charset=" + utf8);
             request.setCharacterEncoding(utf8);
             response.setCharacterEncoding(utf8);
         }

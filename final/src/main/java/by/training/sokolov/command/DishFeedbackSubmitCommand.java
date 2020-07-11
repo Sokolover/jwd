@@ -49,13 +49,6 @@ public class DishFeedbackSubmitCommand implements Command {
             dishFeedbackService.update(dishFeedback);
         }
 
-        /*
-        todo
-            1. если из бд достается фидбек, у которого совпадает текущий пользователь
-            и блюдо, то сделать апдейт фидбека
-            2. если не п.1 - сохранить фидбек
-         */
-
         return DISH_LIST_JSP;
     }
 }

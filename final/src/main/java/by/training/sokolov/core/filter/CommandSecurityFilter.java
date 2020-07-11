@@ -24,14 +24,6 @@ public class CommandSecurityFilter implements Filter {
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         SecurityContext securityContext = SecurityContext.getInstance();
         /*
-        fixme не использовать
-                private final ThreadLocal<String> currentSessionIdStorage = new ThreadLocal<>();
-                и всё что с этим связано
-                сессия != поток выполнения
-        */
-//        securityContext.setCurrentSessionId(servletRequest.getSession().getId());
-
-/*
 todo посмотреть видео по security и прикрутить рабочее security вместе с security.properties
  */
         String command = servletRequest.getParameter("_command");

@@ -5,7 +5,6 @@ import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.user.model.User;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class UserOrder implements IdentifiedRow {

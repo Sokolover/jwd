@@ -36,7 +36,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             "     dish_category\n" +
             "WHERE {0}.dish_id = dish.id\n" +
             "  AND dish.dish_category_id = dish_category.id\n" +
-            "  AND dish_category.category_name = ?";
+            "  AND dish_category.category_name = ?\n" +
+            "  AND {0}.user_order_id = ?";
     private static final String SELECT_ALL_BY_ORDER_ID_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
@@ -114,7 +115,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     public OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-        LOGGER.info("getById()--" + dishId);
+//        LOGGER.info("getById()--" + dishId);
         AtomicReference<OrderItem> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID, TABLE_NAME);
@@ -137,7 +138,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public OrderItem getByDishCategoryName(String categoryName) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
         LOGGER.info("getByDishCategoryName(String categoryName)");
@@ -145,8 +146,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//                statement.setString(1, "'" + categoryName + "'");
                 statement.setString(1, categoryName);
+                statement.setLong(2, userOrderId);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     try {

@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static by.training.sokolov.application.constants.JspName.ORDER_SUBMITTED_JSP;
@@ -60,13 +58,6 @@ public class OrderCheckoutSubmitCommand implements Command {
             setCustomAddress(request, currentOrder);
         }
 
-        /*
-        todo доставка еды будет пока что с выбором только
-          на сегодня и выбор времени
-         */
-        /*
-        fixme КОГДА ПРИХОДИТ ВРЕМЯ 19:00 ПОЕМУ-ТО В БАЗУ ЗАПИСЫВАЕТСЯ 16:00!!!
-         */
         setTimeOfDelivery(request, currentOrder);
 
         currentOrder.setOrderStatus(SUBMITTED);
@@ -77,15 +68,9 @@ public class OrderCheckoutSubmitCommand implements Command {
     }
 
     private void setTimeOfDelivery(HttpServletRequest request, UserOrder currentOrder) {
+
         String timeOfDeliveryMinutes = request.getParameter("order.timeOfDelivery");
-//        String seconds = ":00";
-        String dateString = LocalDate.now().toString();
-//        ISO_LOCAL_DATE_TIME   | 	ISO Local Date and Time	 |  '2011-12-03T10:15:30'
-//        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String FORMATTER_DELIMITER = "T";
-        LocalDateTime date = LocalDateTime.parse(dateString + FORMATTER_DELIMITER + timeOfDeliveryMinutes);
+        LocalDateTime date = LocalDateTime.parse(timeOfDeliveryMinutes);
         currentOrder.setTimeOfDelivery(date);
     }
 

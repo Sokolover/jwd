@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements DishFeedbackDao {
 
-    private static final  Logger LOGGER = Logger.getLogger(DishFeedbackDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DishFeedbackDaoImpl.class.getName());
     private static final String TABLE_NAME = "dish_feedback";
     private static final String SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID = "" +
             "SELECT *\n" +

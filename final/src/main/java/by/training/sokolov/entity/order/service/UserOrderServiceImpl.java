@@ -1,6 +1,7 @@
 package by.training.sokolov.entity.order.service;
 
 import by.training.sokolov.core.context.SecurityContext;
+import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.Transactional;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
@@ -11,13 +12,10 @@ import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import by.training.sokolov.entity.user.model.User;
-import by.training.sokolov.core.service.GenericServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +33,7 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     }
 
     /*
-    todo сделать id на таблицы, а не объекты там, где это надо сделать
+    todo !!!!!!!!!!!!!!!!!!!!!!!!! сделать id на таблицы, а не объекты там, где это надо сделать
      */
 
     @Transactional
@@ -45,8 +43,6 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         UserOrder userOrder = new UserOrder();
         userOrder.getUser().setId(user.getId());
 
-//        Date date = new Date();
-//        Timestamp timestamp = new Timestamp(date.getTime());
         LocalDateTime localDateTime = LocalDateTime.now();
         userOrder.setTimeOfDelivery(localDateTime);
 
@@ -67,7 +63,7 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
 
         User currentUser = SecurityContext.getInstance().getCurrentUser(id);
         UserOrder userOrder = userOrderDao.findBuildingUpUserOrder(currentUser.getId());
-        if(Objects.isNull(userOrder)){
+        if (Objects.isNull(userOrder)) {
             return null;
         }
         DeliveryAddress deliveryAddress = deliveryAddressService.getById(userOrder.getDeliveryAddress().getId());
@@ -81,11 +77,11 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     public BigDecimal getOrderCost(UserOrder order) throws ConnectionException, SQLException {
 
         /*
-        todo сделать поле стоимосоть ордера в таблице юзер_ордер вместо этого поиска!
+        todo сделать поле стоимость ордера в таблице юзер_ордер вместо этого поиска!
          */
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(order.getId());
         BigDecimal orderCost = new BigDecimal(0);
-        for(OrderItem orderItem:orderItems){
+        for (OrderItem orderItem : orderItems) {
             orderCost = orderCost.add(orderItem.getItemCost());
         }
         return orderCost;
@@ -95,5 +91,6 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     public void update(UserOrder entity) throws SQLException, ConnectionException {
 
         super.update(entity);
+        deliveryAddressService.update(entity.getDeliveryAddress());
     }
 }

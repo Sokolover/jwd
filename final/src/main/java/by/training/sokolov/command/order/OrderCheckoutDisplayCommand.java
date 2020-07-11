@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,9 +34,8 @@ public class OrderCheckoutDisplayCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-        if(Objects.isNull(currentOrder)){
+        if (Objects.isNull(currentOrder)) {
             request.setAttribute("error", "please, create order");
-//                return CommandType.CREATE_ORDER.name();
             return INDEX_JSP;
         }
         request.setAttribute("itemList", orderItemService.findAllItemsByOrderId(currentOrder.getId()));
@@ -44,8 +43,8 @@ public class OrderCheckoutDisplayCommand implements Command {
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
         request.setAttribute("totalCost", orderCost);
 
-        List<LocalTime> localTimeList = TimeService.countTime();
-        request.setAttribute("timeList", localTimeList);
+        List<LocalDateTime> localDateTimeList = TimeService.findTimeVariants();
+        request.setAttribute("timeList", localDateTimeList);
 
         return CHECKOUT_JSP;
     }

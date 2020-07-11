@@ -49,7 +49,6 @@ public class OrderBasketServlet extends HttpServlet {
             case ORDER_CREATED_JSP:
             case DISH_FEEDBACK_WRITE_JSP:
                 req.setAttribute("viewName", viewName);
-//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case BASKET_ADD_ITEM:
@@ -59,23 +58,8 @@ public class OrderBasketServlet extends HttpServlet {
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
                 req.setAttribute("viewName", commandResult);
-//                req.setAttribute("category", DISH_CATEGORY_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
-                /*
-                todo сделать менее колходное создание заказа по дефолту,
-                 если его нет, а он нужен!!!
-                 */
-//                if(commandResult.equals(CommandType.CREATE_ORDER.name())){
-//                    String commandCreateOrder = String.valueOf(CommandType.CREATE_ORDER);
-//                    command = commandFactory.getCommand(commandCreateOrder);
-//                    command.apply(req, resp);
-//                    commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
-//                    command = commandFactory.getCommand(commandName);
-//                    command.apply(req, resp);
-//                }
-
-
         }
 
     }

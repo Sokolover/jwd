@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
+import static by.training.sokolov.application.constants.JspName.INDEX_JSP;
 import static by.training.sokolov.command.constants.CommandReturnValues.BASKET_ADD_ITEM;
 
 public class OrderItemAddCommand implements Command {
@@ -37,18 +38,15 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        /*
-        fixme добавить ошибку на джп что если заказ не создан то его нужно создать
-         */
-        UserOrder currentUserOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-        Long currentUserOrderId = currentUserOrder.getId();
+        UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
+        if (Objects.isNull(currentOrder)) {
+            request.setAttribute("error", "please, create order");
+            return INDEX_JSP;
+        }
+        Long currentUserOrderId = currentOrder.getId();
 
         String dishIdString = request.getParameter("dish.id");
         Long dishIdLong = Long.parseLong(dishIdString);
-
-        /*
-        todo этот метод должен доставать ИТЕМ по ид блюда ИЗ ТЕКУЩЕГО ЗАКАЗА
-         */
 
         if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 

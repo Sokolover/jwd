@@ -34,7 +34,8 @@
                     <a href="?_command=${CommandType.CREATE_ORDER}"><fmt:message key="links.order.create"/></a>
                 </li>
                 <li>
-                    <a href="?_command=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message key="links.order.checkout"/></a>
+                    <a href="?_command=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
+                            key="links.order.checkout"/></a>
                 </li>
             </c:when>
             <c:otherwise>

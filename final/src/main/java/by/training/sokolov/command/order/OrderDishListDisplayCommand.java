@@ -40,12 +40,8 @@ public class OrderDishListDisplayCommand implements Command {
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             UserOrder userOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-            /*
-            fixme придумать как обработать опцию, если заказ ещё не создан (userOrder == null)
-             */
             if (Objects.isNull(userOrder)) {
                 request.setAttribute("error", "please, create order");
-//                return CommandType.CREATE_ORDER.name();
                 return INDEX_JSP;
             }
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
@@ -54,8 +50,11 @@ public class OrderDishListDisplayCommand implements Command {
         }
 
         List<OrderItem> filteredUserOrderItems = new ArrayList<>();
+        String sessionId = request.getSession().getId();
+        UserOrder userOrder = userOrderService.getCurrentUserOrder(sessionId);
+
         for (String categoryName : categoryNames) {
-            OrderItem orderItem = orderItemService.getByDishCategoryName(categoryName);
+            OrderItem orderItem = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, userOrder.getId());
             if (Objects.isNull(orderItem)) {
                 continue;
             }

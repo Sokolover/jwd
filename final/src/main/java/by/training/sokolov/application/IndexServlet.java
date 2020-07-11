@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.*;
+import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
+import static by.training.sokolov.application.constants.JspName.ORDER_CREATED_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
 

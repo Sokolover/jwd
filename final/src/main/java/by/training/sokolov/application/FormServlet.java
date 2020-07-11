@@ -10,14 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.INDEX_JSP;
 import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
 
 public interface FormServlet {
-/*
-todo узнать у Саши норм тут делать метод или нет
- */
+    /*
+    todo узнать у Саши норм тут делать метод или нет
+     */
     default void formServletProcess(HttpServletRequest req, HttpServletResponse resp, CommandFactory commandFactory, String formJspName) throws IOException, ServletException {
 
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);

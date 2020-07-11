@@ -1,8 +1,8 @@
 package by.training.sokolov.entity.dishfeedback.service;
 
+import by.training.sokolov.core.service.GenericService;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
-import by.training.sokolov.core.service.GenericService;
 
 import java.sql.SQLException;
 

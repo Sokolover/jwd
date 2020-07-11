@@ -1,12 +1,12 @@
 package by.training.sokolov.entity.orderitem.service;
 
+import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.Transactional;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.entity.orderitem.dao.OrderItemDao;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
-import by.training.sokolov.core.service.GenericServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -61,9 +61,9 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
 
     @Transactional
     @Override
-    public OrderItem getByDishCategoryName(String categoryName) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException {
 
-        OrderItem orderItem = orderItemDao.getByDishCategoryName(categoryName);
+        OrderItem orderItem = orderItemDao.getFromCurrentOrderByDishCategoryName(categoryName, userOrderId);
         if (Objects.isNull(orderItem)) {
             return null;
         }

@@ -1,5 +1,6 @@
 package by.training.sokolov.entity.user.service;
 
+import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.Transactional;
 import by.training.sokolov.entity.loyalty.dao.LoyaltyDao;
@@ -11,7 +12,6 @@ import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
 import by.training.sokolov.entity.useraddress.model.UserAddress;
 import by.training.sokolov.entity.wallet.dao.WalletDao;
 import by.training.sokolov.entity.wallet.model.Wallet;
-import by.training.sokolov.core.service.GenericServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;

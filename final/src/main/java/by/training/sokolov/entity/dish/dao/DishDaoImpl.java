@@ -127,10 +127,4 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
             connectionLock.unlock();
         }
     }
-
-    /*
-    todo DONE дао делает только дао-операции. сервиса содержат в себе несколько
-     дао и сервисов и выполняют зависимую от
-     нескольких дао логику, как в этом методе
-     */
 }

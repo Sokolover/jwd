@@ -1,10 +1,10 @@
 package by.training.sokolov.core.service;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TimeService {
 
@@ -13,30 +13,37 @@ public class TimeService {
     private static final int ONE_MINUTE = 1;
     private static final String TIME_09_00 = "09:00";
     private static final String TIME_23_00 = "23:00";
+    private static final String TIME_23_59 = "23:59";
     private static final String TIME_00_00 = "00:00";
 
-    private static final LocalTime FIRST_TIME_OF_DELIVERY = LocalTime.parse(TIME_09_00);
-    private static final LocalTime LAST_TIME_OF_DELIVERY = LocalTime.parse(TIME_23_00);
-    private static final LocalTime LAST_TIME_FOR_ORDER = LAST_TIME_OF_DELIVERY.minusMinutes(HALF_AN_HOUR);
-    private static final LocalTime MIDNIGHT = LocalTime.parse(TIME_00_00);
+    public static List<LocalDateTime> findTimeVariants() {
 
-    public static List<LocalTime> countTime() {
+        LocalDate currentDate = LocalDate.now();
+        final LocalDateTime THIS_DAY_FIRST_TIME_OF_DELIVERY = LocalDateTime.parse(currentDate + "T" + TIME_09_00);
+        LocalDateTime THIS_DAY_LAST_TIME_OF_DELIVERY = LocalDateTime.parse(currentDate + "T" + TIME_23_00);
+        final LocalDateTime THIS_DAY_LAST_TIME_FOR_ORDER = THIS_DAY_LAST_TIME_OF_DELIVERY.minusMinutes(HALF_AN_HOUR);
+        final LocalDateTime THIS_DAY_MIDNIGHT = LocalDateTime.parse(currentDate + "T" + TIME_00_00);
+        final LocalDateTime THIS_DAY_23_59 = LocalDateTime.parse(LocalDate.now() + "T" + TIME_23_59);
 
-        LocalTime currentTimeMinutes = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime currentTimeMinutes = LocalDateTime
+                .now()
+                .truncatedTo(ChronoUnit.MINUTES);
 
-        LocalTime currentHourAndAHalf = currentTimeMinutes
+        LocalDateTime currentHourAndAHalf = LocalDateTime
+                .now()
                 .truncatedTo(ChronoUnit.HOURS)
                 .plusMinutes(HALF_AN_HOUR);
 
-        LocalTime timeVariant = null;
-        if (currentTimeMinutes.isAfter(LAST_TIME_FOR_ORDER) && currentTimeMinutes.isBefore(MIDNIGHT.minusMinutes(ONE_MINUTE))) {
-            timeVariant = null;
-        } else if ((currentTimeMinutes.isAfter(MIDNIGHT) && currentTimeMinutes.isBefore(FIRST_TIME_OF_DELIVERY.minusMinutes(ONE_MINUTE)))
-                || currentTimeMinutes.compareTo(MIDNIGHT) == 0) {
-            timeVariant = FIRST_TIME_OF_DELIVERY;
-        } else if ((currentTimeMinutes.isAfter(FIRST_TIME_OF_DELIVERY) && currentTimeMinutes.isBefore(LAST_TIME_FOR_ORDER))
-                || currentTimeMinutes.compareTo(FIRST_TIME_OF_DELIVERY) == 0
-                || currentTimeMinutes.compareTo(LAST_TIME_FOR_ORDER) == 0) {
+        LocalDateTime timeVariant = null;
+        if (currentTimeMinutes.isAfter(THIS_DAY_LAST_TIME_FOR_ORDER) && currentTimeMinutes.isBefore(THIS_DAY_23_59)
+                || currentTimeMinutes.compareTo(THIS_DAY_23_59) == 0) {
+            timeVariant = THIS_DAY_23_59.plusMinutes(1);
+        } else if ((currentTimeMinutes.isAfter(THIS_DAY_MIDNIGHT) && currentTimeMinutes.isBefore(THIS_DAY_FIRST_TIME_OF_DELIVERY.minusMinutes(ONE_MINUTE)))
+                || currentTimeMinutes.compareTo(THIS_DAY_MIDNIGHT) == 0) {
+            timeVariant = THIS_DAY_FIRST_TIME_OF_DELIVERY;
+        } else if ((currentTimeMinutes.isAfter(THIS_DAY_FIRST_TIME_OF_DELIVERY) && currentTimeMinutes.isBefore(THIS_DAY_LAST_TIME_FOR_ORDER))
+                || currentTimeMinutes.compareTo(THIS_DAY_FIRST_TIME_OF_DELIVERY) == 0
+                || currentTimeMinutes.compareTo(THIS_DAY_LAST_TIME_FOR_ORDER) == 0) {
             if (currentTimeMinutes.isAfter(currentHourAndAHalf)) {
                 timeVariant = currentTimeMinutes
                         .truncatedTo(ChronoUnit.HOURS)
@@ -48,13 +55,14 @@ public class TimeService {
             }
         }
 
-        if (Objects.isNull(timeVariant)) {
-            return new ArrayList<>();
+        if (timeVariant.truncatedTo(ChronoUnit.DAYS).isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))) {
+            THIS_DAY_LAST_TIME_OF_DELIVERY = THIS_DAY_LAST_TIME_OF_DELIVERY.plusDays(1);
+            timeVariant = THIS_DAY_FIRST_TIME_OF_DELIVERY.plusDays(1);
         }
 
-        List<LocalTime> result = new ArrayList<>();
+        List<LocalDateTime> result = new ArrayList<>();
         result.add(timeVariant);
-        while (timeVariant.isBefore(LAST_TIME_OF_DELIVERY)) {
+        while (timeVariant.isBefore(THIS_DAY_LAST_TIME_OF_DELIVERY)) {
             timeVariant = timeVariant.plusHours(ONE_HOUR);
             result.add(timeVariant);
         }

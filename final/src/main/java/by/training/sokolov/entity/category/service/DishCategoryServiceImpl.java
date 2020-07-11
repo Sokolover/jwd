@@ -1,9 +1,9 @@
 package by.training.sokolov.entity.category.service;
 
+import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.category.dao.DishCategoryDao;
 import by.training.sokolov.entity.category.model.DishCategory;
-import by.training.sokolov.core.service.GenericServiceImpl;
 
 import java.sql.SQLException;
 import java.util.List;
