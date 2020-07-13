@@ -10,7 +10,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <aside class="menu">
-
     <ul class="menu-list">
         <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
         <form action="" method="GET">
@@ -25,5 +24,4 @@
             <input type="submit" name="_category" value="all"/>
         </form>
     </ul>
-
 </aside>

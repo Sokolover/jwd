@@ -12,28 +12,30 @@ public class CategoryNameUtil {
 
     public static final String ALL_CATEGORIES = "all";
 
-    public static List<String> getCategoryNames(HttpServletRequest request) {
+    public static List<String> getCategoryNamesFromRequest(HttpServletRequest request) {
 
         Enumeration<String> paramNames = request.getParameterNames();
-        String[] paramValues;
-        List<String> categoryNames = new ArrayList<>();
-
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
             if (QueryParamConstants.CATEGORY_PARAM.equals(paramName)) {
-                paramValues = request.getParameterValues(paramName);
-
-                for (String paramValue : paramValues) {
-
-                    if (ALL_CATEGORIES.equals(paramValue)) {
-                        return Collections.singletonList(ALL_CATEGORIES);
-                    }
-                    categoryNames.add(paramValue);
-                }
-                return categoryNames;
+                return createCategoryListFromParameters(request, paramName);
             }
         }
 
         return new ArrayList<>();
+    }
+
+    private static List<String> createCategoryListFromParameters(HttpServletRequest request, String paramName) {
+
+        String[] paramValues;
+        List<String> categoryNames = new ArrayList<>();
+        paramValues = request.getParameterValues(paramName);
+        for (String paramValue : paramValues) {
+            if (ALL_CATEGORIES.equals(paramValue)) {
+                return Collections.singletonList(ALL_CATEGORIES);
+            }
+            categoryNames.add(paramValue);
+        }
+        return categoryNames;
     }
 }

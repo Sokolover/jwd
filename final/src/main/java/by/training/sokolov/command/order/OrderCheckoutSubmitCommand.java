@@ -5,9 +5,7 @@ import by.training.sokolov.core.context.SecurityContext;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
-import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import by.training.sokolov.entity.user.model.User;
-import by.training.sokolov.entity.user.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +20,10 @@ import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
 
 public class OrderCheckoutSubmitCommand implements Command {
 
-    private final OrderItemService orderItemService;
     private final UserOrderService userOrderService;
-    private final UserService userService;
 
-    public OrderCheckoutSubmitCommand(OrderItemService orderItemService, UserOrderService userOrderService, UserService userService) {
-        this.orderItemService = orderItemService;
+    public OrderCheckoutSubmitCommand(UserOrderService userOrderService) {
         this.userOrderService = userOrderService;
-        this.userService = userService;
     }
 
     @Override
@@ -75,6 +69,7 @@ public class OrderCheckoutSubmitCommand implements Command {
     }
 
     private void setCustomAddress(HttpServletRequest request, UserOrder currentOrder) {
+
         String locality = request.getParameter("order.address.locality");
         String street = request.getParameter("order.address.street");
         String buildingNumber = request.getParameter("order.address.buildingNumber");

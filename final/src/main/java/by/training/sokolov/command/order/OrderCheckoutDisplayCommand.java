@@ -5,6 +5,7 @@ import by.training.sokolov.core.service.TimeService;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
+import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static by.training.sokolov.application.constants.JspName.CHECKOUT_JSP;
-import static by.training.sokolov.application.constants.JspName.INDEX_JSP;
+import static by.training.sokolov.application.constants.JspName.ERROR_MESSAGE_JSP;
 
 public class OrderCheckoutDisplayCommand implements Command {
 
@@ -36,9 +37,15 @@ public class OrderCheckoutDisplayCommand implements Command {
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
         if (Objects.isNull(currentOrder)) {
             request.setAttribute("error", "please, create order");
-            return INDEX_JSP;
+            return ERROR_MESSAGE_JSP;
         }
-        request.setAttribute("itemList", orderItemService.findAllItemsByOrderId(currentOrder.getId()));
+
+        List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
+        if (Objects.isNull(orderItems)) {
+            request.setAttribute("error", "please, add items to your order");
+            return ERROR_MESSAGE_JSP;
+        }
+        request.setAttribute("itemList", orderItems);
 
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
         request.setAttribute("totalCost", orderCost);

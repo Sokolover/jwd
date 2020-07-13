@@ -101,6 +101,9 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     public User getByName(String name) throws ConnectionException, SQLException {
 
         User user = userDao.getByName(name);
+        if (Objects.isNull(user)) {
+            return null;
+        }
         this.getUserAttributes(user);
 
         return user;

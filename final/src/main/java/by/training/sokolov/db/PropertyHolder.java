@@ -13,8 +13,8 @@ import static java.util.stream.Collectors.toMap;
 
 final class PropertyHolder {
 
-    private static Map<String, String> dataBaseProperties;
     private static final Logger LOGGER = Logger.getLogger(PropertyHolder.class.getName());
+    private static Map<String, String> dataBaseProperties;
 
     static Map<String, String> getProperties() {
         if (dataBaseProperties == null) {
@@ -28,7 +28,8 @@ final class PropertyHolder {
             Properties properties = new Properties();
             properties.load(inputStream);
 
-            dataBaseProperties = properties.entrySet()
+            dataBaseProperties = properties
+                    .entrySet()
                     .stream()
                     .collect(toMap(
                             entry -> (String) entry.getKey(),

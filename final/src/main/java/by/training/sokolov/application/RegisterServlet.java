@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.training.sokolov.application.constants.JspName.USER_REGISTER_JSP;
+import static by.training.sokolov.application.constants.ServletName.USER_REGISTER_SERVLET;
 
-@WebServlet(urlPatterns = "/user_register", name = "RegisterServlet")
+@WebServlet(urlPatterns = "/user_register", name = USER_REGISTER_SERVLET)
 public class RegisterServlet extends HttpServlet implements FormServlet {
 
     private static final long serialVersionUID = -8104780406678115072L;

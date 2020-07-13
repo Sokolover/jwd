@@ -6,11 +6,12 @@
 
 <div class="container">
 
-    <c:if test="${not empty error}">
-        <p class="is-danger"><c:out value="${error}"/></p>
-    </c:if>
+    <h5 class="title is-5">
+        <c:if test="${not empty error}">
+            <p class="is-danger"><c:out value="${error}"/></p>
+        </c:if>
+    </h5>
 
-    <%--    <form action="${pageContext.request.contextPath}/login" method="post">--%>
     <form action="${pageContext.request.contextPath}/login" method="post">
         <input type="hidden" name="_command" value="${CommandType.LOGIN_SUBMIT}">
         <div class="content">

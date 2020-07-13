@@ -37,18 +37,28 @@ public class DishFeedbackSubmitCommand implements Command {
         DishFeedback dishFeedback = dishFeedbackService.getUsersFeedbackByDishId(currentUserId, dishIdLong);
 
         if (Objects.isNull(dishFeedback)) {
-            dishFeedback = new DishFeedback();
-            dishFeedback.getUser().setId(currentUserId);
-            dishFeedback.setDishRating(Integer.parseInt(rating));
-            dishFeedback.setDishComment(comment);
-            dishFeedback.getDish().setId(Long.parseLong(dishIdString));
-            dishFeedbackService.save(dishFeedback);
+            saveNewFeedback(currentUserId, rating, comment, dishIdString);
         } else {
-            dishFeedback.setDishRating(Integer.parseInt(rating));
-            dishFeedback.setDishComment(comment);
-            dishFeedbackService.update(dishFeedback);
+            updateExistingFeedback(rating, comment, dishFeedback);
         }
 
         return DISH_LIST_JSP;
+    }
+
+    private void updateExistingFeedback(String rating, String comment, DishFeedback dishFeedback) throws SQLException, ConnectionException {
+
+        dishFeedback.setDishRating(Integer.parseInt(rating));
+        dishFeedback.setDishComment(comment);
+        dishFeedbackService.update(dishFeedback);
+    }
+
+    private void saveNewFeedback(Long currentUserId, String rating, String comment, String dishIdString) throws SQLException, ConnectionException {
+
+        DishFeedback dishFeedback = new DishFeedback();
+        dishFeedback.getUser().setId(currentUserId);
+        dishFeedback.setDishRating(Integer.parseInt(rating));
+        dishFeedback.setDishComment(comment);
+        dishFeedback.getDish().setId(Long.parseLong(dishIdString));
+        dishFeedbackService.save(dishFeedback);
     }
 }

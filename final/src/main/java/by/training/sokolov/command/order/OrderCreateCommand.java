@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.ORDER_CREATED_JSP;
+import static by.training.sokolov.application.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 
 public class OrderCreateCommand implements Command {
 
@@ -37,11 +37,11 @@ public class OrderCreateCommand implements Command {
             String currentSessionId = request.getSession().getId();
             User user = SecurityContext.getInstance().getCurrentUser(currentSessionId);
             userOrderService.createNewOrder(user);
-            request.setAttribute("msg", "order has been created now");
+            request.setAttribute("message", "order has been created now");
         } else {
-            request.setAttribute("msg", "order is already exist");
+            request.setAttribute("message", "order is already exist");
         }
 
-        return ORDER_CREATED_JSP;
+        return COMMAND_RESULT_MESSAGE_JSP;
     }
 }

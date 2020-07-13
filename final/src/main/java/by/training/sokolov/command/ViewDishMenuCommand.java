@@ -29,7 +29,7 @@ public class ViewDishMenuCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         setCategoriesToRequest(request);
-        List<String> categoryNames = CategoryNameUtil.getCategoryNames(request);
+        List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 

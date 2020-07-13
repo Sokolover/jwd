@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.application.constants.JspName.USER_REGISTER_JSP;
-import static by.training.sokolov.application.constants.ServletName.DELIVERY_SERVLET;
+import static by.training.sokolov.application.constants.ServletName.INDEX_SERVLET;
 
 public class RegisterUserCommand implements Command {
 
@@ -45,6 +45,12 @@ public class RegisterUserCommand implements Command {
         }
         String password = request.getParameter("user.password");
         String email = request.getParameter("user.email");
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                request.setAttribute("error", "user with this email has been registered");
+                return USER_REGISTER_JSP;
+            }
+        }
         String phoneNumber = request.getParameter("user.phoneNumber");
         String address = request.getParameter("user.address");
 
@@ -57,6 +63,6 @@ public class RegisterUserCommand implements Command {
 
         userService.register(user);
 
-        return DELIVERY_SERVLET;
+        return INDEX_SERVLET;
     }
 }

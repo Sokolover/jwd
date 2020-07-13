@@ -34,25 +34,26 @@ public class OrderDishListDisplayCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
+        String sessionId = request.getSession().getId();
+        UserOrder userOrder = userOrderService.getCurrentUserOrder(sessionId);
+
+        if (Objects.isNull(userOrder)) {
+
+            request.setAttribute("error", "please, create order");
+            return ERROR_MESSAGE_JSP;
+        }
+
         setCategoriesToRequest(request);
-        List<String> categoryNames = CategoryNameUtil.getCategoryNames(request);
+        List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
-            UserOrder userOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
-            if (Objects.isNull(userOrder)) {
-                request.setAttribute("error", "please, create order");
-                return INDEX_JSP;
-            }
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
             request.setAttribute("orderItems", orderItems);
             return ORDER_ITEM_LIST_JSP;
         }
 
         List<OrderItem> filteredUserOrderItems = new ArrayList<>();
-        String sessionId = request.getSession().getId();
-        UserOrder userOrder = userOrderService.getCurrentUserOrder(sessionId);
-
         for (String categoryName : categoryNames) {
             OrderItem orderItem = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, userOrder.getId());
             if (Objects.isNull(orderItem)) {
@@ -67,6 +68,7 @@ public class OrderDishListDisplayCommand implements Command {
     }
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
+
         request.setAttribute("category", DISH_CATEGORY_JSP);
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute("categoryList", categories);

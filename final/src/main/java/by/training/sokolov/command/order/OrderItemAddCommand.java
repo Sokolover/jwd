@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.INDEX_JSP;
-import static by.training.sokolov.command.constants.CommandReturnValues.BASKET_ADD_ITEM;
+import static by.training.sokolov.application.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_ADD_ITEM_RESULT;
 
 public class OrderItemAddCommand implements Command {
 
@@ -38,10 +38,11 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
+        String sessionId = request.getSession().getId();
+        UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
         if (Objects.isNull(currentOrder)) {
             request.setAttribute("error", "please, create order");
-            return INDEX_JSP;
+            return ERROR_MESSAGE_JSP;
         }
         Long currentUserOrderId = currentOrder.getId();
 
@@ -50,24 +51,29 @@ public class OrderItemAddCommand implements Command {
 
         if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.getUserOrder().setId(currentUserOrderId);
-
-            dishIdString = request.getParameter("dish.id");
-            dishIdLong = Long.parseLong(dishIdString);
-            Dish dish = dishService.getById(dishIdLong);
-            orderItem.setDish(dish);
-
-            String dishAmountString = request.getParameter("order.dish.amount");
-            Integer dishAmountInteger = Integer.parseInt(dishAmountString);
-            orderItem.setDishAmount(dishAmountInteger);
-
-            orderItemService.addNewOrderItem(orderItem);
-
-            return BASKET_ADD_ITEM;
+            addItemToOrder(request, currentUserOrderId);
         }
 
-        return BASKET_ADD_ITEM;
+        return ORDER_ADD_ITEM_RESULT;
+    }
+
+    private void addItemToOrder(HttpServletRequest request, Long currentUserOrderId) throws SQLException, ConnectionException {
+
+        String dishIdString;
+        Long dishIdLong;
+        OrderItem orderItem = new OrderItem();
+        orderItem.getUserOrder().setId(currentUserOrderId);
+
+        dishIdString = request.getParameter("dish.id");
+        dishIdLong = Long.parseLong(dishIdString);
+        Dish dish = dishService.getById(dishIdLong);
+        orderItem.setDish(dish);
+
+        String dishAmountString = request.getParameter("order.dish.amount");
+        Integer dishAmountInteger = Integer.parseInt(dishAmountString);
+        orderItem.setDishAmount(dishAmountInteger);
+
+        orderItemService.addNewOrderItem(orderItem);
     }
 
 }

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
+import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
 
 public interface FormServlet {
     /*
@@ -32,12 +33,12 @@ public interface FormServlet {
             case USER_REGISTER_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case DELIVERY_SERVLET:
+            case INDEX_SERVLET:
                 resp.sendRedirect(req.getContextPath());
                 break;
+            case DEFAULT_RESULT:
             default:
                 req.setAttribute("viewName", formJspName);
-//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

@@ -26,7 +26,6 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     private static final String UPDATE_QUERY = "UPDATE {0} SET {1} WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM {0} WHERE id = ?";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM {0} WHERE id = ?";
-    private static final String SELECT_MAX_ID_QUERY = "SELECT MAX(ID) FROM {0}";
 
     private final String tableName;
     private final IdentifiedRowMapper<T> rowMapper;

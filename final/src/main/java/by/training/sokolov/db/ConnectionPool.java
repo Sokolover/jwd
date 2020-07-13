@@ -9,12 +9,6 @@ public interface ConnectionPool {
 
     void releaseConnection(Connection connection);
 
-    int getAvailableConnectionsAmount();
-
-    int getUsedConnectionsAmount();
-
-    int getSize();
-
     void shutdown() throws SQLException;
 
 }

@@ -28,7 +28,7 @@ public class TransactionManagerImpl implements TransactionManager {
                 currentConnection.set(connection);
                 connection.setAutoCommit(false);
             } catch (SQLException sqlException) {
-                LOGGER.error("An exception is occurred during beginning of transaction");
+                LOGGER.error("exception during beginning transaction");
                 throw new ConnectionException(sqlException.getMessage(), sqlException);
             }
         }
@@ -41,7 +41,7 @@ public class TransactionManagerImpl implements TransactionManager {
             connection.commit();
             this.close();
         } catch (SQLException sqlException) {
-            LOGGER.error("An exception is occurred during commission of transaction");
+            LOGGER.error("exception during committing transaction");
             throw new ConnectionException(sqlException.getMessage(), sqlException);
         }
     }
@@ -53,7 +53,7 @@ public class TransactionManagerImpl implements TransactionManager {
             connection.rollback();
             this.close();
         } catch (SQLException sqlException) {
-            LOGGER.error("An exception is occurred during roll backing of transaction");
+            LOGGER.error("exception during rolling back transaction");
             throw new ConnectionException(sqlException.getMessage(), sqlException);
         }
     }
@@ -65,7 +65,7 @@ public class TransactionManagerImpl implements TransactionManager {
             connection.close();
             currentConnection.remove();
         } catch (SQLException sqlException) {
-            LOGGER.error("An exception is occurred during closing of transaction");
+            LOGGER.error("exception during closing of transaction");
             throw new ConnectionException(sqlException.getMessage(), sqlException);
         }
     }

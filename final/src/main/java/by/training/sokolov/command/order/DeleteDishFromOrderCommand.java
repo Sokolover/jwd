@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.DELETE_DISH_FROM_ORDER;
+import static by.training.sokolov.command.constants.CommandReturnValues.DELETE_DISH_FROM_ORDER_RESULT;
 
 public class DeleteDishFromOrderCommand implements Command {
 
@@ -25,7 +25,7 @@ public class DeleteDishFromOrderCommand implements Command {
         Long itemIdLong = Long.parseLong(itemIdString);
         orderItemService.deleteById(itemIdLong);
 
-        return DELETE_DISH_FROM_ORDER;
+        return DELETE_DISH_FROM_ORDER_RESULT;
     }
 
 }

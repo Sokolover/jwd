@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+import static by.training.sokolov.core.QueryParamConstants.COMMAND_PARAM;
+
 @WebFilter(urlPatterns = "/*", filterName = "security")
 public class CommandSecurityFilter implements Filter {
 
@@ -23,10 +25,7 @@ public class CommandSecurityFilter implements Filter {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         SecurityContext securityContext = SecurityContext.getInstance();
-        /*
-todo посмотреть видео по security и прикрутить рабочее security вместе с security.properties
- */
-        String command = servletRequest.getParameter("_command");
+        String command = servletRequest.getParameter(COMMAND_PARAM);
 
         Optional<CommandType> commandType = CommandType.of(command);
 
@@ -35,7 +34,7 @@ todo посмотреть видео по security и прикрутить ра�
         } else if (!commandType.isPresent()) {
             chain.doFilter(request, response);
         } else {
-            ((HttpServletResponse) response).sendRedirect("?_command=" + CommandType.INDEX.name());
+            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath());
         }
     }
 

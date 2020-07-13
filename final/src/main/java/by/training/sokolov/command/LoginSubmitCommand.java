@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
-import static by.training.sokolov.application.constants.ServletName.DELIVERY_SERVLET;
+import static by.training.sokolov.application.constants.ServletName.INDEX_SERVLET;
 
 public class LoginSubmitCommand implements Command {
 
@@ -40,6 +40,6 @@ public class LoginSubmitCommand implements Command {
         HttpSession httpSession = request.getSession();
         SecurityContext.getInstance().login(user, httpSession.getId());
 
-        return DELIVERY_SERVLET;
+        return INDEX_SERVLET;
     }
 }

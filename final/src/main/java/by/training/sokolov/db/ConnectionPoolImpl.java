@@ -33,6 +33,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private BlockingQueue<Connection> usedConnections;
 
     private ConnectionPoolImpl() {
+
         properties = getProperties();
         registerDriver();
 
@@ -59,14 +60,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     private static Connection createConnection() {
-//        LOGGER.info("Trying to create connection to database");
         try {
             String url = properties.get(URL);
             String username = properties.get(USERNAME);
             String password = properties.get(PASSWORD);
-            Connection connection = DriverManager.getConnection(url, username, password);
-//            LOGGER.info("Connection has been created");
-            return connection;
+            return DriverManager.getConnection(url, username, password);
         } catch (SQLException ex) {
             LOGGER.error("Connection can't be created");
             throw new InternalServerErrorException(ex);
@@ -140,7 +138,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
     public void releaseConnection(Connection connection) {
         try {
             connectionLock.lock();
-            //availableConnections.size() > POOL_CAPACITY
             if (availableConnections.size() >= POOL_CAPACITY) {
                 throw new IllegalStateException("Release Maximum pool size was reached");
             }
@@ -154,25 +151,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }
     }
 
-    public int getAvailableConnectionsAmount() {
-        return availableConnections.size();
-    }
-
-    public int getUsedConnectionsAmount() {
-        return usedConnections.size();
-    }
-
-    @Override
-    public int getSize() {
-        return availableConnections.size() + usedConnections.size();
-    }
-
-
     @Override
     public void shutdown() throws SQLException {
         usedConnections.forEach(this::releaseConnection);
-        for (Connection c : availableConnections) {
-            c.close();
+        for (Connection connection : availableConnections) {
+            connection.close();
         }
         availableConnections.clear();
         LOGGER.info("connection pool shutdown");

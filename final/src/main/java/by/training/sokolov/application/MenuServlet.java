@@ -17,9 +17,9 @@ import java.io.IOException;
 
 import static by.training.sokolov.application.constants.JspName.*;
 import static by.training.sokolov.application.constants.ServletName.*;
-import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
+import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
-@WebServlet(urlPatterns = "/menu", name = "MenuServlet")
+@WebServlet(urlPatterns = "/menu", name = MENU_SERVLET)
 public class MenuServlet extends HttpServlet {
 
     private static final long serialVersionUID = 3075146766217683919L;
@@ -34,24 +34,22 @@ public class MenuServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        setSecurityAttributes(req);
 
         switch (viewName) {
             case LOGIN_SERVLET:
+            case MENU_SERVLET:
             case USER_REGISTER_SERVLET:
             case ORDER_BASKET_SERVLET:
-            case MENU_SERVLET:
             case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case LOGOUT:
+            case LOGOUT_RESULT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-            case ORDER_CREATED_JSP:
-            case DISH_FEEDBACK_WRITE_JSP:
+            case COMMAND_RESULT_MESSAGE_JSP:
+            case DISH_CREATE_FEEDBACK_JSP:
                 req.setAttribute("viewName", viewName);
-//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             default:
@@ -59,7 +57,6 @@ public class MenuServlet extends HttpServlet {
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
                 req.setAttribute("viewName", commandResult);
-//                req.setAttribute("category", DISH_CATEGORY_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }
@@ -70,5 +67,11 @@ public class MenuServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         doGet(req, resp);
+    }
+
+    private void setSecurityAttributes(HttpServletRequest req) {
+        req.setAttribute("sessionId", req.getSession().getId());
+        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
+        req.setAttribute("userLoggedIn", userLoggedIn);
     }
 }

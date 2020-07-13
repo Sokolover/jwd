@@ -26,11 +26,9 @@ public enum CommandType {
     DISH_FEEDBACK_WRITE,
     DISH_FEEDBACK_SUBMIT,
     VIEW_DISH_MENU,
-    VIEW_USER_LIST;
 
-    /*
-    TODO СДЕЛАТЬ КАК в старых проектах
-     */
+    DEFAULT;
+
     public static Optional<CommandType> of(String name) {
         return Stream.of(CommandType.values())
                 .filter(type -> type.name().equalsIgnoreCase(name))

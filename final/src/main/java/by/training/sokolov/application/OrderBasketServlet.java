@@ -19,7 +19,7 @@ import static by.training.sokolov.application.constants.JspName.*;
 import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.*;
 
-@WebServlet(urlPatterns = "/order_basket", name = "OrderBasketServlet")
+@WebServlet(urlPatterns = "/order_basket", name = ORDER_BASKET_SERVLET)
 public class OrderBasketServlet extends HttpServlet {
 
     private static final long serialVersionUID = -79412450294725257L;
@@ -34,8 +34,7 @@ public class OrderBasketServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        setSecurityAttributes(req);
 
         switch (viewName) {
             case MENU_SERVLET:
@@ -43,16 +42,16 @@ public class OrderBasketServlet extends HttpServlet {
             case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case LOGOUT:
+            case LOGOUT_RESULT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-            case ORDER_CREATED_JSP:
-            case DISH_FEEDBACK_WRITE_JSP:
+            case COMMAND_RESULT_MESSAGE_JSP:
+            case DISH_CREATE_FEEDBACK_JSP:
                 req.setAttribute("viewName", viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
-            case BASKET_ADD_ITEM:
-            case DELETE_DISH_FROM_ORDER:
+            case ORDER_ADD_ITEM_RESULT:
+            case DELETE_DISH_FROM_ORDER_RESULT:
             default:
                 String commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
                 command = commandFactory.getCommand(commandName);
@@ -62,6 +61,12 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
         }
 
+    }
+
+    private void setSecurityAttributes(HttpServletRequest req) {
+        req.setAttribute("sessionId", req.getSession().getId());
+        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
+        req.setAttribute("userLoggedIn", userLoggedIn);
     }
 
     @Override

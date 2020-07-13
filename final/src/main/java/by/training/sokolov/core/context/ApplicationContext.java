@@ -177,6 +177,16 @@ public class ApplicationContext {
         DishCategoryService dishCategoryProxyService = createProxy
                 (getClass().getClassLoader(), dishCategoryServiceHandler, DishCategoryService.class);
 
+        InvocationHandler deliveryAddressServiceHandler = createTransactionalInvocationHandler
+                (transactionManager, deliveryAddressService);
+        DeliveryAddressService deliveryAddressProxyService = createProxy
+                (getClass().getClassLoader(), deliveryAddressServiceHandler, DeliveryAddressService.class);
+
+        InvocationHandler dishFeedbackServiceHandler = createTransactionalInvocationHandler
+                (transactionManager, dishFeedbackService);
+        DishFeedbackService dishFeedbackServiceProxyService = createProxy
+                (getClass().getClassLoader(), dishFeedbackServiceHandler, DishFeedbackService.class);
+
         //commands
         Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
         Command deleteDishFromOrderCommand = new DeleteDishFromOrderCommand(orderItemProxyService);
@@ -186,7 +196,7 @@ public class ApplicationContext {
         Command registerUserCommand = new RegisterUserCommand(userProxyService);
         Command viewDishMenuCommand = new ViewDishMenuCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
-        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(orderItemProxyService, userOrderProxyService, userService);
+        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService);
         Command dishFeedbackSubmitCommand = new DishFeedbackSubmitCommand(dishFeedbackService);
         Command dishFeedbackWriteCommand = new DishFeedbackWriteCommand(dishProxyService);
 
@@ -221,14 +231,19 @@ public class ApplicationContext {
 
         //bean command provider
         beans.put(CommandFactory.class, commandFactory);
-
-        LOGGER.info("application context initialize");
+        beans.put(DishService.class, dishProxyService);
+        beans.put(OrderItemService.class, orderItemProxyService);
+        beans.put(DeliveryAddressService.class, deliveryAddressProxyService);
+        beans.put(UserOrderService.class, userOrderProxyService);
+        beans.put(UserService.class, userProxyService);
+        beans.put(DishCategoryService.class, dishCategoryProxyService);
+        beans.put(DishFeedbackService.class, dishFeedbackServiceHandler);
     }
 
     public void destroy() throws SQLException {
+
         connectionPool.shutdown();
         beans.clear();
-        LOGGER.info("application context destroy");
     }
 
     public <T> T getBean(Class<T> clazz) {

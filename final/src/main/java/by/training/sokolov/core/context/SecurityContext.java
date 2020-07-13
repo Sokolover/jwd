@@ -14,8 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SecurityContext {
 
     private static final SecurityContext SECURITY_CONTEXT = new SecurityContext();
-    private final Map<String, User> userDtoMap = new ConcurrentHashMap<>(1000);
-    //    private final ThreadLocal<String> currentSessionIdStorage = new ThreadLocal<>();
+    private final Map<String, User> userMap = new ConcurrentHashMap<>(1000);
     private Properties properties = new Properties();
 
     public static SecurityContext getInstance() {
@@ -32,25 +31,21 @@ public class SecurityContext {
     }
 
     public void login(User user, String sessionId) {
-        userDtoMap.put(sessionId, user);
+
+        userMap.put(sessionId, user);
     }
 
     public void logout(String sessionId) {
-        userDtoMap.remove(sessionId);
+
+        userMap.remove(sessionId);
     }
 
     public User getCurrentUser(String sessionId) {
 
-        return sessionId != null ? userDtoMap.get(sessionId) : null;
+        return sessionId != null ? userMap.get(sessionId) : null;
     }
 
     public boolean canExecute(CommandType commandType, String sessionId) {
-
-        User currentUser = getCurrentUser(sessionId);
-        return canExecute(currentUser, commandType);
-    }
-
-    public boolean canExecute(String sessionId, CommandType commandType) {
 
         User currentUser = getCurrentUser(sessionId);
         return canExecute(currentUser, commandType);
@@ -63,10 +58,10 @@ public class SecurityContext {
                 .map(s -> Arrays.asList(s.split(",")))
                 .orElseGet(ArrayList::new);
         return (user != null && rolesMatch(roles, user)) || roles.isEmpty();
-
     }
 
     private boolean rolesMatch(List<String> roles, User user) {
+
         for (String role : roles) {
             for (UserRole userRole : user.getRoles()) {
                 if (role.equalsIgnoreCase(userRole.getRoleName())) {

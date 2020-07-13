@@ -12,11 +12,4 @@ public class CommandUtil {
                 String.valueOf(request.getAttribute(QueryParamConstants.COMMAND_PARAM)) :
                 request.getParameter(QueryParamConstants.COMMAND_PARAM);
     }
-
-    public static String getCategoryFromRequest(HttpServletRequest request) {
-
-        return request.getAttribute(QueryParamConstants.CATEGORY_PARAM) != null ?
-                String.valueOf(request.getAttribute(QueryParamConstants.CATEGORY_PARAM)) :
-                request.getParameter(QueryParamConstants.CATEGORY_PARAM);
-    }
 }

@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.training.sokolov.application.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
-import static by.training.sokolov.application.constants.JspName.ORDER_CREATED_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
-import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT;
+import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
-@WebServlet(urlPatterns = "/", name = "index")
+@WebServlet(urlPatterns = "/", name = INDEX_SERVLET)
 public class IndexServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6154677369722697748L;
@@ -34,32 +34,33 @@ public class IndexServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        setSecurityAttributes(req);
 
         switch (viewName) {
             case LOGIN_SERVLET:
-            case USER_REGISTER_SERVLET:
             case MENU_SERVLET:
+            case USER_REGISTER_SERVLET:
             case ORDER_BASKET_SERVLET:
             case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case ORDER_CREATED_JSP:
-                req.setAttribute("viewName", viewName);
-//                req.setAttribute("category", INDEX_JSP);
-                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
-                break;
-            case LOGOUT:
+            case LOGOUT_RESULT:
                 resp.sendRedirect(req.getContextPath());
                 break;
+            case COMMAND_RESULT_MESSAGE_JSP:
+                req.setAttribute("viewName", viewName);
+                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
+                break;
             default:
-//                req.setAttribute("viewName", INDEX_JSP);
-//                req.setAttribute("category", INDEX_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }
+    }
 
+    private void setSecurityAttributes(HttpServletRequest req) {
+        req.setAttribute("sessionId", req.getSession().getId());
+        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
+        req.setAttribute("userLoggedIn", userLoggedIn);
     }
 
     @Override

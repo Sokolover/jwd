@@ -20,27 +20,25 @@ public class LangFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        /*
-        todo сделать более универсальным, для многих языков
-         */
-
         if (request instanceof HttpServletRequest) {
             String lang = request.getParameter("lang");
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            if (("en".equalsIgnoreCase(lang) || "ru".equalsIgnoreCase(lang))) {
-                Cookie langCookie = new Cookie("lang", lang);
-                langCookie.setPath(httpRequest.getContextPath());
-                httpRequest.setAttribute("lang", lang);
-                ((HttpServletResponse) response).addCookie(langCookie);
+            Cookie langCookie;
+            LangEnum langEnum = LangEnum.fromString(lang);
+
+            if (langEnum != LangEnum.DEFAULT) {
+                langCookie = new Cookie("lang", langEnum.getValue());
             } else {
                 Optional<Cookie[]> cookies = Optional.ofNullable(httpRequest.getCookies());
-                Cookie langCookie = cookies.map(Stream::of).orElse(Stream.empty())
-                        .filter(cookie -> cookie.getName().equalsIgnoreCase("lang")).findFirst()
-                        .orElse(new Cookie("lang", "en"));
-                langCookie.setPath(httpRequest.getContextPath());
-                httpRequest.setAttribute("lang", lang);
-                ((HttpServletResponse) response).addCookie(langCookie);
+                langCookie = cookies.map(Stream::of)
+                        .orElse(Stream.empty())
+                        .filter(cookie -> cookie.getName().equalsIgnoreCase("lang"))
+                        .findFirst()
+                        .orElse(new Cookie("lang", LangEnum.ENGLISH.getValue()));
             }
+            langCookie.setPath(httpRequest.getContextPath());
+            httpRequest.setAttribute("lang", lang);
+            ((HttpServletResponse) response).addCookie(langCookie);
         }
         chain.doFilter(request, response);
     }
