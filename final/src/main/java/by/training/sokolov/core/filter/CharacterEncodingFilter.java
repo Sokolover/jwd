@@ -18,13 +18,11 @@ public class CharacterEncodingFilter implements Filter {
 
         String characterEncoding = request.getCharacterEncoding();
         String utf8 = StandardCharsets.UTF_8.name();
-//        if (!utf8.equalsIgnoreCase(characterEncoding)) {
+        if (!utf8.equalsIgnoreCase(characterEncoding)) {
             request.setCharacterEncoding(utf8);
             response.setCharacterEncoding(utf8);
-//        }
-        request.setCharacterEncoding("UTF-8");
+        }
         response.setContentType("text/html; charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
 
         chain.doFilter(request, response);
     }

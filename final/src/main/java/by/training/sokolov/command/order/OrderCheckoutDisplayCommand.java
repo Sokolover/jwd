@@ -41,7 +41,7 @@ public class OrderCheckoutDisplayCommand implements Command {
         }
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
-        if (Objects.isNull(orderItems)) {
+        if (Objects.isNull(orderItems) || orderItems.isEmpty()) {
             request.setAttribute("error", "please, add items to your order");
             return ERROR_MESSAGE_JSP;
         }
