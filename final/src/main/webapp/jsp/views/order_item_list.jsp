@@ -55,7 +55,6 @@
                             <c:out value="${orderItem.dishAmount}"/>
                         </li>
                     </ul>
-
                     <div class="control">
                         <fmt:message var="delete_label" key="links.order.item.delete"/>
                         <input class="button is-primary" type="submit" value="${delete_label}">
@@ -64,5 +63,4 @@
             </form>
         </c:forEach>
     </ul>
-
 </aside>

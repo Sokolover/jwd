@@ -12,10 +12,8 @@
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
     <ul class="menu-list">
         <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
-        <%--        <jsp:useBean id="sessionId" scope="request" type="java.lang.String"/>--%>
         <c:choose>
             <c:when test="${userLoggedIn}">
-                <%--                todo сделать чтобы работал метод securityContext.canExecute, придумать как передать в него sessionId из jsp--%>
                 <li>
                     <a href="?_command=${CommandType.LOGOUT}"><fmt:message key="links.person.logout"/></a>
                 </li>

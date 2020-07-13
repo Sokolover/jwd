@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
-import static by.training.sokolov.application.constants.ServletName.LOGIN_SERVLET;
+import static by.training.sokolov.application.constants.JspName.USER_REGISTER_JSP;
+import static by.training.sokolov.application.constants.ServletName.USER_REGISTER_SERVLET;
 
-@WebServlet(urlPatterns = "/login", name = LOGIN_SERVLET)
-public class LoginServlet extends HttpServlet implements FormServlet {
+@WebServlet(urlPatterns = "/user_register", name = USER_REGISTER_SERVLET)
+public class RegisterServletUtil extends HttpServlet {
 
-    private static final long serialVersionUID = 1845229810562352696L;
+    private static final long serialVersionUID = -8104780406678115072L;
 
-    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RegisterServletUtil.class.getName());
     private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        formServletProcess(req, resp, commandFactory, LOGIN_JSP);
+        FormServletUtil.formServletProcess(req, resp, commandFactory, USER_REGISTER_JSP);
     }
 
     @Override

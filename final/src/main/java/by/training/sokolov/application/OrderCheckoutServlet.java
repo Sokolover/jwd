@@ -46,7 +46,6 @@ public class OrderCheckoutServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
-            case ORDER_SUBMITTED_JSP:
                 req.setAttribute("viewName", viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;

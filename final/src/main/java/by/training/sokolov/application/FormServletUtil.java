@@ -14,11 +14,9 @@ import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
 
-public interface FormServlet {
-    /*
-    todo узнать у Саши норм тут делать метод или нет
-     */
-    default void formServletProcess(HttpServletRequest req, HttpServletResponse resp, CommandFactory commandFactory, String formJspName) throws IOException, ServletException {
+class FormServletUtil {
+
+    static void formServletProcess(HttpServletRequest req, HttpServletResponse resp, CommandFactory commandFactory, String formJspName) throws IOException, ServletException {
 
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
         Command command = commandFactory.getCommand(commandFromRequest);

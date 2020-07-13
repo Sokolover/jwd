@@ -1,10 +1,11 @@
 package by.training.sokolov.core.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.LocalDate.now;
 
 public class TimeService {
 
@@ -18,12 +19,11 @@ public class TimeService {
 
     public static List<LocalDateTime> findTimeVariants() {
 
-        LocalDate currentDate = LocalDate.now();
-        final LocalDateTime THIS_DAY_FIRST_TIME_OF_DELIVERY = LocalDateTime.parse(currentDate + "T" + TIME_09_00);
-        LocalDateTime THIS_DAY_LAST_TIME_OF_DELIVERY = LocalDateTime.parse(currentDate + "T" + TIME_23_00);
+        final LocalDateTime THIS_DAY_FIRST_TIME_OF_DELIVERY = LocalDateTime.parse(now() + "T" + TIME_09_00);
+        LocalDateTime THIS_DAY_LAST_TIME_OF_DELIVERY = LocalDateTime.parse(now() + "T" + TIME_23_00);
         final LocalDateTime THIS_DAY_LAST_TIME_FOR_ORDER = THIS_DAY_LAST_TIME_OF_DELIVERY.minusMinutes(HALF_AN_HOUR);
-        final LocalDateTime THIS_DAY_MIDNIGHT = LocalDateTime.parse(currentDate + "T" + TIME_00_00);
-        final LocalDateTime THIS_DAY_23_59 = LocalDateTime.parse(LocalDate.now() + "T" + TIME_23_59);
+        final LocalDateTime THIS_DAY_MIDNIGHT = LocalDateTime.parse(now() + "T" + TIME_00_00);
+        final LocalDateTime THIS_DAY_23_59 = LocalDateTime.parse(now() + "T" + TIME_23_59);
 
         LocalDateTime currentTimeMinutes = LocalDateTime
                 .now()

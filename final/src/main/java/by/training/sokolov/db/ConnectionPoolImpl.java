@@ -18,10 +18,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import static by.training.sokolov.db.PropertyHolder.getProperties;
 import static by.training.sokolov.db.constants.PropertyName.*;
 
-
 public class ConnectionPoolImpl implements ConnectionPool {
 
-    private final static Logger LOGGER = Logger.getLogger(ConnectionPoolImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ConnectionPoolImpl.class.getName());
     private static final Lock connectionLockStatic = new ReentrantLock();
     private static Map<String, String> properties;
     private static int POOL_CAPACITY;

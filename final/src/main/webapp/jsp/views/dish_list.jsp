@@ -47,17 +47,19 @@
                             </div>
                         </li>
                     </ul>
-
                     <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
                     <c:if test="${userLoggedIn}">
                         <label class="label">
                             <fmt:message key="order.menu.amount"/>
                             <div class="column is-half">
                                 <div class="control">
-                                        <%--                            <input class="input" name="order.dish.amount" type="text" placeholder="input amount">--%>
-                                    <input class="input" name="order.dish.amount" value="1" type="number" step="1"
+                                    <input class="input"
+                                           name="order.dish.amount"
+                                           value="1"
+                                           type="number"
+                                           step="1"
                                            min="1"
-                                           max="10" autocomplete="on">
+                                           max="10">
                                 </div>
                             </div>
                         </label>

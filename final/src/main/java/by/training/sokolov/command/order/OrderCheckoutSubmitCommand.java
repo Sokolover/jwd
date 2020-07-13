@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.ORDER_SUBMITTED_JSP;
+import static by.training.sokolov.application.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
 
 public class OrderCheckoutSubmitCommand implements Command {
@@ -57,8 +57,9 @@ public class OrderCheckoutSubmitCommand implements Command {
         currentOrder.setOrderStatus(SUBMITTED);
 
         userOrderService.update(currentOrder);
+        request.setAttribute("message", "order accepted");
 
-        return ORDER_SUBMITTED_JSP;
+        return COMMAND_RESULT_MESSAGE_JSP;
     }
 
     private void setTimeOfDelivery(HttpServletRequest request, UserOrder currentOrder) {
