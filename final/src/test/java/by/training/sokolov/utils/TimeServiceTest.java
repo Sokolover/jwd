@@ -1,4 +1,4 @@
-package by.training.sokolov.others;
+package by.training.sokolov.utils;
 
 import org.junit.jupiter.api.Test;
 
