@@ -28,10 +28,10 @@ public class LoginSubmitCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        String name = request.getParameter("user.name");
+        String email = request.getParameter("user.email");
         String password = request.getParameter("user.password");
         String hashedPassword = Md5EncryptingUtil.encrypt(password);
-        User user = userService.login(name, hashedPassword);
+        User user = userService.login(email, hashedPassword);
 
         if (Objects.isNull(user)) {
             request.setAttribute("error", "wrong email address or password");

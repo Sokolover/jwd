@@ -9,4 +9,6 @@ import java.sql.SQLException;
 public interface UserDao extends CrudDao<User> {
 
     User getByName(String name) throws SQLException, ConnectionException;
+
+    User getByEmail(String name) throws SQLException, ConnectionException;
 }

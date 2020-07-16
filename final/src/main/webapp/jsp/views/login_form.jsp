@@ -17,9 +17,9 @@
         <div class="content">
             <div class="column is-one-third">
                 <div class="control">
-                    <label for="user.name">
-                        <fmt:message key="user.name"/>
-                        <input id="user.name" name="user.name" class="input" type="text">
+                    <label for="user.email">
+                        <fmt:message key="user.email"/>
+                        <input id="user.email" name="user.email" class="input" type="text">
                     </label>
                 </div>
                 <div class="control">

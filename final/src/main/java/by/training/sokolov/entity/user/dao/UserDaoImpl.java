@@ -27,6 +27,10 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
             "SELECT {0}.*\n" +
             "FROM {0}\n" +
             "WHERE {0}.user_name = ?";
+    private static final String SELECT_BY_EMAIL = "" +
+            "SELECT {0}.*\n" +
+            "FROM {0}\n" +
+            "WHERE {0}.user_email = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
@@ -81,14 +85,28 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
         };
     }
 
+    @Override
     public User getByName(String name) throws SQLException, ConnectionException {
-        connectionLock.lock();
+
         LOGGER.info("getByName(String name)");
+        return getByStringParam(SELECT_BY_EMAIL, name);
+    }
+
+    @Override
+    public User getByEmail(String email) throws SQLException, ConnectionException {
+
+        LOGGER.info("getByEmail(String email)");
+        return getByStringParam(SELECT_BY_EMAIL, email);
+    }
+
+    private User getByStringParam(String query, String param) throws SQLException, ConnectionException {
+
+        connectionLock.lock();
         AtomicReference<User> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_NAME, TABLE_NAME);
+            String sql = MessageFormat.format(query, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, name);
+                statement.setString(1, param);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     try {
@@ -103,5 +121,4 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
             connectionLock.unlock();
         }
     }
-
 }

@@ -10,7 +10,9 @@ public interface UserService extends GenericService<User> {
 
     void register(User user) throws ConnectionException, SQLException;
 
-    User login(String name, String password) throws ConnectionException, SQLException;
+    User login(String email, String password) throws ConnectionException, SQLException;
 
     User getByName(String name) throws ConnectionException, SQLException;
+
+    User getByEmail(String email) throws ConnectionException, SQLException;
 }

@@ -64,14 +64,14 @@ public class RegisterUserCommand implements Command {
              вместо этого поиска циклами. скорее всего сделатб регистрацию в userService
              */
             for (User user : users) {
-                if (user.getName().equals(name)) {
+                if (user.getName().equalsIgnoreCase(name)) {
                     request.setAttribute("error", "user with this name has been registered");
                     return USER_REGISTER_JSP;
                 }
             }
 
             for (User user : users) {
-                if (user.getEmail().equals(email)) {
+                if (user.getEmail().equalsIgnoreCase(email)) {
                     request.setAttribute("error", "user with this email has been registered");
                     return USER_REGISTER_JSP;
                 }

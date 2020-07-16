@@ -42,9 +42,9 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     }
 
     @Override
-    public User login(String name, String password) throws ConnectionException, SQLException {
+    public User login(String email, String password) throws ConnectionException, SQLException {
 
-        User user = this.getByName(name);
+        User user = this.getByEmail(email);
 
         if (!Objects.isNull(user) && user.getPassword().equals(password)) {
             LOGGER.info("user " + user.getName() + " logged in");
@@ -97,10 +97,23 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     }
 
     @Transactional
-
+    @Override
     public User getByName(String name) throws ConnectionException, SQLException {
 
         User user = userDao.getByName(name);
+        if (Objects.isNull(user)) {
+            return null;
+        }
+        this.getUserAttributes(user);
+
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public User getByEmail(String email) throws ConnectionException, SQLException {
+
+        User user = userDao.getByEmail(email);
         if (Objects.isNull(user)) {
             return null;
         }
