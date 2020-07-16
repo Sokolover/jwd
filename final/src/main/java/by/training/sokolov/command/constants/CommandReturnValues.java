@@ -9,5 +9,5 @@ public class CommandReturnValues {
     public static final String ORDER_DISH_LIST_DISPLAY = "order_dish_list_display";
     public static final String DISH_MENU_DISPLAY = "dish_menu_display";
     public static final String CHECKOUT = "checkout";
-    public static final String ERROR = "error";
+    public static final String ERROR_PAGE = "error";
 }

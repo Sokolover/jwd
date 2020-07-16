@@ -1,4 +1,4 @@
-package com.bunis.container.validation;
+package by.training.sokolov.validation;
 
 import java.util.ArrayList;
 import java.util.List;

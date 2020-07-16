@@ -41,8 +41,11 @@ import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDaoImpl;
 import by.training.sokolov.entity.wallet.dao.WalletDao;
 import by.training.sokolov.entity.wallet.dao.WalletDaoImpl;
+import by.training.sokolov.validation.*;
+import by.training.sokolov.validation.impl.*;
 import org.apache.log4j.Logger;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -187,13 +190,22 @@ public class ApplicationContext {
         DishFeedbackService dishFeedbackServiceProxyService = createProxy
                 (getClass().getClassLoader(), dishFeedbackServiceHandler, DishFeedbackService.class);
 
+        //init bean validator
+        Map<Class<? extends Annotation>, FieldValidator> validatorMap = new HashMap<>();
+        validatorMap.put(MaxLength.class, new MaxLengthFieldValidator());
+        validatorMap.put(MinLength.class, new MinLengthFieldValidator());
+        validatorMap.put(Email.class, new EmailFieldValidator());
+        validatorMap.put(Password.class, new PasswordFieldValidator());
+        validatorMap.put(PhoneNumber.class, new PhoneNumberFieldValidator());
+        BeanValidator beanValidator = new AnnotationBasedBeanValidator(validatorMap);
+
         //commands
         Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
         Command deleteDishFromOrderCommand = new DeleteDishFromOrderCommand(orderItemProxyService);
         Command orderDishListDisplayCommand = new OrderDishListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
         Command loginSubmitCommand = new LoginSubmitCommand(userProxyService);
-        Command registerUserCommand = new RegisterUserCommand(userProxyService);
+        Command registerUserCommand = new RegisterUserCommand(userProxyService, beanValidator);
         Command viewDishMenuCommand = new ViewDishMenuCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
         Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService);
@@ -238,6 +250,9 @@ public class ApplicationContext {
         beans.put(UserService.class, userProxyService);
         beans.put(DishCategoryService.class, dishCategoryProxyService);
         beans.put(DishFeedbackService.class, dishFeedbackServiceHandler);
+
+        beans.put(UserDao.class, userDao);
+        beans.put(BeanValidator.class, beanValidator);
     }
 
     public void destroy() throws SQLException {

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class Md5UtilTest {
+public class Md5EncryptingUtilTest {
 
     @Test
-    public void givenPassword_whenHashing_thenVerifying() {
+    public void shouldEncryptPassword() {
         String hash = "FBD5FC9D0373D3BD981AB6E6905279DD";
         String password = "Qwerty3@123";
         String encryptResult = Md5EncryptingUtil.encrypt(password);

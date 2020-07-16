@@ -1,91 +1,106 @@
 package by.training.sokolov.validation;
 
-import by.sadko.training.entity.UserAccount;
-import by.sadko.training.validation.impl.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.training.sokolov.core.context.ApplicationContext;
+import by.training.sokolov.dao.UserDaoImplTest;
+import by.training.sokolov.entity.user.model.User;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
-import java.lang.annotation.Annotation;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ValidatorTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(ValidatorTest.class);
-    private BeanValidator beanValidator;
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImplTest.class.getName());
+    private static BeanValidator beanValidator;
 
-    @Before
-    public void initValidator() {
+    @BeforeAll
+    static void initValidator() {
 
-        Map<Class<? extends Annotation>, FieldValidator> validatorMap = new HashMap<>();
-        validatorMap.put(MaxLength.class, new MaxLengthFieldValidator());
-        validatorMap.put(MinLength.class, new MinLengthFieldValidator());
-        validatorMap.put(Email.class, new EmailFieldValidator());
-        validatorMap.put(Password.class, new PasswordFieldValidator());
-        beanValidator = new AnnotationBasedBeanValidator(validatorMap);
+        ApplicationContext.initialize();
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        beanValidator = applicationContext.getBean(BeanValidator.class);
     }
 
     @Test
     public void shouldFailValidationOnEmailField() {
 
-        UserAccount userAccount = new UserAccount();
-        userAccount.setName("John");
-        userAccount.setEmail("John@.com");
-        userAccount.setPassword("John1234");
+        User user = new User();
+        user.setName("Ivanov Ivan");
+        user.setEmail("@inavov.com");
+        user.setPassword("Ivanov1234");
 
-        ValidationResult result = beanValidator.validate(userAccount);
+        ValidationResult result = beanValidator.validate(user);
         Assert.assertNotNull(result);
         List<BrokenField> brokenFields = result.getBrokenFields();
         Assert.assertEquals(1, brokenFields.size());
 
         BrokenField brokenField = brokenFields.get(0);
-        LOGGER.info("Broken field is {}", brokenField.getFieldName());
+        LOGGER.info("Broken field is " + brokenField.getFieldName());
         Assert.assertEquals("email", brokenField.getViolatedRule());
-        Assert.assertEquals("John@.com", brokenField.getFieldValue());
+        Assert.assertEquals("@inavov.com", brokenField.getFieldValue());
         Assert.assertEquals("email", brokenField.getFieldName());
     }
 
     @Test
     public void shouldFailValidationOnNameField() {
 
-        UserAccount userAccount = new UserAccount();
-        userAccount.setName("Jon");
-        userAccount.setEmail("John@gmail.com");
-        userAccount.setPassword("John1234");
+        User user = new User();
+        user.setName("Ivan");
+        user.setEmail("Ivanov@gmail.com");
+        user.setPassword("Ivanov1234");
 
-        ValidationResult result = beanValidator.validate(userAccount);
+        ValidationResult result = beanValidator.validate(user);
         Assert.assertNotNull(result);
         List<BrokenField> brokenFields = result.getBrokenFields();
         Assert.assertEquals(1, brokenFields.size());
 
         BrokenField brokenField = brokenFields.get(0);
-        LOGGER.info("Broken field is {}", brokenField.getFieldName());
+        LOGGER.info("Broken field is " + brokenField.getFieldName());
         Assert.assertEquals("minLength", brokenField.getViolatedRule());
-        Assert.assertEquals("Jon", brokenField.getFieldValue());
+        Assert.assertEquals("Ivan", brokenField.getFieldValue());
         Assert.assertEquals("name", brokenField.getFieldName());
     }
 
     @Test
     public void shouldFailValidationOnPasswordField() {
 
-        UserAccount userAccount = new UserAccount();
-        userAccount.setName("John");
-        userAccount.setEmail("John@gmail.com");
-        userAccount.setPassword("john123");
+        User user = new User();
+        user.setName("Ivanov Ivan");
+        user.setEmail("Ivanov@gmail.com");
+        user.setPassword("ivanov1234");
 
-        ValidationResult result = beanValidator.validate(userAccount);
+        ValidationResult result = beanValidator.validate(user);
         Assert.assertNotNull(result);
         List<BrokenField> brokenFields = result.getBrokenFields();
         Assert.assertEquals(1, brokenFields.size());
 
         BrokenField brokenField = brokenFields.get(0);
-        LOGGER.info("Broken field is {}", brokenField.getFieldName());
+        LOGGER.info("Broken field is " + brokenField.getFieldName());
         Assert.assertEquals("password", brokenField.getViolatedRule());
-        Assert.assertEquals("john123", brokenField.getFieldValue());
+        Assert.assertEquals("ivanov1234", brokenField.getFieldValue());
         Assert.assertEquals("password", brokenField.getFieldName());
+    }
+
+    @Test
+    public void shouldFailValidationOnPhoneNumberField() {
+
+        User user = new User();
+        user.setName("Ivanov Ivan");
+        user.setEmail("Ivanov@gmail.com");
+        user.setPassword("Ivanov1234");
+        user.setPhoneNumber("+37529123456");
+
+        ValidationResult result = beanValidator.validate(user);
+        Assert.assertNotNull(result);
+        List<BrokenField> brokenFields = result.getBrokenFields();
+        Assert.assertEquals(1, brokenFields.size());
+
+        BrokenField brokenField = brokenFields.get(0);
+        LOGGER.info("Broken field is " + brokenField.getFieldName());
+        Assert.assertEquals("phoneNumber", brokenField.getViolatedRule());
+        Assert.assertEquals("+37529123456", brokenField.getFieldValue());
+        Assert.assertEquals("phoneNumber", brokenField.getFieldName());
     }
 }

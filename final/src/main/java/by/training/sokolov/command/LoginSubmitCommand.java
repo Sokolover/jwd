@@ -1,6 +1,7 @@
 package by.training.sokolov.command;
 
 import by.training.sokolov.core.context.SecurityContext;
+import by.training.sokolov.core.util.Md5EncryptingUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
@@ -29,8 +30,8 @@ public class LoginSubmitCommand implements Command {
 
         String name = request.getParameter("user.name");
         String password = request.getParameter("user.password");
-
-        User user = userService.login(name, password);
+        String hashedPassword = Md5EncryptingUtil.encrypt(password);
+        User user = userService.login(name, hashedPassword);
 
         if (Objects.isNull(user)) {
             request.setAttribute("error", "wrong email address or password");

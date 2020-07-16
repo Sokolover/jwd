@@ -1,14 +1,15 @@
-package com.bunis.container.validation.impl;
+package by.training.sokolov.validation.impl;
 
-import com.bunis.container.validation.BrokenField;
-import com.bunis.container.validation.Email;
-import com.bunis.container.validation.FieldValidator;
-import com.bunis.container.validation.ValidationException;
+import by.training.sokolov.validation.BrokenField;
+import by.training.sokolov.validation.Email;
+import by.training.sokolov.validation.FieldValidator;
+import by.training.sokolov.validation.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 public class EmailFieldValidator implements FieldValidator {
+
     @Override
     public BrokenField validate(Object entity, Field field) {
 

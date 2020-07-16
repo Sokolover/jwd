@@ -1,11 +1,6 @@
-package com.bunis.container.validation.impl;
+package by.training.sokolov.validation.impl;
 
-import com.bunis.container.validation.BeanValidator;
-import com.bunis.container.validation.BrokenField;
-import com.bunis.container.validation.FieldValidator;
-import com.bunis.container.validation.ValidBean;
-import com.bunis.container.validation.ValidationException;
-import com.bunis.container.validation.ValidationResult;
+import by.training.sokolov.validation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -15,6 +10,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.*;
 
 public class AnnotationBasedBeanValidator implements BeanValidator {
 
@@ -31,7 +28,7 @@ public class AnnotationBasedBeanValidator implements BeanValidator {
 
         ValidationResult validationResult = new ValidationResult();
 
-        if (bean == null) {
+        if (isNull(bean)) {
             throw new ValidationException("Passed bean is null");
         }
 

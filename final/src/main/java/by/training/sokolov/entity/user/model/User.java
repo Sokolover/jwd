@@ -5,16 +5,25 @@ import by.training.sokolov.entity.loyalty.model.Loyalty;
 import by.training.sokolov.entity.role.model.UserRole;
 import by.training.sokolov.entity.useraddress.model.UserAddress;
 import by.training.sokolov.entity.wallet.model.Wallet;
+import by.training.sokolov.validation.*;
 
 import java.util.List;
 
+import static by.training.sokolov.core.CommonAppConstants.*;
+
+@ValidBean("user")
 public class User implements IdentifiedRow {
 
     private Long id;
+    @MinLength(5)
+    @MaxLength(20)
     private String name;
+    @Password(regex = PASSWORD_PATTERN)
     private String password;
+    @Email(regex = EMAIL_PATTERN)
     private String email;
     private boolean isActive;
+    @PhoneNumber(regex = PHONE_NUMBER_PATTERN)
     private String phoneNumber;
 
     private List<UserRole> roles;

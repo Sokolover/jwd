@@ -50,4 +50,10 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
 
         return dishDao.getByCategory(categoryName);
     }
+
+    @Override
+    public void update(Dish entity) throws SQLException, ConnectionException {
+
+        super.update(entity);
+    }
 }

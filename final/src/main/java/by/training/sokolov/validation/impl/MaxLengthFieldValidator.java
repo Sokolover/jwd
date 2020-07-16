@@ -1,13 +1,14 @@
-package com.bunis.container.validation.impl;
+package by.training.sokolov.validation.impl;
 
-import com.bunis.container.validation.ValidationException;
-import com.bunis.container.validation.FieldValidator;
-import com.bunis.container.validation.MaxLength;
-import com.bunis.container.validation.BrokenField;
+import by.training.sokolov.validation.BrokenField;
+import by.training.sokolov.validation.FieldValidator;
+import by.training.sokolov.validation.MaxLength;
+import by.training.sokolov.validation.ValidationException;
 
 import java.lang.reflect.Field;
 
 public class MaxLengthFieldValidator implements FieldValidator {
+
     @Override
     public BrokenField validate(Object entity, Field field) {
 

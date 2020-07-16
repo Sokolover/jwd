@@ -1,19 +1,15 @@
 package by.training.sokolov.utils;
 
-import by.training.sokolov.core.service.TimeService;
-import by.training.sokolov.dao.UserDaoImplTest;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
-public class TestJavaToSqlTimeDate {
+public class LocalDateTimeTest {
 
-    private static final Logger LOGGER = Logger.getLogger(TestJavaToSqlTimeDate.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LocalDateTimeTest.class.getName());
 
     private static final int HALF_AN_HOUR = 30;
     private static final int ONE_HOUR = 1;
@@ -21,7 +17,7 @@ public class TestJavaToSqlTimeDate {
     private static final String TIME_09_00 = "09:00";
     private static final String TIME_23_00 = "23:00";
     private static final String TIME_00_00 = "00:00";
-    
+
     @Test
     public void shouldParseWithoutExceptions() {
 

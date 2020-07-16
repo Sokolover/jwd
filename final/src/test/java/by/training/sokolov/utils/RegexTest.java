@@ -1,4 +1,4 @@
-package by.training.sokolov.others;
+package by.training.sokolov.utils;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,12 +10,10 @@ import static junit.framework.TestCase.assertTrue;
 public class RegexTest {
 
     @Test
-    public void testRegexPhoneNumber(){
+    public void shouldVerifyPhoneNumber(){
 
         Pattern pattern2 = Pattern.compile("^\\+\\d{12}$");
-
         Matcher matcher = pattern2.matcher("+375297577197");
-
         assertTrue(matcher.matches());
     }
 }

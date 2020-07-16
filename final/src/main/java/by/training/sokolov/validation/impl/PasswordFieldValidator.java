@@ -1,16 +1,18 @@
-package by.sadko.training.validation.impl;
+package by.training.sokolov.validation.impl;
 
-import by.sadko.training.exception.ValidationException;
-import by.sadko.training.validation.BrokenField;
-import by.sadko.training.validation.FieldValidator;
-import by.sadko.training.validation.Password;
+import by.training.sokolov.validation.BrokenField;
+import by.training.sokolov.validation.FieldValidator;
+import by.training.sokolov.validation.Password;
+import by.training.sokolov.validation.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 public class PasswordFieldValidator implements FieldValidator {
+
     @Override
     public BrokenField validate(Object entity, Field field) {
+
         if (String.class.isAssignableFrom(field.getType())) {
             Password annotation = field.getAnnotation(Password.class);
             String regex = annotation.regex();
@@ -26,6 +28,7 @@ public class PasswordFieldValidator implements FieldValidator {
                 throw new ValidationException(e);
             }
         }
+
         return null;
     }
 }
