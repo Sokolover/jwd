@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.COMMAND_SECURITY_PROPERTY;
+
 public class SecurityContext {
 
     private static final SecurityContext SECURITY_CONTEXT = new SecurityContext();
@@ -53,7 +55,7 @@ public class SecurityContext {
 
     private boolean canExecute(User user, CommandType commandType) {
 
-        String commandToRoles = properties.getProperty("command." + commandType.name());
+        String commandToRoles = properties.getProperty(COMMAND_SECURITY_PROPERTY + commandType.name());
         List<String> roles = Optional.ofNullable(commandToRoles)
                 .map(s -> Arrays.asList(s.split(",")))
                 .orElseGet(ArrayList::new);

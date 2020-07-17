@@ -138,7 +138,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             connectionLock.lock();
             if (availableConnections.size() >= POOL_CAPACITY) {
-                throw new IllegalStateException("Release Maximum pool size was reached");
+                LOGGER.info("Release Maximum pool size was reached");
+                return;
             }
             usedConnections.remove(connection);
             availableConnections.add(connection);

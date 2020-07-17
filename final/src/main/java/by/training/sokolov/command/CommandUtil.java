@@ -1,15 +1,15 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.QueryParamConstants;
-
 import javax.servlet.http.HttpServletRequest;
+
+import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_COMMAND_PARAM;
 
 public class CommandUtil {
 
     public static String getCommandFromRequest(HttpServletRequest request) {
 
-        return request.getAttribute(QueryParamConstants.COMMAND_PARAM) != null ?
-                String.valueOf(request.getAttribute(QueryParamConstants.COMMAND_PARAM)) :
-                request.getParameter(QueryParamConstants.COMMAND_PARAM);
+        return request.getAttribute(QUERY_COMMAND_PARAM) != null ?
+                String.valueOf(request.getAttribute(QUERY_COMMAND_PARAM)) :
+                request.getParameter(QUERY_COMMAND_PARAM);
     }
 }

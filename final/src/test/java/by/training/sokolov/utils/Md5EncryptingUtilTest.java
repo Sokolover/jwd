@@ -1,6 +1,6 @@
 package by.training.sokolov.utils;
 
-import by.training.sokolov.core.util.Md5EncryptingUtil;
+import by.training.sokolov.util.Md5EncryptingUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;

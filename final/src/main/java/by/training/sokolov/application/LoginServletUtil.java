@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
-import static by.training.sokolov.application.constants.ServletName.LOGIN_SERVLET;
+import static by.training.sokolov.core.constants.JspName.LOGIN_JSP;
+import static by.training.sokolov.core.constants.ServletName.LOGIN_SERVLET;
 
 @WebServlet(urlPatterns = "/login", name = LOGIN_SERVLET)
 public class LoginServletUtil extends HttpServlet {

@@ -1,4 +1,4 @@
-package by.training.sokolov.application.constants;
+package by.training.sokolov.core.constants;
 
 public class JspConstants {
 

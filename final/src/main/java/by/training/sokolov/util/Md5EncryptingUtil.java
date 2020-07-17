@@ -1,4 +1,4 @@
-package by.training.sokolov.core.util;
+package by.training.sokolov.util;
 
 import by.training.sokolov.core.context.ApplicationContext;
 import org.apache.log4j.Logger;
@@ -7,7 +7,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Md5EncryptingUtil {
+public final class Md5EncryptingUtil {
 
     private static final Logger LOGGER = Logger.getLogger(ApplicationContext.class);
 

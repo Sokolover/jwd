@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static by.training.sokolov.core.QueryParamConstants.COMMAND_PARAM;
+import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_COMMAND_PARAM;
 
 @WebFilter(urlPatterns = "/*", filterName = "security")
 public class CommandSecurityFilter implements Filter {
@@ -25,7 +25,7 @@ public class CommandSecurityFilter implements Filter {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         SecurityContext securityContext = SecurityContext.getInstance();
-        String command = servletRequest.getParameter(COMMAND_PARAM);
+        String command = servletRequest.getParameter(QUERY_COMMAND_PARAM);
 
         Optional<CommandType> commandType = CommandType.of(command);
 

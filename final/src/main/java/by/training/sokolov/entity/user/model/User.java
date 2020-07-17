@@ -9,7 +9,7 @@ import by.training.sokolov.validation.*;
 
 import java.util.List;
 
-import static by.training.sokolov.core.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 
 @ValidBean("user")
 public class User implements IdentifiedRow {

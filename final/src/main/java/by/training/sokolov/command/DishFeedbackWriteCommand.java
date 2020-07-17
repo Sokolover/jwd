@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static by.training.sokolov.application.constants.JspName.DISH_CREATE_FEEDBACK_JSP;
+import static by.training.sokolov.core.constants.CommonAppConstants.DISH_ID_JSP_PARAM;
+import static by.training.sokolov.core.constants.CommonAppConstants.DISH_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.JspName.DISH_CREATE_FEEDBACK_JSP;
 
 public class DishFeedbackWriteCommand implements Command {
 
@@ -23,10 +25,10 @@ public class DishFeedbackWriteCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        String dishId = request.getParameter("dish.id");
+        String dishId = request.getParameter(DISH_ID_JSP_PARAM);
         Long dishIdLong = Long.parseLong(dishId);
         Dish dish = dishService.getById(dishIdLong);
-        request.setAttribute("dish", dish);
+        request.setAttribute(DISH_JSP_ATTRIBUTE, dish);
 
         return DISH_CREATE_FEEDBACK_JSP;
     }

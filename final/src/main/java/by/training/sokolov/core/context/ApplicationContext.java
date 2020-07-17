@@ -56,7 +56,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static by.training.sokolov.application.constants.ServletName.*;
+import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
+import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandType.*;
 
 public class ApplicationContext {
@@ -238,7 +239,7 @@ public class ApplicationContext {
         commandFactory.registerCommand(LOGOUT, (request, response) -> {
             request.getSession().invalidate();
             SecurityContext.getInstance().logout(request.getSession().getId());
-            return "logout";
+            return LOGOUT_RESULT;
         });
 
         //bean command provider

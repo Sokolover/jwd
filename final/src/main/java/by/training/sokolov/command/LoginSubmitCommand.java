@@ -1,7 +1,7 @@
 package by.training.sokolov.command;
 
 import by.training.sokolov.core.context.SecurityContext;
-import by.training.sokolov.core.util.Md5EncryptingUtil;
+import by.training.sokolov.util.Md5EncryptingUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
@@ -14,8 +14,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.LOGIN_JSP;
-import static by.training.sokolov.application.constants.ServletName.INDEX_SERVLET;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.LOGIN_JSP;
+import static by.training.sokolov.core.constants.ServletName.INDEX_SERVLET;
 
 public class LoginSubmitCommand implements Command {
 
@@ -28,13 +29,13 @@ public class LoginSubmitCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        String email = request.getParameter("user.email");
-        String password = request.getParameter("user.password");
+        String email = request.getParameter(USER_EMAIL_JSP_PARAM);
+        String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
         String hashedPassword = Md5EncryptingUtil.encrypt(password);
         User user = userService.login(email, hashedPassword);
 
         if (Objects.isNull(user)) {
-            request.setAttribute("error", "wrong email address or password");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "wrong email address or password");
             return LOGIN_JSP;
         }
 

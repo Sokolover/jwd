@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.USER_REGISTER_JSP;
-import static by.training.sokolov.application.constants.ServletName.USER_REGISTER_SERVLET;
+import static by.training.sokolov.core.constants.JspName.USER_REGISTER_JSP;
+import static by.training.sokolov.core.constants.ServletName.USER_REGISTER_SERVLET;
 
 @WebServlet(urlPatterns = "/user_register", name = USER_REGISTER_SERVLET)
 public class RegisterServletUtil extends HttpServlet {

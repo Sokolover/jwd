@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
-import static by.training.sokolov.application.constants.ServletName.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.USER_LOGGED_IN_JSP_PARAM;
+import static by.training.sokolov.core.constants.CommonAppConstants.VIEW_NAME_JSP_PARAM;
+import static by.training.sokolov.core.constants.JspName.MAIN_LAYOUT_JSP;
+import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
 
 class FormServletUtil {
@@ -23,7 +25,7 @@ class FormServletUtil {
         String viewName = command.apply(req, resp);
 
         boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
 
         switch (viewName) {
             case LOGIN_SERVLET:
@@ -36,7 +38,7 @@ class FormServletUtil {
                 break;
             case DEFAULT_RESULT:
             default:
-                req.setAttribute("viewName", formJspName);
+                req.setAttribute(VIEW_NAME_JSP_PARAM, formJspName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

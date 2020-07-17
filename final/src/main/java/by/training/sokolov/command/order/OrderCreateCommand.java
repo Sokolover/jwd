@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 
 public class OrderCreateCommand implements Command {
 

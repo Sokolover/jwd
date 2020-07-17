@@ -110,24 +110,26 @@ public class UserDaoInMemoryDatabaseTest {
         UserService userService = ApplicationContext.getInstance().getBean(UserService.class);
         Assert.assertNotNull(userService);
 
-        User user = new User();
-        user.setName("test1");
-        user.setEmail("test1@test.com");
-        user.setPassword("Test1111");
-        user.setPhoneNumber("+375291234567");
-        user.getUserAddress().setFullAddress("test_address");
+        User newUser = new User();
+        newUser.setName("test1");
+        newUser.setEmail("test1@test.com");
+        newUser.setPassword("Test1111");
+        newUser.setPhoneNumber("+375291234567");
+        newUser.getUserAddress().setFullAddress("test_address");
 
-        userService.register(user);
+        userService.register(newUser);
 
         List<User> allUsers = userService.findAll();
-        for (User user1 : allUsers) {
-            System.out.println(user1.toString());
-            LOGGER.info(user1.toString());
+        for (User user : allUsers) {
+            System.out.println(user.toString());
+            LOGGER.info(user.toString());
         }
+
         Assert.assertEquals(1, allUsers.size());
     }
 
     private void executeSql(String sql) throws SQLException {
+
         ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
         Connection connection = connectionPool.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

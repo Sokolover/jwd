@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
-import static by.training.sokolov.application.constants.JspName.MAIN_LAYOUT_JSP;
-import static by.training.sokolov.application.constants.ServletName.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.MAIN_LAYOUT_JSP;
+import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
 @WebServlet(urlPatterns = "/", name = INDEX_SERVLET)
@@ -48,7 +49,7 @@ public class IndexServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
-                req.setAttribute("viewName", viewName);
+                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             default:
@@ -58,9 +59,9 @@ public class IndexServlet extends HttpServlet {
     }
 
     private void setSecurityAttributes(HttpServletRequest req) {
-        req.setAttribute("sessionId", req.getSession().getId());
+        req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
         boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
     }
 
     @Override

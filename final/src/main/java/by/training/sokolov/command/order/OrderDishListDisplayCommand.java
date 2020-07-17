@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.*;
+import static by.training.sokolov.core.constants.JspName.*;
 
 public class OrderDishListDisplayCommand implements Command {
 

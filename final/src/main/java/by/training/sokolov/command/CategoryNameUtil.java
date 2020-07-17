@@ -1,12 +1,12 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.QueryParamConstants;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+
+import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_CATEGORY_PARAM;
 
 public class CategoryNameUtil {
 
@@ -17,7 +17,7 @@ public class CategoryNameUtil {
         Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
-            if (QueryParamConstants.CATEGORY_PARAM.equals(paramName)) {
+            if (QUERY_CATEGORY_PARAM.equals(paramName)) {
                 return createCategoryListFromParameters(request, paramName);
             }
         }

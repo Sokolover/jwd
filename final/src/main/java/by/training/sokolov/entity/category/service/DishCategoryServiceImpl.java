@@ -17,15 +17,6 @@ public class DishCategoryServiceImpl extends GenericServiceImpl<DishCategory> im
         this.dishCategoryDao = dao;
     }
 
-    /*
-     createTransactionalInvocationHandler не может найти метод List<DishCategory> findAll(),
-        скорее всего потому, что он не определён именно в этом классе, а в классе GenericServiceImpl<DishCategory>
-        надо это выяснить
-        @
-        походу так и есть,
-        надо переопределить все методы GenericServiceImpl в конкретных сервисах!!!
-     */
-
     @Override
     public List<DishCategory> findAll() throws SQLException, ConnectionException {
 

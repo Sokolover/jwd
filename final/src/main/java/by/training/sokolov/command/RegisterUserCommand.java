@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.util.Md5EncryptingUtil;
+import by.training.sokolov.util.Md5EncryptingUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
@@ -16,7 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static by.training.sokolov.application.constants.JspName.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.*;
 
 public class RegisterUserCommand implements Command {
 
@@ -39,10 +40,10 @@ public class RegisterUserCommand implements Command {
             и для колонок  таблиц в dao
          */
 
-        String name = request.getParameter("user.name");
-        String email = request.getParameter("user.email");
-        String password = request.getParameter("user.password");
-        String phoneNumber = request.getParameter("user.phoneNumber");
+        String name = request.getParameter(USER_NAME_JSP_PARAM);
+        String email = request.getParameter(USER_EMAIL_JSP_PARAM);
+        String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
+        String phoneNumber = request.getParameter(USER_PHONE_NUMBER_JSP_PARAM);
 
         User newUser = new User();
         newUser.setName(name);
@@ -65,14 +66,14 @@ public class RegisterUserCommand implements Command {
              */
             for (User user : users) {
                 if (user.getName().equalsIgnoreCase(name)) {
-                    request.setAttribute("error", "user with this name has been registered");
+                    request.setAttribute(ERROR_JSP_ATTRIBUTE, "user with this name has been registered");
                     return USER_REGISTER_JSP;
                 }
             }
 
             for (User user : users) {
                 if (user.getEmail().equalsIgnoreCase(email)) {
-                    request.setAttribute("error", "user with this email has been registered");
+                    request.setAttribute(ERROR_JSP_ATTRIBUTE, "user with this email has been registered");
                     return USER_REGISTER_JSP;
                 }
             }
@@ -81,19 +82,19 @@ public class RegisterUserCommand implements Command {
             todo валидация на адрес.
              */
 
-            String address = request.getParameter("user.address");
+            String address = request.getParameter(USER_ADDRESS_JSP_PARAM);
             newUser.getUserAddress().setFullAddress(address);
 
             userService.register(newUser);
 
-            request.setAttribute("message", "You have been registered successfully");
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "You have been registered successfully");
             return COMMAND_RESULT_MESSAGE_JSP;
 
         } else {
 
             StringBuilder message = createMessage(brokenFields);
 
-            request.setAttribute("error", message);
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
         }
 
         return ERROR_MESSAGE_JSP;

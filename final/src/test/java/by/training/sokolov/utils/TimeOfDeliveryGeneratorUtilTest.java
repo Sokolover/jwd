@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeServiceTest {
+public class TimeOfDeliveryGeneratorUtilTest {
     private static final int HALF_AN_HOUR = 30;
     private static final int ONE_HOUR = 1;
     private static final int ONE_MINUTE = 1;

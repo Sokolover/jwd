@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.DISH_LIST_JSP;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
 
 public class DishFeedbackSubmitCommand implements Command {
 
@@ -29,9 +30,9 @@ public class DishFeedbackSubmitCommand implements Command {
         String sessionId = request.getSession().getId();
         User currentUser = SecurityContext.getInstance().getCurrentUser(sessionId);
         Long currentUserId = currentUser.getId();
-        String rating = request.getParameter("feedback.rating");
-        String comment = request.getParameter("feedback.text");
-        String dishIdString = request.getParameter("dish.id");
+        String rating = request.getParameter(FEEDBACK_RATING_JSP_PARAM);
+        String comment = request.getParameter(FEEDBACK_TEXT_JSP_PARAM);
+        String dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
         Long dishIdLong = Long.parseLong(dishIdString);
 
         DishFeedback dishFeedback = dishFeedbackService.getUsersFeedbackByDishId(currentUserId, dishIdLong);

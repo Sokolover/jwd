@@ -5,6 +5,8 @@ import by.training.sokolov.command.constants.CommandType;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
+
 public class CommandFactoryImpl implements CommandFactory {
 
     private static final Map<CommandType, Command> commands = new ConcurrentHashMap<>(CommandType.values().length);
@@ -24,6 +26,6 @@ public class CommandFactoryImpl implements CommandFactory {
 
         return CommandType.of(commandParam)
                 .map(commands::get)
-                .orElse(((request, response) -> "default"));
+                .orElse(((request, response) -> DEFAULT_RESULT));
     }
 }

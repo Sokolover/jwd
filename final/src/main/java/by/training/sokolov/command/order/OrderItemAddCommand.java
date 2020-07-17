@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.application.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_ADD_ITEM_RESULT;
 
 public class OrderItemAddCommand implements Command {

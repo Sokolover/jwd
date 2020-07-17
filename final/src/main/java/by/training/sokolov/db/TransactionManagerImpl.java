@@ -72,6 +72,7 @@ public class TransactionManagerImpl implements TransactionManager {
 
     @Override
     public boolean isEmpty() {
+
         Connection connection = currentConnection.get();
         return connection == null;
     }

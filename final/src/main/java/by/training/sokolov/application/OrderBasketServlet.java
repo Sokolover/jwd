@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.application.constants.JspName.*;
-import static by.training.sokolov.application.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.*;
+import static by.training.sokolov.core.constants.ServletName.*;
 
 @WebServlet(urlPatterns = "/order_basket", name = ORDER_BASKET_SERVLET)
 public class OrderBasketServlet extends HttpServlet {
@@ -47,7 +48,7 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
             case DISH_CREATE_FEEDBACK_JSP:
-                req.setAttribute("viewName", viewName);
+                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case ORDER_ADD_ITEM_RESULT:
@@ -56,7 +57,7 @@ public class OrderBasketServlet extends HttpServlet {
                 String commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
-                req.setAttribute("viewName", commandResult);
+                req.setAttribute(VIEW_NAME_JSP_PARAM, commandResult);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }
@@ -64,9 +65,9 @@ public class OrderBasketServlet extends HttpServlet {
     }
 
     private void setSecurityAttributes(HttpServletRequest req) {
-        req.setAttribute("sessionId", req.getSession().getId());
+        req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
         boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute("userLoggedIn", userLoggedIn);
+        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
     }
 
     @Override
