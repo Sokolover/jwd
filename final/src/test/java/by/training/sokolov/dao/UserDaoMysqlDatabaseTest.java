@@ -14,9 +14,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserDaoImplTest {
+public class UserDaoMysqlDatabaseTest {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImplTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserDaoMysqlDatabaseTest.class.getName());
     private static UserDao userDao;
 
     @BeforeAll

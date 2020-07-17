@@ -1,7 +1,7 @@
 package by.training.sokolov.validation;
 
 import by.training.sokolov.core.context.ApplicationContext;
-import by.training.sokolov.dao.UserDaoImplTest;
+import by.training.sokolov.dao.UserDaoMysqlDatabaseTest;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ValidatorTest {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImplTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserDaoMysqlDatabaseTest.class.getName());
     private static BeanValidator beanValidator;
 
     @BeforeAll

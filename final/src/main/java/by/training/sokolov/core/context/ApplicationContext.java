@@ -253,6 +253,10 @@ public class ApplicationContext {
 
         beans.put(UserDao.class, userDao);
         beans.put(BeanValidator.class, beanValidator);
+
+        beans.put(ConnectionPool.class, connectionPool);
+        beans.put(TransactionManager.class, transactionManager);
+        beans.put(ConnectionManager.class, connectionManager);
     }
 
     public void destroy() throws SQLException {
@@ -265,4 +269,11 @@ public class ApplicationContext {
 
         return (T) this.beans.get(clazz);
     }
+
+    public <T> boolean removeBean(T bean) {
+
+        Object removedBean = this.beans.remove(bean);
+        return bean.equals(removedBean);
+    }
+
 }
