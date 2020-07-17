@@ -9,6 +9,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.SECURITY_CONTEXT_JSP_PARAM;
+
 @WebListener
 public class ApplicationListener implements ServletContextListener {
 
@@ -19,7 +21,7 @@ public class ApplicationListener implements ServletContextListener {
 
         SecurityContext securityContext = SecurityContext.getInstance();
         securityContext.initialize(sce.getServletContext());
-        sce.getServletContext().setAttribute("securityContext", securityContext);
+        sce.getServletContext().setAttribute(SECURITY_CONTEXT_JSP_PARAM, securityContext);
         LOGGER.info("Security context initialized");
 
         ApplicationContext.initialize();

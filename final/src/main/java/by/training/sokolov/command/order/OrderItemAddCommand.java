@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_ADD_ITEM_RESULT;
 
@@ -41,12 +42,12 @@ public class OrderItemAddCommand implements Command {
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute("error", "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
             return ERROR_MESSAGE_JSP;
         }
         Long currentUserOrderId = currentOrder.getId();
 
-        String dishIdString = request.getParameter("dish.id");
+        String dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
         Long dishIdLong = Long.parseLong(dishIdString);
 
         if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
@@ -64,12 +65,12 @@ public class OrderItemAddCommand implements Command {
         OrderItem orderItem = new OrderItem();
         orderItem.getUserOrder().setId(currentUserOrderId);
 
-        dishIdString = request.getParameter("dish.id");
+        dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
         dishIdLong = Long.parseLong(dishIdString);
         Dish dish = dishService.getById(dishIdLong);
         orderItem.setDish(dish);
 
-        String dishAmountString = request.getParameter("order.dish.amount");
+        String dishAmountString = request.getParameter(ORDER_DISH_AMOUNT_JSP_PARAM);
         Integer dishAmountInteger = Integer.parseInt(dishAmountString);
         orderItem.setDishAmount(dishAmountInteger);
 

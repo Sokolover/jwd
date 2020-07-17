@@ -14,11 +14,11 @@ import static by.training.sokolov.core.constants.CommonAppConstants.DISH_ID_JSP_
 import static by.training.sokolov.core.constants.CommonAppConstants.DISH_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.JspName.DISH_CREATE_FEEDBACK_JSP;
 
-public class DishFeedbackWriteCommand implements Command {
+public class WritingDishFeedbackFormDisplayCommand implements Command {
 
     private final DishService dishService;
 
-    public DishFeedbackWriteCommand(DishService dishService) {
+    public WritingDishFeedbackFormDisplayCommand(DishService dishService) {
         this.dishService = dishService;
     }
 

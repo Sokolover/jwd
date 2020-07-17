@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.CHECKOUT_JSP;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 
@@ -36,22 +37,22 @@ public class OrderCheckoutDisplayCommand implements Command {
 
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute("error", "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
             return ERROR_MESSAGE_JSP;
         }
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
         if (Objects.isNull(orderItems) || orderItems.isEmpty()) {
-            request.setAttribute("error", "please, add items to your order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, add items to your order");
             return ERROR_MESSAGE_JSP;
         }
-        request.setAttribute("itemList", orderItems);
+        request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
 
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
-        request.setAttribute("totalCost", orderCost);
+        request.setAttribute(TOTAL_ORDER_COST_JSP_ATTRIBUTE, orderCost);
 
         List<LocalDateTime> localDateTimeList = TimeOfDeliveryGeneratorUtil.findTimeVariants();
-        request.setAttribute("timeList", localDateTimeList);
+        request.setAttribute(TIME_LIST_JSP_ATTRIBUTE, localDateTimeList);
 
         return CHECKOUT_JSP;
     }

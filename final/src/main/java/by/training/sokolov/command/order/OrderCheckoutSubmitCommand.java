@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
 
@@ -33,21 +34,26 @@ public class OrderCheckoutSubmitCommand implements Command {
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
         User user = SecurityContext.getInstance().getCurrentUser(sessionId);
 
-        String customerName = request.getParameter("default.user.name");
-        if ("users".equals(customerName)) {
+        String customerName = request.getParameter(DEFAULT_USER_NAME_JSP_PARAM);
+        /*
+        TODO попробовать посменять "user_s".equals(customerName)
+            на
+            Objects.isNull(customerUsersAddress)
+         */
+        if ("user_s".equals(customerName)) {
             currentOrder.setCustomerName(user.getName());
         } else {
-            currentOrder.setCustomerName(request.getParameter("user.name"));
+            currentOrder.setCustomerName(request.getParameter(USER_NAME_JSP_PARAM));
         }
 
-        String customerPhoneNumber = request.getParameter("default.user.phoneNumber");
-        if ("users".equals(customerPhoneNumber)) {
+        String customerPhoneNumber = request.getParameter(DEFAULT_USER_PHONE_NUMBER_JSP_PARAM);
+        if ("user_s".equals(customerPhoneNumber)) {
             currentOrder.setCustomerPhoneNumber(user.getPhoneNumber());
         } else {
-            currentOrder.setCustomerPhoneNumber(request.getParameter("user.phoneNumber"));
+            currentOrder.setCustomerPhoneNumber(request.getParameter(USER_PHONE_NUMBER_JSP_PARAM));
         }
 
-        String customerUsersAddress = request.getParameter("default.order.address");
+        String customerUsersAddress = request.getParameter(DEFAULT_ORDER_ADDRESS_JSP_PARAM);
         if (Objects.isNull(customerUsersAddress)) {
             setCustomAddress(request, currentOrder);
         }
@@ -57,26 +63,26 @@ public class OrderCheckoutSubmitCommand implements Command {
         currentOrder.setOrderStatus(SUBMITTED);
 
         userOrderService.update(currentOrder);
-        request.setAttribute("message", "order accepted");
+        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "order accepted");
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }
 
     private void setTimeOfDelivery(HttpServletRequest request, UserOrder currentOrder) {
 
-        String timeOfDeliveryMinutes = request.getParameter("order.timeOfDelivery");
+        String timeOfDeliveryMinutes = request.getParameter(ORDER_TIME_OF_DELIVERY_JSP_ATTRIBUTE);
         LocalDateTime date = LocalDateTime.parse(timeOfDeliveryMinutes);
         currentOrder.setTimeOfDelivery(date);
     }
 
     private void setCustomAddress(HttpServletRequest request, UserOrder currentOrder) {
 
-        String locality = request.getParameter("order.address.locality");
-        String street = request.getParameter("order.address.street");
-        String buildingNumber = request.getParameter("order.address.buildingNumber");
-        String flatNumber = request.getParameter("order.address.flatNumber");
-        String porch = request.getParameter("order.address.porch");
-        String floor = request.getParameter("order.address.floor");
+        String locality = request.getParameter(ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE);
+        String street = request.getParameter(ORDER_ADDRESS_STREET_JSP_ATTRIBUTE);
+        String buildingNumber = request.getParameter(ORDER_ADDRESS_BUILDING_NUMBER_JSP_ATTRIBUTE);
+        String flatNumber = request.getParameter(ORDER_ADDRESS_FLAT_NUMBER_JSP_ATTRIBUTE);
+        String porch = request.getParameter(ORDER_ADDRESS_PORCH_NUMBER_JSP_ATTRIBUTE);
+        String floor = request.getParameter(ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE);
 
         StringBuilder address = new StringBuilder();
         address.append(locality)

@@ -17,8 +17,8 @@
     </p>
 
     <ul class="menu-list">
-        <jsp:useBean id="orderItems" scope="request" type="java.util.List"/>
-        <c:forEach items="${orderItems}" var="orderItem">
+        <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
+        <c:forEach items="${itemList}" var="orderItem">
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
                 <input type="hidden" name="_command" value="${CommandType.DELETE_DISH_FROM_ORDER}">
                 <li>

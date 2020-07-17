@@ -16,11 +16,11 @@ import java.util.Objects;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
 
-public class DishFeedbackSubmitCommand implements Command {
+public class WritingDishFeedbackFormSubmitCommand implements Command {
 
     private final DishFeedbackService dishFeedbackService;
 
-    public DishFeedbackSubmitCommand(DishFeedbackService dishFeedbackService) {
+    public WritingDishFeedbackFormSubmitCommand(DishFeedbackService dishFeedbackService) {
         this.dishFeedbackService = dishFeedbackService;
     }
 

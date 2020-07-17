@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
-import static by.training.sokolov.core.constants.JspName.MAIN_LAYOUT_JSP;
+import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
@@ -49,10 +48,9 @@ public class IndexServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
-                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
-                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
-                break;
+            case DISH_CREATE_FORM_JSP:
             default:
+                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
         }

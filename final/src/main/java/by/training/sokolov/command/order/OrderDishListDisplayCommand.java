@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.*;
 
 public class OrderDishListDisplayCommand implements Command {
@@ -39,7 +40,7 @@ public class OrderDishListDisplayCommand implements Command {
 
         if (Objects.isNull(userOrder)) {
 
-            request.setAttribute("error", "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
             return ERROR_MESSAGE_JSP;
         }
 
@@ -49,7 +50,7 @@ public class OrderDishListDisplayCommand implements Command {
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
-            request.setAttribute("orderItems", orderItems);
+            request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
             return ORDER_ITEM_LIST_JSP;
         }
 
@@ -62,15 +63,15 @@ public class OrderDishListDisplayCommand implements Command {
             filteredUserOrderItems.add(orderItem);
         }
 
-        request.setAttribute("orderItems", filteredUserOrderItems);
+        request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, filteredUserOrderItems);
 
         return ORDER_ITEM_LIST_JSP;
     }
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
 
-        request.setAttribute("category", DISH_CATEGORY_JSP);
+        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
         List<DishCategory> categories = dishCategoryService.findAll();
-        request.setAttribute("categoryList", categories);
+        request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
     }
 }

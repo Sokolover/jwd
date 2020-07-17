@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 import static by.training.sokolov.command.constants.CommandReturnValues.DELETE_DISH_FROM_ORDER_RESULT;
+import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_ID_JSP_PARAM;
 
 public class DeleteDishFromOrderCommand implements Command {
 
@@ -21,7 +22,7 @@ public class DeleteDishFromOrderCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
-        String itemIdString = request.getParameter("orderItem.id");
+        String itemIdString = request.getParameter(ORDER_ITEM_ID_JSP_PARAM);
         Long itemIdLong = Long.parseLong(itemIdString);
         orderItemService.deleteById(itemIdLong);
 

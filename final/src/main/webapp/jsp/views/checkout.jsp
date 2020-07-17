@@ -66,11 +66,11 @@
                 </div>
             </label>
             <label class="checkbox">
-                <input type="checkbox" name="default.user.name" value="users">
+                <input type="checkbox" name="default.user.name" value="user_s">
                 send user name
             </label>
             <label class="checkbox">
-                <input type="checkbox" name="default.user.phoneNumber" value="users">
+                <input type="checkbox" name="default.user.phoneNumber" value="user_s">
                 send user phone number
             </label>
             <%--input time of delivery--%>
@@ -122,7 +122,7 @@
                 </div>
             </label>
             <label class="checkbox">
-                <input type="checkbox" name="default.order.address" value="users">
+                <input type="checkbox" name="default.order.address" value="user_s">
                 send user address
             </label>
         </div>
