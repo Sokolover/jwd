@@ -28,7 +28,7 @@
                             <c:out value="${dish.name}"/>
                         </li>
                         <li>
-                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture"/>
+                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="200" height="200"/>
                         </li>
                         <li>
                             <label for="${dish.cost}">
@@ -71,7 +71,7 @@
                 </li>
             </form>
             <c:if test="${userLoggedIn}">
-                <form action="${pageContext.request.contextPath}/order_basket" method="post">
+                <form action="${pageContext.request.contextPath}/menu" method="post">
                     <label class="label">
                         <input type="hidden" name="dish.id" value="${dish.id}">
                         <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_WRITE}">

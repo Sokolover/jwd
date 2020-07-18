@@ -51,6 +51,9 @@ public class OrderCheckoutDisplayCommand implements Command {
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
         request.setAttribute(TOTAL_ORDER_COST_JSP_ATTRIBUTE, orderCost);
 
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        localDateTime.getHour() + localDateTime.getMinute();
+
         List<LocalDateTime> localDateTimeList = TimeOfDeliveryGeneratorUtil.findTimeVariants();
         request.setAttribute(TIME_LIST_JSP_ATTRIBUTE, localDateTimeList);
 

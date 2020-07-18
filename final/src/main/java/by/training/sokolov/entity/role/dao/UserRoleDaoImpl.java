@@ -25,18 +25,19 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
 
     private static final Logger LOGGER = Logger.getLogger(UserRoleDaoImpl.class.getName());
     private static final String TABLE_NAME = "user_role";
-    private static final String SELECT_ROLE_ID_QUERY = "SELECT *\n" +
-            "FROM user_role\n" +
-            "WHERE user_role.role_name LIKE {0}";
+    private static final String SELECT_ROLE_ID_QUERY = "" +
+            "SELECT *\n" +
+            "FROM {0}\n" +
+            "WHERE {0}.role_name = ?";
     private static final String INSERT_ROLES_QUERY = "INSERT INTO account_to_roles (user_account_id, user_role_id) VALUES ({0}, {1})";
-    private static final String SELECT_ROLES_ID_QUERY =
-            "SELECT user_role.*\n" +
-                    "FROM user_role,\n" +
-                    "     user_account,\n" +
-                    "     account_to_roles\n" +
-                    "WHERE user_account.id = account_to_roles.user_account_id\n" +
-                    "  AND account_to_roles.user_role_id = user_role.id\n" +
-                    "  AND user_account.id = {0}";
+    private static final String SELECT_ROLES_ID_QUERY = "" +
+            "SELECT {0}.*\n" +
+            "FROM {0},\n" +
+            "     user_account,\n" +
+            "     account_to_roles\n" +
+            "WHERE user_account.id = account_to_roles.user_account_id\n" +
+            "  AND account_to_roles.user_role_id = {0}.id\n" +
+            "  AND user_account.id = ?";
     private final Lock connectionLock = new ReentrantLock();
 
     private final ConnectionManager connectionManager;
@@ -74,16 +75,12 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
     @Override
     public UserRole getByName(String roleName) throws SQLException, ConnectionException {
 
-/*
- ! обязательно нужны кавычки в
- String roleNameColumn = "'" + userRole.getRoleName() + "'";
- */
         connectionLock.lock();
-        String roleNameColumn = "'" + roleName + "'";
-        String sql = MessageFormat.format(SELECT_ROLE_ID_QUERY, roleNameColumn);
+        String sql = MessageFormat.format(SELECT_ROLE_ID_QUERY, TABLE_NAME);
         AtomicReference<UserRole> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, roleName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 try {
@@ -105,10 +102,11 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
     public List<UserRole> getUserRoles(User user) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        String sql = MessageFormat.format(SELECT_ROLES_ID_QUERY, user.getId());
+        String sql = MessageFormat.format(SELECT_ROLES_ID_QUERY, TABLE_NAME);
         List<UserRole> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, user.getId());
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 try {

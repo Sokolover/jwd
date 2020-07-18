@@ -79,7 +79,7 @@
                 <select name="order.timeOfDelivery">
                     <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
                     <c:forEach items="${timeList}" var="time">
-                        <option value="${time}">${time}</option>
+                        <option value="${time}">${time.getHour}:${time.getMinutes}</option>
                     </c:forEach>
                 </select>
             </label>

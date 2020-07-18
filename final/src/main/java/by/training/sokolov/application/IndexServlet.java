@@ -8,6 +8,7 @@ import by.training.sokolov.core.context.SecurityContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
+@MultipartConfig
 @WebServlet(urlPatterns = "/", name = INDEX_SERVLET)
 public class IndexServlet extends HttpServlet {
 

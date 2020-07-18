@@ -57,6 +57,7 @@ public final class CommonAppConstants {
     public static final String COMMAND_SECURITY_PROPERTY = "command.";
     public static final String COOKIE_NAME_LANG = "lang";
 
+    public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
 
 //    user@domain.com :       true
 //    user@domain.co.in :     true

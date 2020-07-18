@@ -213,6 +213,7 @@ public class ApplicationContext {
         Command dishFeedbackSubmitCommand = new WritingDishFeedbackFormSubmitCommand(dishFeedbackService);
         Command dishFeedbackWriteCommand = new WritingDishFeedbackFormDisplayCommand(dishProxyService);
         Command creatingDishFormDisplayCommand = new CreatingDishFormDisplayCommand(dishCategoryProxyService);
+        Command creatingDishFormSubmitCommand = new CreatingDishFormSubmitCommand(dishProxyService);
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -235,7 +236,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
         commandFactory.registerCommand(VIEW_DISH_MENU, viewDishMenuCommand);
 
-        commandFactory.registerCommand(CREATE_DISH, creatingDishFormDisplayCommand);
+        commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, creatingDishFormDisplayCommand);
+        commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, creatingDishFormSubmitCommand);
 
         commandFactory.registerCommand(REGISTER_USER, registerUserCommand);
         commandFactory.registerCommand(LOGIN_SUBMIT, loginSubmitCommand);

@@ -19,9 +19,9 @@
             <p class="is-danger"><c:out value="${error}"/></p>
         </c:if>
     </h5>
-    <form action="" method="post" enctype="multipart/form-data">
-    <form action="${pageContext.request.contextPath}/user_register" method="post">
-        <input type="hidden" name="_command" value="${CommandType.CREATE_DISH}">
+    <form action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
+        <input type="hidden"
+               name=${CommonAppConstants.QUERY_COMMAND_PARAM} value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
         <div class="field">
             <div class="column is-one-third">
                 <div class="control">
@@ -45,18 +45,16 @@
                                placeholder="Description input" rows="10">
                     </label>
                 </div>
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="dish.picture"/>
-                        <input type="file" name=${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}/>
-                    </label>
-                </div>
+                <label class="label">
+                    <fmt:message key="dish.picture"/>
+                    <input type="file" name=${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE} />
+                </label>
                 <label class="label">
                     <fmt:message key="dish.category"/>
                     <select name=${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}>
                         <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
                         <c:forEach items="${categoryList}" var="category">
-                            <option value="${category}">${category}</option>
+                            <option value="${category.categoryName}">${category.categoryName}</option>
                         </c:forEach>
                     </select>
                 </label>

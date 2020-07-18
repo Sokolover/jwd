@@ -2,15 +2,21 @@ package by.training.sokolov.entity.category.dao;
 
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
+import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.ConnectionManager;
 import by.training.sokolov.entity.category.model.DishCategory;
+import by.training.sokolov.entity.role.model.UserRole;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,6 +24,10 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
 
     private final static Logger LOGGER = Logger.getLogger(DishCategoryDaoImpl.class.getName());
     private static final String TABLE_NAME = "dish_category";
+    private static final String SELECT_BY_NAME = "" +
+            "SELECT *\n" +
+            "FROM {0}\n" +
+            "WHERE category_name = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
@@ -49,5 +59,36 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
                 statement.setString(1, entity.getCategoryName());
             }
         };
+    }
+
+    @Override
+    public DishCategory getByName(String categoryName) throws SQLException, ConnectionException {
+
+/*
+ ! обязательно нужны кавычки в
+ String roleNameColumn = "'" + userRole.getRoleName() + "'";
+ */
+        connectionLock.lock();
+//        String categoryNameColumn = "'" + categoryName + "'";
+        String sql = MessageFormat.format(SELECT_BY_NAME, TABLE_NAME);
+        AtomicReference<DishCategory> result = new AtomicReference<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, categoryName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                try {
+                    result.set(getDishCategoryRowMapper().map(resultSet));
+                } catch (IOException e) {
+                    LOGGER.error(e.getMessage());
+                }
+            }
+            return result.get();
+        } catch (ConnectionException e) {
+            LOGGER.error(e.getMessage());
+            throw e;
+        } finally {
+            connectionLock.unlock();
+        }
     }
 }

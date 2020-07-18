@@ -35,9 +35,9 @@
                     <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
                             key="links.order.checkout"/></a>
                 </li>
-                <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH, sessionId)}">
+                <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
                     <li>
-                        <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH}"><fmt:message
+                        <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
                                 key="links.dish.create"/></a>
                     </li>
                 </c:if>

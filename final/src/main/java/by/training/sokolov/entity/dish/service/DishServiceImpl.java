@@ -56,4 +56,13 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
 
         super.update(entity);
     }
+
+    @Override
+    public Long save(Dish entity) throws SQLException, ConnectionException {
+
+        String categoryName = entity.getDishCategory().getCategoryName();
+        DishCategory dishCategory = dishCategoryDao.getByName(categoryName);
+        entity.setDishCategory(dishCategory);
+        return super.save(entity);
+    }
 }
