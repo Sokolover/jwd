@@ -3,9 +3,9 @@ package by.training.sokolov.util;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public final class Dates {
+public final class LocalDateTimeFormattingUtil {
 
-    private Dates() {
+    private LocalDateTimeFormattingUtil() {
 
     }
 

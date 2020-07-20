@@ -51,12 +51,12 @@
         </c:if>
     </div>
 </section>
-<%--<section class="footer">--%>
-<%--    <div class="content has-text-centered">--%>
-<%--        <p>--%>
-<%--            <fmt:message key="app.footer"/>--%>
-<%--        </p>--%>
-<%--    </div>--%>
-<%--</section>--%>
+<section class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <fmt:message key="app.footer"/>
+        </p>
+    </div>
+</section>
 </body>
 </html>

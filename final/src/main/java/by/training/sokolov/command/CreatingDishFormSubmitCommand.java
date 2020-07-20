@@ -22,7 +22,6 @@ import java.util.List;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 
-@MultipartConfig
 public class CreatingDishFormSubmitCommand implements Command {
 
     private final DishService dishService;

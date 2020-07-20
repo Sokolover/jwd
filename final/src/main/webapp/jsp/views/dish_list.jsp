@@ -28,20 +28,22 @@
                             <c:out value="${dish.name}"/>
                         </li>
                         <li>
-                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="200" height="200"/>
+                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"
+                                 height="400"/>
                         </li>
                         <li>
                             <label for="${dish.cost}">
                                 <fmt:message key="dish.cost"/>
                             </label>
-                            <c:out value="${dish.cost}"/>
+                            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+                            <c:out value=": ${dish.cost} ${currency}"/>
                         </li>
                         <li>
-                            <div class="column is-half">
+                            <div class="column is-two-thirds">
+                                <label for="${dish.description}">
+                                    <fmt:message key="dish.description"/>
+                                </label>
                                 <div class="box">
-                                    <label for="${dish.description}">
-                                        <fmt:message key="dish.description"/>
-                                    </label>
                                     <c:out value="${dish.description}"/>
                                 </div>
                             </div>
@@ -49,20 +51,20 @@
                     </ul>
                     <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
                     <c:if test="${userLoggedIn}">
-                        <label class="label">
-                            <fmt:message key="order.menu.amount"/>
-                            <div class="column is-half">
-                                <div class="control">
-                                    <input class="input"
-                                           name="order.dish.amount"
-                                           value="1"
-                                           type="number"
-                                           step="1"
-                                           min="1"
-                                           max="10">
+                        <div class="column is-one-fifth">
+                            <label class="label">
+                                <fmt:message key="order.menu.amount"/>
+                                    <div class="control">
+                                        <input class="input"
+                                               name="order.dish.amount"
+                                               value="1"
+                                               type="number"
+                                               step="1"
+                                               min="1"
+                                               max="10">
                                 </div>
-                            </div>
-                        </label>
+                            </label>
+                        </div>
                         <div class="control">
                             <fmt:message var="add_label" key="links.dish.add"/>
                             <input class="button is-primary" type="submit" value="${add_label}">
@@ -77,7 +79,7 @@
                         <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_WRITE}">
                         <div class="control">
                             <fmt:message var="write_feedback" key="links.dish.feedback"/>
-                            <input class="button is-primary is-light" type="submit" value="${write_feedback}">
+                            <input class="button is-primary" type="submit" value="${write_feedback}">
                         </div>
                     </label>
                 </form>

@@ -26,6 +26,7 @@ public class LocalDateTimeTest {
         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
         DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter4 = DateTimeFormatter.ofPattern("MM.dd HH:mm");
 
         LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter1);
 
@@ -33,6 +34,7 @@ public class LocalDateTimeTest {
         LOGGER.info("After formatter1 : " + formatDateTime);
         LOGGER.info("After formatter2 : " + formatDateTime.format(formatter2));
         LOGGER.info("After formatter3 : " + formatDateTime.format(formatter3));
+        LOGGER.info("After formatter4 : " + formatDateTime.format(formatter4));
         LOGGER.info(LocalDate.now().toString());
 
         LocalDate currentDate = LocalDate.now();

@@ -28,31 +28,38 @@
                             <c:out value="${orderItem.dish.name}"/>
                         </li>
                         <li>
-                            <img src="data:image/jpg;base64,${orderItem.dish.picture}" alt="no dish picture"/>
+                            <img src="data:image/jpg;base64,${orderItem.dish.picture}" alt="no dish picture" width="400"
+                                 height="400"/>
                         </li>
                         <li>
                             <label for="${orderItem.dish.cost}">
                                 <fmt:message key="dish.cost"/>
                             </label>
-                            <c:out value="${orderItem.dish.cost}"/>
+                            <c:out value=": ${orderItem.dish.cost}"/>
+                            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+                            <c:out value="${currency}"/>
                         </li>
                         <li>
-                            <label for="${orderItem.dish.description}">
-                                <fmt:message key="dish.description"/>
-                            </label>
-                            <c:out value="${orderItem.dish.description}"/>
-                        </li>
-                        <li>
-                            <label for="${orderItem.itemCost}">
-                                <fmt:message key="order.item.cost"/>
-                            </label>
-                            <c:out value="${orderItem.itemCost}"/>
+                            <div class="column is-two-thirds">
+                                <label for="${orderItem.dish.description}">
+                                    <fmt:message key="dish.description"/>
+                                </label>
+                                <div class="box">
+                                    <c:out value="${orderItem.dish.description}"/>
+                                </div>
+                            </div>
                         </li>
                         <li>
                             <label for="${orderItem.dishAmount}">
                                 <fmt:message key="order.item.dishAmount"/>
                             </label>
-                            <c:out value="${orderItem.dishAmount}"/>
+                            <c:out value=": ${orderItem.dishAmount}"/>
+                        </li>
+                        <li>
+                            <label for="${orderItem.itemCost}">
+                                <fmt:message key="order.item.cost"/>
+                            </label>
+                            <c:out value=": ${orderItem.itemCost}"/>
                         </li>
                     </ul>
                     <div class="control">

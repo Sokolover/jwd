@@ -14,7 +14,7 @@ import java.util.List;
 import static by.training.sokolov.util.TimeConstants.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TimeOfDeliveryGeneratorUtilTest2 {
+public class TimeOfDeliveryGeneratorUtilTest {
 
     private static final LocalDateTime t8_00 = LocalDateTime.parse(LocalDate.now() + "T" + "08:00");
     private static final LocalDateTime _08_59 = LocalDateTime.parse(LocalDate.now() + "T" + "08:59");

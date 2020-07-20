@@ -19,13 +19,13 @@
                 <div class="control">
                     <label for="user.email">
                         <fmt:message key="user.email"/>
-                        <input id="user.email" name="user.email" class="input" type="text">
+                        <input id="user.email" name="user.email" class="input" type="text" value="qwerty7@m.com">
                     </label>
                 </div>
                 <div class="control">
                     <label for="user.password">
                         <fmt:message key="user.password"/>
-                        <input id="user.password" name="user.password" class="input" type="password">
+                        <input id="user.password" name="user.password" class="input" type="password" value="Qwerty777">
                     </label>
                 </div>
             </div>

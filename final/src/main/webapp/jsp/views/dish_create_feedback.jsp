@@ -25,6 +25,7 @@
                                       rows="10"></textarea>
                         </label>
                         <label>
+<%--                            todo сделать циклом--%>
                             <fmt:message key="feedback.rating"/>
                             <div class="control">
                                 <label class="radio">
@@ -65,20 +66,15 @@
                         <c:out value="${dish.name}"/>
                     </li>
                     <li>
-                        <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture"/>
+                        <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"
+                             height="400"/>
                     </li>
                     <li>
-                        <label for="${dish.cost}">
-                            <fmt:message key="dish.cost"/>
-                        </label>
-                        <c:out value="${dish.cost}"/>
-                    </li>
-                    <li>
-                        <div class="column is-half">
+                        <div class="column is-two-thirds">
+                            <label for="${dish.description}">
+                                <fmt:message key="dish.description"/>
+                            </label>
                             <div class="box">
-                                <label for="${dish.description}">
-                                    <fmt:message key="dish.description"/>
-                                </label>
                                 <c:out value="${dish.description}"/>
                             </div>
                         </div>

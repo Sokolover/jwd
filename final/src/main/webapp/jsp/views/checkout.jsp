@@ -9,131 +9,174 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
-
+<%@ taglib prefix="f" uri="/WEB-INF/tld/format/timeFormat.tld" %>
 
 <div class="container">
 
-    <%--dish table--%>
-    <table class="table is-striped">
-        <thead>
-        <tr>
-            <th>№</th>
-            <th>dish name</th>
-            <th>dish cost</th>
-            <th>dish amount</th>
-            <th>item cost</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:set var="i" value="1"/>
-        <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
-        <c:forEach items="${itemList}" var="item">
-            <tr>
-                <td><c:out value="${i}"/>
-                <td><c:out value="${item.dish.name}"/>
-                <td><c:out value="${item.dish.cost}"/>
-                <td><c:out value="${item.dishAmount}"/>
-                <td><c:out value="${item.itemCost}"/>
-            </tr>
-            <c:set var="i" value="${i + 1}"/>
-        </c:forEach>
-        </tbody>
-    </table>
+    <div class="columns">
 
-    <%--total cost--%>
-    <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
-    <label class="label">
-        <fmt:message key="order.cost"/>
-        <c:set var="totalCost" value="${totalCost}"/>
-        <c:out value="${totalCost}"/>
-    </label>
+        <%--dish table--%>
+        <div class="column is-half">
+            <fmt:message var="order_list" key="app.order_list"/>
+            <h5 class="title is-5">
+                <c:out value="${order_list}"/>
+            </h5>
+            <fmt:message var="dish_name" key="dish.name"/>
+            <fmt:message var="dish_cost" key="dish.cost"/>
+            <fmt:message var="dish_amount" key="dish.amount"/>
+            <fmt:message var="item_cost" key="order.item.cost"/>
 
-    <%--input contact info--%>
-    <form action="${pageContext.request.contextPath}/order_checkout" method="post">
-        <input type="hidden" name="_command" value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
-        <div class="field">
-            <fmt:message key="app.contact.info"/>
-            <label class="label">
-                <fmt:message key="user.name"/>
-                <div class="control">
-                    <input class="input" name="user.name" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="user.phoneNumber"/>
-                <div class="control">
-                    <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="default.user.name" value="user_s">
-                send user name
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="default.user.phoneNumber" value="user_s">
-                send user phone number
-            </label>
-            <%--input time of delivery--%>
-            <label class="label">
-                <fmt:message key="order.timeOfDelivery"/>
-                <select name="order.timeOfDelivery">
-                    <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
-                    <c:forEach items="${timeList}" var="time">
-                        <option value="${time}">${time.getHour}:${time.getMinutes}</option>
-                    </c:forEach>
-                </select>
-            </label>
-            <%--input delivery address--%>
-            <fmt:message key="app.delivery.address"/>
-            <label class="label">
-                <fmt:message key="order.address.locality"/>
-                <div class="control">
-                    <input class="input" name="order.address.locality" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="order.address.street"/>
-                <div class="control">
-                    <input class="input" name="order.address.street" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="order.address.buildingNumber"/>
-                <div class="control">
-                    <input class="input" name="order.address.buildingNumber" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="order.address.flatNumber"/>
-                <div class="control">
-                    <input class="input" name="order.address.flatNumber" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="order.address.porch"/>
-                <div class="control">
-                    <input class="input" name="order.address.porch" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="label">
-                <fmt:message key="order.address.floor"/>
-                <div class="control">
-                    <input class="input" name="order.address.floor" type="text" placeholder="Text input">
-                </div>
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="default.order.address" value="user_s">
-                send user address
-            </label>
+            <table class="table is-striped">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th><c:out value="${dish_name}"/></th>
+                    <th><c:out value="${dish_cost}"/></th>
+                    <th><c:out value="${dish_amount}"/></th>
+                    <th><c:out value="${item_cost}"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:set var="i" value="1"/>
+                <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
+                <c:forEach items="${itemList}" var="item">
+                    <tr>
+                        <td><c:out value="${i}"/>
+                        <td><c:out value="${item.dish.name}"/>
+                        <td><c:out value="${item.dish.cost}"/>
+                        <td><c:out value="${item.dishAmount}"/>
+                        <td><c:out value="${item.itemCost}"/>
+                    </tr>
+                    <c:set var="i" value="${i + 1}"/>
+                </c:forEach>
+                </tbody>
+            </table>
+            <%--total cost--%>
+            <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
+            <c:set var="totalCost" value="${totalCost}"/>
+            <fmt:message var="orderCostString" key="order.cost"/>
+            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+            <h5 class="title is-5">
+                <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
+            </h5>
         </div>
-        <%--checkout button--%>
-        <div class="field is-grouped">
-            <div class="control">
-                <fmt:message var="checkout_label" key="links.checkout"/>
-                <input class="button is-primary" type="submit" value="${checkout_label}">
-            </div>
+
+        <div class="column is-one-quarter">
+            <%--input contact info--%>
+            <form action="${pageContext.request.contextPath}/order_checkout" method="post">
+                <input type="hidden" name="_command" value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+                <div class="field">
+                    <fmt:message var="contact_info" key="app.contact.info"/>
+                    <h5 class="title is-5">
+                        <c:out value="${contact_info}"/>
+                    </h5>
+                    <label class="label">
+                        <fmt:message key="user.name"/>
+                        <div class="control">
+                            <input class="input" name="user.name" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+                    <label class="label">
+                        <fmt:message key="user.phoneNumber"/>
+                        <div class="control">
+                            <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <fmt:message var="send_user_name" key="lable.checkbox.send_user_name"/>
+                    <label class="checkbox">
+                        <input type="checkbox" name="default.user.name" value="user_s">
+                        <c:out value="${send_user_name}"/>
+                    </label>
+
+                    <fmt:message var="send_user_phone_number" key="lable.checkbox.send_user_phone_number"/>
+                    <label class="checkbox">
+                        <input type="checkbox" name="default.user.phoneNumber" value="user_s">
+                        <c:out value="${send_user_phone_number}"/>
+                    </label>
+                    <br>
+                    <br>
+                    <%--input time of delivery--%>
+                    <fmt:message var="timeOfDelivery" key="order.timeOfDelivery"/>
+                    <h5 class="title is-5">
+                        <c:out value="${timeOfDelivery}"/>
+                    </h5>
+                    <label class="label">
+                        <select name="order.timeOfDelivery">
+                            <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
+                            <c:forEach items="${timeList}" var="time">
+                                <option value="${time}">
+                                        ${f:formatLocalDateTime(time, 'MM.dd HH:mm')}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                    <br>
+                    <fmt:message var="delivery_address" key="app.delivery.address"/>
+                    <h5 class="title is-5">
+                        <c:out value="${delivery_address}"/>
+                    </h5>
+                    <label class="label">
+                        <fmt:message key="order.address.locality"/>
+                        <div class="control">
+                            <input class="input" name="order.address.locality" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <label class="label">
+                        <fmt:message key="order.address.street"/>
+                        <div class="control">
+                            <input class="input" name="order.address.street" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <label class="label">
+                        <fmt:message key="order.address.buildingNumber"/>
+                        <div class="control">
+                            <input class="input" name="order.address.buildingNumber" type="text"
+                                   placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <label class="label">
+                        <fmt:message key="order.address.flatNumber"/>
+                        <div class="control">
+                            <input class="input" name="order.address.flatNumber" type="text"
+                                   placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <label class="label">
+                        <fmt:message key="order.address.porch"/>
+                        <div class="control">
+                            <input class="input" name="order.address.porch" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <label class="label">
+                        <fmt:message key="order.address.floor"/>
+                        <div class="control">
+                            <input class="input" name="order.address.floor" type="text" placeholder="Text input">
+                        </div>
+                    </label>
+
+                    <fmt:message var="send_user_address" key="lable.checkbox.send_user_address"/>
+                    <label class="checkbox">
+                        <input type="checkbox" name="default.order.address" value="user_s">
+                        <c:out value="${send_user_address}"/>
+                    </label>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <fmt:message var="checkout_label" key="links.checkout"/>
+                        <input class="button is-primary" type="submit" value="${checkout_label}">
+                    </div>
+                </div>
+
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 
