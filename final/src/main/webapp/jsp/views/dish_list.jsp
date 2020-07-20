@@ -13,7 +13,7 @@
 <aside class="menu">
 
     <p class="menu-label">
-        <fmt:message key="links.group.dishes"/>
+        <fmt:message key="app.group.dishes"/>
     </p>
 
     <ul class="menu-list">
@@ -22,20 +22,24 @@
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
                 <input type="hidden" name="_command" value="${CommandType.ORDER_ITEM_ADD}">
                 <li>
+                    <br>
+                    <br>
                     <input type="hidden" name="dish.id" value="${dish.id}">
                     <ul>
                         <li>
                             <c:out value="${dish.name}"/>
                         </li>
+                        <br>
                         <li>
                             <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"
                                  height="400"/>
                         </li>
+                        <br>
                         <li>
                             <label for="${dish.cost}">
                                 <fmt:message key="dish.cost"/>
                             </label>
-                            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+                            <fmt:message var="currency" key="symbol.currency"/>
                             <c:out value=": ${dish.cost} ${currency}"/>
                         </li>
                         <li>
@@ -53,7 +57,7 @@
                     <c:if test="${userLoggedIn}">
                         <div class="column is-one-fifth">
                             <label class="label">
-                                <fmt:message key="order.menu.amount"/>
+                                <fmt:message key="order.item.dishAmount"/>
                                     <div class="control">
                                         <input class="input"
                                                name="order.dish.amount"
@@ -66,7 +70,7 @@
                             </label>
                         </div>
                         <div class="control">
-                            <fmt:message var="add_label" key="links.dish.add"/>
+                            <fmt:message var="add_label" key="button.dish.add"/>
                             <input class="button is-primary" type="submit" value="${add_label}">
                         </div>
                     </c:if>
@@ -78,7 +82,7 @@
                         <input type="hidden" name="dish.id" value="${dish.id}">
                         <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_WRITE}">
                         <div class="control">
-                            <fmt:message var="write_feedback" key="links.dish.feedback"/>
+                            <fmt:message var="write_feedback" key="button.feedback.write"/>
                             <input class="button is-primary" type="submit" value="${write_feedback}">
                         </div>
                     </label>

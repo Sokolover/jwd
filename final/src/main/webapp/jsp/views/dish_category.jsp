@@ -10,6 +10,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <aside class="menu">
+
+    <p class="menu-label">
+        <fmt:message key="app.group.category"/>
+    </p>
+
     <ul class="menu-list">
         <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
         <form action="" method="GET">

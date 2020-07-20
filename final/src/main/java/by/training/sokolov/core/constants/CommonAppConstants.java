@@ -17,7 +17,7 @@ public final class CommonAppConstants {
     public static final String ORDER_ITEM_LIST_JSP_ATTRIBUTE = "itemList";
     public static final String ORDER_TIME_OF_DELIVERY_JSP_ATTRIBUTE = "order.timeOfDelivery";
 
-    public static final String ORDER_DISH_AMOUNT_JSP_PARAM = "order.dish.amount";
+    public static final String ORDER_DISH_AMOUNT_JSP_PARAM = "order.item.dishAmount";
     public static final String ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE = "order.address.locality";
     public static final String ORDER_ADDRESS_STREET_JSP_ATTRIBUTE = "order.address.street";
     public static final String ORDER_ADDRESS_BUILDING_NUMBER_JSP_ATTRIBUTE = "order.address.buildingNumber";

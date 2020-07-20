@@ -13,7 +13,7 @@
 <aside class="menu">
 
     <p class="menu-label">
-        <fmt:message key="links.group.order.items"/>
+        <fmt:message key="app.group.orderItems"/>
     </p>
 
     <ul class="menu-list">
@@ -22,6 +22,8 @@
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
                 <input type="hidden" name="_command" value="${CommandType.DELETE_DISH_FROM_ORDER}">
                 <li>
+                    <br>
+                    <br>
                     <input type="hidden" name="orderItem.id" value="${orderItem.id}">
                     <ul>
                         <li>
@@ -36,7 +38,7 @@
                                 <fmt:message key="dish.cost"/>
                             </label>
                             <c:out value=": ${orderItem.dish.cost}"/>
-                            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+                            <fmt:message var="currency" key="symbol.currency"/>
                             <c:out value="${currency}"/>
                         </li>
                         <li>
@@ -59,11 +61,11 @@
                             <label for="${orderItem.itemCost}">
                                 <fmt:message key="order.item.cost"/>
                             </label>
-                            <c:out value=": ${orderItem.itemCost}"/>
+                            <c:out value=": ${orderItem.itemCost} ${currency}"/>
                         </li>
                     </ul>
                     <div class="control">
-                        <fmt:message var="delete_label" key="links.order.item.delete"/>
+                        <fmt:message var="delete_label" key="button.order.item.delete"/>
                         <input class="button is-primary" type="submit" value="${delete_label}">
                     </div>
                 </li>

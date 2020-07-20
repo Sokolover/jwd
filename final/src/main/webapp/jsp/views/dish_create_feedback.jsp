@@ -20,12 +20,7 @@
                     <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_SUBMIT}">
                     <div class="card-content">
                         <label>
-                            <fmt:message key="feedback.text"/>
-                            <textarea class="textarea" name="feedback.text" placeholder="10 lines of textarea"
-                                      rows="10"></textarea>
-                        </label>
-                        <label>
-<%--                            todo сделать циклом--%>
+                            <%--                            todo сделать циклом--%>
                             <fmt:message key="feedback.rating"/>
                             <div class="control">
                                 <label class="radio">
@@ -50,10 +45,15 @@
                                 </label>
                             </div>
                         </label>
+                        <label>
+                            <fmt:message key="feedback.text"/>
+                            <textarea class="textarea" name="feedback.text" placeholder="10 lines of textarea"
+                                      rows="10"></textarea>
+                        </label>
                     </div>
                     <footer class="card-footer">
                         <input type="hidden" name="dish.id" value="${dish.id}">
-                        <fmt:message var="send_feedback" key="feedback.send"/>
+                        <fmt:message var="send_feedback" key="button.feedback.send"/>
                         <input class="button is-primary" type="submit" value="${send_feedback}">
                     </footer>
                 </form>

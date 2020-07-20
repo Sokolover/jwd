@@ -7,7 +7,7 @@
 <aside class="menu">
 
     <p class="menu-label">
-        <fmt:message key="links.group.navigation"/>
+        <fmt:message key="app.group.navigation"/>
     </p>
 
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
@@ -53,7 +53,7 @@
                 </li>
                 <li>
                     <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.REGISTER_SERVLET_SWITCH}"><fmt:message
-                            key="links.register"/></a>
+                            key="button.person.register"/></a>
                 </li>
             </c:otherwise>
         </c:choose>

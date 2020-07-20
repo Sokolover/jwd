@@ -49,7 +49,7 @@
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <fmt:message var="register_label" key="links.register"/>
+                    <fmt:message var="register_label" key="button.person.register"/>
                     <input class="button is-primary" type="submit" value="${register_label}">
                 </div>
             </div>

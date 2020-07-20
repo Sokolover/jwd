@@ -14,16 +14,16 @@
 
     <form action="${pageContext.request.contextPath}/login" method="post">
         <input type="hidden" name="_command" value="${CommandType.LOGIN_SUBMIT}">
-        <div class="content">
+        <div class="field">
             <div class="column is-one-third">
                 <div class="control">
-                    <label for="user.email">
+                    <label class="label">
                         <fmt:message key="user.email"/>
                         <input id="user.email" name="user.email" class="input" type="text" value="qwerty7@m.com">
                     </label>
                 </div>
                 <div class="control">
-                    <label for="user.password">
+                    <label class="label">
                         <fmt:message key="user.password"/>
                         <input id="user.password" name="user.password" class="input" type="password" value="Qwerty777">
                     </label>
@@ -31,7 +31,7 @@
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <fmt:message var="login_label" key="links.login"/>
+                    <fmt:message var="login_label" key="button.person.login"/>
                     <input class="button is-primary" type="submit" value="${login_label}">
                 </div>
             </div>

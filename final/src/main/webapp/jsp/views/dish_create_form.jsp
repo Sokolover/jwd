@@ -61,7 +61,7 @@
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <fmt:message var="create_label" key="links.create_dish"/>
+                    <fmt:message var="create_label" key="button.dish.create"/>
                     <input class="button is-primary" type="submit" value="${create_label}">
                 </div>
             </div>

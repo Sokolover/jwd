@@ -17,13 +17,13 @@
 
         <%--dish table--%>
         <div class="column is-half">
-            <fmt:message var="order_list" key="app.order_list"/>
+            <fmt:message var="order_list" key="order.item.list"/>
             <h5 class="title is-5">
                 <c:out value="${order_list}"/>
             </h5>
             <fmt:message var="dish_name" key="dish.name"/>
             <fmt:message var="dish_cost" key="dish.cost"/>
-            <fmt:message var="dish_amount" key="dish.amount"/>
+            <fmt:message var="dish_amount" key="order.item.dishAmount"/>
             <fmt:message var="item_cost" key="order.item.cost"/>
 
             <table class="table is-striped">
@@ -55,7 +55,7 @@
             <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
             <c:set var="totalCost" value="${totalCost}"/>
             <fmt:message var="orderCostString" key="order.cost"/>
-            <fmt:message var="currency" key="dish.cost.currency.symbol"/>
+            <fmt:message var="currency" key="symbol.currency"/>
             <h5 class="title is-5">
                 <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
             </h5>
@@ -66,7 +66,7 @@
             <form action="${pageContext.request.contextPath}/order_checkout" method="post">
                 <input type="hidden" name="_command" value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
                 <div class="field">
-                    <fmt:message var="contact_info" key="app.contact.info"/>
+                    <fmt:message var="contact_info" key="order.contactInfo"/>
                     <h5 class="title is-5">
                         <c:out value="${contact_info}"/>
                     </h5>
@@ -83,13 +83,13 @@
                         </div>
                     </label>
 
-                    <fmt:message var="send_user_name" key="lable.checkbox.send_user_name"/>
+                    <fmt:message var="send_user_name" key="lable.checkbox.sendUserName"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.name" value="user_s">
                         <c:out value="${send_user_name}"/>
                     </label>
 
-                    <fmt:message var="send_user_phone_number" key="lable.checkbox.send_user_phone_number"/>
+                    <fmt:message var="send_user_phone_number" key="lable.checkbox.sendUserPhoneNumber"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.phoneNumber" value="user_s">
                         <c:out value="${send_user_phone_number}"/>
@@ -112,7 +112,7 @@
                         </select>
                     </label>
                     <br>
-                    <fmt:message var="delivery_address" key="app.delivery.address"/>
+                    <fmt:message var="delivery_address" key="order.deliveryAddress"/>
                     <h5 class="title is-5">
                         <c:out value="${delivery_address}"/>
                     </h5>
@@ -160,7 +160,7 @@
                         </div>
                     </label>
 
-                    <fmt:message var="send_user_address" key="lable.checkbox.send_user_address"/>
+                    <fmt:message var="send_user_address" key="lable.checkbox.sendUserAddress"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.order.address" value="user_s">
                         <c:out value="${send_user_address}"/>
@@ -169,7 +169,7 @@
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <fmt:message var="checkout_label" key="links.checkout"/>
+                        <fmt:message var="checkout_label" key="button.checkout"/>
                         <input class="button is-primary" type="submit" value="${checkout_label}">
                     </div>
                 </div>
