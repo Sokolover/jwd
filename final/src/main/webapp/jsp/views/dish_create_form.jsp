@@ -21,20 +21,20 @@
     </h5>
     <form action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
         <input type="hidden"
-               name=${CommonAppConstants.QUERY_COMMAND_PARAM} value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
+               name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
         <div class="field">
             <div class="column is-one-third">
                 <div class="control">
                     <label class="label">
                         <fmt:message key="dish.name"/>
-                        <input class="input" name=${CommonAppConstants.DISH_NAME_JSP_ATTRIBUTE} type="text"
+                        <input class="input" name="${CommonAppConstants.DISH_NAME_JSP_ATTRIBUTE}" type="text"
                                placeholder="Name input">
                     </label>
                 </div>
                 <div class="control">
                     <label class="label">
                         <fmt:message key="dish.cost"/>
-                        <input class="input" name=${CommonAppConstants.DISH_COST_JSP_ATTRIBUTE} type="text"
+                        <input class="input" name="${CommonAppConstants.DISH_COST_JSP_ATTRIBUTE}" type="text"
                                placeholder="Cost input">
                     </label>
                 </div>
@@ -45,11 +45,11 @@
                 </label>
                 <label class="label">
                     <fmt:message key="dish.picture"/>
-                    <input type="file" name=${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}/>
+                    <input type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}"/>
                 </label>
                 <label class="label">
                     <fmt:message key="dish.category"/>
-                    <select name=${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}>
+                    <select name="${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}">
                         <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
                         <c:forEach items="${categoryList}" var="category">
                             <option value="${category.categoryName}">${category.categoryName}</option>

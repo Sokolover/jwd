@@ -20,13 +20,15 @@
                 <div class="control">
                     <label class="label">
                         <fmt:message key="user.email"/>
-                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" class="input" type="text" value="qwerty7@m.com">
+<%--                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text" value="qwerty7@m.com">--%>
+                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text">
                     </label>
                 </div>
                 <div class="control">
                     <label class="label">
                         <fmt:message key="user.password"/>
-                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" class="input" type="password" value="Qwerty777">
+<%--                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password" value="Qwerty777">--%>
+                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password">
                     </label>
                 </div>
             </div>
