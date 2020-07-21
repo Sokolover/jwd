@@ -35,7 +35,7 @@ public class OrderBasketServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        setSecurityAttributes(req);
+        SecurityContext.getInstance().setSecurityAttributes(req);
 
         switch (viewName) {
             case MENU_SERVLET:
@@ -48,6 +48,7 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
             case DISH_CREATE_FEEDBACK_JSP:
+            case DISH_CREATE_FORM_JSP:
                 req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
@@ -62,12 +63,6 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
         }
 
-    }
-
-    private void setSecurityAttributes(HttpServletRequest req) {
-        req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
-        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
     }
 
     @Override

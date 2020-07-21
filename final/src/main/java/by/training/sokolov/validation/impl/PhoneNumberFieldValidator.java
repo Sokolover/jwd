@@ -1,6 +1,9 @@
 package by.training.sokolov.validation.impl;
 
-import by.training.sokolov.validation.*;
+import by.training.sokolov.validation.BrokenField;
+import by.training.sokolov.validation.FieldValidator;
+import by.training.sokolov.validation.PhoneNumber;
+import by.training.sokolov.validation.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;

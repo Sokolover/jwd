@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.COMMAND_SECURITY_PROPERTY;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 
 public class SecurityContext {
 
@@ -74,9 +74,15 @@ public class SecurityContext {
         return false;
     }
 
-    public boolean isUserLoggedIn(HttpServletRequest req) {
+    private boolean isUserLoggedIn(HttpServletRequest req) {
 
         return getCurrentUser(req.getSession().getId()) != null;
     }
 
+    public void setSecurityAttributes(HttpServletRequest req) {
+
+        req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
+        boolean userLoggedIn = isUserLoggedIn(req);
+        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
+    }
 }

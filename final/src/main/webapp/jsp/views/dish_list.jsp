@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <aside class="menu">
 
@@ -20,7 +21,8 @@
         <jsp:useBean id="dishes" scope="request" type="java.util.List"/>
         <c:forEach items="${dishes}" var="dish">
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                <input type="hidden" name="_command" value="${CommandType.ORDER_ITEM_ADD}">
+                <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                       value="${CommandType.ORDER_ITEM_ADD}">
                 <li>
                     <br>
                     <br>
@@ -58,14 +60,14 @@
                         <div class="column is-one-fifth">
                             <label class="label">
                                 <fmt:message key="order.item.dishAmount"/>
-                                    <div class="control">
-                                        <input class="input"
-                                               name="order.dish.amount"
-                                               value="1"
-                                               type="number"
-                                               step="1"
-                                               min="1"
-                                               max="10">
+                                <div class="control">
+                                    <input class="input"
+                                           name="${CommonAppConstants.ORDER_DISH_AMOUNT_JSP_PARAM}"
+                                           value="1"
+                                           type="number"
+                                           step="1"
+                                           min="1"
+                                           max="10">
                                 </div>
                             </label>
                         </div>
@@ -78,14 +80,15 @@
             </form>
             <c:if test="${userLoggedIn}">
                 <form action="${pageContext.request.contextPath}/menu" method="post">
-                    <label class="label">
-                        <input type="hidden" name="dish.id" value="${dish.id}">
-                        <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_WRITE}">
-                        <div class="control">
+                    <div class="control">
+                        <label class="label">
+                            <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
+                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                   value="${CommandType.DISH_FEEDBACK_WRITE}">
                             <fmt:message var="write_feedback" key="button.feedback.write"/>
                             <input class="button is-primary" type="submit" value="${write_feedback}">
-                        </div>
-                    </label>
+                        </label>
+                    </div>
                 </form>
             </c:if>
         </c:forEach>

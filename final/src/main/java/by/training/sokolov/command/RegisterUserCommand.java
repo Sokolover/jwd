@@ -1,9 +1,9 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.util.Md5EncryptingUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
+import by.training.sokolov.util.Md5EncryptingUtil;
 import by.training.sokolov.validation.BeanValidator;
 import by.training.sokolov.validation.BrokenField;
 import by.training.sokolov.validation.ValidationResult;

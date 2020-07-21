@@ -59,7 +59,7 @@ public final class CommonAppConstants {
 
     public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
 
-//    user@domain.com :       true
+    //    user@domain.com :       true
 //    user@domain.co.in :     true
 //    user1@domain.com :      true
 //    user.name@domain.com :  true
@@ -70,7 +70,7 @@ public final class CommonAppConstants {
 //    @yahoo.com :            false
     public static final String EMAIL_PATTERN = "^(.+)@(.+)$";
 
-//    ^                 # start-of-string
+    //    ^                 # start-of-string
 //    (?=.*[0-9])       # a digit must occur at least once
 //    (?=.*[a-z])       # a lower case letter must occur at least once
 //    (?=.*[A-Z])       # an upper case letter must occur at least once
@@ -80,7 +80,7 @@ public final class CommonAppConstants {
 //    $                 # end-of-string
     public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
 
-// +375291234567
+    // +375291234567
     public static final String PHONE_NUMBER_PATTERN = "^\\+\\d{12}$";
 
 

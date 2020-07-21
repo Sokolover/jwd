@@ -17,23 +17,23 @@
 
         <%--dish table--%>
         <div class="column is-half">
-            <fmt:message var="order_list" key="order.item.list"/>
+            <fmt:message var="orderList" key="order.item.list"/>
             <h5 class="title is-5">
-                <c:out value="${order_list}"/>
+                <c:out value="${orderList}"/>
             </h5>
-            <fmt:message var="dish_name" key="dish.name"/>
-            <fmt:message var="dish_cost" key="dish.cost"/>
-            <fmt:message var="dish_amount" key="order.item.dishAmount"/>
-            <fmt:message var="item_cost" key="order.item.cost"/>
+            <fmt:message var="dishName" key="dish.name"/>
+            <fmt:message var="dishCost" key="dish.cost"/>
+            <fmt:message var="dishAmount" key="order.item.dishAmount"/>
+            <fmt:message var="itemCost" key="order.item.cost"/>
 
             <table class="table is-striped">
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th><c:out value="${dish_name}"/></th>
-                    <th><c:out value="${dish_cost}"/></th>
-                    <th><c:out value="${dish_amount}"/></th>
-                    <th><c:out value="${item_cost}"/></th>
+                    <th><c:out value="${dishName}"/></th>
+                    <th><c:out value="${dishCost}"/></th>
+                    <th><c:out value="${dishAmount}"/></th>
+                    <th><c:out value="${itemCost}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,19 +83,21 @@
                         </div>
                     </label>
 
-                    <fmt:message var="send_user_name" key="lable.checkbox.sendUserName"/>
+                    <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.name" value="user_s">
-                        <c:out value="${send_user_name}"/>
+                        <c:out value="${sendUserName}"/>
                     </label>
 
-                    <fmt:message var="send_user_phone_number" key="lable.checkbox.sendUserPhoneNumber"/>
+                    <fmt:message var="sendUserPhoneNumber" key="lable.checkbox.sendUserPhoneNumber"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.phoneNumber" value="user_s">
-                        <c:out value="${send_user_phone_number}"/>
+                        <c:out value="${sendUserPhoneNumber}"/>
                     </label>
+
                     <br>
                     <br>
+
                     <%--input time of delivery--%>
                     <fmt:message var="timeOfDelivery" key="order.timeOfDelivery"/>
                     <h5 class="title is-5">
@@ -111,11 +113,14 @@
                             </c:forEach>
                         </select>
                     </label>
+
                     <br>
-                    <fmt:message var="delivery_address" key="order.deliveryAddress"/>
+
+                    <fmt:message var="deliveryAddress" key="order.deliveryAddress"/>
                     <h5 class="title is-5">
-                        <c:out value="${delivery_address}"/>
+                        <c:out value="${deliveryAddress}"/>
                     </h5>
+
                     <label class="label">
                         <fmt:message key="order.address.locality"/>
                         <div class="control">
@@ -160,17 +165,17 @@
                         </div>
                     </label>
 
-                    <fmt:message var="send_user_address" key="lable.checkbox.sendUserAddress"/>
+                    <fmt:message var="sendUserAddress" key="lable.checkbox.sendUserAddress"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.order.address" value="user_s">
-                        <c:out value="${send_user_address}"/>
+                        <c:out value="${sendUserAddress}"/>
                     </label>
                 </div>
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <fmt:message var="checkout_label" key="button.checkout"/>
-                        <input class="button is-primary" type="submit" value="${checkout_label}">
+                        <fmt:message var="checkoutLabel" key="button.checkout"/>
+                        <input class="button is-primary" type="submit" value="${checkoutLabel}">
                     </div>
                 </div>
 

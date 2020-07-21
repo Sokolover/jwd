@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <div class="container">
 
@@ -13,19 +14,19 @@
     </h5>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="hidden" name="_command" value="${CommandType.LOGIN_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.LOGIN_SUBMIT}">
         <div class="field">
             <div class="column is-one-third">
                 <div class="control">
                     <label class="label">
                         <fmt:message key="user.email"/>
-                        <input id="user.email" name="user.email" class="input" type="text" value="qwerty7@m.com">
+                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" class="input" type="text" value="qwerty7@m.com">
                     </label>
                 </div>
                 <div class="control">
                     <label class="label">
                         <fmt:message key="user.password"/>
-                        <input id="user.password" name="user.password" class="input" type="password" value="Qwerty777">
+                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" class="input" type="password" value="Qwerty777">
                     </label>
                 </div>
             </div>

@@ -38,16 +38,14 @@
                                placeholder="Cost input">
                     </label>
                 </div>
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="dish.description"/>
-                        <input class="textarea" name=${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE} type="text"
-                               placeholder="Description input" rows="10">
-                    </label>
-                </div>
+                <label class="label">
+                    <fmt:message key="dish.description"/>
+                    <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE}"
+                              placeholder="Description input" rows="10"></textarea>
+                </label>
                 <label class="label">
                     <fmt:message key="dish.picture"/>
-                    <input type="file" name=${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE} />
+                    <input type="file" name=${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}/>
                 </label>
                 <label class="label">
                     <fmt:message key="dish.category"/>

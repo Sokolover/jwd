@@ -5,8 +5,8 @@ import by.training.sokolov.dao.UserDaoMysqlDatabaseTest;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

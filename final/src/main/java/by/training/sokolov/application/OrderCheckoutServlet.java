@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.ServletName.*;
-import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 
 @WebServlet(urlPatterns = "/order_checkout", name = ORDER_CHECKOUT_SERVLET)
 public class OrderCheckoutServlet extends HttpServlet {
@@ -35,7 +35,7 @@ public class OrderCheckoutServlet extends HttpServlet {
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
 
-        setSecurityAttributes(req);
+        SecurityContext.getInstance().setSecurityAttributes(req);
 
         switch (viewName) {
             case MENU_SERVLET:
@@ -47,6 +47,7 @@ public class OrderCheckoutServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case COMMAND_RESULT_MESSAGE_JSP:
+            case DISH_CREATE_FORM_JSP:
                 req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
@@ -60,12 +61,6 @@ public class OrderCheckoutServlet extends HttpServlet {
                 break;
         }
 
-    }
-
-    private void setSecurityAttributes(HttpServletRequest req) {
-        req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
-        boolean userLoggedIn = SecurityContext.getInstance().isUserLoggedIn(req);
-        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
     }
 
     @Override

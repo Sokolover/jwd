@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <aside class="menu">
 
@@ -20,7 +21,7 @@
         <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
         <c:forEach items="${itemList}" var="orderItem">
             <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                <input type="hidden" name="_command" value="${CommandType.DELETE_DISH_FROM_ORDER}">
+                <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.DELETE_DISH_FROM_ORDER}">
                 <li>
                     <br>
                     <br>

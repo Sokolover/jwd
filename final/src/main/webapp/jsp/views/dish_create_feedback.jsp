@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <div class="container">
     <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>
@@ -17,42 +18,33 @@
         <div class="column is-half">
             <div class="card">
                 <form action="${pageContext.request.contextPath}/menu" method="post">
-                    <input type="hidden" name="_command" value="${CommandType.DISH_FEEDBACK_SUBMIT}">
+                    <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                           value="${CommandType.DISH_FEEDBACK_SUBMIT}">
                     <div class="card-content">
                         <label>
-                            <%--                            todo сделать циклом--%>
+                            <c:set var="minRating" value="1"/>
+                            <c:set var="maxRating" value="5"/>
                             <fmt:message key="feedback.rating"/>
                             <div class="control">
+                                <c:forEach var="i" begin="${minRating}" end="${maxRating - 1}" step="1">
+                                    <label class="radio">
+                                        <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}" value="${i}">
+                                        <c:out value="${i}"/>
+                                    </label>
+                                </c:forEach>
                                 <label class="radio">
-                                    <input type="radio" name="feedback.rating" value="5" checked>
-                                    5
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="feedback.rating" value="4">
-                                    4
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="feedback.rating" value="3">
-                                    3
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="feedback.rating" value="2">
-                                    2
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="feedback.rating" value="1">
-                                    1
+                                    <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}" value="${maxRating}" checked>
+                                    <c:out value="${maxRating}"/>
                                 </label>
                             </div>
                         </label>
                         <label>
                             <fmt:message key="feedback.text"/>
-                            <textarea class="textarea" name="feedback.text" placeholder="10 lines of textarea"
-                                      rows="10"></textarea>
+                            <textarea class="textarea" name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}" rows="10"></textarea>
                         </label>
                     </div>
                     <footer class="card-footer">
-                        <input type="hidden" name="dish.id" value="${dish.id}">
+                        <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
                         <fmt:message var="send_feedback" key="button.feedback.send"/>
                         <input class="button is-primary" type="submit" value="${send_feedback}">
                     </footer>

@@ -1,12 +1,12 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.util.TimeOfDeliveryGeneratorUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
+import by.training.sokolov.util.TimeOfDeliveryGeneratorUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

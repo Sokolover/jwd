@@ -5,7 +5,6 @@ import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.ConnectionManager;
 import by.training.sokolov.entity.category.model.DishCategory;
-import by.training.sokolov.entity.role.model.UserRole;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

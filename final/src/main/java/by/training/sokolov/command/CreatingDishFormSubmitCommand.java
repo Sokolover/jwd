@@ -6,7 +6,6 @@ import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -16,8 +15,6 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;

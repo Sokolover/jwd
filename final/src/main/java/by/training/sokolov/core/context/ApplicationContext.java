@@ -57,8 +57,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
-import static by.training.sokolov.core.constants.ServletName.*;
 import static by.training.sokolov.command.constants.CommandType.*;
+import static by.training.sokolov.core.constants.ServletName.*;
 
 public class ApplicationContext {
 

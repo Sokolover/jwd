@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
 
 public class AnnotationBasedBeanValidator implements BeanValidator {
 

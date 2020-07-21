@@ -1,10 +1,10 @@
 package by.training.sokolov.command;
 
 import by.training.sokolov.core.context.SecurityContext;
-import by.training.sokolov.util.Md5EncryptingUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
+import by.training.sokolov.util.Md5EncryptingUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
