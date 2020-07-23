@@ -37,7 +37,7 @@ public class OrderCheckoutDisplayCommand implements Command {
 
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
             return ERROR_MESSAGE_JSP;
         }
 

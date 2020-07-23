@@ -11,66 +11,73 @@
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<aside class="menu">
+<div class="dishPage">
 
-    <p class="menu-label">
-        <fmt:message key="app.group.orderItems"/>
-    </p>
+    <jsp:include page="dish_category.jsp"/>
 
-    <ul class="menu-list">
+    <c:if test="${not empty message}">
+        <h5 class="title is-5">
+            <c:out value="${message}"/>
+        </h5>
+    </c:if>
+
+    <div class="dishContainer">
         <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
         <c:forEach items="${itemList}" var="orderItem">
-            <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.DELETE_DISH_FROM_ORDER}">
-                <li>
-                    <br>
-                    <br>
-                    <input type="hidden" name="orderItem.id" value="${orderItem.id}">
-                    <ul>
-                        <li>
+            <div class="cardContainer">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="data:image/jpg;base64,${orderItem.dish.picture}" alt="no dish picture"/>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+
+                        <p class="card-header-title">
                             <c:out value="${orderItem.dish.name}"/>
-                        </li>
-                        <li>
-                            <img src="data:image/jpg;base64,${orderItem.dish.picture}" alt="no dish picture" width="400"
-                                 height="400"/>
-                        </li>
-                        <li>
+                        </p>
+
+                        <div class="box">
+                            <c:out value="${orderItem.dish.description}"/>
+                        </div>
+
+                        <div class="">
                             <label for="${orderItem.dish.cost}">
                                 <fmt:message key="dish.cost"/>
                             </label>
-                            <c:out value=": ${orderItem.dish.cost}"/>
                             <fmt:message var="currency" key="symbol.currency"/>
-                            <c:out value="${currency}"/>
-                        </li>
-                        <li>
-                            <div class="column is-two-thirds">
-                                <label for="${orderItem.dish.description}">
-                                    <fmt:message key="dish.description"/>
-                                </label>
-                                <div class="box">
-                                    <c:out value="${orderItem.dish.description}"/>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
+                            <c:out value=": ${orderItem.dish.cost} ${currency}"/>
+                        </div>
+
+                        <div class="">
                             <label for="${orderItem.dishAmount}">
                                 <fmt:message key="order.item.dishAmount"/>
                             </label>
                             <c:out value=": ${orderItem.dishAmount}"/>
-                        </li>
-                        <li>
+                        </div>
+
+                        <div class="">
                             <label for="${orderItem.itemCost}">
                                 <fmt:message key="order.item.cost"/>
                             </label>
                             <c:out value=": ${orderItem.itemCost} ${currency}"/>
-                        </li>
-                    </ul>
-                    <div class="control">
-                        <fmt:message var="delete_label" key="button.order.item.delete"/>
-                        <input class="button is-primary" type="submit" value="${delete_label}">
+                        </div>
+
+                        <form action="${pageContext.request.contextPath}/order_basket" method="post">
+                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                   value="${CommandType.DELETE_DISH_FROM_ORDER}">
+                            <input type="hidden" name="orderItem.id" value="${orderItem.id}">
+                            <div class="control">
+                                <fmt:message var="deleteLabel" key="button.order.item.delete"/>
+                                <input class="button is-light secondary" type="submit" value="${deleteLabel}">
+                            </div>
+                        </form>
+
                     </div>
-                </li>
-            </form>
+                </div>
+            </div>
         </c:forEach>
-    </ul>
-</aside>
+    </div>
+</div>
+
+

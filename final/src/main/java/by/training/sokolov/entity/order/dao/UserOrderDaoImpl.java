@@ -50,7 +50,7 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
                 LocalDateTime localDateTime = resultSet.getObject("time_of_delivery", LocalDateTime.class);
                 userOrder.setTimeOfDelivery(localDateTime);
                 userOrder.setOrderStatus(OrderStatus.fromString(resultSet.getString("order_status")));
-                userOrder.getUser().setId(resultSet.getLong("user_account_id"));
+                userOrder.setUserId(resultSet.getLong("user_account_id"));
                 userOrder.getDeliveryAddress().setId(resultSet.getLong("delivery_address_id"));
                 userOrder.setCustomerName(resultSet.getString("customer_name"));
                 userOrder.setCustomerPhoneNumber(resultSet.getString("customer_phone_number"));
@@ -73,7 +73,7 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
                 statement.setObject(1, entity.getTimeOfDelivery());
 //                statement.setTimestamp(1, entity.getTimeOfDelivery());
                 statement.setString(2, entity.getOrderStatus().getValue());
-                statement.setLong(3, entity.getUser().getId());
+                statement.setLong(3, entity.getUserId());
                 statement.setLong(4, entity.getDeliveryAddress().getId());
                 statement.setString(5, entity.getCustomerName());
                 statement.setString(6, entity.getCustomerPhoneNumber());

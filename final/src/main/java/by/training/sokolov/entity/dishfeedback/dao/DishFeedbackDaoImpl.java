@@ -46,8 +46,8 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
                 dishFeedback.setId(resultSet.getLong("id"));
                 dishFeedback.setDishRating(resultSet.getInt("dish_rating"));
                 dishFeedback.setDishComment(resultSet.getString("dish_comment"));
-                dishFeedback.getUser().setId(resultSet.getLong("user_account_id"));
-                dishFeedback.getDish().setId(resultSet.getLong("dish_id"));
+                dishFeedback.setUserId(resultSet.getLong("user_account_id"));
+                dishFeedback.setDishId(resultSet.getLong("dish_id"));
                 return dishFeedback;
             }
 
@@ -64,8 +64,8 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
 
                 statement.setInt(1, entity.getDishRating());
                 statement.setString(2, entity.getDishComment());
-                statement.setLong(3, entity.getUser().getId());
-                statement.setLong(4, entity.getDish().getId());
+                statement.setLong(3, entity.getUserId());
+                statement.setLong(4, entity.getDishId());
             }
         };
     }

@@ -74,6 +74,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
     }
 
     private static Blob convertStringToBlob(String stringPicture) throws SQLException, ConnectionException {
+
         byte[] byteData = stringPicture.getBytes(StandardCharsets.UTF_8);
         Connection connection = connectionManager.getConnection();
         Blob blobPicture = connection.createBlob();
@@ -82,8 +83,8 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
     }
 
     private static String convertBlobToString(ResultSet resultSet) throws SQLException, IOException {
-        Blob blob = resultSet.getBlob("dish_picture");
 
+        Blob blob = resultSet.getBlob("dish_picture");
         InputStream inputStream = blob.getBinaryStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int bufferSize = 4096;

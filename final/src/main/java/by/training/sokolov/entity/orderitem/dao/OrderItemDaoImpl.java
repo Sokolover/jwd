@@ -63,7 +63,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
                 orderItem.setDishAmount(resultSet.getInt("dish_amount"));
                 orderItem.setItemCost(resultSet.getBigDecimal("item_cost"));
                 orderItem.getDish().setId(resultSet.getLong("dish_id"));
-                orderItem.getUserOrder().setId(resultSet.getLong("user_order_id"));
+                orderItem.setUserOrderId(resultSet.getLong("user_order_id"));
                 return orderItem;
             }
 
@@ -81,7 +81,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
                 statement.setInt(1, entity.getDishAmount());
                 statement.setBigDecimal(2, entity.getItemCost());
                 statement.setLong(3, entity.getDish().getId());
-                statement.setLong(4, entity.getUserOrder().getId());
+                statement.setLong(4, entity.getUserOrderId());
             }
         };
     }

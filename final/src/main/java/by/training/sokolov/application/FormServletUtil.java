@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.VIEW_NAME_JSP_PARAM;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.core.constants.ServletName.*;
 
@@ -39,6 +40,10 @@ class FormServletUtil {
                 break;
             case INDEX_SERVLET:
                 resp.sendRedirect(req.getContextPath());
+                break;
+            case COMMAND_RESULT_MESSAGE_JSP:
+                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
+                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             case DEFAULT_RESULT:
             default:

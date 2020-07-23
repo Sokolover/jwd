@@ -28,19 +28,22 @@
                             <div class="control">
                                 <c:forEach var="i" begin="${minRating}" end="${maxRating - 1}" step="1">
                                     <label class="radio">
-                                        <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}" value="${i}">
+                                        <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
+                                               value="${i}">
                                         <c:out value="${i}"/>
                                     </label>
                                 </c:forEach>
                                 <label class="radio">
-                                    <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}" value="${maxRating}" checked>
+                                    <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
+                                           value="${maxRating}" checked>
                                     <c:out value="${maxRating}"/>
                                 </label>
                             </div>
                         </label>
                         <label>
                             <fmt:message key="feedback.text"/>
-                            <textarea class="textarea" name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}" rows="10"></textarea>
+                            <textarea class="textarea" name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}"
+                                      rows="10"></textarea>
                         </label>
                     </div>
                     <footer class="card-footer">
@@ -51,29 +54,30 @@
                 </form>
             </div>
         </div>
-        <div class="column is-half">
-            <div class="card-content">
-                <ul>
-                    <li>
-                        <c:out value="${dish.name}"/>
-                    </li>
-                    <li>
-                        <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"
-                             height="400"/>
-                    </li>
-                    <li>
-                        <div class="column is-two-thirds">
-                            <label for="${dish.description}">
-                                <fmt:message key="dish.description"/>
-                            </label>
-                            <div class="box">
-                                <c:out value="${dish.description}"/>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <%--        <div class="column is-half">--%>
+        <%--            <div class="card-content">--%>
+        <%--                <ul>--%>
+        <%--                    <li>--%>
+        <%--                        <c:out value="${dish.name}"/>--%>
+        <%--                    </li>--%>
+        <%--                    <li>--%>
+        <%--                        <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"--%>
+        <%--                             height="400"/>--%>
+        <%--                    </li>--%>
+        <%--                    <li>--%>
+        <%--                        <div class="column is-two-thirds">--%>
+        <%--                            <label for="${dish.description}">--%>
+        <%--                                <fmt:message key="dish.description"/>--%>
+        <%--                            </label>--%>
+        <%--                            <div class="box">--%>
+        <%--                                <c:out value="${dish.description}"/>--%>
+        <%--                            </div>--%>
+        <%--                        </div>--%>
+        <%--                    </li>--%>
+        <%--                </ul>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
+        <jsp:include page="card_dish.jsp"/>
     </div>
 </div>
 

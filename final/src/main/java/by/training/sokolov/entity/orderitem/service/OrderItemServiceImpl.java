@@ -35,7 +35,9 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     }
 
     private void findOrderItemsDish(List<OrderItem> orderItems) throws SQLException, ConnectionException {
+
         for (OrderItem orderItem : orderItems) {
+
             Long itemDishId = orderItem.getDish().getId();
             Dish dish = dishService.getById(itemDishId);
             orderItem.setDish(dish);

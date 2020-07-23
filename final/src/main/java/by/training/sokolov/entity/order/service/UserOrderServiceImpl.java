@@ -41,7 +41,7 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     public void createNewOrder(User user) throws SQLException, ConnectionException {
 
         UserOrder userOrder = new UserOrder();
-        userOrder.getUser().setId(user.getId());
+        userOrder.setUserId(user.getId());
 
         LocalDateTime localDateTime = LocalDateTime.now();
         userOrder.setTimeOfDelivery(localDateTime);
@@ -62,6 +62,9 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
     public UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException {
 
         User currentUser = SecurityContext.getInstance().getCurrentUser(id);
+        if (Objects.isNull(currentUser)) {
+            return null;
+        }
         UserOrder userOrder = userOrderDao.findBuildingUpUserOrder(currentUser.getId());
         if (Objects.isNull(userOrder)) {
             return null;

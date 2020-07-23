@@ -10,41 +10,46 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<aside class="menu">
+<div class="categoryContainer">
 
     <p class="menu-label">
         <fmt:message key="app.group.category"/>
     </p>
 
-    <ul class="menu-list">
+    <div class="categoryAddContainer">
+    <form action="" method="GET" class="">
+<%--        todo сделать checked чекбоксов в выбранных категориях (написать сравнение ЗНАЧЕНИЙ строк на jsp)--%>
+<%--        <c:forEach items="${selectedCategories}" var="selectedCategory">--%>
+<%--            <c:forEach items="${categoryList}" var="category">--%>
+<%--                <c:when test="${category eq selectedCategory}">--%>
+<%--                    <input type="checkbox" checked name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
+<%--                           value="${category.categoryName}"/>--%>
+<%--                    ${category.categoryName}--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
+<%--                           value="${category.categoryName}"/>--%>
+<%--                    ${category.categoryName}--%>
+<%--                </c:otherwise>--%>
+<%--            </c:forEach>--%>
+<%--        </c:forEach>--%>
 
-        <form action="" method="GET">
-            <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
-            <c:forEach items="${categoryList}" var="category">
-                <li>
-                    <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
-                           value="${category.categoryName}"/>
-                        ${category.categoryName}
-                </li>
-            </c:forEach>
+        <c:forEach items="${categoryList}" var="category">
+            <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+                   value="${category.categoryName}"/>
+            ${category.categoryName}
+        </c:forEach>
 
-            <br>
-            <br>
+        <fmt:message var="ok" key="button.category.ok"/>
+        <input class="button is-light secondary" type="submit" value="${ok}"/>
 
-            <fmt:message var="ok" key="button.category.ok"/>
-            <input class="button is-primary" type="submit" value="${ok}"/>
+    </form>
 
-            <fmt:message var="reset" key="button.category.reset"/>
-            <input class="button is-primary" type="reset" value="${reset}"/>
-
-        </form>
-
-        <fmt:message var="all" key="button.category.all"/>
-        <form action="" method="get">
-            <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
-                   value="all">
-            <input class="button is-primary" type="submit" value="${all}"/>
-        </form>
-
-    </ul>
-</aside>
+    <fmt:message var="all" key="button.category.reset"/>
+    <form action="" method="get">
+        <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+               value="all">
+        <input class="button is-light secondary" type="submit" value="${all}"/>
+    </form>
+    </div>
+</div>

@@ -1,20 +1,17 @@
 package by.training.sokolov.entity.dishfeedback.model;
 
 import by.training.sokolov.core.dao.IdentifiedRow;
-import by.training.sokolov.entity.dish.model.Dish;
-import by.training.sokolov.entity.user.model.User;
 
 public class DishFeedback implements IdentifiedRow {
 
     private Long id;
     private Integer dishRating;
     private String dishComment;
-    private User user;
-    private Dish dish;
+    private Long userId;
+    private Long dishId;
 
     public DishFeedback() {
-        this.user = new User();
-        this.dish = new Dish();
+
     }
 
     @Override
@@ -43,19 +40,19 @@ public class DishFeedback implements IdentifiedRow {
         this.dishComment = dishComment;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Dish getDish() {
-        return dish;
+    public Long getDishId() {
+        return dishId;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setDishId(Long dishId) {
+        this.dishId = dishId;
     }
 }

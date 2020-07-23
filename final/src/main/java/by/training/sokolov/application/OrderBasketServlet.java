@@ -38,6 +38,7 @@ public class OrderBasketServlet extends HttpServlet {
         SecurityContext.getInstance().setSecurityAttributes(req);
 
         switch (viewName) {
+            case LOGIN_SERVLET:
             case MENU_SERVLET:
             case ORDER_BASKET_SERVLET:
             case ORDER_CHECKOUT_SERVLET:

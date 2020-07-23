@@ -8,80 +8,93 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="by.training.sokolov.command.constants.CommandType" %>
 <%@ taglib prefix="f" uri="/WEB-INF/tld/format/timeFormat.tld" %>
+<%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<div class="container">
+<div class="checkoutContainer">
 
-    <div class="columns">
 
-        <%--dish table--%>
-        <div class="column is-half">
-            <fmt:message var="orderList" key="order.item.list"/>
-            <h5 class="title is-5">
-                <c:out value="${orderList}"/>
-            </h5>
-            <fmt:message var="dishName" key="dish.name"/>
-            <fmt:message var="dishCost" key="dish.cost"/>
-            <fmt:message var="dishAmount" key="order.item.dishAmount"/>
-            <fmt:message var="itemCost" key="order.item.cost"/>
+    <%--dish table--%>
+    <div class="tableContainer">
+        <fmt:message var="orderList" key="order.item.list"/>
+        <h5 class="title is-5">
+            <c:out value="${orderList}"/>
+        </h5>
+        <fmt:message var="dishName" key="dish.name"/>
+        <fmt:message var="dishCost" key="dish.cost"/>
+        <fmt:message var="dishAmount" key="order.item.dishAmount"/>
+        <fmt:message var="itemCost" key="order.item.cost"/>
 
-            <table class="table is-striped">
-                <thead>
+        <table class="table is-striped">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th><c:out value="${dishName}"/></th>
+                <th><c:out value="${dishCost}"/></th>
+                <th><c:out value="${dishAmount}"/></th>
+                <th><c:out value="${itemCost}"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="i" value="1"/>
+            <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
+            <c:forEach items="${itemList}" var="item">
                 <tr>
-                    <th>№</th>
-                    <th><c:out value="${dishName}"/></th>
-                    <th><c:out value="${dishCost}"/></th>
-                    <th><c:out value="${dishAmount}"/></th>
-                    <th><c:out value="${itemCost}"/></th>
+                    <td><c:out value="${i}"/>
+                    <td><c:out value="${item.dish.name}"/>
+                    <td><c:out value="${item.dish.cost}"/>
+                    <td><c:out value="${item.dishAmount}"/>
+                    <td><c:out value="${item.itemCost}"/>
                 </tr>
-                </thead>
-                <tbody>
-                <c:set var="i" value="1"/>
-                <jsp:useBean id="itemList" scope="request" type="java.util.List"/>
-                <c:forEach items="${itemList}" var="item">
-                    <tr>
-                        <td><c:out value="${i}"/>
-                        <td><c:out value="${item.dish.name}"/>
-                        <td><c:out value="${item.dish.cost}"/>
-                        <td><c:out value="${item.dishAmount}"/>
-                        <td><c:out value="${item.itemCost}"/>
-                    </tr>
-                    <c:set var="i" value="${i + 1}"/>
-                </c:forEach>
-                </tbody>
-            </table>
-            <%--total cost--%>
-            <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
-            <c:set var="totalCost" value="${totalCost}"/>
-            <fmt:message var="orderCostString" key="order.cost"/>
-            <fmt:message var="currency" key="symbol.currency"/>
-            <h5 class="title is-5">
-                <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
-            </h5>
-        </div>
+                <c:set var="i" value="${i + 1}"/>
+            </c:forEach>
+            </tbody>
+        </table>
+        <%--total cost--%>
+        <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
+        <c:set var="totalCost" value="${totalCost}"/>
+        <fmt:message var="orderCostString" key="order.cost"/>
+        <fmt:message var="currency" key="symbol.currency"/>
+        <h5 class="title is-5">
+            <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
+        </h5>
+    </div>
 
-        <div class="column is-one-quarter">
-            <%--input contact info--%>
-            <form action="${pageContext.request.contextPath}/order_checkout" method="post">
-                <input type="hidden" name="_command" value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+    <div class="infoContainer">
+        <%--input contact info--%>
+        <form action="${pageContext.request.contextPath}/order_checkout" method="post">
+            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                   value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+            <div class="contactInfoContent">
+
                 <div class="field">
-                    <fmt:message var="contact_info" key="order.contactInfo"/>
+                    <fmt:message var="contactInfo" key="order.contactInfo"/>
                     <h5 class="title is-5">
-                        <c:out value="${contact_info}"/>
+                        <c:out value="${contactInfo}"/>
                     </h5>
-                    <label class="label">
-                        <fmt:message key="user.name"/>
+
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="user.name" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="user.name"/>
+                                <input class="input" id="user.name" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
-                    <label class="label">
-                        <fmt:message key="user.phoneNumber"/>
+                    </div>
+
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="user.phoneNumber" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="user.phoneNumber"/>
+                                <div class="control">
+                                    <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}"
+                                           type="text">
+                                </div>
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
                     <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>
                     <label class="checkbox">
@@ -94,9 +107,6 @@
                         <input type="checkbox" name="default.user.phoneNumber" value="user_s">
                         <c:out value="${sendUserPhoneNumber}"/>
                     </label>
-
-                    <br>
-                    <br>
 
                     <%--input time of delivery--%>
                     <fmt:message var="timeOfDelivery" key="order.timeOfDelivery"/>
@@ -113,74 +123,96 @@
                             </c:forEach>
                         </select>
                     </label>
+                </div>
 
-                    <br>
-
+                <div class="contactInfoBottomContainer">
                     <fmt:message var="deliveryAddress" key="order.deliveryAddress"/>
                     <h5 class="title is-5">
                         <c:out value="${deliveryAddress}"/>
                     </h5>
 
-                    <label class="label">
-                        <fmt:message key="order.address.locality"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.locality" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.locality"/>
+                                <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="label">
-                        <fmt:message key="order.address.street"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.street" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.street"/>
+                                <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_STREET_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="label">
-                        <fmt:message key="order.address.buildingNumber"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.buildingNumber" type="text"
-                                   placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.buildingNumber"/>
+                                <input class="input"
+                                       name="${CommonAppConstants.ORDER_ADDRESS_BUILDING_NUMBER_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="label">
-                        <fmt:message key="order.address.flatNumber"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.flatNumber" type="text"
-                                   placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.flatNumber"/>
+                                <input class="input"
+                                       name="${CommonAppConstants.ORDER_ADDRESS_FLAT_NUMBER_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="label">
-                        <fmt:message key="order.address.porch"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.porch" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.porch"/>
+                                <input class="input"
+                                       name="${CommonAppConstants.ORDER_ADDRESS_PORCH_NUMBER_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="label">
-                        <fmt:message key="order.address.floor"/>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" name="order.address.floor" type="text" placeholder="Text input">
+                            <label class="label">
+                                <fmt:message key="order.address.floor"/>
+                                <input class="input"
+                                       name="${CommonAppConstants.ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE}"
+                                       type="text">
+                            </label>
                         </div>
-                    </label>
+                    </div>
 
                     <fmt:message var="sendUserAddress" key="lable.checkbox.sendUserAddress"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.order.address" value="user_s">
                         <c:out value="${sendUserAddress}"/>
                     </label>
-                </div>
 
-                <div class="field is-grouped">
-                    <div class="control">
-                        <fmt:message var="checkoutLabel" key="button.checkout"/>
-                        <input class="button is-primary" type="submit" value="${checkoutLabel}">
-                    </div>
                 </div>
+            </div>
 
-            </form>
-        </div>
+<%--            todo выровнять поцентру--%>
+            <div class="marginTop">
+                <div class="control">
+                    <fmt:message var="checkoutLabel" key="button.checkout"/>
+                    <input class="button is-light secondary" type="submit" value="${checkoutLabel}">
+                </div>
+            </div>
+
+        </form>
     </div>
 </div>
 

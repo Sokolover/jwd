@@ -11761,16 +11761,155 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     padding: 3rem 1.5rem 6rem;
 }
 
-.class1 {
+
+body {
+    background-color: #ece1d8;
+}
+
+.button.is-light.secondary {
+    margin-right: 6px;
+    background-color: #f6a52d;
+}
+
+.button.is-light.secondary:hover {
+    background-color: #f68a2f;
+}
+
+.bodyContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.appTitle {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+.myHeader {
+    display: flex;
+    flex-direction: column;
+    background-color: #e02525;
+    padding: 10px 20px;
+}
+
+
+.myContent {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: #ddc4b9;
+}
+
+.myFooter {
+    display: flex;
+    justify-content: center;
+    background-color: #6d3d32;
+    padding: 20px;
+}
+
+.footerText {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.betweenContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.button.sokolover228 {
-    background-color: #d1662e;
-    border-color: transparent;
-    color: #fff;
+
+.alignItemsCenter {
+    display: flex;
+    align-items: center;
 }
+
+.marginTop {
+    margin-top: 10px;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 500px;
+    padding: 20px 10px;
+}
+
+
+.dishPage {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 30px 20px;
+}
+
+.dishContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.categoryContainer {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    background-color: #ddc4b9;
+    border-bottom: #cc0f35;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.cardContainer {
+    width: 400px;
+    margin: 10px;
+}
+
+.dishAmount {
+    display: flex;
+    margin-right: 10px;
+}
+
+
+.categoryAddContainer {
+    display: flex;
+}
+
+.checkoutContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+}
+
+.tableContainer {
+    margin-bottom: 50px;
+}
+
+.infoContainer {
+    width: 100%;
+}
+
+.contactInfoContent {
+    display: flex;
+    justify-content: space-around;
+}
+
+.contactInfoBottomContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 
 /*# sourceMappingURL=bulma.css.map */

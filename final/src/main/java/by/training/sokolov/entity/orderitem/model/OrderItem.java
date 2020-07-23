@@ -12,11 +12,11 @@ public class OrderItem implements IdentifiedRow {
     private Integer dishAmount;
     private BigDecimal itemCost;
     private Dish dish;
-    private UserOrder userOrder;
+    private Long userOrderId;
 
     public OrderItem() {
+
         this.dish = new Dish();
-        this.userOrder = new UserOrder();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class OrderItem implements IdentifiedRow {
                 ", dishAmount=" + dishAmount +
                 ", itemCost=" + itemCost +
                 ", dish=" + dish +
-                ", userOrder=" + userOrder +
+                ", userOrder=" + userOrderId +
                 '}';
     }
 
@@ -64,11 +64,11 @@ public class OrderItem implements IdentifiedRow {
         this.dish = dish;
     }
 
-    public UserOrder getUserOrder() {
-        return userOrder;
+    public Long getUserOrderId() {
+        return userOrderId;
     }
 
-    public void setUserOrder(UserOrder userOrder) {
-        this.userOrder = userOrder;
+    public void setUserOrderId(Long userOrderId) {
+        this.userOrderId = userOrderId;
     }
 }

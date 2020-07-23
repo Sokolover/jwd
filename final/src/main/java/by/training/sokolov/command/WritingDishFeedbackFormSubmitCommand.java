@@ -56,10 +56,10 @@ public class WritingDishFeedbackFormSubmitCommand implements Command {
     private void saveNewFeedback(Long currentUserId, String rating, String comment, String dishIdString) throws SQLException, ConnectionException {
 
         DishFeedback dishFeedback = new DishFeedback();
-        dishFeedback.getUser().setId(currentUserId);
+        dishFeedback.setUserId(currentUserId);
         dishFeedback.setDishRating(Integer.parseInt(rating));
         dishFeedback.setDishComment(comment);
-        dishFeedback.getDish().setId(Long.parseLong(dishIdString));
+        dishFeedback.setDishId(Long.parseLong(dishIdString));
         dishFeedbackService.save(dishFeedback);
     }
 }

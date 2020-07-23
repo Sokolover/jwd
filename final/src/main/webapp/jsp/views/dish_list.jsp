@@ -11,87 +11,101 @@
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<aside class="menu">
+<div class="dishPage">
 
-    <p class="menu-label">
-        <fmt:message key="app.group.dishes"/>
-    </p>
+    <%--    <p class="menu-label">--%>
+    <%--        <fmt:message key="app.group.dishes"/>--%>
+    <%--    </p>--%>
 
-    <ul class="menu-list">
+    <jsp:include page="dish_category.jsp"/>
+
+    <div class="dishContainer">
         <jsp:useBean id="dishes" scope="request" type="java.util.List"/>
         <c:forEach items="${dishes}" var="dish">
-            <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
-                       value="${CommandType.ORDER_ITEM_ADD}">
-                <li>
-                    <br>
-                    <br>
-                    <input type="hidden" name="dish.id" value="${dish.id}">
-                    <ul>
-                        <li>
+            <div class="cardContainer">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture"/>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-header-title">
                             <c:out value="${dish.name}"/>
-                        </li>
-                        <br>
-                        <li>
-                            <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"
-                                 height="400"/>
-                        </li>
-                        <br>
-                        <li>
+                        </p>
+                        <div class="box">
+                            <c:out value="${dish.description}"/>
+                        </div>
+                        <div class="">
                             <label for="${dish.cost}">
                                 <fmt:message key="dish.cost"/>
                             </label>
                             <fmt:message var="currency" key="symbol.currency"/>
                             <c:out value=": ${dish.cost} ${currency}"/>
-                        </li>
-                        <li>
-                            <div class="column is-two-thirds">
-                                <label for="${dish.description}">
-                                    <fmt:message key="dish.description"/>
-                                </label>
-                                <div class="box">
-                                    <c:out value="${dish.description}"/>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
-                    <c:if test="${userLoggedIn}">
-                        <div class="column is-one-fifth">
-                            <label class="label">
-                                <fmt:message key="order.item.dishAmount"/>
-                                <div class="control">
-                                    <input class="input"
-                                           name="${CommonAppConstants.ORDER_DISH_AMOUNT_JSP_PARAM}"
-                                           value="1"
-                                           type="number"
-                                           step="1"
-                                           min="1"
-                                           max="10">
-                                </div>
-                            </label>
                         </div>
-                        <div class="control">
-                            <fmt:message var="add_label" key="button.dish.add"/>
-                            <input class="button is-primary" type="submit" value="${add_label}">
-                        </div>
-                    </c:if>
-                </li>
-            </form>
-            <c:if test="${userLoggedIn}">
-                <form action="${pageContext.request.contextPath}/menu" method="post">
-                    <div class="control">
-                        <label class="label">
-                            <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
-                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
-                                   value="${CommandType.DISH_FEEDBACK_WRITE}">
-                            <fmt:message var="write_feedback" key="button.feedback.write"/>
-                            <input class="button is-primary" type="submit" value="${write_feedback}">
-                        </label>
-                    </div>
-                </form>
-            </c:if>
-        </c:forEach>
-    </ul>
+                        <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
+                        <c:if test="${userLoggedIn}">
 
-</aside>
+                            <form action="${pageContext.request.contextPath}/order_basket" method="post">
+                                <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
+                                       value="${dish.id}">
+                                <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                       value="${CommandType.ORDER_ITEM_ADD}">
+                                <div class="betweenContainer alignItemsCenter">
+                                    <label class="label dishAmount">
+                                        <fmt:message key="order.item.dishAmount"/>
+                                        <div class="control">
+                                            <input class="input"
+                                                   name="${CommonAppConstants.ORDER_DISH_AMOUNT_JSP_PARAM}"
+                                                   value="1"
+                                                   type="number"
+                                                   step="1"
+                                                   min="1"
+                                                   max="10">
+                                        </div>
+                                    </label>
+
+                                    <div class="control">
+                                        <fmt:message var="add_label" key="button.dish.add"/>
+                                        <input class="button is-light secondary" type="submit" value="${add_label}">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="betweenContainer">
+                                <form action="${pageContext.request.contextPath}/menu" method="post">
+                                    <div class="control is-centered alignItemsCenter">
+                                        <label class="label">
+                                            <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
+                                                   value="${dish.id}">
+                                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                                   value="${CommandType.DISH_FEEDBACK_WRITE}">
+                                            <fmt:message var="writeFeedback" key="button.feedback.write"/>
+                                            <input class="button is-light is-small is-rounded" type="submit"
+                                                   value="${writeFeedback}">
+                                        </label>
+                                    </div>
+                                </form>
+
+                                <form action="${pageContext.request.contextPath}/menu" method="post">
+                                    <div class="control is-centered">
+                                        <label class="label">
+                                            <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
+                                                   value="${dish.id}">
+                                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                                   value="${CommandType.UPDATE_DISH_FORM_DISPLAY}">
+                                            <fmt:message var="updateDish" key="button.dish.update"/>
+                                            <input class="button is-light is-small is-rounded" type="submit"
+                                                   value="${updateDish}">
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>

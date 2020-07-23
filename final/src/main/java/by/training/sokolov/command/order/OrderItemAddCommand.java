@@ -42,7 +42,7 @@ public class OrderItemAddCommand implements Command {
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
             return ERROR_MESSAGE_JSP;
         }
         Long currentUserOrderId = currentOrder.getId();
@@ -53,6 +53,9 @@ public class OrderItemAddCommand implements Command {
         if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 
             addItemToOrder(request, currentUserOrderId);
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "new item added to order");
+        } else {
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "this item is already in the order! if you want to change dish amount - delete correspond item");
         }
 
         return ORDER_ADD_ITEM_RESULT;
@@ -63,7 +66,7 @@ public class OrderItemAddCommand implements Command {
         String dishIdString;
         Long dishIdLong;
         OrderItem orderItem = new OrderItem();
-        orderItem.getUserOrder().setId(currentUserOrderId);
+        orderItem.setUserOrderId(currentUserOrderId);
 
         dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
         dishIdLong = Long.parseLong(dishIdString);

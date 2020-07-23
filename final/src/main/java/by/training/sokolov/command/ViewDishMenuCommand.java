@@ -31,6 +31,7 @@ public class ViewDishMenuCommand implements Command {
 
         setCategoriesToRequest(request);
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
+        request.setAttribute("selectedCategories", categoryNames);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
@@ -49,7 +50,8 @@ public class ViewDishMenuCommand implements Command {
     }
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
-        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
+//        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
+
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
     }

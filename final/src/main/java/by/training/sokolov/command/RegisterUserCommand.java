@@ -35,9 +35,7 @@ public class RegisterUserCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
         /*
-        TODO добвавить константы для параметров jsp!!!
-            "user.password" и т.д.
-            и для колонок  таблиц в dao
+        TODO добвавить константы для колонок  таблиц в dao
          */
 
         String name = request.getParameter(USER_NAME_JSP_PARAM);

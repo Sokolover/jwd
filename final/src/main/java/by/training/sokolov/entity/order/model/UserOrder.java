@@ -3,7 +3,6 @@ package by.training.sokolov.entity.order.model;
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.order.constants.OrderStatus;
-import by.training.sokolov.entity.user.model.User;
 
 import java.time.LocalDateTime;
 
@@ -12,13 +11,12 @@ public class UserOrder implements IdentifiedRow {
     private Long id;
     private LocalDateTime timeOfDelivery;
     private OrderStatus orderStatus;
-    private User user;
+    private Long userId;
     private DeliveryAddress deliveryAddress;
     private String customerName;
     private String customerPhoneNumber;
 
     public UserOrder() {
-        this.user = new User();
         this.deliveryAddress = new DeliveryAddress();
     }
 
@@ -28,7 +26,7 @@ public class UserOrder implements IdentifiedRow {
                 "id=" + id +
                 ", timeOfDelivery=" + timeOfDelivery +
                 ", orderStatus=" + orderStatus +
-                ", user=" + user +
+                ", user=" + userId +
                 ", deliveryAddress=" + deliveryAddress +
                 ", customerName='" + customerName + '\'' +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
@@ -61,12 +59,12 @@ public class UserOrder implements IdentifiedRow {
         this.orderStatus = orderStatus;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public DeliveryAddress getDeliveryAddress() {

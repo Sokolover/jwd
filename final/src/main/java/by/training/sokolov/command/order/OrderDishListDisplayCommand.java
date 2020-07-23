@@ -40,7 +40,7 @@ public class OrderDishListDisplayCommand implements Command {
 
         if (Objects.isNull(userOrder)) {
 
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
             return ERROR_MESSAGE_JSP;
         }
 
@@ -70,7 +70,7 @@ public class OrderDishListDisplayCommand implements Command {
 
     private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
 
-        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
+//        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
     }

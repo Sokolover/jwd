@@ -7,7 +7,8 @@
 <head>
     <title>Delivery service</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bulma.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/bulma.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/login.css">
 </head>
 <body>
 
@@ -21,41 +22,30 @@
 </c:choose>
 
 <fmt:setBundle basename="/i18n/ApplicationMessages" scope="application"/>
-<section class="hero is-dark">
-    <div class="hero-head">
-        <lang:lang/>
-    </div>
-    <div class="hero-body">
-        <div class="container">
-            <h1 class="title">
-                <fmt:message key="app.title"/>
-            </h1>
+<div class="bodyContainer">
+    <section class="myHeader">
+        <div class="betweenContainer">
+            <div class="alignItemsCenter">
+                <span class="appTitle">
+                    <fmt:message key="app.title"/>
+                </span>
+            </div>
+            <lang:lang/>
         </div>
-    </div>
-</section>
-<section class="is-fullheight is-medium">
-    <div class="columns">
-        <div class="column is-one-quarter">
+        <div class="">
             <jsp:include page="nav_bar.jsp"/>
         </div>
+    </section>
+    <section class="myContent">
         <c:if test="${not empty viewName}">
-            <div class="column is-two-quarters">
-                <jsp:include page="views/${viewName}.jsp"/>
-            </div>
+            <jsp:include page="views/${viewName}.jsp"/>
         </c:if>
-        <c:if test="${not empty category}">
-            <div class="column is-one-quarter">
-                <jsp:include page="views/${category}.jsp"/>
-            </div>
-        </c:if>
-    </div>
-</section>
-<section class="footer">
-    <div class="content has-text-centered">
-        <p>
+    </section>
+    <section class="myFooter">
+        <p class="footerText">
             <fmt:message key="app.footer"/>
         </p>
-    </div>
-</section>
+    </section>
+</div>
 </body>
 </html>

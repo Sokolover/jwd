@@ -18,15 +18,13 @@ import java.util.stream.Collectors;
 public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
 
     private static final Logger LOGGER = Logger.getLogger(GenericDao.class.getName());
-    private final Lock connectionLock = new ReentrantLock();
-
     private static final String SELECT_ALL_QUERY = "SELECT * FROM {0}";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM {0} WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO {0} ({1}) VALUES ({2})";
     private static final String UPDATE_QUERY = "UPDATE {0} SET {1} WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM {0} WHERE id = ?";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM {0} WHERE id = ?";
-
+    private final Lock connectionLock = new ReentrantLock();
     private final String tableName;
     private final IdentifiedRowMapper<T> rowMapper;
     private final ConnectionManager connectionManager;
@@ -76,7 +74,11 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
             String columns = columnNames.stream()
                     .map(column -> column + " = ?")
                     .collect(Collectors.joining(", "));
-
+/*
+fixme         dishService.update(dish);
+            кидает
+            com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'dish_cost' at row 1
+ */
             String sql = MessageFormat.format(UPDATE_QUERY, tableName, columns);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 rowMapper.populateStatement(statement, entity);

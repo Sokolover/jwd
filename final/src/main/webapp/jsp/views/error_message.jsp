@@ -9,9 +9,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="container">
-    <h5 class="title is-5">
-        <c:if test="${not empty error}">
+    <c:if test="${not empty error}">
+        <h5 class="title is-5">
             <p class="is-danger"><c:out value="${error}"/></p>
-        </c:if>
-    </h5>
+        </h5>
+    </c:if>
 </div>

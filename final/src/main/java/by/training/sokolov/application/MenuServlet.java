@@ -51,6 +51,7 @@ public class MenuServlet extends HttpServlet {
             case COMMAND_RESULT_MESSAGE_JSP:
             case DISH_CREATE_FEEDBACK_JSP:
             case DISH_CREATE_FORM_JSP:
+            case DISH_UPDATE_FORM_JSP:
                 req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;

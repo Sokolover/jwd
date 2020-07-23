@@ -6,56 +6,66 @@
 
 <aside class="menu">
 
-    <p class="menu-label">
-        <fmt:message key="app.group.navigation"/>
-    </p>
+    <%--    <p class="menu-label">--%>
+    <%--        <fmt:message key="app.group.navigation"/>--%>
+    <%--    </p>--%>
 
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
-    <ul class="menu-list">
+    <div class="navbar-brand">
         <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
         <c:choose>
             <c:when test="${userLoggedIn}">
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.LOGOUT}"><fmt:message
-                            key="links.person.logout"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
+                <div class="navbar-start">
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
                             key="links.dish.menu"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
+
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
                             key="links.basket.display"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_ORDER}"><fmt:message
+
+
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_ORDER}"><fmt:message
                             key="links.order.create"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
+
+
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
                             key="links.order.checkout"/></a>
-                </li>
+
+                </div>
+                <div class="navbar-end"><a class="navbar-item button is-light secondary"
+                                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.LOGOUT}"><fmt:message
+                        key="links.person.logout"/></a>
+                </div>
+
                 <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
-                    <li>
-                        <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
-                                key="links.dish.create"/></a>
-                    </li>
+
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
+                            key="links.dish.create"/></a>
+
                 </c:if>
             </c:when>
             <c:otherwise>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.LOGIN_SERVLET_SWITCH}"><fmt:message
-                            key="links.person.login"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
+                <div class="navbar-start">
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
                             key="links.dish.menu"/></a>
-                </li>
-                <li>
-                    <a href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.REGISTER_SERVLET_SWITCH}"><fmt:message
-                            key="button.person.register"/></a>
-                </li>
+
+                </div>
+                <div class="navbar-end">
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.REGISTER_SERVLET_SWITCH}"><fmt:message
+                            key="links.person.register"/></a>
+
+
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.LOGIN_SERVLET_SWITCH}"><fmt:message
+                            key="links.person.login"/></a>
+                </div>
             </c:otherwise>
         </c:choose>
-    </ul>
+    </div>
 </aside>

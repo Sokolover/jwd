@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSessionEvent;
 import java.io.IOException;
 
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
