@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.ORDER_ADD_ITEM_RESULT;
+import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 
@@ -58,7 +58,7 @@ public class OrderItemAddCommand implements Command {
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "this item is already in the order! if you want to change dish amount - delete correspond item");
         }
 
-        return ORDER_ADD_ITEM_RESULT;
+        return VIEW_ORDER_DISH_LIST_RESULT;
     }
 
     private void addItemToOrder(HttpServletRequest request, Long currentUserOrderId) throws SQLException, ConnectionException {

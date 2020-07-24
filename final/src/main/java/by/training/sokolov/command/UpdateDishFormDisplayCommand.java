@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.DISH_CREATE_FORM_JSP;
 import static by.training.sokolov.core.constants.JspName.DISH_UPDATE_FORM_JSP;
 
 public class UpdateDishFormDisplayCommand implements Command {

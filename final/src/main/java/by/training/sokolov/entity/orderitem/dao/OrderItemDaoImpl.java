@@ -44,6 +44,9 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             "     user_order\n" +
             "WHERE {0}.user_order_id = user_order.id\n" +
             "  AND user_order.id = ?";
+    private static final String DELETE_BY_ORDER_ID = "" +
+            "DELETE FROM {0}\n" +
+            "WHERE {0}.user_order_id = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
@@ -112,7 +115,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishId(Long dishId, Long orderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
 //        LOGGER.info("getById()--" + dishId);
@@ -121,7 +124,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, dishId);
-                statement.setLong(2, userOrderId);
+                statement.setLong(2, orderId);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     try {
@@ -138,7 +141,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException {
+    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long orderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
         LOGGER.info("getByDishCategoryName(String categoryName)");
@@ -147,7 +150,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, categoryName);
-                statement.setLong(2, userOrderId);
+                statement.setLong(2, orderId);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     try {
@@ -163,4 +166,19 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
         }
     }
 
+    @Override
+    public void deleteByOrderId(Long orderId) throws SQLException, ConnectionException {
+
+        connectionLock.lock();
+        LOGGER.info("deleteById()--" + orderId);
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(DELETE_BY_ORDER_ID, TABLE_NAME);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setLong(1, orderId);
+                statement.executeUpdate();
+            }
+        } finally {
+            connectionLock.unlock();
+        }
+    }
 }

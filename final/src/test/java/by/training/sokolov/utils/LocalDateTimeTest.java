@@ -1,5 +1,6 @@
 package by.training.sokolov.utils;
 
+import by.training.sokolov.db.Transactional;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
@@ -42,5 +43,15 @@ public class LocalDateTimeTest {
         LOGGER.info(FIRST_TIME_OF_DELIVERY);
         LocalDateTime localDateTime = LocalDateTime.parse(currentDate + "T" + TIME_00_00);
         LOGGER.info(localDateTime.plusDays(1));
+    }
+
+    @Test
+    public void equTest(){
+        String str1 = "pizza";
+        String str2 = "pizza";
+
+        System.out.println(str1.equals(str2));
+        System.out.println(str1 == str2);
+
     }
 }

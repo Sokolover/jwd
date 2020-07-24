@@ -74,11 +74,7 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
             String columns = columnNames.stream()
                     .map(column -> column + " = ?")
                     .collect(Collectors.joining(", "));
-/*
-fixme         dishService.update(dish);
-            кидает
-            com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'dish_cost' at row 1
- */
+
             String sql = MessageFormat.format(UPDATE_QUERY, tableName, columns);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 rowMapper.populateStatement(statement, entity);

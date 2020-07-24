@@ -216,6 +216,8 @@ public class ApplicationContext {
         Command creatingDishFormSubmitCommand = new CreatingDishFormSubmitCommand(dishProxyService, dishCategoryService);
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
         Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
+        Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
+        Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
 
 
         //commandFactory
@@ -234,6 +236,7 @@ public class ApplicationContext {
         commandFactory.registerCommand(ORDER_ITEM_ADD, orderItemAddCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
+        commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
 
         commandFactory.registerCommand(DISH_FEEDBACK_WRITE, dishFeedbackWriteCommand);
         commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
@@ -244,6 +247,8 @@ public class ApplicationContext {
 
         commandFactory.registerCommand(UPDATE_DISH_FORM_DISPLAY, updateDishFormDisplayCommand);
         commandFactory.registerCommand(UPDATE_DISH_FORM_SUBMIT, updateDishFormSubmitCommand);
+
+        commandFactory.registerCommand(DELETE_DISH_FROM_MENU, deleteDishCommand);
 
         commandFactory.registerCommand(REGISTER_USER, registerUserCommand);
         commandFactory.registerCommand(LOGIN_SUBMIT, loginSubmitCommand);

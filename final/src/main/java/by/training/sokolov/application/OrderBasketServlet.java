@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.*;
-import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
+import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
+import static by.training.sokolov.core.constants.CommonAppConstants.VIEW_NAME_JSP_PARAM;
 import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.ServletName.*;
 
@@ -53,8 +54,7 @@ public class OrderBasketServlet extends HttpServlet {
                 req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
-            case ORDER_ADD_ITEM_RESULT:
-            case DELETE_DISH_FROM_ORDER_RESULT:
+            case VIEW_ORDER_DISH_LIST_RESULT:
             default:
                 String commandName = String.valueOf(CommandType.VIEW_ORDER_DISH_LIST);
                 command = commandFactory.getCommand(commandName);

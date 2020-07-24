@@ -61,6 +61,7 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
         super.update(entity);
     }
 
+    @Transactional
     @Override
     public Long save(Dish entity) throws SQLException, ConnectionException {
 
@@ -68,5 +69,11 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
         DishCategory dishCategory = dishCategoryDao.getByName(categoryName);
         entity.setDishCategory(dishCategory);
         return super.save(entity);
+    }
+
+    @Override
+    public void deleteById(Long id) throws SQLException, ConnectionException {
+
+        super.deleteById(id);
     }
 }

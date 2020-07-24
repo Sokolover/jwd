@@ -17,39 +17,61 @@
     </p>
 
     <div class="categoryAddContainer">
-    <form action="" method="GET" class="">
-<%--        todo сделать checked чекбоксов в выбранных категориях (написать сравнение ЗНАЧЕНИЙ строк на jsp)--%>
-<%--        <c:forEach items="${selectedCategories}" var="selectedCategory">--%>
-<%--            <c:forEach items="${categoryList}" var="category">--%>
-<%--                <c:when test="${category eq selectedCategory}">--%>
-<%--                    <input type="checkbox" checked name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
-<%--                           value="${category.categoryName}"/>--%>
-<%--                    ${category.categoryName}--%>
+        <form action="" method="GET" class="">
+
+            <%--        todo сделать checked чекбоксов в выбранных категориях (написать сравнение ЗНАЧЕНИЙ строк на jsp)--%>
+<%--            <jsp:useBean id="selectedCategories" scope="request" type="java.util.List"/>--%>
+<%--            <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>--%>
+<%--            <jsp:useBean id="flag" type="java.lang.Boolean"/>--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${not empty selectedCategories}">--%>
+<%--                    <c:forEach items="${categoryList}" var="category">--%>
+<%--                        <jsp:setProperty name="flag" property="false"/>--%>
+<%--                        <c:forEach items="${selectedCategories}" var="selectedCategory">--%>
+<%--                            <c:if test="${category eq selectedCategory}">--%>
+<%--                                <jsp:setProperty name="flag" property="true"/>--%>
+<%--                            </c:if>--%>
+<%--                        </c:forEach>--%>
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${flag}">--%>
+<%--                                <input type="checkbox" checked name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
+<%--                                       value="${category.categoryName}"/>--%>
+<%--                                ${category.categoryName}--%>
+<%--                            </c:when>--%>
+<%--                            <c:otherwise>--%>
+<%--                                <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
+<%--                                       value="${category.categoryName}"/>--%>
+<%--                                ${category.categoryName}--%>
+<%--                            </c:otherwise>--%>
+<%--                        </c:choose>--%>
+<%--                    </c:forEach>--%>
 <%--                </c:when>--%>
-<%--                <c:otherwise>--%>
-<%--                    <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"--%>
-<%--                           value="${category.categoryName}"/>--%>
-<%--                    ${category.categoryName}--%>
-<%--                </c:otherwise>--%>
-<%--            </c:forEach>--%>
-<%--        </c:forEach>--%>
+<%--&lt;%&ndash;                <c:otherwise>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <c:forEach items="${categoryList}" var="category">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                               value="${category.categoryName}"/>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        ${category.categoryName}&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </c:forEach>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                </c:otherwise>&ndash;%&gt;--%>
+<%--            </c:choose>--%>
 
-        <c:forEach items="${categoryList}" var="category">
-            <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
-                   value="${category.categoryName}"/>
-            ${category.categoryName}
-        </c:forEach>
+                <c:forEach items="${categoryList}" var="category">
+                    <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+                    value="${category.categoryName}"/>
+                    ${category.categoryName}
+                </c:forEach>
 
-        <fmt:message var="ok" key="button.category.ok"/>
-        <input class="button is-light secondary" type="submit" value="${ok}"/>
+            <fmt:message var="ok" key="button.category.ok"/>
+            <input class="button is-light secondary" type="submit" value="${ok}"/>
 
-    </form>
+        </form>
 
-    <fmt:message var="all" key="button.category.reset"/>
-    <form action="" method="get">
-        <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
-               value="all">
-        <input class="button is-light secondary" type="submit" value="${all}"/>
-    </form>
+        <fmt:message var="all" key="button.category.reset"/>
+        <form action="" method="get">
+            <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+                   value="all">
+            <input class="button is-light secondary" type="submit" value="${all}"/>
+        </form>
+
     </div>
 </div>

@@ -87,4 +87,9 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
         super.deleteById(id);
     }
 
+    @Override
+    public void deleteByOrderId(Long orderId) throws SQLException, ConnectionException {
+
+        orderItemDao.deleteByOrderId(orderId);
+    }
 }

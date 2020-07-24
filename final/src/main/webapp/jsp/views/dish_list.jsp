@@ -19,6 +19,12 @@
 
     <jsp:include page="dish_category.jsp"/>
 
+    <c:if test="${not empty message}">
+        <h5 class="title is-5">
+            <c:out value="${message}"/>
+        </h5>
+    </c:if>
+
     <div class="dishContainer">
         <jsp:useBean id="dishes" scope="request" type="java.util.List"/>
         <c:forEach items="${dishes}" var="dish">
@@ -66,8 +72,8 @@
                                     </label>
 
                                     <div class="control">
-                                        <fmt:message var="add_label" key="button.dish.add"/>
-                                        <input class="button is-light secondary" type="submit" value="${add_label}">
+                                        <fmt:message var="addLabel" key="button.dish.add"/>
+                                        <input class="button is-light secondary" type="submit" value="${addLabel}">
                                     </div>
                                 </div>
                             </form>
@@ -100,6 +106,21 @@
                                         </label>
                                     </div>
                                 </form>
+
+                                <form action="${pageContext.request.contextPath}/menu" method="post">
+                                    <div class="control is-centered">
+                                        <label class="label">
+                                            <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
+                                                   value="${dish.id}">
+                                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                                   value="${CommandType.DELETE_DISH_FROM_MENU}">
+                                            <fmt:message var="delete" key="button.dish.delete"/>
+                                            <input class="button is-light is-small is-rounded" type="submit"
+                                                   value="${delete}">
+                                        </label>
+                                    </div>
+                                </form>
+
                             </div>
 
                         </c:if>

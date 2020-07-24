@@ -17,4 +17,5 @@ public interface OrderItemService extends GenericService<OrderItem> {
 
     OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException;
 
+    void deleteByOrderId(Long orderId) throws SQLException, ConnectionException;
 }

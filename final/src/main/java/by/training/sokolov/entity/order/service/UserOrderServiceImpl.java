@@ -32,10 +32,6 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         this.orderItemService = orderItemService;
     }
 
-    /*
-    todo !!!!!!!!!!!!!!!!!!!!!!!!! сделать id на таблицы, а не объекты там, где это надо сделать
-     */
-
     @Transactional
     @Override
     public void createNewOrder(User user) throws SQLException, ConnectionException {
@@ -58,6 +54,7 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         userOrderDao.save(userOrder);
     }
 
+    @Transactional
     @Override
     public UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException {
 
@@ -90,10 +87,18 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         return orderCost;
     }
 
+    @Transactional
     @Override
     public void update(UserOrder entity) throws SQLException, ConnectionException {
 
         super.update(entity);
         deliveryAddressService.update(entity.getDeliveryAddress());
+    }
+
+    @Override
+    public void deleteById(Long id) throws SQLException, ConnectionException {
+
+        orderItemService.deleteByOrderId(id);
+        super.deleteById(id);
     }
 }

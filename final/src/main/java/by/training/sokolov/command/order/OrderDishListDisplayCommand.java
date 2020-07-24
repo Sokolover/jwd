@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.*;
+import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 
 public class OrderDishListDisplayCommand implements Command {
 

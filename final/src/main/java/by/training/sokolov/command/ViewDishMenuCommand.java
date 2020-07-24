@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.DISH_CATEGORY_JSP;
+import static by.training.sokolov.core.constants.CommonAppConstants.CATEGORY_LIST_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.CommonAppConstants.DISHES_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
 
 public class ViewDishMenuCommand implements Command {

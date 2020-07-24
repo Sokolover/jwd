@@ -41,14 +41,19 @@ public class CreatingDishFormSubmitCommand implements Command {
 
         String costString = request.getParameter(DISH_COST_JSP_ATTRIBUTE);
 
+        if(costString.length() > 2){
+            return createReturnAnswer(request, "Cost must be two-digit number");
+        }
+
         long costLong;
         try {
             costLong = Long.parseLong(costString);
         } catch (NumberFormatException e) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "Invalid cost format or empty string");
-            List<DishCategory> dishCategories = dishCategoryService.findAll();
-            request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);
-            return DISH_CREATE_FORM_JSP;
+            return createReturnAnswer(request, "Invalid cost format or empty string");
+        }
+
+        if(costLong < 0L){
+            return createReturnAnswer(request, "Cost can't have negative value");
         }
 
         BigDecimal bigDecimalCost = BigDecimal.valueOf(costLong);
@@ -62,10 +67,7 @@ public class CreatingDishFormSubmitCommand implements Command {
         try {
             stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
         } catch (IllegalArgumentException e) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "You have forgotten to choose a picture, please choose it now");
-            List<DishCategory> dishCategories = dishCategoryService.findAll();
-            request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);
-            return DISH_CREATE_FORM_JSP;
+            return createReturnAnswer(request, "You have forgotten to choose a picture, please choose it now");
         }
 
         Dish dish = new Dish();
@@ -82,6 +84,14 @@ public class CreatingDishFormSubmitCommand implements Command {
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "your dish has been created and added to menu");
 
         return COMMAND_RESULT_MESSAGE_JSP;
+    }
+
+    private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
+
+        request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+        List<DishCategory> dishCategories = dishCategoryService.findAll();
+        request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);
+        return DISH_CREATE_FORM_JSP;
     }
 
 }

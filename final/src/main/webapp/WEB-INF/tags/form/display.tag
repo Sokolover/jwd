@@ -3,10 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
-<%-- todo этот тег нужен чтобы получать доступ к полям объекта см. 20:30 на видео CustomTag
-        в том же видео 22:50 - группировка ApplicationMessages.properties
-        ApplicationMessages_ru.properties--%>
-
 <jsp:directive.attribute name="fieldName" required="true" description="field name to display"/>
 <jsp:directive.attribute name="beanName" required="true" description="some object"/>
 <c:if test="${not empty fieldName and not empty beanName}">

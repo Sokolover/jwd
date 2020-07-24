@@ -29,6 +29,9 @@
                        href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_ORDER}"><fmt:message
                             key="links.order.create"/></a>
 
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.DELETE_ORDER}"><fmt:message
+                            key="links.order.delete"/></a>
 
                     <a class="navbar-item button is-light secondary"
                        href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message

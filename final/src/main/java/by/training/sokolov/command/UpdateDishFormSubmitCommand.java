@@ -72,7 +72,7 @@ public class UpdateDishFormSubmitCommand implements Command {
     private void updateDishCategory(HttpServletRequest request, Dish dish) {
 
         String category = request.getParameter(DISH_CATEGORY_JSP_ATTRIBUTE);
-        if (!"".equals(category)) {
+        if (!category.trim().isEmpty()) {
 
             DishCategory dishCategory = new DishCategory();
             dishCategory.setCategoryName(category);
@@ -83,7 +83,7 @@ public class UpdateDishFormSubmitCommand implements Command {
     private void updateDishDescription(HttpServletRequest request, Dish dish) {
 
         String description = request.getParameter(DISH_DESCRIPTION_JSP_ATTRIBUTE);
-        if (!"".equals(description)) {
+        if (!description.trim().isEmpty()) {
 
             dish.setDescription(description);
         }
@@ -92,7 +92,7 @@ public class UpdateDishFormSubmitCommand implements Command {
     private boolean updateDishCost(HttpServletRequest request, Dish dish) throws SQLException, ConnectionException {
 
         String costString = request.getParameter(DISH_COST_JSP_ATTRIBUTE);
-        if (!"".equals(costString)) {
+        if (!costString.trim().isEmpty()) {
 
             long costLong;
             try {
@@ -115,7 +115,7 @@ public class UpdateDishFormSubmitCommand implements Command {
     private void updateDishName(HttpServletRequest request, Dish dish) {
 
         String name = request.getParameter(DISH_NAME_JSP_ATTRIBUTE);
-        if (!"".equals(name)) {
+        if (!name.trim().isEmpty()) {
 
             dish.setName(name);
         }
