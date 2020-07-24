@@ -37,22 +37,19 @@ public class OrderCheckoutDisplayCommand implements Command {
 
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "Please, create order or login (session timeout)");
             return ERROR_MESSAGE_JSP;
         }
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
         if (Objects.isNull(orderItems) || orderItems.isEmpty()) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, add items to your order");
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, "Please, add items to your order");
             return ERROR_MESSAGE_JSP;
         }
         request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
 
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
         request.setAttribute(TOTAL_ORDER_COST_JSP_ATTRIBUTE, orderCost);
-
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        localDateTime.getHour() + localDateTime.getMinute();
 
         List<LocalDateTime> localDateTimeList = TimeOfDeliveryGeneratorUtil.findTimeVariants();
         request.setAttribute(TIME_LIST_JSP_ATTRIBUTE, localDateTimeList);

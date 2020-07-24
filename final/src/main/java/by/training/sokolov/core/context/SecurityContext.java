@@ -82,7 +82,6 @@ public class SecurityContext {
     public void setSecurityAttributes(HttpServletRequest req) {
 
         req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
-        boolean userLoggedIn = isUserLoggedIn(req);
-        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, userLoggedIn);
+        req.setAttribute(USER_LOGGED_IN_JSP_PARAM, isUserLoggedIn(req));
     }
 }

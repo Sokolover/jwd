@@ -37,6 +37,11 @@
         </div>
     </section>
     <section class="myContent">
+<%--        <c:if test="${not empty error}">--%>
+<%--            <h5 class="title is-5">--%>
+<%--                <p class="is-danger"><c:out value="${error}"/></p>--%>
+<%--            </h5>--%>
+<%--        </c:if>--%>
         <c:if test="${not empty viewName}">
             <jsp:include page="views/${viewName}.jsp"/>
         </c:if>

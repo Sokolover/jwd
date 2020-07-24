@@ -234,7 +234,7 @@ public class ApplicationContext {
         commandFactory.registerCommand(DELETE_DISH_FROM_ORDER, deleteDishFromOrderCommand);
         commandFactory.registerCommand(CREATE_ORDER, createOrderCommand);
         commandFactory.registerCommand(VIEW_ORDER_DISH_LIST, orderDishListDisplayCommand);
-        commandFactory.registerCommand(ORDER_ITEM_ADD, orderItemAddCommand);
+        commandFactory.registerCommand(ADD_ITEM_TO_ORDER, orderItemAddCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
         commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
