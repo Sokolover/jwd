@@ -30,6 +30,7 @@
         <c:forEach items="${dishes}" var="dish">
             <div class="cardContainer">
                 <div class="card">
+
                     <div class="card-image">
                         <figure class="image is-4by3">
                             <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture"/>
@@ -49,6 +50,7 @@
                             <fmt:message var="currency" key="symbol.currency"/>
                             <c:out value=": ${dish.cost} ${currency}"/>
                         </div>
+
                         <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>
                         <c:if test="${userLoggedIn}">
 

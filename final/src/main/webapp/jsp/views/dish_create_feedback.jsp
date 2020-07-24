@@ -12,72 +12,58 @@
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<div class="container">
+<div class="container feedbackPageContainer">
+
+<%--todo написать вместо--%>
+<%--    <div class="field">--%>
+<%--        <div class="control">--%>
+<%--        ЭТО--%>
+<%--        <div class="control field">    --%>
+
     <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>
-    <div class="columns">
-        <div class="column is-half">
-            <div class="card">
-                <form action="${pageContext.request.contextPath}/menu" method="post">
-                    <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
-                           value="${CommandType.DISH_FEEDBACK_SUBMIT}">
-                    <div class="card-content">
-                        <label>
-                            <c:set var="minRating" value="1"/>
-                            <c:set var="maxRating" value="5"/>
-                            <fmt:message key="feedback.rating"/>
-                            <div class="control">
-                                <c:forEach var="i" begin="${minRating}" end="${maxRating - 1}" step="1">
-                                    <label class="radio">
-                                        <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
-                                               value="${i}">
-                                        <c:out value="${i}"/>
-                                    </label>
-                                </c:forEach>
-                                <label class="radio">
-                                    <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
-                                           value="${maxRating}" checked>
-                                    <c:out value="${maxRating}"/>
-                                </label>
-                            </div>
-                        </label>
-                        <label>
-                            <fmt:message key="feedback.text"/>
-                            <textarea class="textarea" name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}"
-                                      rows="10"></textarea>
+    <div class="feedbackContainer">
+
+        <form action="${pageContext.request.contextPath}/menu" method="post" class="feedbackArea">
+            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                   value="${CommandType.DISH_FEEDBACK_SUBMIT}">
+            <div class="field">
+                <label>
+                    <c:set var="minRating" value="1"/>
+                    <c:set var="maxRating" value="5"/>
+                    <fmt:message key="feedback.rating"/>
+                    <div class="control">
+                        <c:forEach var="i" begin="${minRating}" end="${maxRating - 1}" step="1">
+                            <label class="radio">
+                                <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
+                                       value="${i}">
+                                <c:out value="${i}"/>
+                            </label>
+                        </c:forEach>
+                        <label class="radio">
+                            <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
+                                   value="${maxRating}" checked>
+                            <c:out value="${maxRating}"/>
                         </label>
                     </div>
-                    <footer class="card-footer">
-                        <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
-                        <fmt:message var="send_feedback" key="button.feedback.send"/>
-                        <input class="button is-primary" type="submit" value="${send_feedback}">
-                    </footer>
-                </form>
+                </label>
+                <div class="field">
+                    <div class="control">
+                        <fmt:message var="textAreaPlaceholder" key="feedback.text"/>
+                        <textarea class="textarea" placeholder="${textAreaPlaceholder}"
+                                  name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}"
+                                  rows="10"></textarea>
+                    </div>
+                </div>
             </div>
-        </div>
-        <%--        <div class="column is-half">--%>
-        <%--            <div class="card-content">--%>
-        <%--                <ul>--%>
-        <%--                    <li>--%>
-        <%--                        <c:out value="${dish.name}"/>--%>
-        <%--                    </li>--%>
-        <%--                    <li>--%>
-        <%--                        <img src="data:image/jpg;base64,${dish.picture}" alt="no dish picture" width="400"--%>
-        <%--                             height="400"/>--%>
-        <%--                    </li>--%>
-        <%--                    <li>--%>
-        <%--                        <div class="column is-two-thirds">--%>
-        <%--                            <label for="${dish.description}">--%>
-        <%--                                <fmt:message key="dish.description"/>--%>
-        <%--                            </label>--%>
-        <%--                            <div class="box">--%>
-        <%--                                <c:out value="${dish.description}"/>--%>
-        <%--                            </div>--%>
-        <%--                        </div>--%>
-        <%--                    </li>--%>
-        <%--                </ul>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
+            <div class="">
+                <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
+                <fmt:message var="send_feedback" key="button.feedback.send"/>
+                <input class="button is-light secondary marginTop is-right" type="submit" value="${send_feedback}">
+            </div>
+        </form>
+
         <jsp:include page="card_dish.jsp"/>
+
     </div>
 </div>
 

@@ -12,43 +12,45 @@
 
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
     <div class="navbar-brand">
-<%--        <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>--%>
+        <%--        <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>--%>
         <c:choose>
             <c:when test="${userLoggedIn}">
-                <div class="navbar-start">
-
-                    <a class="navbar-item button is-light secondary"
-                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
-                            key="links.dish.menu"/></a>
-
-                    <a class="navbar-item button is-light secondary"
-                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
-                            key="links.basket.display"/></a>
-
-                    <a class="navbar-item button is-light secondary"
-                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_ORDER}"><fmt:message
-                            key="links.order.create"/></a>
-
-                    <a class="navbar-item button is-light secondary"
-                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.DELETE_ORDER}"><fmt:message
-                            key="links.order.delete"/></a>
-
-                    <a class="navbar-item button is-light secondary"
-                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
-                            key="links.order.checkout"/></a>
-
-                    <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY, sessionId)}">
+                <div class="navbar-start navBarContainer">
+                    <div class="navbar navBarBackground">
                         <a class="navbar-item button is-light secondary"
-                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
-                                key="links.category.create"/></a>
-                    </c:if>
+                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
+                                key="links.dish.menu"/></a>
 
-                    <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
                         <a class="navbar-item button is-light secondary"
-                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
-                                key="links.dish.create"/></a>
-                    </c:if>
+                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
+                                key="links.basket.display"/></a>
 
+                        <a class="navbar-item button is-light secondary"
+                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_ORDER}"><fmt:message
+                                key="links.order.create"/></a>
+
+                        <a class="navbar-item button is-light secondary"
+                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.DELETE_ORDER}"><fmt:message
+                                key="links.order.delete"/></a>
+
+                        <a class="navbar-item button is-light secondary"
+                           href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
+                                key="links.order.checkout"/></a>
+                    </div>
+
+                    <div class="navbar navBarBackground marginTop">
+                        <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY, sessionId)}">
+                            <a class="navbar-item button is-light secondary"
+                               href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
+                                    key="links.category.create"/></a>
+                        </c:if>
+
+                        <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
+                            <a class="navbar-item button is-light secondary"
+                               href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
+                                    key="links.dish.create"/></a>
+                        </c:if>
+                    </div>
                 </div>
 
                 <div class="navbar-end"><a class="navbar-item button is-light secondary"

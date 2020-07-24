@@ -64,13 +64,15 @@
     <div class="infoContainer">
         <%--input contact info--%>
         <form action="${pageContext.request.contextPath}/order_checkout" method="post">
+
             <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
                    value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+
             <div class="contactInfoContent">
 
                 <div class="field">
-                    <fmt:message var="contactInfo" key="order.contactInfo"/>
                     <h5 class="title is-5">
+                        <fmt:message var="contactInfo" key="order.contactInfo"/>
                         <c:out value="${contactInfo}"/>
                     </h5>
 
@@ -96,33 +98,35 @@
                         </div>
                     </div>
 
-                    <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.name" value="user_s">
+                        <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>
                         <c:out value="${sendUserName}"/>
                     </label>
 
-                    <fmt:message var="sendUserPhoneNumber" key="lable.checkbox.sendUserPhoneNumber"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.user.phoneNumber" value="user_s">
+                        <fmt:message var="sendUserPhoneNumber" key="lable.checkbox.sendUserPhoneNumber"/>
                         <c:out value="${sendUserPhoneNumber}"/>
                     </label>
 
                     <%--input time of delivery--%>
-                    <fmt:message var="timeOfDelivery" key="order.timeOfDelivery"/>
-                    <h5 class="title is-5">
-                        <c:out value="${timeOfDelivery}"/>
-                    </h5>
-                    <label class="label">
-                        <select name="order.timeOfDelivery">
-                            <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
-                            <c:forEach items="${timeList}" var="time">
-                                <option value="${time}">
-                                        ${f:formatLocalDateTime(time, 'MM.dd HH:mm')}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </label>
+                    <div class="timeOfDelivery">
+                        <h5 class="title is-5">
+                            <fmt:message var="timeOfDelivery" key="order.timeOfDelivery"/>
+                            <c:out value="${timeOfDelivery}"/>
+                        </h5>
+                        <div class="select">
+                            <select name="order.timeOfDelivery">
+                                <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
+                                <c:forEach items="${timeList}" var="time">
+                                    <option value="${time}">
+                                            ${f:formatLocalDateTime(time, 'MM.dd HH:mm')}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="contactInfoBottomContainer">
@@ -195,9 +199,9 @@
                         </div>
                     </div>
 
-                    <fmt:message var="sendUserAddress" key="lable.checkbox.sendUserAddress"/>
                     <label class="checkbox">
                         <input type="checkbox" name="default.order.address" value="user_s">
+                        <fmt:message var="sendUserAddress" key="lable.checkbox.sendUserAddress"/>
                         <c:out value="${sendUserAddress}"/>
                     </label>
 
@@ -205,7 +209,7 @@
             </div>
 
             <%--            todo выровнять поцентру--%>
-            <div class="marginTop">
+            <div class="marginTop justifyCenter">
                 <div class="control">
                     <fmt:message var="checkoutLabel" key="button.checkout"/>
                     <input class="button is-light secondary" type="submit" value="${checkoutLabel}">

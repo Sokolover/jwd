@@ -12,58 +12,66 @@
 <%@ page import="by.training.sokolov.command.constants.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
-<div class="container">
+<div class="container createDishContainer">
 
     <h5 class="title is-5">
         <c:if test="${not empty error}">
             <p class="is-danger"><c:out value="${error}"/></p>
         </c:if>
     </h5>
-    <form action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
+
+    <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
         <input type="hidden"
-               name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
-        <div class="field">
-            <div class="column is-one-third">
-                <div class="control">
+               name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+               value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
+
+            <div class="">
+                <div class="control field">
                     <label class="label">
                         <fmt:message key="dish.name"/>
                         <input class="input" name="${CommonAppConstants.DISH_NAME_JSP_ATTRIBUTE}" type="text"
                                placeholder="Name input">
                     </label>
                 </div>
-                <div class="control">
-                    <label class="label">
+                <div class="control field">
+                    <div class="label">
                         <fmt:message key="dish.cost"/>
                         <input class="input" name="${CommonAppConstants.DISH_COST_JSP_ATTRIBUTE}" type="text"
                                placeholder="Cost input">
+                    </div>
+                </div>
+                <div class="control field">
+                    <div class="label">
+                        <fmt:message key="dish.description"/>
+                        <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE}"
+                                  placeholder="Description input" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="file field">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}"/>
+                        <span class="file-cta">
+                            <span class="file-label"><fmt:message key="app.choose.dish.picture"/></span>
+                        </span>
                     </label>
                 </div>
                 <label class="label">
-                    <fmt:message key="dish.description"/>
-                    <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE}"
-                              placeholder="Description input" rows="10"></textarea>
-                </label>
-                <label class="label">
-                    <fmt:message key="dish.picture"/>
-                    <input type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}"/>
-                </label>
-                <label class="label">
                     <fmt:message key="dish.category"/>
-                    <select name="${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}">
-                        <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
-                        <c:forEach items="${categoryList}" var="category">
-                            <option value="${category.categoryName}">${category.categoryName}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="select field">
+                        <select name="${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}">
+                            <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
+                            <c:forEach items="${categoryList}" var="category">
+                                <option value="${category.categoryName}">${category.categoryName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </label>
             </div>
-            <div class="field is-grouped">
-                <div class="control">
-                    <fmt:message var="create_label" key="button.dish.create"/>
-                    <input class="button is-primary" type="submit" value="${create_label}">
-                </div>
+            <div class="control field">
+                <fmt:message var="createLabel" key="button.dish.create"/>
+                <input class="button is-light secondary marginTop" type="submit" value="${createLabel}">
             </div>
-        </div>
+
     </form>
 </div>
 

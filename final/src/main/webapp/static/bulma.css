@@ -11798,6 +11798,17 @@ body {
 }
 
 
+.navBarContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.navBarBackground {
+    background-color: #e02525;
+}
+
+
 .myContent {
     display: flex;
     justify-content: center;
@@ -11854,6 +11865,7 @@ body {
 .dishContainer {
     display: flex;
     flex-grow: 1;
+    flex: 1;
     flex-wrap: wrap;
     justify-content: space-around;
 }
@@ -11911,5 +11923,38 @@ body {
     flex-direction: column;
 }
 
+.justifyCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.timeOfDelivery {
+    margin-top: 30px;
+}
+
+.feedbackPageContainer {
+    padding: 20px;
+}
+
+.feedbackContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.feedbackArea {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+
+.createDishContainer {
+    display: flex;
+    padding: 20px;
+    flex: 1;
+    justify-content: center;
+}
 
 /*# sourceMappingURL=bulma.css.map */
