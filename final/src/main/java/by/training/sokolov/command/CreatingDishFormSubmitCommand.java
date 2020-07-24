@@ -41,7 +41,7 @@ public class CreatingDishFormSubmitCommand implements Command {
 
         String costString = request.getParameter(DISH_COST_JSP_ATTRIBUTE);
 
-        if(costString.length() > 2){
+        if (costString.length() > 2) {
             return createReturnAnswer(request, "Cost must be two-digit number");
         }
 
@@ -52,7 +52,7 @@ public class CreatingDishFormSubmitCommand implements Command {
             return createReturnAnswer(request, "Invalid cost format or empty string");
         }
 
-        if(costLong < 0L){
+        if (costLong < 0L) {
             return createReturnAnswer(request, "Cost can't have negative value");
         }
 

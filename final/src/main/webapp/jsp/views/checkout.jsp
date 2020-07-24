@@ -204,7 +204,7 @@
                 </div>
             </div>
 
-<%--            todo выровнять поцентру--%>
+            <%--            todo выровнять поцентру--%>
             <div class="marginTop">
                 <div class="control">
                     <fmt:message var="checkoutLabel" key="button.checkout"/>

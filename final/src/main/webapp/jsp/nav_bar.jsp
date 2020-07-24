@@ -16,6 +16,7 @@
         <c:choose>
             <c:when test="${userLoggedIn}">
                 <div class="navbar-start">
+
                     <a class="navbar-item button is-light secondary"
                        href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
                             key="links.dish.menu"/></a>
@@ -37,7 +38,11 @@
                        href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
                             key="links.order.checkout"/></a>
 
+                    <a class="navbar-item button is-light secondary"
+                       href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
+                            key="links.category.create"/></a>
                 </div>
+
                 <div class="navbar-end"><a class="navbar-item button is-light secondary"
                                            href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.LOGOUT}"><fmt:message
                         key="links.person.logout"/></a>

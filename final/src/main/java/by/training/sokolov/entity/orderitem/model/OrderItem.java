@@ -2,7 +2,6 @@ package by.training.sokolov.entity.orderitem.model;
 
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.dish.model.Dish;
-import by.training.sokolov.entity.order.model.UserOrder;
 
 import java.math.BigDecimal;
 

@@ -58,6 +58,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.command.constants.CommandReturnValues.LOGOUT_RESULT;
 import static by.training.sokolov.command.constants.CommandType.*;
+import static by.training.sokolov.core.constants.JspName.CATEGORY_CREATE_FORM_JSP;
 import static by.training.sokolov.core.constants.ServletName.*;
 
 public class ApplicationContext {
@@ -218,7 +219,7 @@ public class ApplicationContext {
         Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
         Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
-
+        Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -241,14 +242,14 @@ public class ApplicationContext {
         commandFactory.registerCommand(DISH_FEEDBACK_WRITE, dishFeedbackWriteCommand);
         commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
         commandFactory.registerCommand(VIEW_DISH_MENU, viewDishMenuCommand);
-
         commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, creatingDishFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, creatingDishFormSubmitCommand);
-
         commandFactory.registerCommand(UPDATE_DISH_FORM_DISPLAY, updateDishFormDisplayCommand);
         commandFactory.registerCommand(UPDATE_DISH_FORM_SUBMIT, updateDishFormSubmitCommand);
-
         commandFactory.registerCommand(DELETE_DISH_FROM_MENU, deleteDishCommand);
+
+        commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_DISPLAY, ((request, response) -> CATEGORY_CREATE_FORM_JSP));
+        commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_SUBMIT, createDishCategoryFormSubmitCommand);
 
         commandFactory.registerCommand(REGISTER_USER, registerUserCommand);
         commandFactory.registerCommand(LOGIN_SUBMIT, loginSubmitCommand);

@@ -16,9 +16,6 @@ import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 
 public class OrderDeleteCommand implements Command {
-    /*
-todo 1. удалить все orderItems из order, 2. удалить order
- */
 
     private final UserOrderService userOrderService;
 
@@ -31,7 +28,7 @@ todo 1. удалить все orderItems из order, 2. удалить order
 
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
-        if(Objects.isNull(currentOrder)){
+        if (Objects.isNull(currentOrder)) {
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "You haven't created order yet");
             return COMMAND_RESULT_MESSAGE_JSP;
         }
@@ -40,6 +37,5 @@ todo 1. удалить все orderItems из order, 2. удалить order
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }
-
 
 }

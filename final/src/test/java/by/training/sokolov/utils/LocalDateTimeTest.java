@@ -1,6 +1,5 @@
 package by.training.sokolov.utils;
 
-import by.training.sokolov.db.Transactional;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +45,7 @@ public class LocalDateTimeTest {
     }
 
     @Test
-    public void equTest(){
+    public void equTest() {
         String str1 = "pizza";
         String str2 = "pizza";
 

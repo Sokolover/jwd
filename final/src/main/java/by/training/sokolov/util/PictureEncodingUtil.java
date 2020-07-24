@@ -13,7 +13,7 @@ public final class PictureEncodingUtil {
     public static String getPictureEncoded(Part picture) throws IOException, IllegalArgumentException {
 
         String fileName = getFileName(picture);
-        if ("".equals(fileName)){
+        if ("".equals(fileName)) {
             throw new IllegalArgumentException("File name is empty");
         }
         String filePath = TMP_DIR + File.separator + fileName;

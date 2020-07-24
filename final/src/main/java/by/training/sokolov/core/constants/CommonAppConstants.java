@@ -44,8 +44,7 @@ public final class CommonAppConstants {
     public static final String DISH_PICTURE_JSP_ATTRIBUTE = "dish.picture";
     public static final String DISHES_JSP_ATTRIBUTE = "dishes";
 
-
-    public static final String CATEGORY_JSP_ATTRIBUTE = "category";
+    public static final String CATEGORY_NAME_JSP_PARAM = "category.name";
     public static final String CATEGORY_LIST_JSP_ATTRIBUTE = "categoryList";
 
     public static final String ERROR_JSP_ATTRIBUTE = "error";

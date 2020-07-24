@@ -23,4 +23,9 @@ public class DishCategoryServiceImpl extends GenericServiceImpl<DishCategory> im
         return super.findAll();
     }
 
+    @Override
+    public Long save(DishCategory entity) throws SQLException, ConnectionException {
+
+        return super.save(entity);
+    }
 }
