@@ -11793,7 +11793,7 @@ body {
 .myHeader {
     display: flex;
     flex-direction: column;
-    background-color: #e02525;
+    background-color: #6d3d32;
     padding: 10px 20px;
 }
 
@@ -11805,7 +11805,7 @@ body {
 
 
 .navBarBackground {
-    background-color: #e02525;
+    background-color: #6d3d32;
 }
 
 
@@ -11889,9 +11889,17 @@ body {
 
 .dishAmount {
     display: flex;
-    margin-right: 10px;
+    margin-right: 20px;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
+
+.welcomeTitle {
+    text-align: center;
+    color: #6d3d32;
+    font-weight: bolder;
+}
 
 .categoryAddContainer {
     display: flex;

@@ -1,8 +1,10 @@
 package by.training.sokolov.command.order;
 
+import by.training.sokolov.application.LoginServlet;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,8 @@ import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_
 import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_ID_JSP_PARAM;
 
 public class DeleteDishFromOrderCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(DeleteDishFromOrderCommand.class.getName());
 
     private final OrderItemService orderItemService;
 
@@ -27,6 +31,8 @@ public class DeleteDishFromOrderCommand implements Command {
         Long itemIdLong = Long.parseLong(itemIdString);
         orderItemService.deleteById(itemIdLong);
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "Item has been deleted from order");
+
+        LOGGER.info(this.getClass());
 
         return VIEW_ORDER_DISH_LIST_RESULT;
     }

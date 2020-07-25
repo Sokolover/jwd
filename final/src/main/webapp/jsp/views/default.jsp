@@ -8,11 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
-<head>
-    <title>Welcome</title>
-</head>
-<body>
-<h1><fmt:message key="app.title.hello"/></h1>
-</body>
-</html>
+<div class="loginContainer">
+    <h1 class="title is-1 welcomeTitle">
+        <fmt:message key="app.title.hello"/>
+    </h1>
+</div>
+
