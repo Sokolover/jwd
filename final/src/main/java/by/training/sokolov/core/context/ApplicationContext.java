@@ -63,10 +63,11 @@ import static by.training.sokolov.core.constants.ServletName.*;
 
 public class ApplicationContext {
 
-    private static final Logger LOGGER = Logger.getLogger(ApplicationContext.class);
+    private static final Logger LOGGER = Logger.getLogger(ApplicationContext.class.getName());
+
     private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
     private static final Lock INITIALIZE_LOCK = new ReentrantLock();
-    private static ApplicationContext INSTANCE;
+    private static ApplicationContext instance;
     private final Map<Class<?>, Object> beans = new HashMap<>();
     private ConnectionPool connectionPool;
 
@@ -78,13 +79,19 @@ public class ApplicationContext {
 
         INITIALIZE_LOCK.lock();
         try {
-            if (INSTANCE != null && INITIALIZED.get()) {
-                throw new IllegalStateException("context has been already initialized");
+            if (instance != null && INITIALIZED.get()) {
+
+                String message = "Context has been already initialized";
+                LOGGER.error(message);
+                throw new IllegalStateException(message);
+
             } else {
+
                 ApplicationContext context = new ApplicationContext();
                 context.init();
-                INSTANCE = context;
+                instance = context;
                 INITIALIZED.set(true);
+                LOGGER.info("Application context initialized");
             }
 
         } finally {
@@ -94,10 +101,14 @@ public class ApplicationContext {
 
     public static ApplicationContext getInstance() {
 
-        if (INSTANCE != null && INITIALIZED.get()) {
-            return INSTANCE;
+        if (instance != null && INITIALIZED.get()) {
+
+            return instance;
         } else {
-            throw new IllegalStateException("context wasn't initialized");
+
+            String message = "Context wasn't initialized";
+            LOGGER.error(message);
+            throw new IllegalStateException(message);
         }
     }
 
@@ -108,9 +119,11 @@ public class ApplicationContext {
             if (method.isAnnotationPresent(Transactional.class)
                     || declaredMethod.isAnnotationPresent(Transactional.class)) {
                 transactionManager.begin();
+                LOGGER.info("Transaction has began");
                 try {
                     Object result = method.invoke(service, args);
                     transactionManager.commit();
+                    LOGGER.info("Transaction has been commit");
                     return result;
                 } catch (Exception e) {
                     LOGGER.error(e.getMessage());
@@ -118,22 +131,26 @@ public class ApplicationContext {
                     throw e;
                 }
             } else {
+                LOGGER.info("Invoke service method without Transaction manager");
                 return method.invoke(service, args);
             }
         };
     }
 
     static <T> T createProxy(ClassLoader classLoader, InvocationHandler handler, Class<T>... toBeProxied) {
+        LOGGER.info(String.format("Create a proxy of %s", toBeProxied));
         return (T) Proxy.newProxyInstance(classLoader, toBeProxied, handler);
     }
 
     private void init() {
-        connectionPool = ConnectionPoolImpl.getInstance();
 
+        // ConnectionManager
+        connectionPool = ConnectionPoolImpl.getInstance();
         TransactionManager transactionManager = new TransactionManagerImpl(connectionPool);
         ConnectionManager connectionManager = new ConnectionManagerImpl(connectionPool, transactionManager);
+        LOGGER.info("ConnectionManager initialized");
 
-        //DAO
+        //dao
         DishCategoryDao dishCategoryDao = new DishCategoryDaoImpl(connectionManager);
         DeliveryAddressDao deliveryAddressDao = new DeliveryAddressDaoImpl(connectionManager);
         DishDao dishDao = new DishDaoImpl(connectionManager);
@@ -146,6 +163,7 @@ public class ApplicationContext {
         UserDao userDao = new UserDaoImpl(connectionManager);
         UserAddressDao userAddressDao = new UserAddressDaoImpl(connectionManager);
         WalletDao walletDao = new WalletDaoImpl(connectionManager);
+        LOGGER.info("Dao initialized");
 
         //service
         DishService dishService = new DishServiceImpl(dishDao, dishCategoryDao);
@@ -155,6 +173,7 @@ public class ApplicationContext {
         UserService userService = new UserServiceImpl(userDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
         DishCategoryService dishCategoryService = new DishCategoryServiceImpl(dishCategoryDao);
         DishFeedbackService dishFeedbackService = new DishFeedbackServiceImpl(dishFeedbackDao);
+        LOGGER.info("Services initialized");
 
         //proxy of services
         InvocationHandler dishServiceHandler = createTransactionalInvocationHandler
@@ -192,6 +211,8 @@ public class ApplicationContext {
         DishFeedbackService dishFeedbackServiceProxyService = createProxy
                 (getClass().getClassLoader(), dishFeedbackServiceHandler, DishFeedbackService.class);
 
+        LOGGER.info("Proxy of services initialized");
+
         //init bean validator
         Map<Class<? extends Annotation>, FieldValidator> validatorMap = new HashMap<>();
         validatorMap.put(MaxLength.class, new MaxLengthFieldValidator());
@@ -200,6 +221,8 @@ public class ApplicationContext {
         validatorMap.put(Password.class, new PasswordFieldValidator());
         validatorMap.put(PhoneNumber.class, new PhoneNumberFieldValidator());
         BeanValidator beanValidator = new AnnotationBasedBeanValidator(validatorMap);
+
+        LOGGER.info("Bean validator initialized");
 
         //commands
         Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
@@ -220,6 +243,8 @@ public class ApplicationContext {
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
         Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
         Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
+
+        LOGGER.info("Commands initialized");
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -259,6 +284,8 @@ public class ApplicationContext {
             return LOGOUT_RESULT;
         });
 
+        LOGGER.info("Command factory initialized");
+
         //bean command provider
         beans.put(CommandFactory.class, commandFactory);
         beans.put(DishService.class, dishProxyService);
@@ -275,12 +302,16 @@ public class ApplicationContext {
         beans.put(ConnectionPool.class, connectionPool);
         beans.put(TransactionManager.class, transactionManager);
         beans.put(ConnectionManager.class, connectionManager);
+
+        LOGGER.info("Bean command provider initialized");
+
     }
 
     public void destroy() throws SQLException {
 
         connectionPool.shutdown();
         beans.clear();
+        LOGGER.info("Application context destroyed");
     }
 
     public <T> T getBean(Class<T> clazz) {

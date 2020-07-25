@@ -20,7 +20,7 @@ import static java.lang.String.format;
 
 public class ViewDishMenuCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(UpdateDishFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ViewDishMenuCommand.class.getName());
 
     private final DishService dishService;
     private final DishCategoryService dishCategoryService;

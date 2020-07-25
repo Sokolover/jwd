@@ -22,10 +22,8 @@ public class ApplicationListener implements ServletContextListener {
         SecurityContext securityContext = SecurityContext.getInstance();
         securityContext.initialize(sce.getServletContext());
         sce.getServletContext().setAttribute(SECURITY_CONTEXT_JSP_PARAM, securityContext);
-        LOGGER.info("Security context initialized");
 
         ApplicationContext.initialize();
-        LOGGER.info("Application context initialized");
     }
 
     @Override
@@ -36,6 +34,5 @@ public class ApplicationListener implements ServletContextListener {
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
-        LOGGER.info("Application context destroyed");
     }
 }

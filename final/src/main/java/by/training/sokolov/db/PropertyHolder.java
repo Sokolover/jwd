@@ -36,9 +36,9 @@ final class PropertyHolder {
                             entry -> (String) entry.getValue()));
 
             LOGGER.info("Properties has been loaded");
-        } catch (IOException ex) {
-            LOGGER.error("Properties can't be loaded");
-            throw new InternalServerErrorException(ex);
+        } catch (IOException e) {
+            LOGGER.error("Properties can't be loaded: " + e);
+            throw new InternalServerErrorException(e);
         }
     }
 }

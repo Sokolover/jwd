@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.List;
 
+import static by.training.sokolov.core.constants.LoggerConstants.*;
+import static java.lang.String.format;
+
 public class GenericServiceImpl<T extends IdentifiedRow> implements GenericService<T> {
 
     private static final Logger LOGGER = Logger.getLogger(GenericServiceImpl.class.getName());
@@ -22,41 +25,41 @@ public class GenericServiceImpl<T extends IdentifiedRow> implements GenericServi
     @Override
     public Long save(T entity) throws SQLException, ConnectionException {
 
-        LOGGER.info("save()--" + entity.toString());
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[save]", entity.toString()));
         return crudDao.save(entity);
     }
 
     @Override
     public void update(T entity) throws SQLException, ConnectionException {
 
-        LOGGER.info("update()--" + entity.toString());
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[update]", entity.toString()));
         crudDao.update(entity);
     }
 
     public void deleteById(Long id) throws SQLException, ConnectionException {
 
-        LOGGER.info("deleteById(Long id)--" + id);
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[deleteById]", id));
         crudDao.deleteById(id);
     }
 
     @Override
     public void delete(T entity) throws SQLException, ConnectionException {
 
-        LOGGER.info("delete()--" + entity.toString());
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[delete]", entity.toString()));
         crudDao.delete(entity);
     }
 
     @Override
     public T getById(Long id) throws SQLException, ConnectionException {
 
-        LOGGER.info("getById()--" + id);
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[getById]", id));
         return crudDao.getById(id);
     }
 
     @Override
     public List<T> findAll() throws SQLException, ConnectionException {
 
-        LOGGER.info("findAll()");
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), "[findAll]"));
         return crudDao.findAll();
     }
 }

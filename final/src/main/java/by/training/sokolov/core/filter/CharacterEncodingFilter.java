@@ -1,5 +1,7 @@
 package by.training.sokolov.core.filter;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
@@ -7,6 +9,8 @@ import java.nio.charset.StandardCharsets;
 
 @WebFilter(urlPatterns = "/*", filterName = "ce_filter")
 public class CharacterEncodingFilter implements Filter {
+
+    private static final Logger LOGGER = Logger.getLogger(CharacterEncodingFilter.class.getName());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -23,6 +27,8 @@ public class CharacterEncodingFilter implements Filter {
             response.setCharacterEncoding(utf8);
         }
         response.setContentType("text/html; charset=UTF-8");
+
+        LOGGER.info("Character encoding filter done");
 
         chain.doFilter(request, response);
     }

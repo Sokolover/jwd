@@ -3,6 +3,7 @@ package by.training.sokolov.core.context;
 import by.training.sokolov.command.constants.CommandType;
 import by.training.sokolov.entity.role.model.UserRole;
 import by.training.sokolov.entity.user.model.User;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import static by.training.sokolov.core.constants.CommonAppConstants.*;
 
 public class SecurityContext {
 
+    private static final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
+
     private static final SecurityContext SECURITY_CONTEXT = new SecurityContext();
     private final Map<String, User> userMap = new ConcurrentHashMap<>(1000);
     private Properties properties = new Properties();
@@ -26,8 +29,13 @@ public class SecurityContext {
     public void initialize(ServletContext servletContext) {
 
         try (InputStream propertyStream = SecurityContext.class.getResourceAsStream("/security.properties")) {
+
             properties.load(propertyStream);
+            LOGGER.info("Security properties have been loaded successfully");
+            LOGGER.info("Security context initialized");
         } catch (IOException e) {
+
+            LOGGER.error("Failed to read security properties" + e.getMessage());
             throw new IllegalStateException("Failed to read security properties", e);
         }
     }
@@ -83,5 +91,6 @@ public class SecurityContext {
 
         req.setAttribute(SESSION_ID_JSP_PARAM, req.getSession().getId());
         req.setAttribute(USER_LOGGED_IN_JSP_PARAM, isUserLoggedIn(req));
+        LOGGER.info("Security attributes have been set");
     }
 }

@@ -27,9 +27,9 @@ public class TransactionManagerImpl implements TransactionManager {
                 Connection connection = connectionPool.getConnection();
                 currentConnection.set(connection);
                 connection.setAutoCommit(false);
-            } catch (SQLException sqlException) {
-                LOGGER.error("exception during beginning transaction");
-                throw new ConnectionException(sqlException.getMessage(), sqlException);
+            } catch (SQLException e) {
+                LOGGER.error("Exception during beginning transaction: " + e);
+                throw new ConnectionException(e.getMessage(), e);
             }
         }
     }
@@ -40,9 +40,9 @@ public class TransactionManagerImpl implements TransactionManager {
             Connection connection = currentConnection.get();
             connection.commit();
             this.close();
-        } catch (SQLException sqlException) {
-            LOGGER.error("exception during committing transaction");
-            throw new ConnectionException(sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            LOGGER.error("Exception during committing transaction: " + e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -52,9 +52,9 @@ public class TransactionManagerImpl implements TransactionManager {
             Connection connection = currentConnection.get();
             connection.rollback();
             this.close();
-        } catch (SQLException sqlException) {
-            LOGGER.error("exception during rolling back transaction");
-            throw new ConnectionException(sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            LOGGER.error("Exception during rolling back transaction: " + e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -64,9 +64,9 @@ public class TransactionManagerImpl implements TransactionManager {
             connection.setAutoCommit(true);
             connection.close();
             currentConnection.remove();
-        } catch (SQLException sqlException) {
-            LOGGER.error("exception during closing of transaction");
-            throw new ConnectionException(sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            LOGGER.error("Exception during closing of transaction: " + e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 

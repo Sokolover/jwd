@@ -1,5 +1,7 @@
 package by.training.sokolov.core.filter;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
@@ -13,6 +15,8 @@ import static by.training.sokolov.core.constants.CommonAppConstants.COOKIE_NAME_
 
 @WebFilter(urlPatterns = "/*", filterName = "lang_filter")
 public class LangFilter implements Filter {
+
+    private static final Logger LOGGER = Logger.getLogger(LangFilter.class.getName());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,6 +34,7 @@ public class LangFilter implements Filter {
 
             if (langEnum != LangEnum.DEFAULT) {
                 langCookie = new Cookie(COOKIE_NAME_LANG, langEnum.getValue());
+                LOGGER.info("New language cookie created");
             } else {
                 Optional<Cookie[]> cookies = Optional.ofNullable(httpRequest.getCookies());
                 langCookie = cookies.map(Stream::of)
@@ -41,8 +46,11 @@ public class LangFilter implements Filter {
             langCookie.setPath(httpRequest.getContextPath());
             httpRequest.setAttribute(COOKIE_NAME_LANG, lang);
             ((HttpServletResponse) response).addCookie(langCookie);
+            LOGGER.info("Set language to existing lang cookie");
         }
         chain.doFilter(request, response);
+
+        LOGGER.info("Language filter done");
     }
 
     @Override

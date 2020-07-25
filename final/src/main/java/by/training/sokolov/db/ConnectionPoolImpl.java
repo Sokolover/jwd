@@ -64,9 +64,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
             String username = properties.get(USERNAME);
             String password = properties.get(PASSWORD);
             return DriverManager.getConnection(url, username, password);
-        } catch (SQLException ex) {
-            LOGGER.error("Connection can't be created");
-            throw new InternalServerErrorException(ex);
+        } catch (SQLException e) {
+            LOGGER.error("Connection can't be created:" + e);
+            throw new InternalServerErrorException(e);
         }
     }
 
@@ -120,7 +120,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 Connection connection = DriverManager.getConnection(url, username, password);
                 availableConnections.add(connection);
             } else if (availableConnections.isEmpty()) {
-                throw new IllegalStateException("Get Maximum pool size was reached");
+                String message = "No available connections";
+                LOGGER.error(message);
+                throw new IllegalStateException(message);
             }
             Connection connection = availableConnections.remove();
             usedConnections.add(connection);
@@ -138,7 +140,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             connectionLock.lock();
             if (availableConnections.size() >= POOL_CAPACITY) {
-                LOGGER.info("Release Maximum pool size was reached");
+//                LOGGER.info("Available connections maximum was reached");
                 return;
             }
             usedConnections.remove(connection);
@@ -158,6 +160,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
             connection.close();
         }
         availableConnections.clear();
-        LOGGER.info("connection pool shutdown");
+        LOGGER.info("Connection pool shutdown done");
     }
 }
