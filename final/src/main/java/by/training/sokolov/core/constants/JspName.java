@@ -1,12 +1,11 @@
 package by.training.sokolov.core.constants;
 
-public class JspName {
+public final class JspName {
 
     public static final String ERROR_MESSAGE_JSP = "error_message";
     public static final String COMMAND_RESULT_MESSAGE_JSP = "command_result_message";
     public static final String LOGIN_JSP = "login_form";
     public static final String DISH_LIST_JSP = "dish_list";
-    public static final String DISH_CATEGORY_JSP = "dish_category";
     public static final String MAIN_LAYOUT_JSP = "/jsp/main_layout.jsp";
     public static final String USER_REGISTER_JSP = "user_register_form";
     public static final String ORDER_ITEM_LIST_JSP = "order_item_list";

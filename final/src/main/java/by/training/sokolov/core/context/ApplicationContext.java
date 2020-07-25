@@ -203,8 +203,8 @@ public class ApplicationContext {
 
         //commands
         Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
-        Command deleteDishFromOrderCommand = new DeleteDishFromOrderCommand(orderItemProxyService);
-        Command orderDishListDisplayCommand = new OrderDishListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
+        Command deleteDishFromOrderCommand = new OrderItemDeleteCommand(orderItemProxyService);
+        Command orderDishListDisplayCommand = new OrderItemListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
         Command loginSubmitCommand = new LoginSubmitCommand(userProxyService);
         Command registerUserCommand = new RegisterUserCommand(userProxyService, beanValidator);

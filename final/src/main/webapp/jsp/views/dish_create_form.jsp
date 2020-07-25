@@ -29,27 +29,27 @@
                 <div class="control field">
                     <label class="label">
                         <fmt:message key="dish.name"/>
-                        <input class="input" name="${CommonAppConstants.DISH_NAME_JSP_ATTRIBUTE}" type="text"
+                        <input class="input" name="${CommonAppConstants.DISH_NAME_JSP_PARAM}" type="text"
                                placeholder="Name input">
                     </label>
                 </div>
                 <div class="control field">
                     <div class="label">
                         <fmt:message key="dish.cost"/>
-                        <input class="input" name="${CommonAppConstants.DISH_COST_JSP_ATTRIBUTE}" type="text"
+                        <input class="input" name="${CommonAppConstants.DISH_COST_JSP_PARAM}" type="text"
                                placeholder="Cost input">
                     </div>
                 </div>
                 <div class="control field">
                     <div class="label">
                         <fmt:message key="dish.description"/>
-                        <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE}"
+                        <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_PARAM}"
                                   placeholder="Description input" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="file field">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}"/>
+                        <input class="file-input" type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_PARAM}"/>
                         <span class="file-cta">
                             <span class="file-label"><fmt:message key="app.choose.dish.picture"/></span>
                         </span>
@@ -58,7 +58,7 @@
                 <label class="label">
                     <fmt:message key="dish.category"/>
                     <div class="select field">
-                        <select name="${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}">
+                        <select name="${CommonAppConstants.DISH_CATEGORY_NAME_JSP_PARAM}">
                             <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
                             <c:forEach items="${categoryList}" var="category">
                                 <option value="${category.categoryName}">${category.categoryName}</option>

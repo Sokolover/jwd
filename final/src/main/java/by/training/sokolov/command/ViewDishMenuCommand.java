@@ -5,6 +5,7 @@ import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +13,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.CATEGORY_LIST_JSP_ATTRIBUTE;
-import static by.training.sokolov.core.constants.CommonAppConstants.DISHES_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static java.lang.String.format;
 
 public class ViewDishMenuCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(UpdateDishFormSubmitCommand.class.getName());
 
     private final DishService dishService;
     private final DishCategoryService dishCategoryService;
@@ -29,30 +33,35 @@ public class ViewDishMenuCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
-        setCategoriesToRequest(request);
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
-        request.setAttribute("selectedCategories", categoryNames);
+
+//        request.setAttribute("selectedCategories", categoryNames);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             request.setAttribute(DISHES_JSP_ATTRIBUTE, dishService.findAll());
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISHES_JSP_ATTRIBUTE));
+            LOGGER.info("All dishes will be shown");
+
             return DISH_LIST_JSP;
         }
 
         List<Dish> filteredDishes = new ArrayList<>();
         for (String categoryName : categoryNames) {
-            filteredDishes.addAll(dishService.getByCategory(categoryName));
+            List<Dish> dishes = dishService.getByCategory(categoryName);
+            if (dishes.isEmpty()) {
+                continue;
+            }
+            filteredDishes.addAll(dishes);
         }
 
+        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+
         request.setAttribute(DISHES_JSP_ATTRIBUTE, filteredDishes);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISHES_JSP_ATTRIBUTE));
+        LOGGER.info("Filtered dishes will be shown");
 
         return DISH_LIST_JSP;
     }
 
-    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
-//        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
-
-        List<DishCategory> categories = dishCategoryService.findAll();
-        request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
-    }
 }

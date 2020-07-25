@@ -5,6 +5,7 @@ import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,14 @@ import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.DISH_UPDATE_FORM_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
+import static java.lang.Long.parseLong;
+import static java.lang.String.format;
 
 public class UpdateDishFormDisplayCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(UpdateDishFormDisplayCommand.class.getName());
 
     private final DishCategoryService dishCategoryService;
     private final DishService dishService;
@@ -29,13 +36,9 @@ public class UpdateDishFormDisplayCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        List<DishCategory> dishCategories = dishCategoryService.findAll();
-        request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);
-
-        String dishId = request.getParameter(DISH_ID_JSP_PARAM);
-        Long dishIdLong = Long.parseLong(dishId);
-        Dish dish = dishService.getById(dishIdLong);
-        request.setAttribute(DISH_JSP_ATTRIBUTE, dish);
+        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+        JspUtil.setDishAttributeByDishParam(request, dishService);
+        LOGGER.info("Command have been processed");
 
         return DISH_UPDATE_FORM_JSP;
     }

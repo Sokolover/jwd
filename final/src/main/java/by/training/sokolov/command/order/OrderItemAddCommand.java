@@ -8,6 +8,7 @@ import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,13 @@ import java.util.Objects;
 import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
+import static java.lang.String.format;
 
 public class OrderItemAddCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderItemAddCommand.class.getName());
 
     private final OrderItemService orderItemService;
     private final DishService dishService;
@@ -39,23 +45,40 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
+        /*
+        todo избавиться от дубляции кода
+         */
+
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
+
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
+
+            String message = "Please, create order or login (session timeout)";
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+            LOGGER.error(message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
             return ERROR_MESSAGE_JSP;
         }
-        Long currentUserOrderId = currentOrder.getId();
 
+        Long currentUserOrderId = currentOrder.getId();
         String dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_ID_JSP_PARAM, dishIdString));
         Long dishIdLong = Long.parseLong(dishIdString);
 
         if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 
             addItemToOrder(request, currentUserOrderId);
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "new item added to order");
+            String message = "New item added to order";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
         } else {
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "this item is already in the order! if you want to change dish amount - delete correspond item");
+
+            String message = "This item is already in the order. If you want to change dish amount - delete correspond item and add it one more time";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
         }
 
         return VIEW_ORDER_DISH_LIST_RESULT;
@@ -63,17 +86,17 @@ public class OrderItemAddCommand implements Command {
 
     private void addItemToOrder(HttpServletRequest request, Long currentUserOrderId) throws SQLException, ConnectionException {
 
-        String dishIdString;
-        Long dishIdLong;
         OrderItem orderItem = new OrderItem();
         orderItem.setUserOrderId(currentUserOrderId);
 
-        dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
-        dishIdLong = Long.parseLong(dishIdString);
+        String dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_ID_JSP_PARAM, dishIdString));
+        Long dishIdLong = Long.parseLong(dishIdString);
         Dish dish = dishService.getById(dishIdLong);
         orderItem.setDish(dish);
 
         String dishAmountString = request.getParameter(ORDER_DISH_AMOUNT_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, ORDER_DISH_AMOUNT_JSP_PARAM, dishAmountString));
         Integer dishAmountInteger = Integer.parseInt(dishAmountString);
         orderItem.setDishAmount(dishAmountInteger);
 

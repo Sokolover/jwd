@@ -18,6 +18,8 @@ import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static java.lang.String.format;
 
 public class OrderCreateCommand implements Command {
 
@@ -35,12 +37,24 @@ public class OrderCreateCommand implements Command {
         UserOrder currentUserOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
 
         if (Objects.isNull(currentUserOrder) || !currentUserOrder.getOrderStatus().equals(OrderStatus.BUILD_UP)) {
+
             String currentSessionId = request.getSession().getId();
             User user = SecurityContext.getInstance().getCurrentUser(currentSessionId);
             userOrderService.createNewOrder(user);
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "Order has been created now");
+
+            String message = "Order has been created now";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.info(message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
+
         } else {
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "Order is already exist");
+
+            String message = "Order is already exist";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.info(message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
         }
 
         return COMMAND_RESULT_MESSAGE_JSP;

@@ -8,9 +8,13 @@ import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_CATEGORY_PARAM;
 
-public class CategoryNameUtil {
+public final class CategoryNameUtil {
 
     public static final String ALL_CATEGORIES = "all";
+
+    private CategoryNameUtil() {
+
+    }
 
     public static List<String> getCategoryNamesFromRequest(HttpServletRequest request) {
 

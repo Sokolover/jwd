@@ -1,6 +1,6 @@
 package by.training.sokolov.core.constants;
 
-public class ServletName {
+public final class ServletName {
 
     public static final String INDEX_SERVLET = "index";
     public static final String LOGIN_SERVLET = "login";

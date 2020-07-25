@@ -141,26 +141,26 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     }
 
     @Override
-    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long orderId) throws ConnectionException, SQLException {
+    public List<OrderItem> getFromCurrentOrderByDishCategoryName(String categoryName, Long orderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
         LOGGER.info("getByDishCategoryName(String categoryName)");
-        AtomicReference<OrderItem> result = new AtomicReference<>();
+        List<OrderItem> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, categoryName);
                 statement.setLong(2, orderId);
                 ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     try {
-                        result.set(getOrderItemRowMapper().map(resultSet));
+                        result.add(getOrderItemRowMapper().map(resultSet));
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
                     }
                 }
             }
-            return result.get();
+            return result;
         } finally {
             connectionLock.unlock();
         }

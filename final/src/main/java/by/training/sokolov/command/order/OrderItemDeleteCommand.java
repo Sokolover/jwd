@@ -1,6 +1,5 @@
 package by.training.sokolov.command.order;
 
-import by.training.sokolov.application.LoginServlet;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
@@ -13,14 +12,18 @@ import java.sql.SQLException;
 import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_ID_JSP_PARAM;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
+import static java.lang.Long.parseLong;
+import static java.lang.String.format;
 
-public class DeleteDishFromOrderCommand implements Command {
+public class OrderItemDeleteCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(DeleteDishFromOrderCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OrderItemDeleteCommand.class.getName());
 
     private final OrderItemService orderItemService;
 
-    public DeleteDishFromOrderCommand(OrderItemService orderItemService) {
+    public OrderItemDeleteCommand(OrderItemService orderItemService) {
         this.orderItemService = orderItemService;
     }
 
@@ -28,11 +31,13 @@ public class DeleteDishFromOrderCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String itemIdString = request.getParameter(ORDER_ITEM_ID_JSP_PARAM);
-        Long itemIdLong = Long.parseLong(itemIdString);
-        orderItemService.deleteById(itemIdLong);
-        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "Item has been deleted from order");
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, ORDER_ITEM_ID_JSP_PARAM, itemIdString));
 
-        LOGGER.info(this.getClass());
+        orderItemService.deleteById(parseLong(itemIdString));
+
+        String message = "Item has been deleted from order";
+        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
         return VIEW_ORDER_DISH_LIST_RESULT;
     }

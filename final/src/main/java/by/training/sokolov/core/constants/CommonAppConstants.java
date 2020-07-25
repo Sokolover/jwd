@@ -36,12 +36,13 @@ public final class CommonAppConstants {
     public static final String DEFAULT_USER_PHONE_NUMBER_JSP_PARAM = "default.user.phoneNumber";
     public static final String USER_PHONE_NUMBER_JSP_PARAM = "user.phoneNumber";
 
+    public static final String DISH_NAME_JSP_PARAM = "dish.name";
+    public static final String DISH_COST_JSP_PARAM = "dish.cost";
+    public static final String DISH_CATEGORY_NAME_JSP_PARAM = "dish.category";
+    public static final String DISH_DESCRIPTION_JSP_PARAM = "dish.description";
+    public static final String DISH_PICTURE_JSP_PARAM = "dish.picture";
+
     public static final String DISH_JSP_ATTRIBUTE = "dish";
-    public static final String DISH_NAME_JSP_ATTRIBUTE = "dish.name";
-    public static final String DISH_COST_JSP_ATTRIBUTE = "dish.cost";
-    public static final String DISH_CATEGORY_JSP_ATTRIBUTE = "dish.category";
-    public static final String DISH_DESCRIPTION_JSP_ATTRIBUTE = "dish.description";
-    public static final String DISH_PICTURE_JSP_ATTRIBUTE = "dish.picture";
     public static final String DISHES_JSP_ATTRIBUTE = "dishes";
 
     public static final String CATEGORY_NAME_JSP_PARAM = "category.name";

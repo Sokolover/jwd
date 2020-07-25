@@ -10,8 +10,8 @@ import by.training.sokolov.entity.orderitem.model.OrderItem;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implements OrderItemService {
 
@@ -47,9 +47,9 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     @Override
     public void addNewOrderItem(OrderItem orderItem) throws SQLException, ConnectionException {
 
-        Dish dish = orderItem.getDish();
+        BigDecimal dishCost = orderItem.getDish().getCost();
         Integer dishAmount = orderItem.getDishAmount();
-        BigDecimal itemCost = dish.getCost().multiply(BigDecimal.valueOf(dishAmount));
+        BigDecimal itemCost = dishCost.multiply(BigDecimal.valueOf(dishAmount));
         orderItem.setItemCost(itemCost);
 
         this.save(orderItem);
@@ -63,16 +63,20 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
 
     @Transactional
     @Override
-    public OrderItem getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException {
+    public List<OrderItem> getFromCurrentOrderByDishCategoryName(String categoryName, Long userOrderId) throws ConnectionException, SQLException {
 
-        OrderItem orderItem = orderItemDao.getFromCurrentOrderByDishCategoryName(categoryName, userOrderId);
-        if (Objects.isNull(orderItem)) {
-            return null;
+        List<OrderItem> orderItems = orderItemDao.getFromCurrentOrderByDishCategoryName(categoryName, userOrderId);
+
+        if (orderItems.isEmpty()) {
+            return new ArrayList<>();
         }
-        Long dishId = orderItem.getDish().getId();
-        orderItem.setDish(dishService.getById(dishId));
 
-        return orderItem;
+        for (OrderItem orderItem : orderItems) {
+            Long dishId = orderItem.getDish().getId();
+            orderItem.setDish(dishService.getById(dishId));
+        }
+
+        return orderItems;
     }
 
     @Override

@@ -4,6 +4,7 @@ import by.training.sokolov.command.Command;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,12 @@ import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static java.lang.String.format;
 
 public class OrderDeleteCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderDeleteCommand.class.getName());
 
     private final UserOrderService userOrderService;
 
@@ -28,12 +33,22 @@ public class OrderDeleteCommand implements Command {
 
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
+
         if (Objects.isNull(currentOrder)) {
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "You haven't created order yet");
+
+            String message = "You haven't created order yet";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.error(message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
             return COMMAND_RESULT_MESSAGE_JSP;
         }
+
         userOrderService.deleteById(currentOrder.getId());
-        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, "Order has been deleted");
+
+        String message = "Order has been deleted";
+        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }

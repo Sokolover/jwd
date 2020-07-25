@@ -2,6 +2,7 @@ package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.CategoryNameUtil;
 import by.training.sokolov.command.Command;
+import by.training.sokolov.command.JspUtil;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
@@ -9,6 +10,7 @@ import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,14 +22,18 @@ import java.util.Objects;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
+import static java.lang.String.format;
 
-public class OrderDishListDisplayCommand implements Command {
+public class OrderItemListDisplayCommand implements Command {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderItemListDisplayCommand.class.getName());
 
     private final UserOrderService userOrderService;
     private final OrderItemService orderItemService;
     private final DishCategoryService dishCategoryService;
 
-    public OrderDishListDisplayCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
+    public OrderItemListDisplayCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
         this.userOrderService = userOrderService;
         this.orderItemService = orderItemService;
         this.dishCategoryService = dishCategoryService;
@@ -41,38 +47,41 @@ public class OrderDishListDisplayCommand implements Command {
 
         if (Objects.isNull(userOrder)) {
 
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, "please, create order or login (session timeout)");
+            String message = "Please, create order or login (session timeout)";
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+            LOGGER.error(message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
             return ERROR_MESSAGE_JSP;
         }
 
-        setCategoriesToRequest(request);
+        JspUtil.setCategoriesAttribute(request, dishCategoryService);
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
             request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
+            LOGGER.info("All items will be shown");
+
             return ORDER_ITEM_LIST_JSP;
         }
 
-        List<OrderItem> filteredUserOrderItems = new ArrayList<>();
+        List<OrderItem> filteredOrderItems = new ArrayList<>();
         for (String categoryName : categoryNames) {
-            OrderItem orderItem = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, userOrder.getId());
-            if (Objects.isNull(orderItem)) {
+            List<OrderItem> orderItems = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, userOrder.getId());
+            if (orderItems.isEmpty()) {
                 continue;
             }
-            filteredUserOrderItems.add(orderItem);
+            filteredOrderItems.addAll(orderItems);
         }
 
-        request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, filteredUserOrderItems);
+        request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, filteredOrderItems);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
+        LOGGER.info("Filtered items will be shown");
 
         return ORDER_ITEM_LIST_JSP;
     }
 
-    private void setCategoriesToRequest(HttpServletRequest request) throws SQLException, ConnectionException {
-
-//        request.setAttribute(CATEGORY_JSP_ATTRIBUTE, DISH_CATEGORY_JSP);
-        List<DishCategory> categories = dishCategoryService.findAll();
-        request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
-    }
 }
