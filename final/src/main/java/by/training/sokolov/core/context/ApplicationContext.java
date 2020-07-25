@@ -231,7 +231,7 @@ public class ApplicationContext {
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
         Command loginSubmitCommand = new LoginSubmitCommand(userProxyService);
         Command registerUserCommand = new RegisterUserCommand(userProxyService, beanValidator);
-        Command viewDishMenuCommand = new ViewDishMenuCommand(dishProxyService, dishCategoryProxyService);
+        Command dishMenuDisplayCommand = new DishMenuDisplayCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
         Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService);
         Command dishFeedbackSubmitCommand = new WritingDishFeedbackFormSubmitCommand(dishFeedbackService);
@@ -266,7 +266,7 @@ public class ApplicationContext {
 
         commandFactory.registerCommand(DISH_FEEDBACK_WRITE, dishFeedbackWriteCommand);
         commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
-        commandFactory.registerCommand(VIEW_DISH_MENU, viewDishMenuCommand);
+        commandFactory.registerCommand(DISH_MENU_DISPLAY, dishMenuDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, creatingDishFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, creatingDishFormSubmitCommand);
         commandFactory.registerCommand(UPDATE_DISH_FORM_DISPLAY, updateDishFormDisplayCommand);

@@ -35,7 +35,7 @@ public enum CommandType {
 
     DISH_FEEDBACK_WRITE,
     DISH_FEEDBACK_SUBMIT,
-    VIEW_DISH_MENU,
+    DISH_MENU_DISPLAY,
 
     DEFAULT;
 

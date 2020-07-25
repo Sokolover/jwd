@@ -1,7 +1,6 @@
 package by.training.sokolov.command;
 
 import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
@@ -18,14 +17,14 @@ import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class ViewDishMenuCommand implements Command {
+public class DishMenuDisplayCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(ViewDishMenuCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DishMenuDisplayCommand.class.getName());
 
     private final DishService dishService;
     private final DishCategoryService dishCategoryService;
 
-    public ViewDishMenuCommand(DishService dishService, DishCategoryService dishCategoryService) {
+    public DishMenuDisplayCommand(DishService dishService, DishCategoryService dishCategoryService) {
         this.dishService = dishService;
         this.dishCategoryService = dishCategoryService;
     }
@@ -33,6 +32,7 @@ public class ViewDishMenuCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
+        JspUtil.setCategoriesAttribute(request, dishCategoryService);
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
 //        request.setAttribute("selectedCategories", categoryNames);
@@ -55,7 +55,7 @@ public class ViewDishMenuCommand implements Command {
             filteredDishes.addAll(dishes);
         }
 
-        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+
 
         request.setAttribute(DISHES_JSP_ATTRIBUTE, filteredDishes);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISHES_JSP_ATTRIBUTE));

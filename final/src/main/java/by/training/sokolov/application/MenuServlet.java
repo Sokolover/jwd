@@ -57,7 +57,7 @@ public class MenuServlet extends HttpServlet {
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
             default:
-                String commandName = String.valueOf(CommandType.VIEW_DISH_MENU);
+                String commandName = String.valueOf(CommandType.DISH_MENU_DISPLAY);
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
                 req.setAttribute(VIEW_NAME_JSP_PARAM, commandResult);
