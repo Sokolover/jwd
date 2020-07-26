@@ -122,7 +122,6 @@ public class User implements IdentifiedRow {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", isActive=" + isActive +
                 ", phoneNumber='" + phoneNumber + '\'' +

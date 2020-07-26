@@ -24,42 +24,66 @@ public class GenericServiceImpl<T extends IdentifiedRow> implements GenericServi
 
     @Override
     public Long save(T entity) throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[save]", entity.toString()));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
         return crudDao.save(entity);
     }
 
     @Override
     public void update(T entity) throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[update]", entity.toString()));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
         crudDao.update(entity);
     }
 
     public void deleteById(Long id) throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[deleteById]", id));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, id));
         crudDao.deleteById(id);
     }
 
     @Override
     public void delete(T entity) throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[delete]", entity.toString()));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
         crudDao.delete(entity);
     }
 
     @Override
     public T getById(Long id) throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[getById]", id));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, id));
         return crudDao.getById(id);
     }
 
     @Override
     public List<T> findAll() throws SQLException, ConnectionException {
-
-        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), "[findAll]"));
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
         return crudDao.findAll();
     }
 }
