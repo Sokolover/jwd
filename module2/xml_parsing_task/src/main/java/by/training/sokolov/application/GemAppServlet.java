@@ -25,6 +25,7 @@ import static by.training.sokolov.contants.GemAppConstants.QUERY_KEY_COMMAND;
 public class GemAppServlet extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger(GemAppServlet.class.getName());
+    private static final long serialVersionUID = -4913979823837836732L;
     private CommandFactory commandFactory;
     private GemService gemService;
 

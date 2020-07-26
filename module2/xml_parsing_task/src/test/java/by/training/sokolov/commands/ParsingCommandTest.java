@@ -9,7 +9,6 @@ import by.training.sokolov.parser.ParseResult;
 import by.training.sokolov.parser.StaxFileParser;
 import by.training.sokolov.service.GemService;
 import by.training.sokolov.service.SimpleGemService;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

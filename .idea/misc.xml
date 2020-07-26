@@ -2,19 +2,31 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/deliveryService" />
     <file type="web" url="file://$PROJECT_DIR$/final" />
     <file type="web" url="file://$PROJECT_DIR$/module1/task3" />
     <file type="web" url="file://$PROJECT_DIR$/module2/xml_parsing_task" />
+    <file type="web" url="file://$PROJECT_DIR$/pagination_example" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/module1/task1/pom.xml" />
+        <option value="$PROJECT_DIR$/module1/task2/pom.xml" />
+        <option value="$PROJECT_DIR$/module2/xml_parsing_task/pom.xml" />
+        <option value="$PROJECT_DIR$/final/pom.xml" />
+        <option value="$PROJECT_DIR$/module0/pom.xml" />
+        <option value="$PROJECT_DIR$/deliveryService/pom.xml" />
+        <option value="$PROJECT_DIR$/module1/task1_csv/pom.xml" />
+        <option value="$PROJECT_DIR$/module1/task2_csv/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/module1/task3/pom.xml" />
+        <option value="$PROJECT_DIR$/pagination_example/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>
   </component>

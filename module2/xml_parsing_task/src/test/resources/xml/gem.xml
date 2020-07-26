@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gems xmlns="http://sokolov.com/gem"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://sokolov.com/gem gemSchema.xsd">
-    <gem id="id-1">
+      xsi:schemaLocation="http://sokolov.com/gem ../gemSchema.xsd">
+
+    <gem id="1">
         <name>brilliant</name>
         <preciousness>precious</preciousness>
         <origin>Africa</origin>
@@ -13,7 +14,8 @@
         </visualParams>
         <value>3</value>
     </gem>
-    <gem id="id-2">
+
+    <gem id="2">
         <name>amethyst</name>
         <preciousness>semiprecious</preciousness>
         <origin>Russia</origin>
@@ -24,4 +26,5 @@
         </visualParams>
         <value>5</value>
     </gem>
+
 </gems>

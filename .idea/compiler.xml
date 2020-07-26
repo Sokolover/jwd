@@ -6,14 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="module0" />
-        <module name="final" />
-        <module name="task1" />
-        <module name="task2" />
+        <module name="deliveryService" />
         <module name="xml_parsing_task" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
+      <module name="final" target="8" />
+      <module name="jwd" target="1.5" />
+      <module name="module1" target="8" />
+      <module name="module2" target="1.5" />
+      <module name="pagination_example" target="8" />
       <module name="task3" target="8" />
     </bytecodeTargetLevel>
   </component>
