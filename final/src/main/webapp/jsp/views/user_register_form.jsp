@@ -21,57 +21,45 @@
     <form action="${pageContext.request.contextPath}/user_register" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.REGISTER_USER}">
         <div class="">
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.name"/>
-                        <input class="input" name="${CommonAppConstants.USER_NAME_JSP_PARAM}" type="text"
-                               placeholder="Text input">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.name"/>
+                    <input class="input" name="${CommonAppConstants.USER_NAME_JSP_PARAM}" type="text"
+                           placeholder="Text input">
+                </label>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.password"/>
-                        <input class="input" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password"
-                               placeholder="Password input">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.password"/>
+                    <input class="input" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password"
+                           placeholder="Password input">
+                </label>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.email"/>
-                        <input class="input" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text"
-                               placeholder="Text input">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.email"/>
+                    <input class="input" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text"
+                           placeholder="Text input">
+                </label>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.phoneNumber"/>
-                        <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}" type="text"
-                               placeholder="Text input">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.phoneNumber"/>
+                    <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}" type="text"
+                           placeholder="Text input">
+                </label>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.address"/>
-                        <input class="input" name="${CommonAppConstants.USER_ADDRESS_JSP_PARAM}" type="text"
-                               placeholder="Text input">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.address"/>
+                    <input class="input" name="${CommonAppConstants.USER_ADDRESS_JSP_PARAM}" type="text"
+                           placeholder="Text input">
+                </label>
             </div>
         </div>
-        <div class="field marginTop">
-            <div class="control">
-                <fmt:message var="register_label" key="links.person.register"/>
-                <input class="button is-light secondary" type="submit" value="${register_label}">
-            </div>
+        <div class="control field marginTop">
+            <fmt:message var="register_label" key="links.person.register"/>
+            <input class="button is-light secondary" type="submit" value="${register_label}">
         </div>
     </form>
 </div>

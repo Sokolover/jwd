@@ -21,26 +21,26 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static by.training.sokolov.entity.user.dao.UserAccountTableConstants.*;
 import static java.lang.String.format;
 
-public class UserDaoImpl extends GenericDao<User> implements UserDao {
+public class UserAccountDaoImpl extends GenericDao<User> implements UserAccountDao {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserAccountDaoImpl.class.getName());
 
-    private static final String TABLE_NAME = "user_account";
     private static final String SELECT_BY_NAME = "" +
             "SELECT {0}.*\n" +
             "FROM {0}\n" +
-            "WHERE {0}.user_name = ?";
+            "WHERE {0}.{1} = ?";
     private static final String SELECT_BY_EMAIL = "" +
             "SELECT {0}.*\n" +
             "FROM {0}\n" +
-            "WHERE {0}.user_email = ?";
+            "WHERE {0}.{1} = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
-    public UserDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getUserRowMapper(), connectionManager);
+    public UserAccountDaoImpl(ConnectionManager connectionManager) {
+        super(USER_ACCOUNT_TABLE_NAME, getUserRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -51,28 +51,28 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
             @Override
             public User map(ResultSet resultSet) throws SQLException {
                 User user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setName(resultSet.getString("user_name"));
-                user.setPassword(resultSet.getString("user_password"));
-                user.setEmail(resultSet.getString("user_email"));
-                user.setActive(resultSet.getBoolean("is_active"));
-                user.setPhoneNumber(resultSet.getString("user_phone_number"));
-                user.getLoyalty().setId(resultSet.getLong("loyalty_points_id"));
-                user.getWallet().setId(resultSet.getLong("wallet_id"));
-                user.getUserAddress().setId(resultSet.getLong("user_address_id"));
+                user.setId(resultSet.getLong(ID));
+                user.setName(resultSet.getString(USER_NAME));
+                user.setPassword(resultSet.getString(USER_PASSWORD));
+                user.setEmail(resultSet.getString(USER_EMAIL));
+                user.setActive(resultSet.getBoolean(IS_ACTIVE));
+                user.setPhoneNumber(resultSet.getString(USER_PHONE_NUMBER));
+                user.getLoyalty().setId(resultSet.getLong(LOYALTY_POINTS_ID));
+                user.getWallet().setId(resultSet.getLong(WALLET_ID));
+                user.getUserAddress().setId(resultSet.getLong(USER_ADDRESS_ID));
                 return user;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("user_name",
-                        "user_password",
-                        "user_email",
-                        "is_active",
-                        "user_phone_number",
-                        "loyalty_points_id",
-                        "wallet_id",
-                        "user_address_id");
+                return Arrays.asList(USER_NAME,
+                        USER_PASSWORD,
+                        USER_EMAIL,
+                        IS_ACTIVE,
+                        USER_PHONE_NUMBER,
+                        LOYALTY_POINTS_ID,
+                        WALLET_ID,
+                        USER_ADDRESS_ID);
             }
 
             @Override
@@ -101,7 +101,7 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
         LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, name));
 
-        return getByStringParam(SELECT_BY_NAME, name);
+        return getByStringParam(SELECT_BY_NAME, USER_NAME, name);
     }
 
     @Override
@@ -115,10 +115,10 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
         LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, email));
 
-        return getByStringParam(SELECT_BY_EMAIL, email);
+        return getByStringParam(SELECT_BY_EMAIL, USER_EMAIL, email);
     }
 
-    private User getByStringParam(String query, String param) throws SQLException, ConnectionException {
+    private User getByStringParam(String query, String columnName, String param) throws SQLException, ConnectionException {
 
         connectionLock.lock();
 
@@ -130,7 +130,7 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
         AtomicReference<User> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(query, TABLE_NAME);
+            String sql = MessageFormat.format(query, USER_ACCOUNT_TABLE_NAME, columnName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, param);
                 ResultSet resultSet = statement.executeQuery();
@@ -140,6 +140,9 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
                     }
+                } else {
+                    LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get()));
+                    return null;
                 }
             }
             LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));

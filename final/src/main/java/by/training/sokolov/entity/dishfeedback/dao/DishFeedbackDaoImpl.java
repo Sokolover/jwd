@@ -20,23 +20,24 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
-import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE;
+import static by.training.sokolov.entity.dishfeedback.dao.DishFeedbackTableConstants.*;
 import static java.lang.String.format;
 
 public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements DishFeedbackDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishFeedbackDaoImpl.class.getName());
-    private static final String TABLE_NAME = "dish_feedback";
+
+
     private static final String SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID = "" +
             "SELECT *\n" +
             "FROM {0}\n" +
-            "WHERE {0}.dish_id = ?\n" +
-            "  AND {0}.user_account_id = ?";
+            "WHERE {0}.{1} = ?\n" +
+            "  AND {0}.{2} = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
     public DishFeedbackDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getDishFeedbackRowMapper(), connectionManager);
+        super(DISH_FEEDBACK_TABLE_NAME, getDishFeedbackRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -47,20 +48,20 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
             @Override
             public DishFeedback map(ResultSet resultSet) throws SQLException {
                 DishFeedback dishFeedback = new DishFeedback();
-                dishFeedback.setId(resultSet.getLong("id"));
-                dishFeedback.setDishRating(resultSet.getInt("dish_rating"));
-                dishFeedback.setDishComment(resultSet.getString("dish_comment"));
-                dishFeedback.setUserId(resultSet.getLong("user_account_id"));
-                dishFeedback.setDishId(resultSet.getLong("dish_id"));
+                dishFeedback.setId(resultSet.getLong(ID));
+                dishFeedback.setDishRating(resultSet.getInt(DISH_RATING));
+                dishFeedback.setDishComment(resultSet.getString(DISH_COMMENT));
+                dishFeedback.setUserId(resultSet.getLong(USER_ACCOUNT_ID));
+                dishFeedback.setDishId(resultSet.getLong(DISH_ID));
                 return dishFeedback;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("dish_rating",
-                        "dish_comment",
-                        "user_account_id",
-                        "dish_id");
+                return Arrays.asList(DISH_RATING,
+                        DISH_COMMENT,
+                        USER_ACCOUNT_ID,
+                        DISH_ID);
             }
 
             @Override
@@ -89,7 +90,7 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
 
         AtomicReference<DishFeedback> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID, TABLE_NAME);
+            String sql = MessageFormat.format(SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID, DISH_FEEDBACK_TABLE_NAME, DISH_ID, USER_ACCOUNT_ID);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, dishId);
                 statement.setLong(2, userId);
@@ -100,6 +101,9 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
                     }
+                } else {
+                    LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get()));
+                    return null;
                 }
             }
             LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));

@@ -14,16 +14,18 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.entity.wallet.dao.WalletTableConstants.*;
+
 public class WalletDaoImpl extends GenericDao<Wallet> implements WalletDao {
 
-    private final static Logger LOGGER = Logger.getLogger(WalletDaoImpl.class.getName());
-    private static final String TABLE_NAME = "wallet";
+    private static final Logger LOGGER = Logger.getLogger(WalletDaoImpl.class.getName());
+
     private final Lock connectionLock = new ReentrantLock();
 
     private final ConnectionManager connectionManager;
 
     public WalletDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getWalletRowMapper(), connectionManager);
+        super(WALLET_TABLE_NAME, getWalletRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -34,14 +36,14 @@ public class WalletDaoImpl extends GenericDao<Wallet> implements WalletDao {
             @Override
             public Wallet map(ResultSet resultSet) throws SQLException {
                 Wallet wallet = new Wallet();
-                wallet.setId(resultSet.getLong("id"));
-                wallet.setMoneyAmount(resultSet.getBigDecimal("money_amount"));
+                wallet.setId(resultSet.getLong(ID));
+                wallet.setMoneyAmount(resultSet.getBigDecimal(MONEY_AMOUNT));
                 return wallet;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Collections.singletonList("money_amount");
+                return Collections.singletonList(MONEY_AMOUNT);
             }
 
             @Override

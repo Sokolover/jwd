@@ -5,6 +5,7 @@ import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.ConnectionManager;
 import by.training.sokolov.entity.role.model.UserRole;
+import by.training.sokolov.entity.user.dao.UserAccountTableConstants;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 
@@ -21,34 +22,34 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static by.training.sokolov.entity.role.dao.AccountToRolesTableConstants.*;
+import static by.training.sokolov.entity.role.dao.UserRoleTableConstants.*;
 import static java.lang.String.format;
 
 public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserRoleDaoImpl.class.getName());
 
-    private static final String TABLE_NAME = "user_role";
     private static final String SELECT_ROLE_ID_QUERY = "" +
-            "SELECT *\n" +
+            "SELECT {0}.*\n" +
             "FROM {0}\n" +
-            "WHERE {0}.role_name = ?";
-    private static final String INSERT_ROLES_QUERY = "INSERT INTO account_to_roles (user_account_id, user_role_id) VALUES ({0}, {1})";
+            "WHERE {0}.{1} = ?";
+    private static final String INSERT_ROLES_QUERY = "INSERT INTO {0} ({1}, {2}) VALUES (?, ?)";
     private static final String SELECT_ROLES_ID_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
-            "     user_account,\n" +
-            "     account_to_roles\n" +
-            "WHERE user_account.id = account_to_roles.user_account_id\n" +
-            "  AND account_to_roles.user_role_id = {0}.id\n" +
-            "  AND user_account.id = ?";
+            "     {2},\n" +
+            "     {4}\n" +
+            "WHERE {2}.{3} = {4}.{5}\n" +
+            "  AND {4}.{6} = {0}.{1}\n" +
+            "  AND {2}.{3} = ?";
     private final Lock connectionLock = new ReentrantLock();
 
     private final ConnectionManager connectionManager;
 
     public UserRoleDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getUserRoleRowMapper(), connectionManager);
+        super(USER_ROLE_TABLE_NAME, getUserRoleRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -59,14 +60,14 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
             @Override
             public UserRole map(ResultSet resultSet) throws SQLException {
                 UserRole userRole = new UserRole();
-                userRole.setId(resultSet.getLong("id"));
-                userRole.setRoleName(resultSet.getString("role_name"));
+                userRole.setId(resultSet.getLong(ID));
+                userRole.setRoleName(resultSet.getString(ROLE_NAME));
                 return userRole;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Collections.singletonList("money_amount");
+                return Collections.singletonList(ROLE_NAME);
             }
 
             @Override
@@ -90,7 +91,7 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
 
         LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, roleName));
 
-        String sql = MessageFormat.format(SELECT_ROLE_ID_QUERY, TABLE_NAME);
+        String sql = MessageFormat.format(SELECT_ROLE_ID_QUERY, USER_ROLE_TABLE_NAME, ROLE_NAME);
         AtomicReference<UserRole> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -116,7 +117,11 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
     public List<UserRole> getUserRoles(User user) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        String sql = MessageFormat.format(SELECT_ROLES_ID_QUERY, TABLE_NAME);
+        String sql = MessageFormat.format(SELECT_ROLES_ID_QUERY,
+                UserRoleTableConstants.USER_ROLE_TABLE_NAME, UserRoleTableConstants.ID,
+                UserAccountTableConstants.USER_ACCOUNT_TABLE_NAME, UserAccountTableConstants.ID,
+                AccountToRolesTableConstants.ACCOUNT_TO_ROLES_TABLE_NAME, AccountToRolesTableConstants.USER_ACCOUNT_ID, AccountToRolesTableConstants.USER_ROLE_ID);
+
         List<UserRole> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -144,8 +149,10 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
         connectionLock.lock();
         try (Connection connection = connectionManager.getConnection()) {
             for (UserRole role : user.getRoles()) {
-                String sql = MessageFormat.format(INSERT_ROLES_QUERY, user.getId(), role.getId());
+                String sql = MessageFormat.format(INSERT_ROLES_QUERY, ACCOUNT_TO_ROLES_TABLE_NAME, USER_ACCOUNT_ID, USER_ROLE_ID);
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setLong(1, user.getId());
+                    statement.setLong(2, role.getId());
                     statement.executeUpdate();
                 }
             }

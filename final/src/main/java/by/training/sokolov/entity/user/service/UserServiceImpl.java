@@ -6,7 +6,7 @@ import by.training.sokolov.db.Transactional;
 import by.training.sokolov.entity.loyalty.dao.LoyaltyDao;
 import by.training.sokolov.entity.loyalty.model.Loyalty;
 import by.training.sokolov.entity.role.dao.UserRoleDao;
-import by.training.sokolov.entity.user.dao.UserDao;
+import by.training.sokolov.entity.user.dao.UserAccountDao;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
 import by.training.sokolov.entity.useraddress.model.UserAddress;
@@ -29,15 +29,15 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     private static final String SET_TO_USER_MESSAGE = "[%s] has been set to User";
     private static final String SET_TO_USER_ATTRIBUTE_MESSAGE = "%s = [%d] has been set to Users attribute - [%s]";
 
-    private UserDao userDao;
+    private UserAccountDao userAccountDao;
     private UserAddressDao userAddressDao;
     private LoyaltyDao loyaltyDao;
     private WalletDao walletDao;
     private UserRoleDao userRoleDao;
 
-    public UserServiceImpl(UserDao userDao, UserAddressDao userAddressDao, LoyaltyDao loyaltyDao, WalletDao walletDao, UserRoleDao userRoleDao) {
-        super(userDao);
-        this.userDao = userDao;
+    public UserServiceImpl(UserAccountDao userAccountDao, UserAddressDao userAddressDao, LoyaltyDao loyaltyDao, WalletDao walletDao, UserRoleDao userRoleDao) {
+        super(userAccountDao);
+        this.userAccountDao = userAccountDao;
         this.userAddressDao = userAddressDao;
         this.loyaltyDao = loyaltyDao;
         this.walletDao = walletDao;
@@ -121,7 +121,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     @Override
     public User getByName(String name) throws ConnectionException, SQLException {
 
-        User user = userDao.getByName(name);
+        User user = userAccountDao.getByName(name);
         if (Objects.isNull(user)) {
             return null;
         }
@@ -134,7 +134,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     @Override
     public User getByEmail(String email) throws ConnectionException, SQLException {
 
-        User user = userDao.getByEmail(email);
+        User user = userAccountDao.getByEmail(email);
         if (Objects.isNull(user)) {
             return null;
         }

@@ -14,12 +14,6 @@
 
 <div class="container feedbackPageContainer">
 
-<%--todo написать вместо--%>
-<%--    <div class="field">--%>
-<%--        <div class="control">--%>
-<%--        ЭТО--%>
-<%--        <div class="control field">    --%>
-
     <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>
     <div class="feedbackContainer">
 
@@ -31,7 +25,7 @@
                     <c:set var="minRating" value="1"/>
                     <c:set var="maxRating" value="5"/>
                     <fmt:message key="feedback.rating"/>
-                    <div class="control">
+                    <div class="control field">
                         <c:forEach var="i" begin="${minRating}" end="${maxRating - 1}" step="1">
                             <label class="radio">
                                 <input type="radio" name="${CommonAppConstants.FEEDBACK_RATING_JSP_PARAM}"
@@ -46,16 +40,14 @@
                         </label>
                     </div>
                 </label>
-                <div class="field">
-                    <div class="control">
-                        <fmt:message var="textAreaPlaceholder" key="feedback.text"/>
-                        <textarea class="textarea" placeholder="${textAreaPlaceholder}"
-                                  name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}"
-                                  rows="10"></textarea>
-                    </div>
+                <div class="control field">
+                    <fmt:message var="textAreaPlaceholder" key="feedback.text"/>
+                    <textarea class="textarea" placeholder="${textAreaPlaceholder}"
+                              name="${CommonAppConstants.FEEDBACK_TEXT_JSP_PARAM}"
+                              rows="10"></textarea>
                 </div>
             </div>
-            <div class="">
+            <div class="control field">
                 <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}" value="${dish.id}">
                 <fmt:message var="send_feedback" key="button.feedback.send"/>
                 <input class="button is-light secondary marginTop is-right" type="submit" value="${send_feedback}">

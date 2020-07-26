@@ -30,20 +30,16 @@
         <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
                value="${CommandType.CREATE_DISH_CATEGORY_FORM_SUBMIT}">
         <div class="">
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <input class="input" name="${CommonAppConstants.CATEGORY_NAME_JSP_PARAM}"
-                               type="text">
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <input class="input" name="${CommonAppConstants.CATEGORY_NAME_JSP_PARAM}"
+                           type="text">
+                </label>
             </div>
         </div>
-        <div class="field marginTop">
-            <div class="control">
-                <fmt:message var="createLabel" key="button.category.create"/>
-                <input class="button is-light secondary" type="submit" value="${createLabel}">
-            </div>
+        <div class="field control marginTop">
+            <fmt:message var="createLabel" key="button.category.create"/>
+            <input class="button is-light secondary" type="submit" value="${createLabel}">
         </div>
     </form>
 </div>

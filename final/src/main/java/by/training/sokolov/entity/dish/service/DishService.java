@@ -10,4 +10,7 @@ import java.util.List;
 public interface DishService extends GenericService<Dish> {
 
     List<Dish> getByCategory(String categoryName) throws ConnectionException, SQLException;
+
+    List<Dish> findAll(int currentPage, int recordsPerPage) throws SQLException, ConnectionException;
+
 }

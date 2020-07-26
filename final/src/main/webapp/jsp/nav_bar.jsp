@@ -6,20 +6,25 @@
 
 <aside class="menu">
 
-    <%--    <p class="menu-label">--%>
-    <%--        <fmt:message key="app.group.navigation"/>--%>
-    <%--    </p>--%>
-
     <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
     <div class="navbar-brand">
-        <%--        <jsp:useBean id="userLoggedIn" scope="request" type="java.lang.Boolean"/>--%>
         <c:choose>
             <c:when test="${userLoggedIn}">
                 <div class="navbar-start navBarContainer">
                     <div class="navbar navBarBackground">
+
                         <a class="navbar-item button is-light secondary"
                            href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
                                 key="links.dish.menu"/></a>
+
+                            <%--                        <form action="${pageContext.request.contextPath}/menu" method="get">--%>
+                            <%--                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"--%>
+                            <%--                                   value="${CommandType.DISH_MENU_DISPLAY}">--%>
+                            <%--                            <input type="hidden" name="currentPage" value="1">--%>
+                            <%--                            <button class="navbar-item button is-light secondary" type="submit" class="btn btn-primary">--%>
+                            <%--                                <fmt:message key="links.dish.menu"/>--%>
+                            <%--                            </button>--%>
+                            <%--                        </form>--%>
 
                         <a class="navbar-item button is-light secondary"
                            href="?${CommonAppConstants.QUERY_COMMAND_PARAM}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message

@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-public class OrderFeedbackDaoImpl extends GenericDao<OrderFeedback> implements OrderFeedbackDao {
+import static by.training.sokolov.entity.orderfeedback.dao.OrderFeedbackTableConstants.*;
 
-    private static final String TABLE_NAME = "order_feedback";
+public class OrderFeedbackDaoImpl extends GenericDao<OrderFeedback> implements OrderFeedbackDao {
 
     private final ConnectionManager connectionManager;
 
     public OrderFeedbackDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getOrderFeedbackRowMapper(), connectionManager);
+        super(ORDER_FEEDBACK_TABLE_NAME, getOrderFeedbackRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -30,16 +30,16 @@ public class OrderFeedbackDaoImpl extends GenericDao<OrderFeedback> implements O
             @Override
             public OrderFeedback map(ResultSet resultSet) throws SQLException, IOException {
                 OrderFeedback orderFeedback = new OrderFeedback();
-                orderFeedback.setId(resultSet.getLong("id"));
-                orderFeedback.setOrderRating(resultSet.getInt("order_rating"));
-                orderFeedback.setOrderComment(resultSet.getString("order_comment"));
+                orderFeedback.setId(resultSet.getLong(ID));
+                orderFeedback.setOrderRating(resultSet.getInt(ORDER_RATING));
+                orderFeedback.setOrderComment(resultSet.getString(ORDER_COMMENT));
                 return orderFeedback;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("order_rating",
-                        "order_comment");
+                return Arrays.asList(ORDER_RATING,
+                        ORDER_COMMENT);
             }
 
             @Override

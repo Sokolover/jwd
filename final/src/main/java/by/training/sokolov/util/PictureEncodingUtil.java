@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
-import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.TMP_DIR;
 import static java.util.Objects.isNull;

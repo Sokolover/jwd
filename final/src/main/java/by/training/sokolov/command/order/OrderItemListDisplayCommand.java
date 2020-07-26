@@ -4,7 +4,6 @@ import by.training.sokolov.command.CategoryNameUtil;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.JspUtil;
 import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
@@ -19,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.CommonAppConstants.ERROR_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_LIST_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;

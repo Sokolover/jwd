@@ -18,4 +18,6 @@ public interface CrudDao<T extends IdentifiedRow> {
     T getById(Long id) throws SQLException, ConnectionException;
 
     List<T> findAll() throws SQLException, ConnectionException;
+
+    Integer getNumberOfRows() throws ConnectionException, SQLException;
 }

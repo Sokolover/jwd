@@ -21,32 +21,26 @@
     <form action="${pageContext.request.contextPath}/login" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.LOGIN_SUBMIT}">
         <div class="">
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.email"/>
-                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}"
-                               type="text" value="qwerty7@m.com">
-                        <%--                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text">--%>
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.email"/>
+                    <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}"
+                           type="text" value="qwerty7@m.com">
+                    <%--                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text">--%>
+                </label>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="label">
-                        <fmt:message key="user.password"/>
-                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}"
-                               type="password" value="Qwerty777">
-                        <%--                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password">--%>
-                    </label>
-                </div>
+            <div class="control field">
+                <label class="label">
+                    <fmt:message key="user.password"/>
+                    <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}"
+                           type="password" value="Qwerty777">
+                    <%--                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password">--%>
+                </label>
             </div>
         </div>
-        <div class="field marginTop">
-            <div class="control">
-                <fmt:message var="loginLabel" key="button.person.login"/>
-                <input class="button is-light secondary" type="submit" value="${loginLabel}">
-            </div>
+        <div class="field control marginTop">
+            <fmt:message var="loginLabel" key="button.person.login"/>
+            <input class="button is-light secondary" type="submit" value="${loginLabel}">
         </div>
     </form>
 </div>

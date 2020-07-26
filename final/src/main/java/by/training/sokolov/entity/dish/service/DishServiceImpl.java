@@ -30,9 +30,11 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
 
     @Transactional
     @Override
-    public List<Dish> findAll() throws SQLException, ConnectionException {
+    public List<Dish> findAll(int currentPage, int recordsPerPage) throws SQLException, ConnectionException {
 
-        List<Dish> dishes = super.findAll();
+        int startRecord = currentPage * recordsPerPage - recordsPerPage;
+
+        List<Dish> dishes = dishDao.findAll(startRecord, recordsPerPage);
         for (Dish dish : dishes) {
             Long categoryId = dish.getDishCategory().getId();
             DishCategory dishCategory = dishCategoryDao.getById(categoryId);
@@ -90,5 +92,11 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
     public void deleteById(Long id) throws SQLException, ConnectionException {
 
         super.deleteById(id);
+    }
+
+    @Override
+    public Integer getNumberOfRows() throws ConnectionException, SQLException {
+
+        return super.getNumberOfRows();
     }
 }

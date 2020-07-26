@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.*;
 import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
 import static java.lang.String.format;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public class OrderCheckoutSubmitCommand implements Command {
 
@@ -43,13 +44,7 @@ public class OrderCheckoutSubmitCommand implements Command {
         String customerName = request.getParameter(DEFAULT_USER_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DEFAULT_USER_NAME_JSP_PARAM, customerName));
 
-        /*
-        TODO попробовать поменять "user_s".equals(customerName)
-            на
-            Objects.isNull(customerUsersAddress)
-         */
-
-        if ("user_s".equals(customerName)) {
+        if (nonNull(customerName)) {
             currentOrder.setCustomerName(user.getName());
             LOGGER.info(format(USERS_PARAM_TO_CURRENT_ORDER, "user name"));
         } else {
@@ -58,7 +53,7 @@ public class OrderCheckoutSubmitCommand implements Command {
         }
 
         String customerPhoneNumber = request.getParameter(DEFAULT_USER_PHONE_NUMBER_JSP_PARAM);
-        if ("user_s".equals(customerPhoneNumber)) {
+        if (nonNull(customerPhoneNumber)) {
             currentOrder.setCustomerPhoneNumber(user.getPhoneNumber());
             LOGGER.info(format(USERS_PARAM_TO_CURRENT_ORDER, "phone number"));
         } else {
@@ -67,7 +62,7 @@ public class OrderCheckoutSubmitCommand implements Command {
         }
 
         String customerUsersAddress = request.getParameter(DEFAULT_ORDER_ADDRESS_JSP_PARAM);
-        if (Objects.isNull(customerUsersAddress)) {
+        if (isNull(customerUsersAddress)) {
             setCustomAddress(request, currentOrder);
             LOGGER.info(format(CUSTOM_PARAM_TO_CURRENT_ORDER, "user address"));
         }

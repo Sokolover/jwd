@@ -43,7 +43,7 @@
                         <div class="label">
                             <fmt:message key="dish.cost"/>
                             <input class="input" name="${CommonAppConstants.DISH_COST_JSP_PARAM}" type="text"
-                                   placeholder="Cost input">
+                                   placeholder="Cost input" value="${dish.cost}">
                         </div>
                     </div>
                     <div class="control field">
@@ -56,7 +56,7 @@
                     <div class="file field">
                         <label class="file-label">
                             <input class="file-input" type="file"
-                                   name="${CommonAppConstants.DISH_PICTURE_JSP_PARAM}"/>
+                                   name="${CommonAppConstants.DISH_PICTURE_JSP_PARAM}" value="value="${dish.picture}""/>
                             <span class="file-cta">
                             <span class="file-label"><fmt:message key="app.choose.dish.picture"/></span>
                         </span>
@@ -76,56 +76,14 @@
                 </div>
 
                 <div class="control field">
-                    <fmt:message var="createLabel" key="button.dish.create"/>
-                    <input class="button is-light secondary marginTop" type="submit" value="${createLabel}">
+                    <fmt:message var="updateLabel" key="button.dish.update"/>
+                    <input class="button is-light secondary marginTop" type="submit" value="${updateLabel}">
                 </div>
             </div>
         </form>
 
         <jsp:include page="card_dish.jsp"/>
-    </div>
 
+    </div>
 </div>
 
-<%--<div class="field">--%>
-<%--    <div class="column is-one-third">--%>
-<%--        <div class="control">--%>
-<%--            <label class="label">--%>
-<%--                <fmt:message key="dish.name"/>--%>
-<%--                <input class="input" name="${CommonAppConstants.DISH_NAME_JSP_ATTRIBUTE}" type="text"--%>
-<%--                       placeholder="Name input">--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--        <div class="control">--%>
-<%--            <label class="label">--%>
-<%--                <fmt:message key="dish.cost"/>--%>
-<%--                <input class="input" name="${CommonAppConstants.DISH_COST_JSP_ATTRIBUTE}" type="text"--%>
-<%--                       placeholder="Cost input">--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--        <label class="label">--%>
-<%--            <fmt:message key="dish.description"/>--%>
-<%--            <textarea class="textarea" name="${CommonAppConstants.DISH_DESCRIPTION_JSP_ATTRIBUTE}"--%>
-<%--                      placeholder="Description input" rows="10"></textarea>--%>
-<%--        </label>--%>
-<%--        <label class="label">--%>
-<%--            <fmt:message key="dish.picture"/>--%>
-<%--            <input type="file" name="${CommonAppConstants.DISH_PICTURE_JSP_ATTRIBUTE}"/>--%>
-<%--        </label>--%>
-<%--        <label class="label">--%>
-<%--            <fmt:message key="dish.category"/>--%>
-<%--            <select name="${CommonAppConstants.DISH_CATEGORY_JSP_ATTRIBUTE}">--%>
-<%--                <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>--%>
-<%--                <c:forEach items="${categoryList}" var="category">--%>
-<%--                    <option value="${category.categoryName}">${category.categoryName}</option>--%>
-<%--                </c:forEach>--%>
-<%--            </select>--%>
-<%--        </label>--%>
-<%--    </div>--%>
-<%--    <div class="field is-grouped">--%>
-<%--        <div class="control">--%>
-<%--            <fmt:message var="updateLabel" key="button.dish.update"/>--%>
-<%--            <input class="button is-primary" type="submit" value="${updateLabel}">--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>

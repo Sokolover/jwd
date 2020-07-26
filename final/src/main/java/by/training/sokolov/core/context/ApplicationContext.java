@@ -33,8 +33,8 @@ import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import by.training.sokolov.entity.orderitem.service.OrderItemServiceImpl;
 import by.training.sokolov.entity.role.dao.UserRoleDao;
 import by.training.sokolov.entity.role.dao.UserRoleDaoImpl;
-import by.training.sokolov.entity.user.dao.UserDao;
-import by.training.sokolov.entity.user.dao.UserDaoImpl;
+import by.training.sokolov.entity.user.dao.UserAccountDao;
+import by.training.sokolov.entity.user.dao.UserAccountDaoImpl;
 import by.training.sokolov.entity.user.service.UserService;
 import by.training.sokolov.entity.user.service.UserServiceImpl;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
@@ -160,7 +160,7 @@ public class ApplicationContext {
         OrderFeedbackDao orderFeedbackDao = new OrderFeedbackDaoImpl(connectionManager);
         OrderItemDao orderItemDao = new OrderItemDaoImpl(connectionManager);
         UserRoleDao userRoleDao = new UserRoleDaoImpl(connectionManager);
-        UserDao userDao = new UserDaoImpl(connectionManager);
+        UserAccountDao userAccountDao = new UserAccountDaoImpl(connectionManager);
         UserAddressDao userAddressDao = new UserAddressDaoImpl(connectionManager);
         WalletDao walletDao = new WalletDaoImpl(connectionManager);
         LOGGER.info("Dao initialized");
@@ -170,7 +170,7 @@ public class ApplicationContext {
         OrderItemService orderItemService = new OrderItemServiceImpl(orderItemDao, dishService);
         DeliveryAddressService deliveryAddressService = new DeliveryAddressServiceImpl(deliveryAddressDao, userAddressDao);
         UserOrderService userOrderService = new UserOrderServiceImpl(userOrderDao, deliveryAddressService, orderItemService);
-        UserService userService = new UserServiceImpl(userDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
+        UserService userService = new UserServiceImpl(userAccountDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
         DishCategoryService dishCategoryService = new DishCategoryServiceImpl(dishCategoryDao);
         DishFeedbackService dishFeedbackService = new DishFeedbackServiceImpl(dishFeedbackDao);
         LOGGER.info("Services initialized");
@@ -296,7 +296,7 @@ public class ApplicationContext {
         beans.put(DishCategoryService.class, dishCategoryProxyService);
         beans.put(DishFeedbackService.class, dishFeedbackServiceHandler);
 
-        beans.put(UserDao.class, userDao);
+        beans.put(UserAccountDao.class, userAccountDao);
         beans.put(BeanValidator.class, beanValidator);
 
         beans.put(ConnectionPool.class, connectionPool);

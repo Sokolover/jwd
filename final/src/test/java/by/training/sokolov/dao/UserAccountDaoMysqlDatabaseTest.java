@@ -2,7 +2,7 @@ package by.training.sokolov.dao;
 
 import by.training.sokolov.core.context.ApplicationContext;
 import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.entity.user.dao.UserDao;
+import by.training.sokolov.entity.user.dao.UserAccountDao;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,23 +14,23 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserDaoMysqlDatabaseTest {
+public class UserAccountDaoMysqlDatabaseTest {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoMysqlDatabaseTest.class.getName());
-    private static UserDao userDao;
+    private static final Logger LOGGER = Logger.getLogger(UserAccountDaoMysqlDatabaseTest.class.getName());
+    private static UserAccountDao userAccountDao;
 
     @BeforeAll
     public static void initContext() {
 
         ApplicationContext.initialize();
         ApplicationContext applicationContext = ApplicationContext.getInstance();
-        userDao = applicationContext.getBean(UserDao.class);
+        userAccountDao = applicationContext.getBean(UserAccountDao.class);
     }
 
     @Test
     public void shouldFindAllUsers() throws ConnectionException, SQLException {
 
-        List<User> all = userDao.findAll();
+        List<User> all = userAccountDao.findAll();
         for (User user : all) {
             LOGGER.info(user.toString());
         }
@@ -41,7 +41,7 @@ public class UserDaoMysqlDatabaseTest {
     public void shouldGetUserByName() throws ConnectionException, SQLException {
 
         String name = "qwerty";
-        User user = userDao.getByName(name);
+        User user = userAccountDao.getByName(name);
         String message = "account got by name = " + name + ", account: " + user.toString();
         LOGGER.info(message);
         assertNotNull(user);

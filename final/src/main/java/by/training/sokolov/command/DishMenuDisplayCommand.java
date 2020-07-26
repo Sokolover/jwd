@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
@@ -35,13 +36,29 @@ public class DishMenuDisplayCommand implements Command {
         JspUtil.setCategoriesAttribute(request, dishCategoryService);
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
+        // для удержания чекбоксов после их отправки
 //        request.setAttribute("selectedCategories", categoryNames);
+
+        String currentPageString = request.getParameter(QUERY_PAGE_PARAM);
+        int currentPage;
+
+        if (Objects.isNull(currentPageString) || currentPageString.isEmpty()) {
+            currentPage = FIRST_PAGE;
+        } else {
+            currentPage = Integer.parseInt(currentPageString);
+        }
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
-            request.setAttribute(DISHES_JSP_ATTRIBUTE, dishService.findAll());
+            request.setAttribute(DISHES_JSP_ATTRIBUTE, dishService.findAll(currentPage, RECORDS_PER_PAGE));
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISHES_JSP_ATTRIBUTE));
             LOGGER.info("All dishes will be shown");
+
+            request.setAttribute(NUMBER_OF_PAGES_JSP_ATTRIBUTE, getNumberOfPages());
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, NUMBER_OF_PAGES_JSP_ATTRIBUTE));
+
+            request.setAttribute(CURRENT_PAGE_JSP_ATTRIBUTE, currentPage);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, CURRENT_PAGE_JSP_ATTRIBUTE));
 
             return DISH_LIST_JSP;
         }
@@ -55,13 +72,22 @@ public class DishMenuDisplayCommand implements Command {
             filteredDishes.addAll(dishes);
         }
 
-
-
         request.setAttribute(DISHES_JSP_ATTRIBUTE, filteredDishes);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISHES_JSP_ATTRIBUTE));
         LOGGER.info("Filtered dishes will be shown");
 
         return DISH_LIST_JSP;
+    }
+
+    private int getNumberOfPages() throws ConnectionException, SQLException {
+
+        int rows = dishService.getNumberOfRows();
+        int numberOfPages = rows / RECORDS_PER_PAGE;
+        if (numberOfPages % RECORDS_PER_PAGE > 0) {
+
+            numberOfPages++;
+        }
+        return numberOfPages;
     }
 
 }

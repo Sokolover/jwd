@@ -6,7 +6,7 @@ import by.training.sokolov.entity.user.model.User;
 
 import java.sql.SQLException;
 
-public interface UserDao extends CrudDao<User> {
+public interface UserAccountDao extends CrudDao<User> {
 
     User getByName(String name) throws SQLException, ConnectionException;
 

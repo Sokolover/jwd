@@ -14,9 +14,9 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Base64;
 
-public class DishServiceTest {
+public class DishServiceMysqlDatabaseTest {
 
-    private static final Logger LOGGER = Logger.getLogger(DishServiceTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DishServiceMysqlDatabaseTest.class.getName());
     private static DishService dishService;
 
     @BeforeAll
@@ -26,10 +26,6 @@ public class DishServiceTest {
         ApplicationContext applicationContext = ApplicationContext.getInstance();
         dishService = applicationContext.getBean(DishService.class);
     }
-
-    /*
-    todo сделать этот тест с инмемори базой
-     */
 
     @Test
     public void shouldUpdateDishPictureWithoutExceptions1() throws SQLException, IOException, ConnectionException {

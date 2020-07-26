@@ -4,6 +4,9 @@ import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.entity.category.dao.DishCategoryTableConstants;
+import by.training.sokolov.entity.dish.dao.DishTableConstants;
+import by.training.sokolov.entity.order.dao.UserOrderTableConstants;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import org.apache.log4j.Logger;
 
@@ -21,40 +24,41 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_MESSAGE;
+import static by.training.sokolov.entity.orderitem.dao.OrderItemTableConstants.*;
 import static java.lang.String.format;
 
 public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItemDao {
 
     private static final Logger LOGGER = Logger.getLogger(OrderItemDaoImpl.class.getName());
-    private static final String TABLE_NAME = "order_item";
+
     private static final String SELECT_BY_DISH_ID_AND_USER_ORDER_ID_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0}\n" +
-            "WHERE {0}.dish_id = ?\n" +
-            "  AND {0}.user_order_id = ?";
+            "WHERE {0}.{1} = ?\n" +
+            "  AND {0}.{2} = ?";
     private static final String SELECT_BY_DISH_CATEGORY_NAME_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
-            "     dish,\n" +
-            "     dish_category\n" +
-            "WHERE {0}.dish_id = dish.id\n" +
-            "  AND dish.dish_category_id = dish_category.id\n" +
-            "  AND dish_category.category_name = ?\n" +
-            "  AND {0}.user_order_id = ?";
+            "     {3},\n" +
+            "     {6}\n" +
+            "WHERE {0}.{1} = {3}.{4}\n" +
+            "  AND {3}.{5} = {6}.{7}\n" +
+            "  AND {6}.{8} = ?\n" +
+            "  AND {0}.{2} = ?";
     private static final String SELECT_ALL_BY_ORDER_ID_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
-            "     user_order\n" +
-            "WHERE {0}.user_order_id = user_order.id\n" +
-            "  AND user_order.id = ?";
+            "     {2}\n" +
+            "WHERE {0}.{1} = {2}.{3}\n" +
+            "  AND {2}.{3} = ?";
     private static final String DELETE_BY_ORDER_ID_QUERY = "" +
             "DELETE FROM {0}\n" +
-            "WHERE {0}.user_order_id = ?";
+            "WHERE {0}.{1} = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
     public OrderItemDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getOrderItemRowMapper(), connectionManager);
+        super(ORDER_ITEM_TABLE_NAME, getOrderItemRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -65,20 +69,20 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             @Override
             public OrderItem map(ResultSet resultSet) throws SQLException, IOException {
                 OrderItem orderItem = new OrderItem();
-                orderItem.setId(resultSet.getLong("id"));
-                orderItem.setDishAmount(resultSet.getInt("dish_amount"));
-                orderItem.setItemCost(resultSet.getBigDecimal("item_cost"));
-                orderItem.getDish().setId(resultSet.getLong("dish_id"));
-                orderItem.setUserOrderId(resultSet.getLong("user_order_id"));
+                orderItem.setId(resultSet.getLong(ID));
+                orderItem.setDishAmount(resultSet.getInt(DISH_AMOUNT));
+                orderItem.setItemCost(resultSet.getBigDecimal(ITEM_COST));
+                orderItem.getDish().setId(resultSet.getLong(DISH_ID));
+                orderItem.setUserOrderId(resultSet.getLong(USER_ORDER_ID));
                 return orderItem;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("dish_amount",
-                        "item_cost",
-                        "dish_id",
-                        "user_order_id");
+                return Arrays.asList(DISH_AMOUNT,
+                        ITEM_COST,
+                        DISH_ID,
+                        USER_ORDER_ID);
             }
 
             @Override
@@ -97,7 +101,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         connectionLock.lock();
 
-        String nameOfCurrentMethod = new Object(){}
+        String nameOfCurrentMethod = new Object() {
+        }
                 .getClass()
                 .getEnclosingMethod()
                 .getName();
@@ -106,7 +111,11 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         List<OrderItem> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_ALL_BY_ORDER_ID_QUERY, TABLE_NAME);
+
+            String sql = MessageFormat.format(SELECT_ALL_BY_ORDER_ID_QUERY,
+                    OrderItemTableConstants.ORDER_ITEM_TABLE_NAME, OrderItemTableConstants.USER_ORDER_ID,
+                    UserOrderTableConstants.USER_ORDER_TABLE_NAME, UserOrderTableConstants.ID);
+
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, orderId);
                 ResultSet resultSet = statement.executeQuery();
@@ -129,7 +138,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         connectionLock.lock();
 
-        String nameOfCurrentMethod = new Object(){}
+        String nameOfCurrentMethod = new Object() {
+        }
                 .getClass()
                 .getEnclosingMethod()
                 .getName();
@@ -138,7 +148,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         AtomicReference<OrderItem> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID_QUERY, TABLE_NAME);
+            String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID_QUERY, ORDER_ITEM_TABLE_NAME, DISH_ID, USER_ORDER_ID);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, dishId);
                 statement.setLong(2, orderId);
@@ -162,7 +172,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         connectionLock.lock();
 
-        String nameOfCurrentMethod = new Object(){}
+        String nameOfCurrentMethod = new Object() {
+        }
                 .getClass()
                 .getEnclosingMethod()
                 .getName();
@@ -171,7 +182,12 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         List<OrderItem> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
+
+            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY,
+                    OrderItemTableConstants.ORDER_ITEM_TABLE_NAME, OrderItemTableConstants.DISH_ID, OrderItemTableConstants.USER_ORDER_ID,
+                    DishTableConstants.DISH_TABLE_NAME, DishTableConstants.ID, DishTableConstants.DISH_CATEGORY_ID,
+                    DishCategoryTableConstants.DISH_CATEGORY_TABLE_NAME, DishCategoryTableConstants.ID, DishCategoryTableConstants.CATEGORY_NAME);
+
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, categoryName);
                 statement.setLong(2, orderId);
@@ -195,7 +211,8 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
 
         connectionLock.lock();
 
-        String nameOfCurrentMethod = new Object(){}
+        String nameOfCurrentMethod = new Object() {
+        }
                 .getClass()
                 .getEnclosingMethod()
                 .getName();
@@ -203,7 +220,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
         LOGGER.info(format("%s called %s method for entity with Order id = [%s]", this.getClass().getSimpleName(), nameOfCurrentMethod, orderId));
 
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(DELETE_BY_ORDER_ID_QUERY, TABLE_NAME);
+            String sql = MessageFormat.format(DELETE_BY_ORDER_ID_QUERY, ORDER_ITEM_TABLE_NAME, USER_ORDER_ID);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, orderId);
                 statement.executeUpdate();

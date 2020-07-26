@@ -17,9 +17,10 @@
     </p>
 
     <div class="categoryAddContainer">
-        <form action="" method="GET" class="">
+        <form action="${pageContext.request.contextPath}/menu" method="get">
+            <%--        <form action="" method="get">--%>
 
-            <%--        todo сделать checked чекбоксов в выбранных категориях (написать сравнение ЗНАЧЕНИЙ строк на jsp)--%>
+            <%--                    todo сделать checked чекбоксов в выбранных категориях (написать сравнение ЗНАЧЕНИЙ строк на jsp)--%>
             <%--            <jsp:useBean id="selectedCategories" scope="request" type="java.util.List"/>--%>
             <%--            <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>--%>
             <%--            <jsp:useBean id="flag" type="java.lang.Boolean"/>--%>
@@ -66,10 +67,10 @@
 
         </form>
 
-        <fmt:message var="all" key="button.category.reset"/>
-        <form action="" method="get">
+        <form action="${pageContext.request.contextPath}/menu" method="get">
             <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
                    value="all">
+            <fmt:message var="all" key="button.category.reset"/>
             <input class="button is-light secondary" type="submit" value="${all}"/>
         </form>
 

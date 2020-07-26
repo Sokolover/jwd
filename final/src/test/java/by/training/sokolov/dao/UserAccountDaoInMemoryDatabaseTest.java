@@ -20,9 +20,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RunWith(JUnit4.class)
-public class UserDaoInMemoryDatabaseTest {
+public class UserAccountDaoInMemoryDatabaseTest {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoInMemoryDatabaseTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserAccountDaoInMemoryDatabaseTest.class.getName());
 
     @Before
     public void createTable() throws SQLException {

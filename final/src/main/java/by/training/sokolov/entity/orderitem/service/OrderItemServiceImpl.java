@@ -34,7 +34,8 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     @Override
     public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException, ConnectionException {
 
-        String nameOfCurrentMethod = new Object(){}
+        String nameOfCurrentMethod = new Object() {
+        }
                 .getClass()
                 .getEnclosingMethod()
                 .getName();

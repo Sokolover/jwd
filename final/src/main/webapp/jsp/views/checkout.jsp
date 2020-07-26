@@ -76,26 +76,21 @@
                         <c:out value="${contactInfo}"/>
                     </h5>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="user.name"/>
-                                <input class="input" id="user.name" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="user.name"/>
+                            <input class="input" id="user.name" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
+                                   type="text">
+                        </label>
+
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="user.phoneNumber"/>
-                                <div class="control">
-                                    <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}"
-                                           type="text">
-                                </div>
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="user.phoneNumber"/>
+                            <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}"
+                                   type="text">
+                        </label>
                     </div>
 
                     <label class="checkbox">
@@ -135,68 +130,56 @@
                         <c:out value="${deliveryAddress}"/>
                     </h5>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.locality"/>
-                                <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.locality"/>
+                            <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.street"/>
-                                <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_STREET_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.street"/>
+                            <input class="input" name="${CommonAppConstants.ORDER_ADDRESS_STREET_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.buildingNumber"/>
-                                <input class="input"
-                                       name="${CommonAppConstants.ORDER_ADDRESS_BUILDING_NUMBER_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.buildingNumber"/>
+                            <input class="input"
+                                   name="${CommonAppConstants.ORDER_ADDRESS_BUILDING_NUMBER_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.flatNumber"/>
-                                <input class="input"
-                                       name="${CommonAppConstants.ORDER_ADDRESS_FLAT_NUMBER_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.flatNumber"/>
+                            <input class="input"
+                                   name="${CommonAppConstants.ORDER_ADDRESS_FLAT_NUMBER_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.porch"/>
-                                <input class="input"
-                                       name="${CommonAppConstants.ORDER_ADDRESS_PORCH_NUMBER_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.porch"/>
+                            <input class="input"
+                                   name="${CommonAppConstants.ORDER_ADDRESS_PORCH_NUMBER_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <label class="label">
-                                <fmt:message key="order.address.floor"/>
-                                <input class="input"
-                                       name="${CommonAppConstants.ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE}"
-                                       type="text">
-                            </label>
-                        </div>
+                    <div class="control field">
+                        <label class="label">
+                            <fmt:message key="order.address.floor"/>
+                            <input class="input"
+                                   name="${CommonAppConstants.ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE}"
+                                   type="text">
+                        </label>
                     </div>
 
                     <label class="checkbox">
@@ -208,12 +191,9 @@
                 </div>
             </div>
 
-            <%--            todo выровнять поцентру--%>
-            <div class="marginTop justifyCenter">
-                <div class="control">
-                    <fmt:message var="checkoutLabel" key="button.checkout"/>
-                    <input class="button is-light secondary" type="submit" value="${checkoutLabel}">
-                </div>
+            <div class="control marginTop justifyCenter">
+                <fmt:message var="checkoutLabel" key="button.checkout"/>
+                <input class="button is-light secondary" type="submit" value="${checkoutLabel}">
             </div>
 
         </form>

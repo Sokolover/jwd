@@ -21,22 +21,22 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static by.training.sokolov.entity.category.dao.DishCategoryTableConstants.*;
 import static java.lang.String.format;
 
 public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements DishCategoryDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishCategoryDaoImpl.class.getName());
 
-    private static final String TABLE_NAME = "dish_category";
     private static final String SELECT_BY_NAME = "" +
             "SELECT *\n" +
             "FROM {0}\n" +
-            "WHERE category_name = ?";
+            "WHERE {1} = ?";
     private final Lock connectionLock = new ReentrantLock();
     private final ConnectionManager connectionManager;
 
     public DishCategoryDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getDishCategoryRowMapper(), connectionManager);
+        super(DISH_CATEGORY_TABLE_NAME, getDishCategoryRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -47,14 +47,14 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
             @Override
             public DishCategory map(ResultSet resultSet) throws SQLException {
                 DishCategory dishCategory = new DishCategory();
-                dishCategory.setId(resultSet.getLong("id"));
-                dishCategory.setCategoryName(resultSet.getString("category_name"));
+                dishCategory.setId(resultSet.getLong(ID));
+                dishCategory.setCategoryName(resultSet.getString(CATEGORY_NAME));
                 return dishCategory;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Collections.singletonList("category_name");
+                return Collections.singletonList(CATEGORY_NAME);
             }
 
             @Override
@@ -78,7 +78,7 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
 
         LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, categoryName));
 
-        String sql = MessageFormat.format(SELECT_BY_NAME, TABLE_NAME);
+        String sql = MessageFormat.format(SELECT_BY_NAME, DISH_CATEGORY_TABLE_NAME, CATEGORY_NAME);
 
         AtomicReference<DishCategory> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection();
@@ -91,6 +91,9 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
                 } catch (IOException e) {
                     LOGGER.error(e.getMessage());
                 }
+            } else {
+                LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get()));
+                return null;
             }
             LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();

@@ -13,10 +13,6 @@
 
 <div class="dishPage">
 
-    <%--    <p class="menu-label">--%>
-    <%--        <fmt:message key="app.group.dishes"/>--%>
-    <%--    </p>--%>
-
     <jsp:include page="dish_category.jsp"/>
 
     <c:if test="${not empty message}">
@@ -43,7 +39,7 @@
                     <div class="box">
                         <c:out value="${dish.description}"/>
                     </div>
-                    <div class="field control">
+                    <div class="control field">
                         <label class="" for="${dish.cost}">
                             <fmt:message key="dish.cost"/>
                         </label>
@@ -65,7 +61,7 @@
                                     <label class="">
                                         <fmt:message key="order.item.dishAmount"/>
                                     </label>
-                                    <div class="control">
+                                    <div class="control field">
                                         <input class="input"
                                                name="${CommonAppConstants.ORDER_DISH_AMOUNT_JSP_PARAM}"
                                                value="1"
@@ -76,7 +72,7 @@
                                     </div>
                                 </div>
 
-                                <div class="control">
+                                <div class="control field">
                                     <fmt:message var="addLabel" key="button.dish.add"/>
                                     <input class="button is-light secondary" type="submit" value="${addLabel}">
                                 </div>
@@ -136,7 +132,9 @@
                     </c:if>
                 </div>
             </div>
-
         </c:forEach>
     </div>
+
+    <jsp:include page="pagination.jsp"/>
+
 </div>

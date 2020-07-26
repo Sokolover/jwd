@@ -12,16 +12,16 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import static by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressTableConstants.*;
+
 public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implements DeliveryAddressDao {
 
     private static final Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
 
-    private static final String TABLE_NAME = "delivery_address";
-
     private final ConnectionManager connectionManager;
 
     public DeliveryAddressDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getDeliveryAddressRowMapper(), connectionManager);
+        super(DELIVERY_ADDRESS_TABLE_NAME, getDeliveryAddressRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -32,16 +32,16 @@ public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implemen
             @Override
             public DeliveryAddress map(ResultSet resultSet) throws SQLException {
                 DeliveryAddress deliveryAddress = new DeliveryAddress();
-                deliveryAddress.setId(resultSet.getLong("id"));
-                deliveryAddress.setCustomDeliveryAddress(resultSet.getString("custom_address_string"));
-                deliveryAddress.getUserAddress().setId(resultSet.getLong("user_address_id"));
+                deliveryAddress.setId(resultSet.getLong(ID));
+                deliveryAddress.setCustomDeliveryAddress(resultSet.getString(CUSTOM_ADDRESS_STRING));
+                deliveryAddress.getUserAddress().setId(resultSet.getLong(USER_ADDRESS_ID));
                 return deliveryAddress;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Arrays.asList("custom_address_string",
-                        "user_address_id");
+                return Arrays.asList(CUSTOM_ADDRESS_STRING,
+                        USER_ADDRESS_ID);
             }
 
             @Override

@@ -1,6 +1,5 @@
 package by.training.sokolov.entity.dishfeedback.service;
 
-import by.training.sokolov.command.WritingDishFeedbackFormSubmitCommand;
 import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.dishfeedback.dao.DishFeedbackDao;

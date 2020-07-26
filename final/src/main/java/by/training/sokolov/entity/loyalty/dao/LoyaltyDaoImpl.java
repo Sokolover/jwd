@@ -14,17 +14,18 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.entity.loyalty.dao.LoyaltyTableConstants.*;
+
 public class LoyaltyDaoImpl extends GenericDao<Loyalty> implements LoyaltyDao {
 
     private static final Logger LOGGER = Logger.getLogger(LoyaltyDaoImpl.class.getName());
 
-    private static final String TABLE_NAME = "loyalty_points";
     private final Lock connectionLock = new ReentrantLock();
 
     private final ConnectionManager connectionManager;
 
     public LoyaltyDaoImpl(ConnectionManager connectionManager) {
-        super(TABLE_NAME, getLoyaltyRowMapper(), connectionManager);
+        super(LOYALTY_TABLE_NAME, getLoyaltyRowMapper(), connectionManager);
         this.connectionManager = connectionManager;
     }
 
@@ -35,14 +36,14 @@ public class LoyaltyDaoImpl extends GenericDao<Loyalty> implements LoyaltyDao {
             @Override
             public Loyalty map(ResultSet resultSet) throws SQLException {
                 Loyalty loyalty = new Loyalty();
-                loyalty.setId(resultSet.getLong("id"));
-                loyalty.setPointsAmount(resultSet.getInt("points_amount"));
+                loyalty.setId(resultSet.getLong(ID));
+                loyalty.setPointsAmount(resultSet.getInt(POINTS_AMOUNT));
                 return loyalty;
             }
 
             @Override
             public List<String> getColumnNames() {
-                return Collections.singletonList("points_amount");
+                return Collections.singletonList(POINTS_AMOUNT);
             }
 
             @Override

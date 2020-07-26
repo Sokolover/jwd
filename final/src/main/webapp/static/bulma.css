@@ -11766,6 +11766,10 @@ body {
     background-color: #ece1d8;
 }
 
+.button.is-light.color {
+    background-color: #f68a2f;
+}
+
 .button.is-light.secondary {
     margin-right: 6px;
     background-color: #f6a52d;
