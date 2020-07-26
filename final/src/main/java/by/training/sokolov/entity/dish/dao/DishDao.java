@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface DishDao extends CrudDao<Dish> {
 
-    List<Dish> getByCategory(String categoryName) throws ConnectionException, SQLException;
+    List<Dish> getByCategoryName(String categoryName) throws ConnectionException, SQLException;
 }

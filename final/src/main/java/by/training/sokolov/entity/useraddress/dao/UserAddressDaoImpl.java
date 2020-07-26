@@ -16,7 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class UserAddressDaoImpl extends GenericDao<UserAddress> implements UserAddressDao {
 
-    private final static Logger LOGGER = Logger.getLogger(UserAddressDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserAddressDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "user_address";
     private final Lock connectionLock = new ReentrantLock();
 

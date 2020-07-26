@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static java.lang.String.format;
+import static java.util.Objects.nonNull;
 
 public class SecurityContext {
 
@@ -52,7 +54,14 @@ public class SecurityContext {
 
     public User getCurrentUser(String sessionId) {
 
-        return sessionId != null ? userMap.get(sessionId) : null;
+        if (nonNull(sessionId)) {
+            LOGGER.info(format("Got user from user map, session Id = [%s]", sessionId));
+            return userMap.get(sessionId);
+        } else {
+            LOGGER.error("session Id is NULL, haven't got any user");
+            return null;
+        }
+
     }
 
     public boolean canExecute(CommandType commandType, String sessionId) {

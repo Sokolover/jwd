@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -64,7 +65,21 @@ public class RegisterUserCommand implements Command {
 
         if (brokenFields.isEmpty()) {
 
-            newUser.setPassword(encrypt(password));
+            String encryptedPassword;
+
+            try {
+
+                encryptedPassword = encrypt(password);
+            } catch (NoSuchAlgorithmException e) {
+
+                request.setAttribute(ERROR_JSP_ATTRIBUTE, e.getMessage());
+                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
+                LOGGER.error(e.getMessage());
+
+                return LOGIN_JSP;
+            }
+
+            newUser.setPassword(encryptedPassword);
 
             List<User> users = userService.findAll();
             /*

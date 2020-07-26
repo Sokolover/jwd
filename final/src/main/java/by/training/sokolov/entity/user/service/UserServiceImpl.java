@@ -21,10 +21,13 @@ import java.util.List;
 import java.util.Objects;
 
 import static by.training.sokolov.entity.role.constants.RoleName.CLIENT;
+import static java.lang.String.format;
 
 public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class.getName());
+    private static final String SET_TO_USER_MESSAGE = "[%s] has been set to User";
+    private static final String SET_TO_USER_ATTRIBUTE_MESSAGE = "%s = [%d] has been set to Users attribute - [%s]";
 
     private UserDao userDao;
     private UserAddressDao userAddressDao;
@@ -47,11 +50,11 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
         User user = this.getByEmail(email);
 
         if (!Objects.isNull(user) && user.getPassword().equals(password)) {
-            LOGGER.info("user " + user.getName() + " logged in");
             return user;
         }
 
-        LOGGER.info("invalid name or password");
+        LOGGER.error("Wrong email address or password");
+
         return null;
     }
 
@@ -60,9 +63,24 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     public void register(User user) throws ConnectionException, SQLException {
 
         user.setRoles(Collections.singletonList(userRoleDao.getByName(CLIENT)));
-        user.setActive(true);
-        user.getWallet().setMoneyAmount(new BigDecimal(0));
-        user.getLoyalty().setPointsAmount(0);
+        String roleNameMessage = format("%s %s", CLIENT, "role");
+        LOGGER.info(format(SET_TO_USER_MESSAGE, roleNameMessage));
+
+        boolean activityStatus = true;
+        user.setActive(activityStatus);
+        String activityMessage = format("Active %b", activityStatus);
+        LOGGER.info(format(SET_TO_USER_MESSAGE, activityMessage));
+
+        BigDecimal moneyAmount = new BigDecimal(0);
+        user.getWallet().setMoneyAmount(moneyAmount);
+        String moneyAmountMessage = format(SET_TO_USER_ATTRIBUTE_MESSAGE, "Money amount", moneyAmount.longValue(), Wallet.class.getSimpleName());
+        LOGGER.info(format(SET_TO_USER_MESSAGE, moneyAmountMessage));
+
+
+        int pointsAmount = 0;
+        user.getLoyalty().setPointsAmount(pointsAmount);
+        String pointsAmountMessage = format(SET_TO_USER_ATTRIBUTE_MESSAGE, "Loyalty points amount", pointsAmount, Loyalty.class.getSimpleName());
+        LOGGER.info(format(SET_TO_USER_MESSAGE, pointsAmountMessage));
 
         this.save(user);
     }
@@ -86,14 +104,17 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
         Long idLoyalty = user.getLoyalty().getId();
         Loyalty loyalty = loyaltyDao.getById(idLoyalty);
         user.setLoyalty(loyalty);
+        LOGGER.info(format(SET_TO_USER_MESSAGE, Loyalty.class.getSimpleName()));
 
         Long idWallet = user.getWallet().getId();
         Wallet wallet = walletDao.getById(idWallet);
         user.setWallet(wallet);
+        LOGGER.info(format(SET_TO_USER_MESSAGE, Wallet.class.getSimpleName()));
 
         Long idAddress = user.getUserAddress().getId();
         UserAddress userAddress = userAddressDao.getById(idAddress);
         user.setUserAddress(userAddress);
+        LOGGER.info(format(SET_TO_USER_MESSAGE, UserAddress.class.getSimpleName()));
     }
 
     @Transactional
@@ -135,6 +156,8 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
         Long userId = super.save(entity);
         entity.setId(userId);
         userRoleDao.setUserRoles(entity);
+
+        LOGGER.info(String.format("[%s] has been saved", entity.toString()));
 
         return userId;
     }

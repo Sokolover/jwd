@@ -25,7 +25,7 @@ public class Dish implements IdentifiedRow {
                 ", name='" + name + '\'' +
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
-                ", picture='" + picture + '\'' +
+                ", picture='" + picture.substring(0, 20) + '\'' +
                 ", dishCategory=" + dishCategory +
                 '}';
     }

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -38,9 +39,23 @@ public class LoginSubmitCommand implements Command {
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_EMAIL_JSP_PARAM, email));
 
         String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, encrypt(password)));
+        String encryptedPassword;
 
-        User user = userService.login(email, encrypt(password));
+        try {
+
+            encryptedPassword = encrypt(password);
+        } catch (NoSuchAlgorithmException e) {
+
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, e.getMessage());
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
+            LOGGER.error(e.getMessage());
+
+            return LOGIN_JSP;
+        }
+
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, encryptedPassword));
+
+        User user = userService.login(email, encryptedPassword);
 
         if (Objects.isNull(user)) {
 
@@ -53,6 +68,7 @@ public class LoginSubmitCommand implements Command {
 
         String sessionId = request.getSession().getId();
         SecurityContext.getInstance().login(user, sessionId);
+        LOGGER.info(format("User with [%s - %s] has logged in", "email", user.getEmail()));
 
         return INDEX_SERVLET;
     }

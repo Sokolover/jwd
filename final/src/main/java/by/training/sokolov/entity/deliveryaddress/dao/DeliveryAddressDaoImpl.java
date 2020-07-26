@@ -15,6 +15,7 @@ import java.util.List;
 public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implements DeliveryAddressDao {
 
     private static final Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "delivery_address";
 
     private final ConnectionManager connectionManager;

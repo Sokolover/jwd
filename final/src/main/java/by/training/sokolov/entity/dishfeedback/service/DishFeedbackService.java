@@ -8,5 +8,5 @@ import java.sql.SQLException;
 
 public interface DishFeedbackService extends GenericService<DishFeedback> {
 
-    DishFeedback getUsersFeedbackByDishId(Long userId, Long dishId) throws ConnectionException, SQLException;
+    DishFeedback getByUserIdAndDishId(Long userId, Long dishId) throws ConnectionException, SQLException;
 }

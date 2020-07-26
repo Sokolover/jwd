@@ -47,7 +47,7 @@ public class WritingDishFeedbackFormSubmitCommand implements Command {
         User currentUser = SecurityContext.getInstance().getCurrentUser(sessionId);
         Long currentUserId = currentUser.getId();
 
-        DishFeedback dishFeedback = dishFeedbackService.getUsersFeedbackByDishId(currentUserId, parseLong(dishIdString));
+        DishFeedback dishFeedback = dishFeedbackService.getByUserIdAndDishId(currentUserId, parseLong(dishIdString));
 
         if (isNull(dishFeedback)) {
             saveNewFeedback(currentUserId, rating, comment, dishIdString);

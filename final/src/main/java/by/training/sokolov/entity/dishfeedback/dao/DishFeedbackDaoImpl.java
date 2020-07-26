@@ -19,6 +19,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE;
+import static java.lang.String.format;
+
 public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements DishFeedbackDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishFeedbackDaoImpl.class.getName());
@@ -71,10 +75,18 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
     }
 
     @Override
-    public DishFeedback getUsersFeedbackByDishId(Long userId, Long dishId) throws ConnectionException, SQLException {
+    public DishFeedback getByUserIdAndDishId(Long userId, Long dishId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-//        LOGGER.info("getById()--" + id);
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format("%s called %s method for entity with User id = [%s] and Dish id = [%s]", this.getClass().getSimpleName(), nameOfCurrentMethod, userId, dishId));
+
         AtomicReference<DishFeedback> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID, TABLE_NAME);
@@ -90,6 +102,7 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
                     }
                 }
             }
+            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();
         } finally {
             connectionLock.unlock();

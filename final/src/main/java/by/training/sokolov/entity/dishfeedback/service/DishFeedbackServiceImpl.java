@@ -1,13 +1,20 @@
 package by.training.sokolov.entity.dishfeedback.service;
 
+import by.training.sokolov.command.WritingDishFeedbackFormSubmitCommand;
 import by.training.sokolov.core.service.GenericServiceImpl;
 import by.training.sokolov.db.ConnectionException;
 import by.training.sokolov.entity.dishfeedback.dao.DishFeedbackDao;
 import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_MESSAGE;
+import static java.lang.String.format;
+
 public class DishFeedbackServiceImpl extends GenericServiceImpl<DishFeedback> implements DishFeedbackService {
+
+    private static final Logger LOGGER = Logger.getLogger(DishFeedbackServiceImpl.class.getName());
 
     private DishFeedbackDao dishFeedbackDao;
 
@@ -17,9 +24,16 @@ public class DishFeedbackServiceImpl extends GenericServiceImpl<DishFeedback> im
     }
 
     @Override
-    public DishFeedback getUsersFeedbackByDishId(Long userId, Long dishId) throws ConnectionException, SQLException {
+    public DishFeedback getByUserIdAndDishId(Long userId, Long dishId) throws ConnectionException, SQLException {
 
-        return dishFeedbackDao.getUsersFeedbackByDishId(userId, dishId);
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
+        return dishFeedbackDao.getByUserIdAndDishId(userId, dishId);
     }
 
     @Override

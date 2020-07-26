@@ -19,9 +19,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static java.lang.String.format;
+
 public class UserDaoImpl extends GenericDao<User> implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "user_account";
     private static final String SELECT_BY_NAME = "" +
             "SELECT {0}.*\n" +
@@ -88,20 +93,41 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
     @Override
     public User getByName(String name) throws SQLException, ConnectionException {
 
-        LOGGER.info("getByName(String name)");
-        return getByStringParam(SELECT_BY_EMAIL, name);
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, name));
+
+        return getByStringParam(SELECT_BY_NAME, name);
     }
 
     @Override
     public User getByEmail(String email) throws SQLException, ConnectionException {
 
-        LOGGER.info("getByEmail(String email)");
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, email));
+
         return getByStringParam(SELECT_BY_EMAIL, email);
     }
 
     private User getByStringParam(String query, String param) throws SQLException, ConnectionException {
 
         connectionLock.lock();
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         AtomicReference<User> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(query, TABLE_NAME);
@@ -116,6 +142,7 @@ public class UserDaoImpl extends GenericDao<User> implements UserDao {
                     }
                 }
             }
+            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();
         } finally {
             connectionLock.unlock();

@@ -19,11 +19,16 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static java.lang.String.format;
+
 public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "dish";
-    private static final String SELECT_BY_DISH_CATEGORY_QUERY = "SELECT {0}.*\n" +
+    private static final String SELECT_BY_DISH_CATEGORY_QUERY = "" +
+            "SELECT {0}.*\n" +
             "FROM {0},\n" +
             "     dish_category\n" +
             "WHERE {0}.dish_category_id = dish_category.id\n" +
@@ -33,7 +38,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     public DishDaoImpl(ConnectionManager connectionManager) {
         super(TABLE_NAME, getDishRowMapper(), connectionManager);
-        DishDaoImpl.connectionManager = connectionManager;
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Dish> getDishRowMapper() {
@@ -104,15 +109,22 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
     }
 
     @Override
-    public List<Dish> getByCategory(String categoryName) throws ConnectionException, SQLException {
+    public List<Dish> getByCategoryName(String categoryName) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-        LOGGER.info("findAll()");
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, categoryName));
+
         List<Dish> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//                statement.setString(1, "'" + categoryName + "'");
                 statement.setString(1, categoryName);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
@@ -120,6 +132,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
                         result.add(getDishRowMapper().map(resultSet));
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
+                        return new ArrayList<>();
                     }
                 }
             }
@@ -128,4 +141,5 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
             connectionLock.unlock();
         }
     }
+
 }

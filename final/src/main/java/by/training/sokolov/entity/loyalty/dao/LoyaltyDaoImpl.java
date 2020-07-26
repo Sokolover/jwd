@@ -16,7 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LoyaltyDaoImpl extends GenericDao<Loyalty> implements LoyaltyDao {
 
-    private final static Logger LOGGER = Logger.getLogger(LoyaltyDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoyaltyDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "loyalty_points";
     private final Lock connectionLock = new ReentrantLock();
 

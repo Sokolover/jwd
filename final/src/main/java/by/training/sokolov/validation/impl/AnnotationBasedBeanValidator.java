@@ -1,6 +1,7 @@
 package by.training.sokolov.validation.impl;
 
 import by.training.sokolov.validation.*;
+import org.apache.log4j.Logger;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 
 public class AnnotationBasedBeanValidator implements BeanValidator {
+
+    private static final Logger LOGGER = Logger.getLogger(AnnotationBasedBeanValidator.class.getName());
 
     private final Map<Class<? extends Annotation>, FieldValidator> validationFunctions;
     private final Set<Class<? extends Annotation>> supportedFieldAnnotations;
@@ -29,14 +32,18 @@ public class AnnotationBasedBeanValidator implements BeanValidator {
         ValidationResult validationResult = new ValidationResult();
 
         if (isNull(bean)) {
-            throw new ValidationException("Passed bean is null");
+            String message = "Passed bean is null";
+            LOGGER.error(message);
+            throw new ValidationException(message);
         }
 
         Class<?> clazz = bean.getClass();
         if (!clazz.isAnnotationPresent(ValidBean.class)) {
-            String msg = MessageFormat.format("{0} does not have the {1} annotation.",
+
+            String message = MessageFormat.format("{0} does not have the {1} annotation.",
                     clazz, ValidBean.class.getName());
-            throw new ValidationException(msg);
+            LOGGER.error(message);
+            throw new ValidationException(message);
         }
 
         Field[] declaredFields = clazz.getDeclaredFields();

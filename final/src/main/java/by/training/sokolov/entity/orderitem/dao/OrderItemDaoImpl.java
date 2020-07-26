@@ -20,11 +20,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_MESSAGE;
+import static java.lang.String.format;
+
 public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItemDao {
 
     private static final Logger LOGGER = Logger.getLogger(OrderItemDaoImpl.class.getName());
     private static final String TABLE_NAME = "order_item";
-    private static final String SELECT_BY_DISH_ID_AND_USER_ORDER_ID = "" +
+    private static final String SELECT_BY_DISH_ID_AND_USER_ORDER_ID_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0}\n" +
             "WHERE {0}.dish_id = ?\n" +
@@ -44,7 +47,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
             "     user_order\n" +
             "WHERE {0}.user_order_id = user_order.id\n" +
             "  AND user_order.id = ?";
-    private static final String DELETE_BY_ORDER_ID = "" +
+    private static final String DELETE_BY_ORDER_ID_QUERY = "" +
             "DELETE FROM {0}\n" +
             "WHERE {0}.user_order_id = ?";
     private final Lock connectionLock = new ReentrantLock();
@@ -93,7 +96,14 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info("findAllItemsByOrderId()");
+
+        String nameOfCurrentMethod = new Object(){}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
+
         List<OrderItem> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_ALL_BY_ORDER_ID_QUERY, TABLE_NAME);
@@ -118,10 +128,17 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     public OrderItem getFromCurrentOrderByDishId(Long dishId, Long orderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-//        LOGGER.info("getById()--" + dishId);
+
+        String nameOfCurrentMethod = new Object(){}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format("%s called %s method for entity with Order id = [%s] and Dish id = [%s]", this.getClass().getSimpleName(), nameOfCurrentMethod, orderId, dishId));
+
         AtomicReference<OrderItem> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID, TABLE_NAME);
+            String sql = MessageFormat.format(SELECT_BY_DISH_ID_AND_USER_ORDER_ID_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, dishId);
                 statement.setLong(2, orderId);
@@ -144,7 +161,14 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     public List<OrderItem> getFromCurrentOrderByDishCategoryName(String categoryName, Long orderId) throws ConnectionException, SQLException {
 
         connectionLock.lock();
-        LOGGER.info("getByDishCategoryName(String categoryName)");
+
+        String nameOfCurrentMethod = new Object(){}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format("%s called %s method for entity with Order id = [%s] and Category name = [%s]", this.getClass().getSimpleName(), nameOfCurrentMethod, orderId, categoryName));
+
         List<OrderItem> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_NAME_QUERY, TABLE_NAME);
@@ -170,9 +194,16 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
     public void deleteByOrderId(Long orderId) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info("deleteById()--" + orderId);
+
+        String nameOfCurrentMethod = new Object(){}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format("%s called %s method for entity with Order id = [%s]", this.getClass().getSimpleName(), nameOfCurrentMethod, orderId));
+
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(DELETE_BY_ORDER_ID, TABLE_NAME);
+            String sql = MessageFormat.format(DELETE_BY_ORDER_ID_QUERY, TABLE_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, orderId);
                 statement.executeUpdate();

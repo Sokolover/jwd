@@ -21,9 +21,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static java.lang.String.format;
+
 public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserRoleDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "user_role";
     private static final String SELECT_ROLE_ID_QUERY = "" +
             "SELECT *\n" +
@@ -76,6 +81,15 @@ public class UserRoleDaoImpl extends GenericDao<UserRole> implements UserRoleDao
     public UserRole getByName(String roleName) throws SQLException, ConnectionException {
 
         connectionLock.lock();
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, roleName));
+
         String sql = MessageFormat.format(SELECT_ROLE_ID_QUERY, TABLE_NAME);
         AtomicReference<UserRole> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection();

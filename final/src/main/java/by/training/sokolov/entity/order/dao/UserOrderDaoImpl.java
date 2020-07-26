@@ -21,9 +21,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE;
+import static java.lang.String.format;
+
 public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrderDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserOrderDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "user_order";
     private static final String SELECT_BUILDING_UP_ORDER_BY_USER_ID_QUERY = "" +
             "SELECT *\n" +
@@ -46,7 +51,6 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
             public UserOrder map(ResultSet resultSet) throws SQLException {
                 UserOrder userOrder = new UserOrder();
                 userOrder.setId(resultSet.getLong("id"));
-//                userOrder.setTimeOfDelivery(resultSet.getTimestamp("time_of_delivery"));
                 LocalDateTime localDateTime = resultSet.getObject("time_of_delivery", LocalDateTime.class);
                 userOrder.setTimeOfDelivery(localDateTime);
                 userOrder.setOrderStatus(OrderStatus.fromString(resultSet.getString("order_status")));
@@ -71,7 +75,6 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
             public void populateStatement(PreparedStatement statement, UserOrder entity) throws SQLException {
 
                 statement.setObject(1, entity.getTimeOfDelivery());
-//                statement.setTimestamp(1, entity.getTimeOfDelivery());
                 statement.setString(2, entity.getOrderStatus().getValue());
                 statement.setLong(3, entity.getUserId());
                 statement.setLong(4, entity.getDeliveryAddress().getId());
@@ -85,7 +88,15 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
     public UserOrder findBuildingUpUserOrder(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info("findInProgressUserOrder(Long id)--" + id);
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, id));
+
         AtomicReference<UserOrder> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BUILDING_UP_ORDER_BY_USER_ID_QUERY, TABLE_NAME);
@@ -98,9 +109,11 @@ public class UserOrderDaoImpl extends GenericDao<UserOrder> implements UserOrder
                         result.set(getUserOrderRowMapper().map(resultSet));
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
+                        return null;
                     }
                 }
             }
+            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();
         } finally {
             connectionLock.unlock();

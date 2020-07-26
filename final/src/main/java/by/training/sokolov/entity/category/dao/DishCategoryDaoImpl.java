@@ -19,9 +19,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static java.lang.String.format;
+
 public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements DishCategoryDao {
 
-    private final static Logger LOGGER = Logger.getLogger(DishCategoryDaoImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DishCategoryDaoImpl.class.getName());
+
     private static final String TABLE_NAME = "dish_category";
     private static final String SELECT_BY_NAME = "" +
             "SELECT *\n" +
@@ -63,13 +68,18 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
     @Override
     public DishCategory getByName(String categoryName) throws SQLException, ConnectionException {
 
-/*
- ! обязательно нужны кавычки в
- String roleNameColumn = "'" + userRole.getRoleName() + "'";
- */
         connectionLock.lock();
-//        String categoryNameColumn = "'" + categoryName + "'";
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, categoryName));
+
         String sql = MessageFormat.format(SELECT_BY_NAME, TABLE_NAME);
+
         AtomicReference<DishCategory> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -82,6 +92,7 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
                     LOGGER.error(e.getMessage());
                 }
             }
+            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();
         } catch (ConnectionException e) {
             LOGGER.error(e.getMessage());

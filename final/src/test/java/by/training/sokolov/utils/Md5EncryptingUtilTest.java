@@ -3,12 +3,14 @@ package by.training.sokolov.utils;
 import by.training.sokolov.util.Md5EncryptingUtil;
 import org.junit.jupiter.api.Test;
 
+import java.security.NoSuchAlgorithmException;
+
 import static org.junit.Assert.assertEquals;
 
 public class Md5EncryptingUtilTest {
 
     @Test
-    public void shouldEncryptPassword() {
+    public void shouldEncryptPassword() throws NoSuchAlgorithmException {
         String hash = "FBD5FC9D0373D3BD981AB6E6905279DD";
         String password = "Qwerty3@123";
         String encryptResult = Md5EncryptingUtil.encrypt(password);

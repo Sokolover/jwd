@@ -82,6 +82,7 @@ public class CreatingDishFormSubmitCommand implements Command {
         try {
             stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
         } catch (IllegalArgumentException e) {
+
             String message = "You have forgotten to choose a picture, please choose it now";
             LOGGER.error(message);
             return createReturnAnswer(request, message);

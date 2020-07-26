@@ -44,12 +44,16 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public Long save(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        /*
-        TODO сделать логгирование методов по образцу
-         */
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[save]", entity.toString()));
-        AtomicLong id = new AtomicLong(-1L);
 
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
+
+        AtomicLong id = new AtomicLong(-1L);
         try (Connection connection = connectionManager.getConnection()) {
             List<String> columnNames = rowMapper.getColumnNames();
             String columns = String.join(", ", columnNames);
@@ -76,7 +80,15 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public void update(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[update]", entity.toString()));
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
+
         try (Connection connection = connectionManager.getConnection()) {
             List<String> columnNames = rowMapper.getColumnNames();
             String columns = columnNames.stream()
@@ -98,7 +110,15 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public void deleteById(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[deleteById]", id));
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, id));
+
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(DELETE_BY_ID_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -114,7 +134,15 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public void delete(T entity) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), "[delete]", entity.toString()));
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, entity.toString()));
+
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(DELETE_QUERY, tableName);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -130,7 +158,14 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public T getById(Long id) throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), "[getById]", id));
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, id));
         AtomicReference<T> result = new AtomicReference<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_BY_ID_QUERY, tableName);
@@ -146,7 +181,7 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
                     }
                 }
             }
-            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), "[getById]", result.get().toString()));
+            LOGGER.info(format(CLASS_INVOKED_METHOD_AND_GOT_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, result.get().toString()));
             return result.get();
         } finally {
             connectionLock.unlock();
@@ -157,7 +192,15 @@ public class GenericDao<T extends IdentifiedRow> implements CrudDao<T> {
     public List<T> findAll() throws SQLException, ConnectionException {
 
         connectionLock.lock();
-        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), "[findAll]"));
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
+
         List<T> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
             String sql = MessageFormat.format(SELECT_ALL_QUERY, tableName);

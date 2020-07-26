@@ -7,13 +7,19 @@ import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.entity.orderitem.dao.OrderItemDao;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_MESSAGE;
+import static java.lang.String.format;
+
 public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implements OrderItemService {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderItemServiceImpl.class.getName());
 
     private final OrderItemDao orderItemDao;
     private final DishService dishService;
@@ -27,6 +33,13 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     @Transactional
     @Override
     public List<OrderItem> findAllItemsByOrderId(Long orderId) throws SQLException, ConnectionException {
+
+        String nameOfCurrentMethod = new Object(){}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
 
         List<OrderItem> orderItems = orderItemDao.findAllItemsByOrderId(orderId);
         findOrderItemsDish(orderItems);
@@ -42,6 +55,8 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
             Dish dish = dishService.getById(itemDishId);
             orderItem.setDish(dish);
         }
+
+        LOGGER.info("All items got there dishes");
     }
 
     @Override
@@ -50,7 +65,10 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
         BigDecimal dishCost = orderItem.getDish().getCost();
         Integer dishAmount = orderItem.getDishAmount();
         BigDecimal itemCost = dishCost.multiply(BigDecimal.valueOf(dishAmount));
+        LOGGER.info(format("Item cost calculated, it's value = [%d]", itemCost.longValue()));
+
         orderItem.setItemCost(itemCost);
+        LOGGER.info("Total cost has been set to item");
 
         this.save(orderItem);
     }
@@ -58,6 +76,13 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     @Override
     public OrderItem getFromCurrentOrderByDishId(Long dishId, Long userOrderId) throws ConnectionException, SQLException {
 
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod));
         return orderItemDao.getFromCurrentOrderByDishId(dishId, userOrderId);
     }
 
