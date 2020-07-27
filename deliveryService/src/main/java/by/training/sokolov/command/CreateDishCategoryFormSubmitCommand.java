@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import org.apache.log4j.Logger;

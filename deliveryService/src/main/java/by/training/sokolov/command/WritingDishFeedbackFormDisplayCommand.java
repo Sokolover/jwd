@@ -1,7 +1,8 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.service.DishService;
+import by.training.sokolov.util.JspUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static by.training.sokolov.core.constants.JspName.DISH_CREATE_FEEDBACK_JSP;
+import static by.training.sokolov.core.constants.JspName.CREATE_DISH_FEEDBACK_FORM_JSP;
 
 public class WritingDishFeedbackFormDisplayCommand implements Command {
 
@@ -28,7 +29,7 @@ public class WritingDishFeedbackFormDisplayCommand implements Command {
         JspUtil.setDishAttributeByDishParam(request, dishService);
         LOGGER.info("Command have been processed");
 
-        return DISH_CREATE_FEEDBACK_JSP;
+        return CREATE_DISH_FEEDBACK_FORM_JSP;
     }
 
 }

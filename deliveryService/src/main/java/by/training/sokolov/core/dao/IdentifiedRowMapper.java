@@ -1,6 +1,6 @@
 package by.training.sokolov.core.dao;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;

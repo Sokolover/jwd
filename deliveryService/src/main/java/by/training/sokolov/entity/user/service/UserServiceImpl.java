@@ -1,8 +1,8 @@
 package by.training.sokolov.entity.user.service;
 
 import by.training.sokolov.core.service.GenericServiceImpl;
-import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.db.Transactional;
+import by.training.sokolov.database.connection.ConnectionException;
+import by.training.sokolov.database.connection.Transactional;
 import by.training.sokolov.entity.loyalty.dao.LoyaltyDao;
 import by.training.sokolov.entity.loyalty.model.Loyalty;
 import by.training.sokolov.entity.role.dao.UserRoleDao;

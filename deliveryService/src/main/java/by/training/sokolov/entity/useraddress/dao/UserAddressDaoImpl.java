@@ -2,7 +2,7 @@ package by.training.sokolov.entity.useraddress.dao;
 
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.useraddress.model.UserAddress;
 import org.apache.log4j.Logger;
 

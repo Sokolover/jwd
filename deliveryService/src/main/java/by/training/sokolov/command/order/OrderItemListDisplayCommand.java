@@ -1,14 +1,14 @@
 package by.training.sokolov.command.order;
 
-import by.training.sokolov.command.CategoryNameUtil;
 import by.training.sokolov.command.Command;
-import by.training.sokolov.command.JspUtil;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
+import by.training.sokolov.util.CategoryNameUtil;
+import by.training.sokolov.util.JspUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.ERROR_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_LIST_JSP_ATTRIBUTE;
-import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
@@ -52,7 +52,7 @@ public class OrderItemListDisplayCommand implements Command {
             LOGGER.error(message);
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
-            return ERROR_MESSAGE_JSP;
+            return COMMAND_RESULT_MESSAGE_JSP;
         }
 
         JspUtil.setCategoriesAttribute(request, dishCategoryService);

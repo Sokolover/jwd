@@ -1,7 +1,7 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.entity.order.model.UserOrder;
@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
@@ -59,7 +59,7 @@ public class OrderItemAddCommand implements Command {
             LOGGER.error(message);
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
-            return ERROR_MESSAGE_JSP;
+            return COMMAND_RESULT_MESSAGE_JSP;
         }
 
         Long currentUserOrderId = currentOrder.getId();
@@ -81,7 +81,7 @@ public class OrderItemAddCommand implements Command {
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
         }
 
-        return VIEW_ORDER_DISH_LIST_RESULT;
+        return ORDER_ITEM_LIST_JSP;
     }
 
     private void addItemToOrder(HttpServletRequest request, Long currentUserOrderId) throws SQLException, ConnectionException {

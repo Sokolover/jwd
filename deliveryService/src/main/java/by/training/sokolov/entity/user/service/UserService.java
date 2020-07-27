@@ -1,7 +1,7 @@
 package by.training.sokolov.entity.user.service;
 
 import by.training.sokolov.core.service.GenericService;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 
 import java.sql.SQLException;

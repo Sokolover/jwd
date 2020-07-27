@@ -1,9 +1,9 @@
 package by.training.sokolov.entity.order.service;
 
-import by.training.sokolov.core.context.SecurityContext;
+import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.core.service.GenericServiceImpl;
-import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.db.Transactional;
+import by.training.sokolov.database.connection.ConnectionException;
+import by.training.sokolov.database.connection.Transactional;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.deliveryaddress.service.DeliveryAddressService;
 import by.training.sokolov.entity.order.dao.UserOrderDao;

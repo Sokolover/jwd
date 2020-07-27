@@ -1,7 +1,7 @@
 package by.training.sokolov.entity.category.service;
 
 import by.training.sokolov.core.service.GenericServiceImpl;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.dao.DishCategoryDao;
 import by.training.sokolov.entity.category.model.DishCategory;
 

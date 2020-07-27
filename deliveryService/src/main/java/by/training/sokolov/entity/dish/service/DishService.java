@@ -1,7 +1,7 @@
 package by.training.sokolov.entity.dish.service;
 
 import by.training.sokolov.core.service.GenericService;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.model.Dish;
 
 import java.sql.SQLException;

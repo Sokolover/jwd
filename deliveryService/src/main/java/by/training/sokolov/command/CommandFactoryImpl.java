@@ -1,12 +1,11 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.command.constants.CommandType;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.DEFAULT_RESULT;
+import static by.training.sokolov.core.constants.JspName.DEFAULT_JSP;
 import static java.lang.String.format;
 
 public class CommandFactoryImpl implements CommandFactory {
@@ -28,6 +27,6 @@ public class CommandFactoryImpl implements CommandFactory {
         LOGGER.info(format("Get command from param: [%s]", commandParam));
         return CommandType.of(commandParam)
                 .map(commands::get)
-                .orElse(((request, response) -> DEFAULT_RESULT));
+                .orElse(((request, response) -> DEFAULT_JSP));
     }
 }

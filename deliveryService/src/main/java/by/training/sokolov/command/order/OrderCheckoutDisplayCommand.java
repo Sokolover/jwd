@@ -1,7 +1,7 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.CHECKOUT_JSP;
-import static by.training.sokolov.core.constants.JspName.ERROR_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.ORDER_CHECKOUT_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
 
@@ -47,7 +47,7 @@ public class OrderCheckoutDisplayCommand implements Command {
             String message = "Please create order or login (because of session timeout)";
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
-            return ERROR_MESSAGE_JSP;
+            return COMMAND_RESULT_MESSAGE_JSP;
         }
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
@@ -55,7 +55,7 @@ public class OrderCheckoutDisplayCommand implements Command {
             String message = "Please add items to your order";
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
-            return ERROR_MESSAGE_JSP;
+            return COMMAND_RESULT_MESSAGE_JSP;
         }
 
         request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
@@ -69,6 +69,6 @@ public class OrderCheckoutDisplayCommand implements Command {
         request.setAttribute(TIME_LIST_JSP_ATTRIBUTE, localDateTimeList);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, TIME_LIST_JSP_ATTRIBUTE));
 
-        return CHECKOUT_JSP;
+        return ORDER_CHECKOUT_FORM_JSP;
     }
 }

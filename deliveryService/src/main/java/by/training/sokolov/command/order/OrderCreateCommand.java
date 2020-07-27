@@ -1,8 +1,8 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.core.context.SecurityContext;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.context.SecurityContext;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;

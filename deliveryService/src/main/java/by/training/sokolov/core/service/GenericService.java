@@ -1,6 +1,6 @@
 package by.training.sokolov.core.service;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 
 import java.sql.SQLException;
 import java.util.List;

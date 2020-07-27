@@ -1,7 +1,7 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.context.SecurityContext;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.context.SecurityContext;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
 import by.training.sokolov.entity.dishfeedback.service.DishFeedbackService;
 import by.training.sokolov.entity.user.model.User;

@@ -1,7 +1,7 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.core.context.SecurityContext;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.context.SecurityContext;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
 import org.apache.log4j.Logger;
@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.LOGIN_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
@@ -70,6 +71,6 @@ public class LoginSubmitCommand implements Command {
         SecurityContext.getInstance().login(user, sessionId);
         LOGGER.info(format("User with [%s - %s] has logged in", "email", user.getEmail()));
 
-        return INDEX_SERVLET;
+        return COMMAND_RESULT_MESSAGE_JSP;
     }
 }

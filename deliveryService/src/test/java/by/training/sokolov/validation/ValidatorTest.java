@@ -1,6 +1,6 @@
 package by.training.sokolov.validation;
 
-import by.training.sokolov.core.context.ApplicationContext;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.dao.UserAccountDaoMysqlDatabaseTest;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;

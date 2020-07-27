@@ -3,8 +3,8 @@ package by.training.sokolov.entity.dish.dao;
 import by.training.sokolov.core.constants.DatabaseTableNames;
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.database.connection.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.dish.model.Dish;
 import org.apache.log4j.Logger;
 
@@ -42,7 +42,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     public DishDaoImpl(ConnectionManager connectionManager) {
         super(DISH_TABLE_NAME, getDishRowMapper(), connectionManager);
-        this.connectionManager = connectionManager;
+        DishDaoImpl.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Dish> getDishRowMapper() {

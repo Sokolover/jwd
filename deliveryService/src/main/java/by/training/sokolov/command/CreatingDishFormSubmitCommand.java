@@ -1,10 +1,11 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
+import by.training.sokolov.util.JspUtil;
 import by.training.sokolov.util.PictureEncodingUtil;
 import org.apache.log4j.Logger;
 
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
-import static by.training.sokolov.core.constants.JspName.DISH_CREATE_FORM_JSP;
+import static by.training.sokolov.core.constants.JspName.CREATE_DISH_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
@@ -114,7 +115,7 @@ public class CreatingDishFormSubmitCommand implements Command {
 
         JspUtil.setCategoriesAttribute(request, dishCategoryService);
 
-        return DISH_CREATE_FORM_JSP;
+        return CREATE_DISH_FORM_JSP;
     }
 
 }

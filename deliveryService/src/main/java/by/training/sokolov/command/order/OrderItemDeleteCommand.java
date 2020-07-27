@@ -1,7 +1,7 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import org.apache.log4j.Logger;
 
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_ID_JSP_PARAM;
+import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.Long.parseLong;
@@ -39,7 +39,7 @@ public class OrderItemDeleteCommand implements Command {
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
-        return VIEW_ORDER_DISH_LIST_RESULT;
+        return ORDER_ITEM_LIST_JSP;
     }
 
 }

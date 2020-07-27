@@ -1,7 +1,7 @@
 package by.training.sokolov.entity.orderitem.service;
 
 import by.training.sokolov.core.service.GenericService;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
 
 import java.sql.SQLException;

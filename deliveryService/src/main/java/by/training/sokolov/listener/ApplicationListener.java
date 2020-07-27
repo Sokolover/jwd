@@ -1,7 +1,7 @@
 package by.training.sokolov.listener;
 
-import by.training.sokolov.core.context.ApplicationContext;
-import by.training.sokolov.core.context.SecurityContext;
+import by.training.sokolov.context.ApplicationContext;
+import by.training.sokolov.context.SecurityContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;

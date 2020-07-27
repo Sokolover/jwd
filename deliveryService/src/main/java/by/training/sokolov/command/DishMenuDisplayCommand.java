@@ -1,9 +1,11 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
+import by.training.sokolov.util.CategoryNameUtil;
+import by.training.sokolov.util.JspUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

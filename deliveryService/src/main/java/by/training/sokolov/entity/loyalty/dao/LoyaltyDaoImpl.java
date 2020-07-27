@@ -2,7 +2,7 @@ package by.training.sokolov.entity.loyalty.dao;
 
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.loyalty.model.Loyalty;
 import org.apache.log4j.Logger;
 

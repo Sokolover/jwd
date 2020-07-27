@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
 import by.training.sokolov.validation.BeanValidator;
@@ -76,7 +76,7 @@ public class RegisterUserCommand implements Command {
                 LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
                 LOGGER.error(e.getMessage());
 
-                return LOGIN_JSP;
+                return REGISTER_JSP;
             }
 
             newUser.setPassword(encryptedPassword);
@@ -94,7 +94,7 @@ public class RegisterUserCommand implements Command {
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
 
-                    return USER_REGISTER_JSP;
+                    return REGISTER_JSP;
                 }
 
                 if (user.getEmail().equalsIgnoreCase(email)) {
@@ -103,7 +103,7 @@ public class RegisterUserCommand implements Command {
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
 
-                    return USER_REGISTER_JSP;
+                    return REGISTER_JSP;
                 }
             }
 
@@ -130,7 +130,7 @@ public class RegisterUserCommand implements Command {
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
 
-            return ERROR_MESSAGE_JSP;
+            return REGISTER_JSP;
         }
 
     }

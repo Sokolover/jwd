@@ -1,6 +1,6 @@
 package by.training.sokolov.util;
 
-import by.training.sokolov.core.context.ApplicationContext;
+import by.training.sokolov.context.ApplicationContext;
 import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;

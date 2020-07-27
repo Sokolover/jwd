@@ -2,8 +2,8 @@ package by.training.sokolov.entity.role.dao;
 
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
-import by.training.sokolov.db.ConnectionException;
-import by.training.sokolov.db.ConnectionManager;
+import by.training.sokolov.database.connection.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.role.model.UserRole;
 import by.training.sokolov.entity.user.dao.UserAccountTableConstants;
 import by.training.sokolov.entity.user.model.User;

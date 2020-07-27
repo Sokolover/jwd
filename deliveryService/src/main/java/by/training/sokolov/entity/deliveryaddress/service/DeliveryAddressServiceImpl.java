@@ -1,7 +1,7 @@
 package by.training.sokolov.entity.deliveryaddress.service;
 
 import by.training.sokolov.core.service.GenericServiceImpl;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressDao;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDao;

@@ -2,7 +2,7 @@ package by.training.sokolov.core.service;
 
 import by.training.sokolov.core.dao.CrudDao;
 import by.training.sokolov.core.dao.IdentifiedRow;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;

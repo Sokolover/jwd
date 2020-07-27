@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.command.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <aside class="menu">
 
-    <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.core.context.SecurityContext"/>
+    <jsp:useBean id="securityContext" scope="application" class="by.training.sokolov.context.SecurityContext"/>
     <div class="navbar-brand">
         <c:choose>
             <c:when test="${userLoggedIn}">

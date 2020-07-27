@@ -1,6 +1,6 @@
 package by.training.sokolov.command;
 
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.service.DishService;
 import org.apache.log4j.Logger;
 
@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-import static by.training.sokolov.command.constants.CommandReturnValues.VIEW_ORDER_DISH_LIST_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.DISH_ID_JSP_PARAM;
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.Long.parseLong;
@@ -38,7 +38,7 @@ public class DeleteDishCommand implements Command {
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
 
-        return VIEW_ORDER_DISH_LIST_RESULT;
+        return DISH_LIST_JSP;
     }
 
 }

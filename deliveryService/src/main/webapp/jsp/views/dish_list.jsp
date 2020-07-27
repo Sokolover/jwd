@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="by.training.sokolov.command.constants.CommandType" %>
+<%@ page import="by.training.sokolov.command.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
 
 <div class="dishPage">
@@ -95,7 +95,7 @@
                             </form>
 
                             <jsp:useBean id="securityContext" scope="application"
-                                         class="by.training.sokolov.core.context.SecurityContext"/>
+                                         class="by.training.sokolov.context.SecurityContext"/>
                             <c:if test="${securityContext.canExecute(CommandType.UPDATE_DISH_FORM_DISPLAY, sessionId)}">
                                 <form action="${pageContext.request.contextPath}/menu" method="post">
                                     <div class="control is-centered">

@@ -1,7 +1,7 @@
 package by.training.sokolov.service;
 
-import by.training.sokolov.core.context.ApplicationContext;
-import by.training.sokolov.db.ConnectionException;
+import by.training.sokolov.context.ApplicationContext;
+import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 import org.apache.log4j.Logger;
