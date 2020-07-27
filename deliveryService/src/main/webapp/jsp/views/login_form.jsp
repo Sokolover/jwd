@@ -8,9 +8,11 @@
 <div class="loginContainer">
 
     <c:if test="${not empty error}">
-        <p class="title is-5 is-danger">
-            <c:out value="${error}"/>
-        </p>
+        <div class="container justifyCenter marginTop">
+            <h5 class="title is-5">
+                <p class="is-danger"><c:out value="${error}"/></p>
+            </h5>
+        </div>
     </c:if>
 
     <h1 class="title is-1">
@@ -19,7 +21,7 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.LOGIN_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.LOGIN_USER_SUBMIT}">
         <div class="">
             <div class="control field">
                 <label class="label">

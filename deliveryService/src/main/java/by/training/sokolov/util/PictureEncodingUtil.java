@@ -11,7 +11,7 @@ import static java.util.Objects.isNull;
 
 public final class PictureEncodingUtil {
 
-    public static String getPictureEncoded(Part picture) throws IOException, IllegalArgumentException {
+    public static String getPictureEncoded(Part picture) throws IOException {
 
         String fileName = getFileName(picture);
         if (isNull(fileName) || fileName.trim().isEmpty()) {

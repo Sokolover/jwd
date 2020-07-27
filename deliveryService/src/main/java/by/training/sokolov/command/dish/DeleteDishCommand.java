@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.dish;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.service.DishService;
 import org.apache.log4j.Logger;

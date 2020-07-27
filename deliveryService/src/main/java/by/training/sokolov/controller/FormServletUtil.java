@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.training.sokolov.core.constants.CommandReturnValues.LOGOUT_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.VIEW_NAME_JSP_PARAM;
 import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.ServletName.*;
@@ -31,9 +32,12 @@ final class FormServletUtil {
             case LOGIN_SERVLET:
             case MENU_SERVLET:
             case USER_REGISTER_SERVLET:
+            case ORDER_BASKET_SERVLET:
+            case ORDER_CHECKOUT_SERVLET:
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
-            case INDEX_SERVLET:
+            case LOGOUT_RESULT:
+//            case INDEX_SERVLET:
                 resp.sendRedirect(req.getContextPath());
                 break;
             case DEFAULT_JSP:

@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.feedback;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dishfeedback.model.DishFeedback;
@@ -14,20 +15,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
-public class WritingDishFeedbackFormSubmitCommand implements Command {
+public class CreateDishFeedbackFormSubmitCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(WritingDishFeedbackFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CreateDishFeedbackFormSubmitCommand.class.getName());
 
     private final DishFeedbackService dishFeedbackService;
 
-    public WritingDishFeedbackFormSubmitCommand(DishFeedbackService dishFeedbackService) {
+    public CreateDishFeedbackFormSubmitCommand(DishFeedbackService dishFeedbackService) {
         this.dishFeedbackService = dishFeedbackService;
     }
 
@@ -49,13 +51,22 @@ public class WritingDishFeedbackFormSubmitCommand implements Command {
 
         DishFeedback dishFeedback = dishFeedbackService.getByUserIdAndDishId(currentUserId, parseLong(dishIdString));
 
+        String message;
         if (isNull(dishFeedback)) {
+
             saveNewFeedback(currentUserId, rating, comment, dishIdString);
+            message = "New feedback saved";
         } else {
+
             updateExistingFeedback(rating, comment, dishFeedback);
+            message = "Existing feedback updated";
         }
 
-        return DISH_LIST_JSP;
+        LOGGER.info(message);
+        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
+
+        return COMMAND_RESULT_MESSAGE_JSP;
     }
 
     private void updateExistingFeedback(String rating, String comment, DishFeedback dishFeedback) throws SQLException, ConnectionException {
@@ -63,7 +74,6 @@ public class WritingDishFeedbackFormSubmitCommand implements Command {
         dishFeedback.setDishRating(parseInt(rating));
         dishFeedback.setDishComment(comment);
         dishFeedbackService.update(dishFeedback);
-        LOGGER.info("Existing feedback updated");
     }
 
     private void saveNewFeedback(Long currentUserId, String rating, String comment, String dishIdString) throws SQLException, ConnectionException {
@@ -74,6 +84,5 @@ public class WritingDishFeedbackFormSubmitCommand implements Command {
         dishFeedback.setDishComment(comment);
         dishFeedback.setDishId(parseLong(dishIdString));
         dishFeedbackService.save(dishFeedback);
-        LOGGER.info("New feedback saved");
     }
 }

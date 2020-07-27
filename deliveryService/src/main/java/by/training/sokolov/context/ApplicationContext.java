@@ -1,7 +1,13 @@
 package by.training.sokolov.context;
 
 import by.training.sokolov.command.*;
+import by.training.sokolov.command.category.CreateDishCategoryFormSubmitCommand;
+import by.training.sokolov.command.dish.*;
+import by.training.sokolov.command.feedback.CreateDishFeedbackFormDisplayCommand;
+import by.training.sokolov.command.feedback.CreateDishFeedbackFormSubmitCommand;
 import by.training.sokolov.command.order.*;
+import by.training.sokolov.command.user.LoginUserSubmitCommand;
+import by.training.sokolov.command.user.RegisterUserSubmitCommand;
 import by.training.sokolov.core.constants.CommandReturnValues;
 import by.training.sokolov.database.connection.*;
 import by.training.sokolov.entity.category.dao.DishCategoryDao;
@@ -229,13 +235,13 @@ public class ApplicationContext {
         Command deleteDishFromOrderCommand = new OrderItemDeleteCommand(orderItemProxyService);
         Command orderDishListDisplayCommand = new OrderItemListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
-        Command loginSubmitCommand = new LoginSubmitCommand(userProxyService);
-        Command registerUserCommand = new RegisterUserCommand(userProxyService, beanValidator);
+        Command loginUserSubmitCommand = new LoginUserSubmitCommand(userProxyService);
+        Command registerUserSubmitCommand = new RegisterUserSubmitCommand(userProxyService, beanValidator);
         Command dishMenuDisplayCommand = new DishMenuDisplayCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
         Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService);
-        Command dishFeedbackSubmitCommand = new WritingDishFeedbackFormSubmitCommand(dishFeedbackService);
-        Command dishFeedbackWriteCommand = new WritingDishFeedbackFormDisplayCommand(dishProxyService);
+        Command createDishFeedbackFormSubmitCommand = new CreateDishFeedbackFormSubmitCommand(dishFeedbackService);
+        Command createDishFeedbackFormDisplayCommand = new CreateDishFeedbackFormDisplayCommand(dishProxyService);
         Command creatingDishFormDisplayCommand = new CreatingDishFormDisplayCommand(dishCategoryProxyService);
         Command creatingDishFormSubmitCommand = new CreatingDishFormSubmitCommand(dishProxyService, dishCategoryService);
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
@@ -264,8 +270,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
         commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
 
-        commandFactory.registerCommand(DISH_FEEDBACK_WRITE, dishFeedbackWriteCommand);
-        commandFactory.registerCommand(DISH_FEEDBACK_SUBMIT, dishFeedbackSubmitCommand);
+        commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_DISPLAY, createDishFeedbackFormDisplayCommand);
+        commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_SUBMIT, createDishFeedbackFormSubmitCommand);
         commandFactory.registerCommand(DISH_MENU_DISPLAY, dishMenuDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, creatingDishFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, creatingDishFormSubmitCommand);
@@ -276,8 +282,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_DISPLAY, ((request, response) -> CREATE_CATEGORY_FORM_JSP));
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_SUBMIT, createDishCategoryFormSubmitCommand);
 
-        commandFactory.registerCommand(REGISTER_USER, registerUserCommand);
-        commandFactory.registerCommand(LOGIN_SUBMIT, loginSubmitCommand);
+        commandFactory.registerCommand(REGISTER_USER_SUBMIT, registerUserSubmitCommand);
+        commandFactory.registerCommand(LOGIN_USER_SUBMIT, loginUserSubmitCommand);
         commandFactory.registerCommand(LOGOUT, (request, response) -> {
             request.getSession().invalidate();
             SecurityContext.getInstance().logout(request.getSession().getId());

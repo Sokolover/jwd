@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.user;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
@@ -19,17 +20,16 @@ import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_
 import static by.training.sokolov.core.constants.JspName.LOGIN_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
-import static by.training.sokolov.core.constants.ServletName.INDEX_SERVLET;
 import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
 import static java.lang.String.format;
 
-public class LoginSubmitCommand implements Command {
+public class LoginUserSubmitCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(LoginSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginUserSubmitCommand.class.getName());
 
     private final UserService userService;
 
-    public LoginSubmitCommand(UserService userService) {
+    public LoginUserSubmitCommand(UserService userService) {
         this.userService = userService;
     }
 
@@ -70,6 +70,10 @@ public class LoginSubmitCommand implements Command {
         String sessionId = request.getSession().getId();
         SecurityContext.getInstance().login(user, sessionId);
         LOGGER.info(format("User with [%s - %s] has logged in", "email", user.getEmail()));
+
+        String message = "You have logged in successfully";
+        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }

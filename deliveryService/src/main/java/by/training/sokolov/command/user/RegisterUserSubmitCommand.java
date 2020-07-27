@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.user;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
@@ -23,14 +24,14 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
 import static java.lang.String.format;
 
-public class RegisterUserCommand implements Command {
+public class RegisterUserSubmitCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(RegisterUserCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RegisterUserSubmitCommand.class.getName());
 
     private final UserService userService;
     private final BeanValidator validator;
 
-    public RegisterUserCommand(UserService userService, BeanValidator validator) {
+    public RegisterUserSubmitCommand(UserService userService, BeanValidator validator) {
         this.userService = userService;
         this.validator = validator;
     }

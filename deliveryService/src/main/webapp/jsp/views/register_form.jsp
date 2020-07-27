@@ -13,13 +13,15 @@
         </p>
     </c:if>
 
+<%--    <jsp:include page="command_result_message.jsp"/>--%>
+
     <h1 class="title is-1">
         <fmt:message var="register" key="app.form.register"/>
         <c:out value="${register}"/>
     </h1>
 
     <form action="${pageContext.request.contextPath}/user_register" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.REGISTER_USER}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.REGISTER_USER_SUBMIT}">
         <div class="">
             <div class="control field">
                 <label class="label">

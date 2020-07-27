@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.category;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;

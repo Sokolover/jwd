@@ -12,7 +12,7 @@
 
 <div class="dishContainer">
     <div class="cardContainer">
-        <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>
+<%--        <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>--%>
         <div class="card">
             <div class="card-image">
                 <figure class="image is-4by3">

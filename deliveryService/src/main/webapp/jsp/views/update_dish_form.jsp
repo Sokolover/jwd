@@ -14,14 +14,17 @@
 
 <div class="container feedbackPageContainer">
 
-    <h5 class="title is-5">
-        <c:if test="${not empty error}">
-            <p class="is-danger"><c:out value="${error}"/></p>
-        </c:if>
-    </h5>
+<%--    <h5 class="title is-5">--%>
+<%--        <c:if test="${not empty error}">--%>
+<%--            <p class="is-danger"><c:out value="${error}"/></p>--%>
+<%--        </c:if>--%>
+<%--    </h5>--%>
 
-    <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>
+    <jsp:include page="command_result_message.jsp"/>
+
+<%--    <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>--%>
     <div class="feedbackContainer">
+<%--        <form class="feedbackArea" action="${pageContext.request.contextPath}/menu" method="post"--%>
         <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post"
               enctype="multipart/form-data">
             <input type="hidden"

@@ -21,10 +21,10 @@
         </p>
     </c:if>
 
-    <div class="title is-3">
+    <h5 class="title is-5">
         <fmt:message var="createCategory" key="app.form.create.category"/>
         <c:out value="${createCategory}"/>
-    </div>
+    </h5>
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"

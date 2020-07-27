@@ -15,11 +15,7 @@
 
     <jsp:include page="dish_category.jsp"/>
 
-    <c:if test="${not empty message}">
-        <h5 class="title is-5">
-            <c:out value="${message}"/>
-        </h5>
-    </c:if>
+    <jsp:include page="command_result_message.jsp"/>
 
     <div class="dishContainer">
         <jsp:useBean id="dishes" scope="request" type="java.util.List"/>
@@ -86,7 +82,7 @@
                                         <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                value="${dish.id}">
                                         <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
-                                               value="${CommandType.DISH_FEEDBACK_WRITE}">
+                                               value="${CommandType.CREATE_DISH_FEEDBACK_FORM_DISPLAY}">
                                         <fmt:message var="writeFeedback" key="button.feedback.write"/>
                                         <input class="button is-light is-small is-rounded" type="submit"
                                                value="${writeFeedback}">

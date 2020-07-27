@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.dish;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
@@ -18,8 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
-import static by.training.sokolov.core.constants.JspName.CREATE_DISH_FORM_JSP;
+import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.Long.parseLong;
@@ -51,22 +51,11 @@ public class UpdateDishFormSubmitCommand implements Command {
 
         updateDishName(request, dish);
         if (!updateDishCost(request, dish)) {
-            return CREATE_DISH_FORM_JSP;
+            return UPDATE_DISH_FORM_JSP;
         }
         updateDishDescription(request, dish);
         updateDishCategory(request, dish);
-
-        try {
-            updateDishPicture(request, dish);
-        } catch (IllegalArgumentException e) {
-
-            String message = "You have forgotten to choose a picture, please choose it now";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-            LOGGER.error(message);
-
-            return COMMAND_RESULT_MESSAGE_JSP;
-        }
+        updateDishPicture(request, dish);
 
         dishService.update(dish);
 
@@ -81,10 +70,17 @@ public class UpdateDishFormSubmitCommand implements Command {
 
         Part picture = request.getPart(DISH_PICTURE_JSP_PARAM);
 
-        String stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
-        dish.setPicture(stringPicture);
+        try {
 
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_PICTURE_JSP_PARAM, stringPicture.substring(0, 20)));
+            String stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
+            dish.setPicture(stringPicture);
+            LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_PICTURE_JSP_PARAM, stringPicture.substring(0, 20)));
+            LOGGER.info("Dish picture has been updated");
+
+        } catch (IllegalArgumentException e) {
+
+            LOGGER.info("Dish picture hasn't been updated");
+        }
     }
 
     private void updateDishCategory(HttpServletRequest request, Dish dish) {
@@ -118,11 +114,11 @@ public class UpdateDishFormSubmitCommand implements Command {
 
         if (!costString.trim().isEmpty()) {
 
-            long costLong;
+            BigDecimal bigDecimalCost;
             try {
 
-                costLong = parseLong(costString);
-            } catch (Exception e) {
+                bigDecimalCost = new BigDecimal(costString);
+            } catch (NumberFormatException e) {
 
                 request.setAttribute(ERROR_JSP_ATTRIBUTE, "Invalid cost format");
                 List<DishCategory> dishCategories = dishCategoryService.findAll();
@@ -130,7 +126,6 @@ public class UpdateDishFormSubmitCommand implements Command {
                 return false;
             }
 
-            BigDecimal bigDecimalCost = BigDecimal.valueOf(costLong);
             dish.setCost(bigDecimalCost);
         }
         return true;

@@ -14,6 +14,7 @@
 
 <div class="checkoutContainer">
 
+    <jsp:include page="command_result_message.jsp"/>
 
     <%--dish table--%>
     <div class="tableContainer">

@@ -15,11 +15,15 @@
 
     <jsp:include page="dish_category.jsp"/>
 
-    <c:if test="${not empty message}">
-        <h5 class="title is-5">
-            <c:out value="${message}"/>
-        </h5>
-    </c:if>
+    <jsp:include page="command_result_message.jsp"/>
+
+<%--    <c:if test="${not empty message}">--%>
+<%--        <div class="container justifyCenter marginTop">--%>
+<%--            <h5 class="title is-5">--%>
+<%--                <p><c:out value="${message}"/></p>--%>
+<%--            </h5>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
 
     <div class="dishContainer">
         <jsp:useBean id="itemList" scope="request" type="java.util.List"/>

@@ -1,5 +1,6 @@
-package by.training.sokolov.command;
+package by.training.sokolov.command.dish;
 
+import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
@@ -49,27 +50,25 @@ public class CreatingDishFormSubmitCommand implements Command {
         String costString = request.getParameter(DISH_COST_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_COST_JSP_PARAM, costString));
 
-        if (costString.length() > 2) {
+//        if (costString.length() > 2 (наверное > 5/6)) {
+//
+//            return createReturnAnswer(request, "Cost must be two-digit number");
+//        }
 
-            return createReturnAnswer(request, "Cost must be two-digit number");
-        }
+//        if (bigDecimalCost < 0) {
+//
+//            return createReturnAnswer(request, "Cost can't have negative value");
+//        }
 
-        long costLong;
+        BigDecimal bigDecimalCost;
         try {
 
-            costLong = Long.parseLong(costString);
+            bigDecimalCost = new BigDecimal(costString);
         } catch (NumberFormatException e) {
 
             String message = "Invalid cost format or empty string";
             return createReturnAnswer(request, message);
         }
-
-        if (costLong < 0L) {
-
-            return createReturnAnswer(request, "Cost can't have negative value");
-        }
-
-        BigDecimal bigDecimalCost = BigDecimal.valueOf(costLong);
 
         String description = request.getParameter(DISH_DESCRIPTION_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_DESCRIPTION_JSP_PARAM, description));
