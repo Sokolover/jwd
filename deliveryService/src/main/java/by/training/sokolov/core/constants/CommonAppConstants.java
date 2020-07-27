@@ -14,8 +14,8 @@ public final class CommonAppConstants {
 
     public static final String ORDER_ITEM_ID_JSP_PARAM = "orderItem.id";
     public static final String DEFAULT_ORDER_ADDRESS_JSP_PARAM = "default.order.address";
+    public static final String ORDER_TIME_OF_DELIVERY_JSP_PARAM = "order.timeOfDelivery";
     public static final String ORDER_ITEM_LIST_JSP_ATTRIBUTE = "itemList";
-    public static final String ORDER_TIME_OF_DELIVERY_JSP_ATTRIBUTE = "order.timeOfDelivery";
 
     public static final String ORDER_DISH_AMOUNT_JSP_PARAM = "order.item.dishAmount";
     public static final String ORDER_ADDRESS_LOCALITY_JSP_ATTRIBUTE = "order.address.locality";

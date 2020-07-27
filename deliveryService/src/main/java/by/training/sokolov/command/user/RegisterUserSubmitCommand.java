@@ -18,10 +18,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.*;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.REGISTER_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
+import static by.training.sokolov.validation.CreateMessageUtil.createMessage;
 import static java.lang.String.format;
 
 public class RegisterUserSubmitCommand implements Command {
@@ -38,10 +40,6 @@ public class RegisterUserSubmitCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
-
-        /*
-        TODO добвавить константы для колонок таблиц в dao
-         */
 
         String name = request.getParameter(USER_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_NAME_JSP_PARAM, name));
@@ -85,7 +83,7 @@ public class RegisterUserSubmitCommand implements Command {
             List<User> users = userService.findAll();
             /*
             todo сделать get by email и by name запрос с чуствительностью к регистру
-             вместо этого поиска циклами. скорее всего сделатб регистрацию в userService
+             вместо этого поиска циклами.
              */
             for (User user : users) {
 
@@ -121,6 +119,7 @@ public class RegisterUserSubmitCommand implements Command {
             String message = "You have been registered successfully";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(message);
 
             return COMMAND_RESULT_MESSAGE_JSP;
 
@@ -136,21 +135,4 @@ public class RegisterUserSubmitCommand implements Command {
 
     }
 
-    private StringBuilder createMessage(List<BrokenField> brokenFields) {
-
-        StringBuilder message = new StringBuilder();
-        message.append("Invalid input in next field(s): ");
-
-        for (int i = 0; i < brokenFields.size(); i++) {
-
-            if (i == brokenFields.size() - 1) {
-                message.append(brokenFields.get(i).getFieldName());
-                break;
-            }
-            message.append(brokenFields.get(i).getFieldName());
-            message.append(", ");
-        }
-
-        return message;
-    }
 }

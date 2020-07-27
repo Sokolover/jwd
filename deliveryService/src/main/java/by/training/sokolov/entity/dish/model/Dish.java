@@ -2,13 +2,16 @@ package by.training.sokolov.entity.dish.model;
 
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.category.model.DishCategory;
+import by.training.sokolov.validation.MinLength;
 
 import java.math.BigDecimal;
 
 public class Dish implements IdentifiedRow {
 
     private Long id;
+    @MinLength(4)
     private String name;
+
     private BigDecimal cost;
     private String description;
     private String picture;

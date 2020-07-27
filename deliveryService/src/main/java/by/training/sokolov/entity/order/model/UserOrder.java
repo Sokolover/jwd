@@ -3,9 +3,16 @@ package by.training.sokolov.entity.order.model;
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.order.constants.OrderStatus;
+import by.training.sokolov.validation.MaxLength;
+import by.training.sokolov.validation.MinLength;
+import by.training.sokolov.validation.PhoneNumber;
+import by.training.sokolov.validation.ValidBean;
 
 import java.time.LocalDateTime;
 
+import static by.training.sokolov.core.constants.CommonAppConstants.PHONE_NUMBER_PATTERN;
+
+@ValidBean("userOrder")
 public class UserOrder implements IdentifiedRow {
 
     private Long id;
@@ -13,7 +20,10 @@ public class UserOrder implements IdentifiedRow {
     private OrderStatus orderStatus;
     private Long userId;
     private DeliveryAddress deliveryAddress;
+    @MinLength(5)
+    @MaxLength(20)
     private String customerName;
+    @PhoneNumber(regex = PHONE_NUMBER_PATTERN)
     private String customerPhoneNumber;
 
     public UserOrder() {

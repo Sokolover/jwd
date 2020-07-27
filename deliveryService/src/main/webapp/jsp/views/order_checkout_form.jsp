@@ -79,7 +79,7 @@
 
                     <div class="control field">
                         <label class="label">
-                            <fmt:message key="user.name"/>
+                            <fmt:message key="customer.name"/>
                             <input class="input" id="user.name" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
                                    type="text">
                         </label>
@@ -88,7 +88,7 @@
 
                     <div class="control field">
                         <label class="label">
-                            <fmt:message key="user.phoneNumber"/>
+                            <fmt:message key="customer.phoneNumber"/>
                             <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}"
                                    type="text">
                         </label>

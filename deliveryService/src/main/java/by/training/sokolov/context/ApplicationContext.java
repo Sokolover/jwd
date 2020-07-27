@@ -239,7 +239,7 @@ public class ApplicationContext {
         Command registerUserSubmitCommand = new RegisterUserSubmitCommand(userProxyService, beanValidator);
         Command dishMenuDisplayCommand = new DishMenuDisplayCommand(dishProxyService, dishCategoryProxyService);
         Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
-        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService);
+        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService, beanValidator);
         Command createDishFeedbackFormSubmitCommand = new CreateDishFeedbackFormSubmitCommand(dishFeedbackService);
         Command createDishFeedbackFormDisplayCommand = new CreateDishFeedbackFormDisplayCommand(dishProxyService);
         Command creatingDishFormDisplayCommand = new CreatingDishFormDisplayCommand(dishCategoryProxyService);

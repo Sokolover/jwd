@@ -1,6 +1,5 @@
 package by.training.sokolov.util;
 
-import by.training.sokolov.context.ApplicationContext;
 import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;
@@ -10,7 +9,7 @@ import static javax.xml.bind.DatatypeConverter.printHexBinary;
 
 public final class Md5EncryptingUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(ApplicationContext.class);
+    private static final Logger LOGGER = Logger.getLogger(Md5EncryptingUtil.class.getName());
 
     public static String encrypt(String password) throws NoSuchAlgorithmException {
 
