@@ -14,16 +14,17 @@
 
 <div class="container createDishContainer">
 
-    <h5 class="title is-5">
-        <c:if test="${not empty error}">
-            <p class="is-danger"><c:out value="${error}"/></p>
-        </c:if>
-    </h5>
 
     <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
         <input type="hidden"
                name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
                value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
+
+        <h5 class="title is-5">
+            <c:if test="${not empty error}">
+                <p class="is-danger"><c:out value="${error}"/></p>
+            </c:if>
+        </h5>
 
         <div class="">
             <div class="control field">

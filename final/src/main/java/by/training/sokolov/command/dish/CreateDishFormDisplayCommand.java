@@ -14,13 +14,13 @@ import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.JspName.CREATE_DISH_FORM_JSP;
 
-public class CreatingDishFormDisplayCommand implements Command {
+public class CreateDishFormDisplayCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(CreatingDishFormDisplayCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CreateDishFormDisplayCommand.class.getName());
 
     private final DishCategoryService dishCategoryService;
 
-    public CreatingDishFormDisplayCommand(DishCategoryService dishCategoryService) {
+    public CreateDishFormDisplayCommand(DishCategoryService dishCategoryService) {
         this.dishCategoryService = dishCategoryService;
     }
 

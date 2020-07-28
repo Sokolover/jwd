@@ -3,17 +3,25 @@ package by.training.sokolov.entity.dish.model;
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.validation.MinLength;
+import by.training.sokolov.validation.NotEmpty;
+import by.training.sokolov.validation.ValidBean;
+import by.training.sokolov.validation.cost.Digits;
+import by.training.sokolov.validation.cost.MinCost;
 
 import java.math.BigDecimal;
 
+@ValidBean("dish")
 public class Dish implements IdentifiedRow {
 
     private Long id;
     @MinLength(4)
     private String name;
-
+    @MinCost(value = "0.0", inclusive = true)
+    @Digits(integer = 3, fraction = 2)
     private BigDecimal cost;
+    @NotEmpty
     private String description;
+    @NotEmpty
     private String picture;
     private DishCategory dishCategory;
 
@@ -23,6 +31,7 @@ public class Dish implements IdentifiedRow {
 
     @Override
     public String toString() {
+
         return "Dish{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

@@ -28,7 +28,9 @@ import static java.lang.String.format;
 public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class.getName());
-
+/*
+todo исправить здесь и проверить где ещё нужны параметризированные запросы!
+ */
     private static final String SELECT_BY_DISH_CATEGORY_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +

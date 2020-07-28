@@ -49,6 +49,8 @@ import by.training.sokolov.entity.useraddress.dao.UserAddressDaoImpl;
 import by.training.sokolov.entity.wallet.dao.WalletDao;
 import by.training.sokolov.entity.wallet.dao.WalletDaoImpl;
 import by.training.sokolov.validation.*;
+import by.training.sokolov.validation.cost.Digits;
+import by.training.sokolov.validation.cost.MinCost;
 import by.training.sokolov.validation.impl.*;
 import org.apache.log4j.Logger;
 
@@ -223,9 +225,12 @@ public class ApplicationContext {
         Map<Class<? extends Annotation>, FieldValidator> validatorMap = new HashMap<>();
         validatorMap.put(MaxLength.class, new MaxLengthFieldValidator());
         validatorMap.put(MinLength.class, new MinLengthFieldValidator());
+        validatorMap.put(NotEmpty.class, new NotEmptyFieldValidator());
         validatorMap.put(Email.class, new EmailFieldValidator());
         validatorMap.put(Password.class, new PasswordFieldValidator());
         validatorMap.put(PhoneNumber.class, new PhoneNumberFieldValidator());
+        validatorMap.put(MinCost.class, new MinCostFieldValidator());
+        validatorMap.put(Digits.class, new DigitsFieldValidator());
         BeanValidator beanValidator = new AnnotationBasedBeanValidator(validatorMap);
 
         LOGGER.info("Bean validator initialized");
@@ -242,8 +247,8 @@ public class ApplicationContext {
         Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService, beanValidator);
         Command createDishFeedbackFormSubmitCommand = new CreateDishFeedbackFormSubmitCommand(dishFeedbackService);
         Command createDishFeedbackFormDisplayCommand = new CreateDishFeedbackFormDisplayCommand(dishProxyService);
-        Command creatingDishFormDisplayCommand = new CreatingDishFormDisplayCommand(dishCategoryProxyService);
-        Command creatingDishFormSubmitCommand = new CreatingDishFormSubmitCommand(dishProxyService, dishCategoryService);
+        Command createDishFormDisplayCommand = new CreateDishFormDisplayCommand(dishCategoryProxyService);
+        Command createDishFormSubmitCommand = new CreateDishFormSubmitCommand(dishProxyService, dishCategoryService, beanValidator);
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
         Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
@@ -273,8 +278,8 @@ public class ApplicationContext {
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_DISPLAY, createDishFeedbackFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_SUBMIT, createDishFeedbackFormSubmitCommand);
         commandFactory.registerCommand(DISH_MENU_DISPLAY, dishMenuDisplayCommand);
-        commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, creatingDishFormDisplayCommand);
-        commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, creatingDishFormSubmitCommand);
+        commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, createDishFormDisplayCommand);
+        commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, createDishFormSubmitCommand);
         commandFactory.registerCommand(UPDATE_DISH_FORM_DISPLAY, updateDishFormDisplayCommand);
         commandFactory.registerCommand(UPDATE_DISH_FORM_SUBMIT, updateDishFormSubmitCommand);
         commandFactory.registerCommand(DELETE_DISH_FROM_MENU, deleteDishCommand);
