@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.CATEGORY_NAME_JSP_PARAM;
-import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
+import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.CREATE_CATEGORY_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
@@ -31,11 +32,13 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
-        /*
-        todo валидация
-         */
+
         String categoryName = request.getParameter(CATEGORY_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, CATEGORY_NAME_JSP_PARAM, categoryName));
+
+        if (!isUniqueCategoryName(request, categoryName)) {
+            return CREATE_CATEGORY_FORM_JSP;
+        }
 
         DishCategory dishCategory = new DishCategory();
         dishCategory.setCategoryName(categoryName);
@@ -47,5 +50,23 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
         return COMMAND_RESULT_MESSAGE_JSP;
+    }
+
+    private boolean isUniqueCategoryName(HttpServletRequest request, String categoryName) throws SQLException, ConnectionException {
+
+        List<DishCategory> dishCategories = dishCategoryService.findAll();
+
+        for (DishCategory category : dishCategories) {
+
+            if (category.getCategoryName().equalsIgnoreCase(categoryName)) {
+
+                String message = "This category is already exist";
+                request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+                LOGGER.error(message);
+
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -43,6 +43,12 @@ public class DishServiceImpl extends GenericServiceImpl<Dish> implements DishSer
         return dishes;
     }
 
+    @Override
+    public List<Dish> findAll() throws SQLException, ConnectionException {
+
+        return super.findAll();
+    }
+
     @Transactional
     @Override
     public Dish getById(Long id) throws SQLException, ConnectionException {

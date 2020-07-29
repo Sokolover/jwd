@@ -1,6 +1,7 @@
 package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.order.model.UserOrder;
@@ -55,7 +56,9 @@ public class OrderItemListDisplayCommand implements Command {
             return COMMAND_RESULT_MESSAGE_JSP;
         }
 
-        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setCategoriesAttribute(request);
+
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {

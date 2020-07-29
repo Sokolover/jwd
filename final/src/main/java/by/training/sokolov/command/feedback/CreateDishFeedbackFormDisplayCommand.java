@@ -1,6 +1,7 @@
 package by.training.sokolov.command.feedback;
 
 import by.training.sokolov.command.Command;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.util.JspUtil;
@@ -27,7 +28,8 @@ public class CreateDishFeedbackFormDisplayCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        JspUtil.setDishAttributeByDishParam(request, dishService);
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setDishAttributeByDishParam(request);
         LOGGER.info("Command have been processed");
 
         return CREATE_DISH_FEEDBACK_FORM_JSP;

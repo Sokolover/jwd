@@ -48,6 +48,7 @@ import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDaoImpl;
 import by.training.sokolov.entity.wallet.dao.WalletDao;
 import by.training.sokolov.entity.wallet.dao.WalletDaoImpl;
+import by.training.sokolov.util.JspUtil;
 import by.training.sokolov.validation.*;
 import by.training.sokolov.validation.cost.Digits;
 import by.training.sokolov.validation.cost.MinCost;
@@ -257,6 +258,9 @@ public class ApplicationContext {
 
         LOGGER.info("Commands initialized");
 
+        //utils
+        JspUtil jspUtil = new JspUtil(dishProxyService, dishCategoryProxyService);
+
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
 
@@ -313,6 +317,8 @@ public class ApplicationContext {
         beans.put(ConnectionPool.class, connectionPool);
         beans.put(TransactionManager.class, transactionManager);
         beans.put(ConnectionManager.class, connectionManager);
+
+        beans.put(JspUtil.class, jspUtil);
 
         LOGGER.info("Bean command provider initialized");
 

@@ -1,6 +1,7 @@
 package by.training.sokolov.command.dish;
 
 import by.training.sokolov.command.Command;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
@@ -35,33 +36,38 @@ public class CreateDishFormSubmitCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(CreateDishFormSubmitCommand.class.getName());
 
     private final DishService dishService;
-    private final DishCategoryService dishCategoryService;
+    //    private final DishCategoryService dishCategoryService;
     private final BeanValidator validator;
 
     public CreateDishFormSubmitCommand(DishService dishService, DishCategoryService dishCategoryService, BeanValidator validator) {
         this.dishService = dishService;
-        this.dishCategoryService = dishCategoryService;
+//        this.dishCategoryService = dishCategoryService;
         this.validator = validator;
     }
+
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        /*
-        todo аннотации валидации на картинку
-         */
-
         String name = request.getParameter(DISH_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_NAME_JSP_PARAM, name));
 
+        List<Dish> dishes = dishService.findAll();
+
+        for (Dish dish : dishes) {
+
+            if (dish.getName().equalsIgnoreCase(name)) {
+
+                String message = "Please, choose another name, dish with this name is already exist";
+                request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+                LOGGER.error(message);
+
+                return createReturnAnswer(request, message);
+            }
+        }
+
         String costString = request.getParameter(DISH_COST_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_COST_JSP_PARAM, costString));
-
-        String description = request.getParameter(DISH_DESCRIPTION_JSP_PARAM);
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_DESCRIPTION_JSP_PARAM, description));
-
-        String categoryName = request.getParameter(DISH_CATEGORY_NAME_JSP_PARAM);
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_CATEGORY_NAME_JSP_PARAM, categoryName));
 
         BigDecimal bigDecimalCost;
         try {
@@ -73,6 +79,12 @@ public class CreateDishFormSubmitCommand implements Command {
             return createReturnAnswer(request, message);
         }
 
+        String description = request.getParameter(DISH_DESCRIPTION_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_DESCRIPTION_JSP_PARAM, description));
+
+        String categoryName = request.getParameter(DISH_CATEGORY_NAME_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_CATEGORY_NAME_JSP_PARAM, categoryName));
+
         Dish dish = new Dish();
         dish.setName(name);
         dish.setCost(bigDecimalCost);
@@ -80,11 +92,12 @@ public class CreateDishFormSubmitCommand implements Command {
         DishCategory dishCategory = new DishCategory();
         dishCategory.setCategoryName(categoryName);
         dish.setDishCategory(dishCategory);
+        setDishPicture(request, dish);
 
-        String setDishPictureResult = setDishPicture(request, dish);
-//        if (!setDishPictureResult.trim().isEmpty()) {
-//            return setDishPictureResult;
-//        }
+        return validateFields(request, dish);
+    }
+
+    private String validateFields(HttpServletRequest request, Dish dish) throws SQLException, ConnectionException {
 
         ValidationResult validationResult = validator.validate(dish);
         List<BrokenField> brokenFields = validationResult.getBrokenFields();
@@ -101,30 +114,16 @@ public class CreateDishFormSubmitCommand implements Command {
 
         } else {
 
-            StringBuilder message = createMessage(brokenFields);
+            String message = createMessage(brokenFields);
 
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
 
-            return createReturnAnswer(request, new String(message));
+            return createReturnAnswer(request, message);
         }
-
-//        Part picture = request.getPart(DISH_PICTURE_JSP_PARAM);
-//        String stringPicture;
-//        try {
-//            stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
-//        } catch (IllegalArgumentException e) {
-
-//
-//            String message = "You have forgotten to choose a picture, please choose it now";
-//            LOGGER.error(message);
-//            return createReturnAnswer(request, message);
-//        }
-//        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_PICTURE_JSP_PARAM, stringPicture.substring(0, 20)));
-
     }
 
-    private String setDishPicture(HttpServletRequest request, Dish dish) throws IOException, ServletException, ConnectionException, SQLException {
+    private void setDishPicture(HttpServletRequest request, Dish dish) throws IOException, ServletException, ConnectionException, SQLException {
 
         Part picture = request.getPart(DISH_PICTURE_JSP_PARAM);
 
@@ -139,9 +138,8 @@ public class CreateDishFormSubmitCommand implements Command {
 
             String message = "Dish picture hasn't been uploaded";
             LOGGER.info(message);
-            return createReturnAnswer(request, message);
+
         }
-        return "";
     }
 
     private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
@@ -150,7 +148,8 @@ public class CreateDishFormSubmitCommand implements Command {
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
         LOGGER.error(message);
 
-        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setCategoriesAttribute(request);
 
         return CREATE_DISH_FORM_JSP;
     }

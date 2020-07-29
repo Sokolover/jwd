@@ -103,7 +103,7 @@ public class OrderCheckoutSubmitCommand implements Command {
 
         } else {
 
-            StringBuilder message = createMessage(brokenFields);
+            String message = createMessage(brokenFields);
 
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);

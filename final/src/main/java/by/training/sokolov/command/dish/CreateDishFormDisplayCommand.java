@@ -1,6 +1,7 @@
 package by.training.sokolov.command.dish;
 
 import by.training.sokolov.command.Command;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.util.JspUtil;
@@ -27,7 +28,8 @@ public class CreateDishFormDisplayCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        JspUtil.setCategoriesAttribute(request, dishCategoryService);
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setCategoriesAttribute(request);
         LOGGER.info("Command have been processed");
 
         return CREATE_DISH_FORM_JSP;

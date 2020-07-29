@@ -4,7 +4,7 @@ import java.util.List;
 
 public final class CreateMessageUtil {
 
-    public static StringBuilder createMessage(List<BrokenField> brokenFields) {
+    public static String createMessage(List<BrokenField> brokenFields) {
 
         StringBuilder message = new StringBuilder();
         message.append("Invalid input in next field(s): ");
@@ -19,6 +19,6 @@ public final class CreateMessageUtil {
             message.append(", ");
         }
 
-        return message;
+        return new String(message);
     }
 }
