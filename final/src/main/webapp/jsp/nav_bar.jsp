@@ -49,7 +49,11 @@
                                href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
                                     key="links.category.create"/></a>
                         </c:if>
-
+                        <c:if test="${securityContext.canExecute(CommandType.DELETE_DISH_CATEGORY_FORM_DISPLAY, sessionId)}">
+                            <a class="navbar-item button is-light secondary"
+                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DELETE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
+                                    key="links.category.delete"/></a>
+                        </c:if>
                         <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
                             <a class="navbar-item button is-light secondary"
                                href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message

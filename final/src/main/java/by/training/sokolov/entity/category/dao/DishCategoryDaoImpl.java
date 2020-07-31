@@ -19,8 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_AND_GOT_MESSAGE;
-import static by.training.sokolov.core.constants.LoggerConstants.CLASS_INVOKED_METHOD_FOR_ENTITY_NAME_MESSAGE;
+import static by.training.sokolov.core.constants.LoggerConstants.*;
 import static by.training.sokolov.entity.category.dao.DishCategoryTableConstants.*;
 import static java.lang.String.format;
 
@@ -30,6 +29,10 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
 
     private static final String SELECT_BY_NAME = "" +
             "SELECT *\n" +
+            "FROM {0}\n" +
+            "WHERE {1} = ?";
+    private static final String DELETE_BY_NAME_QUERY = "" +
+            "DELETE\n" +
             "FROM {0}\n" +
             "WHERE {1} = ?";
     private final Lock connectionLock = new ReentrantLock();
@@ -100,6 +103,30 @@ public class DishCategoryDaoImpl extends GenericDao<DishCategory> implements Dis
         } catch (ConnectionException e) {
             LOGGER.error(e.getMessage());
             throw e;
+        } finally {
+            connectionLock.unlock();
+        }
+    }
+
+    @Override
+    public void deleteByName(String name) throws SQLException, ConnectionException {
+
+        connectionLock.lock();
+
+        String nameOfCurrentMethod = new Object() {
+        }
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        LOGGER.info(format(CLASS_INVOKED_METHOD_FOR_ENTITY_ID_MESSAGE, this.getClass().getSimpleName(), nameOfCurrentMethod, name));
+
+        try (Connection connection = connectionManager.getConnection()) {
+            String sql = MessageFormat.format(DELETE_BY_NAME_QUERY, DISH_CATEGORY_TABLE_NAME, CATEGORY_NAME);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, name);
+                statement.executeUpdate();
+            }
         } finally {
             connectionLock.unlock();
         }

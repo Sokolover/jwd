@@ -65,9 +65,9 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
                 LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
                 LOGGER.error(message);
 
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

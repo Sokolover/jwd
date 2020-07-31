@@ -39,6 +39,13 @@
             </div>
             <div class="control field">
                 <label class="label">
+                    <fmt:message key="user.password.confirm"/>
+                    <input class="input" name="${CommonAppConstants.USER_PASSWORD_CONFIRM_JSP_PARAM}" type="password"
+                           placeholder="Password input">
+                </label>
+            </div>
+            <div class="control field">
+                <label class="label">
                     <fmt:message key="user.email"/>
                     <input class="input" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text"
                            placeholder="Text input">

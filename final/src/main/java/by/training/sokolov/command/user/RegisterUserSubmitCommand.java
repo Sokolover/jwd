@@ -52,6 +52,16 @@ public class RegisterUserSubmitCommand implements Command {
         String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, "NOT SHOWN"));
 
+        String passwordConfirm = request.getParameter(USER_PASSWORD_CONFIRM_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_CONFIRM_JSP_PARAM, "NOT SHOWN"));
+
+        if(passwordConfirm.trim().isEmpty() || !password.equals(passwordConfirm)){
+            String message = "You haven't confirmed password correctly";
+            int status = NOT_SUCCESSFUL;
+            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
+            return REGISTER_JSP;
+        }
+
         String phoneNumber = request.getParameter(USER_PHONE_NUMBER_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PHONE_NUMBER_JSP_PARAM, phoneNumber));
 
@@ -77,8 +87,8 @@ public class RegisterUserSubmitCommand implements Command {
                 LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
                 LOGGER.error(e.getMessage());
 
-                int success = 0;
-                response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, e.getMessage()));
+                int status = NOT_SUCCESSFUL;
+                response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, e.getMessage()));
 
                 return REGISTER_JSP;
             }
@@ -98,8 +108,8 @@ public class RegisterUserSubmitCommand implements Command {
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
 
-                    int success = 0;
-                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
+                    int status = NOT_SUCCESSFUL;
+                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
                     return REGISTER_JSP;
                 }
@@ -110,8 +120,8 @@ public class RegisterUserSubmitCommand implements Command {
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
 
-                    int success = 0;
-                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
+                    int status = NOT_SUCCESSFUL;
+                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
                     return REGISTER_JSP;
                 }
@@ -132,8 +142,8 @@ public class RegisterUserSubmitCommand implements Command {
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
             LOGGER.info(message);
 
-            int success = 1;
-            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_MESSAGE, message));
+            int status = SUCCESSFULLY;
+            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_MESSAGE, message));
 
             return COMMAND_RESULT_MESSAGE_JSP;
 
@@ -144,8 +154,8 @@ public class RegisterUserSubmitCommand implements Command {
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
 
-            int success = 0;
-            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
+            int status = NOT_SUCCESSFUL;
+            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
             return REGISTER_JSP;
         }

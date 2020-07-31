@@ -28,4 +28,10 @@ public class DishCategoryServiceImpl extends GenericServiceImpl<DishCategory> im
 
         return super.save(entity);
     }
+
+    @Override
+    public void deleteByName(String name) throws SQLException, ConnectionException {
+
+        dishCategoryDao.deleteByName(name);
+    }
 }

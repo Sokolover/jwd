@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Sokolover
-  Date: 24.07.2020
-  Time: 14:12
+  Date: 31.07.2020
+  Time: 20:14
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,7 +11,6 @@
 <%@ taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
 <%@ page import="by.training.sokolov.command.CommandType" %>
 <%@ page import="by.training.sokolov.core.constants.CommonAppConstants" %>
-
 
 <div class="loginContainer">
 
@@ -22,22 +21,24 @@
     </c:if>
 
     <h5 class="title is-5">
-        <fmt:message var="createCategory" key="app.form.create.category"/>
-        <c:out value="${createCategory}"/>
+        <fmt:message var="deleteCategory" key="app.form.delete.category"/>
+        <c:out value="${deleteCategory}"/>
     </h5>
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-               value="${CommandType.CREATE_DISH_CATEGORY_FORM_SUBMIT}">
-        <div class="control field">
-            <label class="label">
-                <input class="input" name="${CommonAppConstants.CATEGORY_NAME_JSP_PARAM}"
-                       type="text">
-            </label>
+               value="${CommandType.DELETE_DISH_CATEGORY_FORM_SUBMIT}">
+        <div class="select field">
+            <select name="${CommonAppConstants.DISH_CATEGORY_NAME_JSP_PARAM}">
+                <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
+                <c:forEach items="${categoryList}" var="category">
+                    <option value="${category.categoryName}">${category.categoryName}</option>
+                </c:forEach>
+            </select>
         </div>
         <div class="field control marginTop">
-            <fmt:message var="createLabel" key="button.category.create"/>
-            <input class="button is-light secondary" type="submit" value="${createLabel}">
+            <fmt:message var="deleteLabel" key="button.category.delete"/>
+            <input class="button is-light secondary" type="submit" value="${deleteLabel}">
         </div>
     </form>
 </div>

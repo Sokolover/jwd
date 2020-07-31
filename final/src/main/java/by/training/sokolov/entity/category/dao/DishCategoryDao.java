@@ -9,4 +9,6 @@ import java.sql.SQLException;
 public interface DishCategoryDao extends CrudDao<DishCategory> {
 
     DishCategory getByName(String categoryName) throws SQLException, ConnectionException;
+
+    void deleteByName(String name) throws SQLException, ConnectionException;
 }

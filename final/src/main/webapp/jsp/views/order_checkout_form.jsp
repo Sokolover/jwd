@@ -113,7 +113,7 @@
                             <c:out value="${timeOfDelivery}"/>
                         </h5>
                         <div class="select">
-                            <select name="order.timeOfDelivery">
+                            <select name="${CommonAppConstants.ORDER_TIME_OF_DELIVERY_JSP_PARAM}">
                                 <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
                                 <c:forEach items="${timeList}" var="time">
                                     <option value="${time}">

@@ -15,6 +15,14 @@
         </div>
     </c:if>
 
+    <c:if test="${not empty message}">
+        <div class="container justifyCenter marginTop">
+            <h5 class="title is-5">
+                <p><c:out value="${message}"/></p>
+            </h5>
+        </div>
+    </c:if>
+
     <h1 class="title is-1">
         <fmt:message var="login" key="app.form.login"/>
         <c:out value="${login}"/>

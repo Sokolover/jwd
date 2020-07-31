@@ -34,20 +34,16 @@ public class DisplayRegisterServlet extends HttpServlet {
         try {
             int success = Integer.parseInt(req.getParameter(QUERY_PARAM_SUCCESS));
 /*
-todo упростить:
-        сделать отправку только сообщения от команды /?message=...
-        без /?success=1&message=...
-        @
+todo
         req.setAttribute(VIEW_NAME_JSP_PARAM, COMMAND_RESULT_MESSAGE_JSP);
-        req.setAttribute(VIEW_NAME_JSP_PARAM, REGISTER_JSP);
-        представить как         req.setAttribute(VIEW_NAME_JSP_PARAM, REGISTER_JSP);
-        с сообщением в шапке
+        представить как req.setAttribute(VIEW_NAME_JSP_PARAM, LOGIN_JSP); т.е. предложение залогинится
+        С ИНФОРМАЦИЕЙ ЧТО ЗАРЕГЕСТРИРОВАН УСПЕШНО
  */
-            if (success == 1) {
+            if (success == SUCCESSFULLY) {
 
                 String message = req.getParameter(QUERY_PARAM_MESSAGE);
                 req.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-                req.setAttribute(VIEW_NAME_JSP_PARAM, COMMAND_RESULT_MESSAGE_JSP);
+                req.setAttribute(VIEW_NAME_JSP_PARAM, LOGIN_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
             } else {
 

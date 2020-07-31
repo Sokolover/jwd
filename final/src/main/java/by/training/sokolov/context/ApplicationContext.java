@@ -1,7 +1,11 @@
 package by.training.sokolov.context;
 
-import by.training.sokolov.command.*;
+import by.training.sokolov.command.Command;
+import by.training.sokolov.command.CommandFactory;
+import by.training.sokolov.command.CommandFactoryImpl;
 import by.training.sokolov.command.category.CreateDishCategoryFormSubmitCommand;
+import by.training.sokolov.command.category.DeleteDishCategoryFormDisplayCommand;
+import by.training.sokolov.command.category.DeleteDishCategoryFormSubmitCommand;
 import by.training.sokolov.command.dish.*;
 import by.training.sokolov.command.feedback.CreateDishFeedbackFormDisplayCommand;
 import by.training.sokolov.command.feedback.CreateDishFeedbackFormSubmitCommand;
@@ -237,7 +241,6 @@ public class ApplicationContext {
         LOGGER.info("Bean validator initialized");
 
         //commands
-//        Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
         Command deleteDishFromOrderCommand = new OrderItemDeleteCommand(orderItemProxyService);
         Command orderDishListDisplayCommand = new OrderItemListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
@@ -253,8 +256,9 @@ public class ApplicationContext {
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
         Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
-//        Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
         Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
+        Command deleteDishCategoryFormSubmitCommand = new DeleteDishCategoryFormSubmitCommand(dishCategoryProxyService);
+        Command deleteDishCategoryFormDisplayCommand = new DeleteDishCategoryFormDisplayCommand(dishCategoryProxyService);
 
         LOGGER.info("Commands initialized");
 
@@ -272,12 +276,10 @@ public class ApplicationContext {
         commandFactory.registerCommand(INDEX, (request, response) -> INDEX_SERVLET);
 
         commandFactory.registerCommand(DELETE_DISH_FROM_ORDER, deleteDishFromOrderCommand);
-//        commandFactory.registerCommand(CREATE_ORDER, createOrderCommand);
         commandFactory.registerCommand(ORDER_ITEM_LIST_DISPLAY, orderDishListDisplayCommand);
         commandFactory.registerCommand(ADD_ITEM_TO_ORDER, orderItemAddCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
-//        commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
 
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_DISPLAY, createDishFeedbackFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_SUBMIT, createDishFeedbackFormSubmitCommand);
@@ -290,6 +292,9 @@ public class ApplicationContext {
 
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_DISPLAY, ((request, response) -> CREATE_CATEGORY_FORM_JSP));
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_SUBMIT, createDishCategoryFormSubmitCommand);
+
+        commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_DISPLAY, deleteDishCategoryFormDisplayCommand);
+        commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_SUBMIT, deleteDishCategoryFormSubmitCommand);
 
         commandFactory.registerCommand(REGISTER_USER_SUBMIT, registerUserSubmitCommand);
         commandFactory.registerCommand(LOGIN_USER_SUBMIT, loginUserSubmitCommand);

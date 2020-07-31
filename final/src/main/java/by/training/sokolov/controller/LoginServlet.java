@@ -47,7 +47,6 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/" + viewName);
                 break;
             case LOGOUT_RESULT:
-//            case INDEX_SERVLET:
                 resp.sendRedirect(req.getContextPath());
                 break;
             case DEFAULT_JSP:

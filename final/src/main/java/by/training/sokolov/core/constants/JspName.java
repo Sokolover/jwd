@@ -15,7 +15,11 @@ public final class JspName {
 
     public static final String ORDER_CHECKOUT_FORM_JSP = "order_checkout_form";
     public static final String CREATE_DISH_FEEDBACK_FORM_JSP = "create_dish_feedback_form";
+
     public static final String CREATE_CATEGORY_FORM_JSP = "create_category_form";
+    public static final String DELETE_CATEGORY_FORM_JSP = "delete_category_form";
+
+
     public static final String CREATE_DISH_FORM_JSP = "create_dish_form";
     public static final String UPDATE_DISH_FORM_JSP = "update_dish_form";
 
