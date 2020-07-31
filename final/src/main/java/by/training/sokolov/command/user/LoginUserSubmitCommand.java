@@ -40,8 +40,9 @@ public class LoginUserSubmitCommand implements Command {
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_EMAIL_JSP_PARAM, email));
 
         String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
-        String encryptedPassword;
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, "NOT SHOWN"));
 
+        String encryptedPassword;
         try {
 
             encryptedPassword = encrypt(password);

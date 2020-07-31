@@ -44,10 +44,10 @@ final class FormServletUtil {
                 req.setAttribute(VIEW_NAME_JSP_PARAM, formJspName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
-            default:
-                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
-                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
-                break;
+//            default:
+//                req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
+//                req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
+//                break;
         }
     }
 }

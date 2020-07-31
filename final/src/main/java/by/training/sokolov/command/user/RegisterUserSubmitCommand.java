@@ -22,6 +22,7 @@ import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_
 import static by.training.sokolov.core.constants.JspName.REGISTER_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
+import static by.training.sokolov.core.constants.ServletName.DISPLAY_REGISTER_SERVLET;
 import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
 import static by.training.sokolov.validation.CreateMessageUtil.createMessage;
 import static java.lang.String.format;
@@ -29,6 +30,7 @@ import static java.lang.String.format;
 public class RegisterUserSubmitCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(RegisterUserSubmitCommand.class.getName());
+
 
     private final UserService userService;
     private final BeanValidator validator;
@@ -48,7 +50,7 @@ public class RegisterUserSubmitCommand implements Command {
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_EMAIL_JSP_PARAM, email));
 
         String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, "..."));
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, "NOT SHOWN"));
 
         String phoneNumber = request.getParameter(USER_PHONE_NUMBER_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PHONE_NUMBER_JSP_PARAM, phoneNumber));
@@ -75,6 +77,9 @@ public class RegisterUserSubmitCommand implements Command {
                 LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
                 LOGGER.error(e.getMessage());
 
+                int success = 0;
+                response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, e.getMessage()));
+
                 return REGISTER_JSP;
             }
 
@@ -93,6 +98,9 @@ public class RegisterUserSubmitCommand implements Command {
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
 
+                    int success = 0;
+                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
+
                     return REGISTER_JSP;
                 }
 
@@ -101,6 +109,9 @@ public class RegisterUserSubmitCommand implements Command {
                     String message = "User with this email has been registered";
                     request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                     LOGGER.error(message);
+
+                    int success = 0;
+                    response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
 
                     return REGISTER_JSP;
                 }
@@ -121,6 +132,9 @@ public class RegisterUserSubmitCommand implements Command {
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
             LOGGER.info(message);
 
+            int success = 1;
+            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_MESSAGE, message));
+
             return COMMAND_RESULT_MESSAGE_JSP;
 
         } else {
@@ -129,6 +143,9 @@ public class RegisterUserSubmitCommand implements Command {
 
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
+
+            int success = 0;
+            response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, success, QUERY_PARAM_ERROR, message));
 
             return REGISTER_JSP;
         }

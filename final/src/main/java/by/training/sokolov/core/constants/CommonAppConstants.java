@@ -56,6 +56,15 @@ public final class CommonAppConstants {
     public static final String QUERY_PARAM_PAGE = "_page";
     public static final String QUERY_PARAM_COOKIE_NAME_LANG = "lang";
 
+    public static final String REDIRECT_FORMAT = "%s/%s";
+
+    public static final String REGISTER_REDIRECT_WITH_PARAMS_FORMAT = "%s/%s?%s=%d&%s=%s";
+    public static final String QUERY_PARAM_SUCCESS = "success";
+    public static final String QUERY_PARAM_ERROR = "error";
+    public static final String QUERY_PARAM_MESSAGE = "message";
+    public static final String QUERY_VALUE_PASSWORD_ERROR = "password";
+
+
     public static final String COMMAND_SECURITY_PROPERTY = "command.";
 
     public static final String NUMBER_OF_PAGES_JSP_ATTRIBUTE = "numberOfPages";
