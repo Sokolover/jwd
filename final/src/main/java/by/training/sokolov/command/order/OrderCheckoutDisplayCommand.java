@@ -2,7 +2,6 @@ package by.training.sokolov.command.order;
 
 import by.training.sokolov.command.Command;
 import by.training.sokolov.database.connection.ConnectionException;
-import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
@@ -41,14 +40,16 @@ public class OrderCheckoutDisplayCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        UserOrder currentOrder = userOrderService.getCurrentUserOrder(request.getSession().getId());
+        UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(request.getSession().getId());
 
-        if (Objects.isNull(currentOrder) || currentOrder.getOrderStatus() != OrderStatus.BUILD_UP) {
-            String message = "Please create order or login (because of session timeout)";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.error(message);
-            return COMMAND_RESULT_MESSAGE_JSP;
-        }
+
+
+//        if (Objects.isNull(currentOrder) || currentOrder.getOrderStatus() != OrderStatus.BUILD_UP) {
+//            String message = "Please create order or login (because of session timeout)";
+//            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+//            LOGGER.error(message);
+//            return COMMAND_RESULT_MESSAGE_JSP;
+//        }
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
         if (Objects.isNull(orderItems) || orderItems.isEmpty()) {

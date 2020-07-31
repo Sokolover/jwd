@@ -20,7 +20,7 @@ public class PhoneNumberFieldValidator implements FieldValidator {
             try {
                 String fieldValue = (String) field.get(entity);
                 if (fieldValue != null
-                        && !fieldValue.isEmpty()
+                        && fieldValue.isEmpty()
                         && !pattern.matcher(fieldValue).find()) {
                     return new BrokenField(field.getName(), fieldValue, "phoneNumber");
                 }

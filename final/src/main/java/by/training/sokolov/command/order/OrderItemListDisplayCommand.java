@@ -17,11 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.ERROR_JSP_ATTRIBUTE;
 import static by.training.sokolov.core.constants.CommonAppConstants.ORDER_ITEM_LIST_JSP_ATTRIBUTE;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
@@ -44,17 +41,7 @@ public class OrderItemListDisplayCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String sessionId = request.getSession().getId();
-        UserOrder userOrder = userOrderService.getCurrentUserOrder(sessionId);
-
-        if (Objects.isNull(userOrder)) {
-
-            String message = "Please, create order or login (session timeout)";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.error(message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-
-            return COMMAND_RESULT_MESSAGE_JSP;
-        }
+        UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);
 
         JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
         jspUtil.setCategoriesAttribute(request);
@@ -63,17 +50,17 @@ public class OrderItemListDisplayCommand implements Command {
 
         if (categoryNames.isEmpty() || categoryNames.get(0).equals(CategoryNameUtil.ALL_CATEGORIES)) {
 
-            List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(userOrder.getId());
+            List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
             request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
-            LOGGER.info("All items will be shown");
+            LOGGER.info("All found items will be shown");
 
             return ORDER_ITEM_LIST_JSP;
         }
 
         List<OrderItem> filteredOrderItems = new ArrayList<>();
         for (String categoryName : categoryNames) {
-            List<OrderItem> orderItems = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, userOrder.getId());
+            List<OrderItem> orderItems = orderItemService.getFromCurrentOrderByDishCategoryName(categoryName, currentOrder.getId());
             if (orderItems.isEmpty()) {
                 continue;
             }

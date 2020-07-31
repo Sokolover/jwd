@@ -6,6 +6,7 @@ import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.database.connection.Transactional;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.deliveryaddress.service.DeliveryAddressService;
+import by.training.sokolov.entity.order.constants.OrderStatus;
 import by.training.sokolov.entity.order.dao.UserOrderDao;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
@@ -42,7 +43,7 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
 
     @Transactional
     @Override
-    public void createNewOrder(User user) throws SQLException, ConnectionException {
+    public UserOrder createNewOrder(User user) throws SQLException, ConnectionException {
 
         UserOrder userOrder = new UserOrder();
         userOrder.setUserId(user.getId());
@@ -62,37 +63,46 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
         userOrder.setDeliveryAddress(userDeliveryAddress);
         LOGGER.info(format(SET_TO_USER_ORDER_MESSAGE, "Delivery address"));
 
-        userOrderDao.save(userOrder);
-    }
+        Long id = userOrderDao.save(userOrder);
 
-    @Transactional
-    @Override
-    public UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException {
-
-        User currentUser = SecurityContext.getInstance().getCurrentUser(id);
-        if (isNull(currentUser)) {
-            return null;
-        }
-
-        UserOrder userOrder = userOrderDao.findBuildingUpUserOrder(currentUser.getId());
-        if (isNull(userOrder)) {
-            return null;
-        }
-
-        DeliveryAddress deliveryAddress = deliveryAddressService.getById(userOrder.getDeliveryAddress().getId());
-        userOrder.setDeliveryAddress(deliveryAddress);
-        LOGGER.info(format(SET_TO_USER_ORDER_MESSAGE, "Delivery address"));
+        userOrder.setId(id);
 
         return userOrder;
     }
 
     @Transactional
     @Override
+    public UserOrder getBuildingUpUserOrder(String sessionId) throws SQLException, ConnectionException {
+
+        User currentUser = SecurityContext.getInstance().getCurrentUser(sessionId);
+
+        if (isNull(currentUser)) {
+            return null;
+        }
+
+        UserOrder buildingUpUserOrder = userOrderDao.findBuildingUpUserOrder(currentUser.getId());
+
+        if (isNull(buildingUpUserOrder) || !buildingUpUserOrder.getOrderStatus().equals(OrderStatus.BUILD_UP)) {
+
+            User user = SecurityContext.getInstance().getCurrentUser(sessionId);
+            buildingUpUserOrder = createNewOrder(user);
+
+            String message = "Order has been created now";
+            LOGGER.info(message);
+        } else {
+
+            DeliveryAddress deliveryAddress = deliveryAddressService.getById(buildingUpUserOrder.getDeliveryAddress().getId());
+            buildingUpUserOrder.setDeliveryAddress(deliveryAddress);
+            LOGGER.info(format(SET_TO_USER_ORDER_MESSAGE, "Delivery address"));
+        }
+
+        return buildingUpUserOrder;
+    }
+
+    @Transactional
+    @Override
     public BigDecimal getOrderCost(UserOrder order) throws ConnectionException, SQLException {
 
-        /*
-        todo сделать поле стоимость ордера в таблице юзер_ордер вместо этого поиска!
-         */
         String nameOfCurrentMethod = new Object() {
         }
                 .getClass()
@@ -103,6 +113,9 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(order.getId());
 
+        /*
+        todo сделать поле стоимость ордера в таблице юзер_ордер вместо этого поиска!
+         */
         BigDecimal orderCost = new BigDecimal(0);
         for (OrderItem orderItem : orderItems) {
             orderCost = orderCost.add(orderItem.getItemCost());

@@ -15,14 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
+import static java.util.Objects.isNull;
 
 public class OrderItemAddCommand implements Command {
 
@@ -45,29 +44,15 @@ public class OrderItemAddCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        /*
-        todo избавиться от дубляции кода
-         */
-
         String sessionId = request.getSession().getId();
-        UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
-
-        if (Objects.isNull(currentOrder)) {
-
-            String message = "Please, create order or login (session timeout)";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.error(message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-
-            return COMMAND_RESULT_MESSAGE_JSP;
-        }
+        UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);
 
         Long currentUserOrderId = currentOrder.getId();
         String dishIdString = request.getParameter(DISH_ID_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_ID_JSP_PARAM, dishIdString));
         Long dishIdLong = Long.parseLong(dishIdString);
 
-        if (Objects.isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
+        if (isNull(orderItemService.getFromCurrentOrderByDishId(dishIdLong, currentUserOrderId))) {
 
             addItemToOrder(request, currentUserOrderId);
             String message = "New item added to order";

@@ -30,13 +30,13 @@
                            href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
                                 key="links.basket.display"/></a>
 
-                        <a class="navbar-item button is-light secondary"
-                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_ORDER}"><fmt:message
-                                key="links.order.create"/></a>
+<%--                        <a class="navbar-item button is-light secondary"--%>
+<%--                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_ORDER}"><fmt:message--%>
+<%--                                key="links.order.create"/></a>--%>
 
-                        <a class="navbar-item button is-light secondary"
-                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DELETE_ORDER}"><fmt:message
-                                key="links.order.delete"/></a>
+<%--                        <a class="navbar-item button is-light secondary"--%>
+<%--                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DELETE_ORDER}"><fmt:message--%>
+<%--                                key="links.order.delete"/></a>--%>
 
                         <a class="navbar-item button is-light secondary"
                            href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message

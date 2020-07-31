@@ -20,7 +20,7 @@ public interface Command extends BiFunction<HttpServletRequest, HttpServletRespo
         try {
             return process(request, response);
         } catch (Exception e) {
-            throw new CommandProcessException("Failed to execute command" + this.getClass().getName(), e);
+            throw new CommandProcessException("Failed to execute command: " + this.getClass().getName(), e);
         }
     }
 }

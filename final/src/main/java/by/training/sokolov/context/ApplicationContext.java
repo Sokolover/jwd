@@ -237,7 +237,7 @@ public class ApplicationContext {
         LOGGER.info("Bean validator initialized");
 
         //commands
-        Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
+//        Command createOrderCommand = new OrderCreateCommand(userOrderProxyService);
         Command deleteDishFromOrderCommand = new OrderItemDeleteCommand(orderItemProxyService);
         Command orderDishListDisplayCommand = new OrderItemListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
         Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
@@ -253,7 +253,7 @@ public class ApplicationContext {
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
         Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
-        Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
+//        Command orderDeleteCommand = new OrderDeleteCommand(userOrderProxyService);
         Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
 
         LOGGER.info("Commands initialized");
@@ -272,12 +272,12 @@ public class ApplicationContext {
         commandFactory.registerCommand(INDEX, (request, response) -> INDEX_SERVLET);
 
         commandFactory.registerCommand(DELETE_DISH_FROM_ORDER, deleteDishFromOrderCommand);
-        commandFactory.registerCommand(CREATE_ORDER, createOrderCommand);
+//        commandFactory.registerCommand(CREATE_ORDER, createOrderCommand);
         commandFactory.registerCommand(ORDER_ITEM_LIST_DISPLAY, orderDishListDisplayCommand);
         commandFactory.registerCommand(ADD_ITEM_TO_ORDER, orderItemAddCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
         commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
-        commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
+//        commandFactory.registerCommand(DELETE_ORDER, orderDeleteCommand);
 
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_DISPLAY, createDishFeedbackFormDisplayCommand);
         commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_SUBMIT, createDishFeedbackFormSubmitCommand);

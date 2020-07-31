@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 public interface UserOrderService extends GenericService<UserOrder> {
 
-    void createNewOrder(User user) throws SQLException, ConnectionException;
-
-    UserOrder getCurrentUserOrder(String id) throws SQLException, ConnectionException;
+    UserOrder createNewOrder(User user) throws SQLException, ConnectionException;
 
     BigDecimal getOrderCost(UserOrder order) throws ConnectionException, SQLException;
+
+    UserOrder getBuildingUpUserOrder(String sessionId) throws SQLException, ConnectionException;
 }

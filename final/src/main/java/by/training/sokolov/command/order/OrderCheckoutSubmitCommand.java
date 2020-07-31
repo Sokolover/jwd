@@ -26,7 +26,6 @@ import static by.training.sokolov.core.constants.LoggerConstants.*;
 import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
 import static by.training.sokolov.validation.CreateMessageUtil.createMessage;
 import static java.lang.String.format;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 public class OrderCheckoutSubmitCommand implements Command {
@@ -47,7 +46,7 @@ public class OrderCheckoutSubmitCommand implements Command {
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
         String sessionId = request.getSession().getId();
-        UserOrder currentOrder = userOrderService.getCurrentUserOrder(sessionId);
+        UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);
         User user = SecurityContext.getInstance().getCurrentUser(sessionId);
 
 
@@ -77,11 +76,11 @@ public class OrderCheckoutSubmitCommand implements Command {
             LOGGER.info(format(CUSTOM_PARAM_TO_CURRENT_ORDER, "phone number"));
         }
 
-        if (isNull(customerUsersAddress)) {
+        if (nonNull(customerUsersAddress)) {
+            LOGGER.info(format(USERS_PARAM_TO_CURRENT_ORDER, "address"));
+        } else {
             setCustomAddress(request, currentOrder);
             LOGGER.info(format(CUSTOM_PARAM_TO_CURRENT_ORDER, "address"));
-        } else {
-            LOGGER.info(format(USERS_PARAM_TO_CURRENT_ORDER, "address"));
         }
 
         setTimeOfDelivery(request, currentOrder);
@@ -110,14 +109,11 @@ public class OrderCheckoutSubmitCommand implements Command {
 
             return ORDER_CHECKOUT_FORM_JSP;
         }
-        
+
     }
 
     private void setTimeOfDelivery(HttpServletRequest request, UserOrder currentOrder) {
 
-        /*
-        todo протестировать работает или нет
-         */
         String timeOfDeliveryMinutes = request.getParameter(ORDER_TIME_OF_DELIVERY_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, ORDER_TIME_OF_DELIVERY_JSP_PARAM, timeOfDeliveryMinutes));
 
