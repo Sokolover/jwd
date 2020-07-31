@@ -28,7 +28,7 @@
         <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post"
               enctype="multipart/form-data">
             <input type="hidden"
-                   name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                   name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.UPDATE_DISH_FORM_SUBMIT}">
             <input type="hidden"
                    name="${CommonAppConstants.DISH_ID_JSP_PARAM}"

@@ -49,7 +49,7 @@
                         <form action="${pageContext.request.contextPath}/order_basket" method="post">
                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                    value="${dish.id}">
-                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                                    value="${CommandType.ADD_ITEM_TO_ORDER}">
 
                             <div class="betweenContainer alignItemsCenter">
@@ -81,7 +81,7 @@
                                     <label class="label">
                                         <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                value="${dish.id}">
-                                        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                                                value="${CommandType.CREATE_DISH_FEEDBACK_FORM_DISPLAY}">
                                         <fmt:message var="writeFeedback" key="button.feedback.write"/>
                                         <input class="button is-light is-small is-rounded" type="submit"
@@ -98,7 +98,7 @@
                                         <label class="label">
                                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                    value="${dish.id}">
-                                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                                                    value="${CommandType.UPDATE_DISH_FORM_DISPLAY}">
                                             <fmt:message var="updateDish" key="button.dish.update"/>
                                             <input class="button is-light is-small is-rounded" type="submit"
@@ -114,7 +114,7 @@
                                         <label class="label">
                                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                    value="${dish.id}">
-                                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                                            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                                                    value="${CommandType.DELETE_DISH_FROM_MENU}">
                                             <fmt:message var="delete" key="button.dish.delete"/>
                                             <input class="button is-light is-small is-rounded" type="submit"

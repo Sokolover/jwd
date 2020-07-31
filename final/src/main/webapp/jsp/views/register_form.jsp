@@ -21,7 +21,7 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/user_register" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.REGISTER_USER_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.REGISTER_USER_SUBMIT}">
         <div class="">
             <div class="control field">
                 <label class="label">

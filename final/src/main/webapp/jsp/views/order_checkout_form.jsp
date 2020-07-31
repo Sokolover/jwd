@@ -66,7 +66,7 @@
         <%--input contact info--%>
         <form action="${pageContext.request.contextPath}/order_checkout" method="post">
 
-            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
 
             <div class="contactInfoContent">

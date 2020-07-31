@@ -51,12 +51,12 @@ public final class CommonAppConstants {
     public static final String ERROR_JSP_ATTRIBUTE = "error";
     public static final String MESSAGE_JSP_ATTRIBUTE = "message";
 
-    public static final String QUERY_COMMAND_PARAM = "_command";
-    public static final String QUERY_CATEGORY_PARAM = "_category";
-    public static final String QUERY_PAGE_PARAM = "_page";
+    public static final String QUERY_PARAM_COMMAND = "_command";
+    public static final String QUERY_PARAM_CATEGORY = "_category";
+    public static final String QUERY_PARAM_PAGE = "_page";
+    public static final String QUERY_PARAM_COOKIE_NAME_LANG = "lang";
 
     public static final String COMMAND_SECURITY_PROPERTY = "command.";
-    public static final String COOKIE_NAME_LANG = "lang";
 
     public static final String NUMBER_OF_PAGES_JSP_ATTRIBUTE = "numberOfPages";
     public static final String CURRENT_PAGE_JSP_ATTRIBUTE = "currentPage";

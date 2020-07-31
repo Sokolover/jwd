@@ -45,7 +45,7 @@ public class DishMenuDisplayCommand implements Command {
         // для удержания чекбоксов после их отправки
 //        request.setAttribute("selectedCategories", categoryNames);
 
-        String currentPageString = request.getParameter(QUERY_PAGE_PARAM);
+        String currentPageString = request.getParameter(QUERY_PARAM_PAGE);
         int currentPage;
 
         if (Objects.isNull(currentPageString) || currentPageString.isEmpty()) {

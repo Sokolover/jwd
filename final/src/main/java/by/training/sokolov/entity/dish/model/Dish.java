@@ -16,6 +16,7 @@ public class Dish implements IdentifiedRow {
     private Long id;
     @MinLength(4)
     private String name;
+    @NotEmpty
     @MinCost(value = "0.0", inclusive = true)
     @Digits(integer = 3, fraction = 2)
     private BigDecimal cost;

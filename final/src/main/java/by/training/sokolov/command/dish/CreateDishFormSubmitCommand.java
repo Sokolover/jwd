@@ -49,6 +49,7 @@ public class CreateDishFormSubmitCommand implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
+
         String name = request.getParameter(DISH_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_NAME_JSP_PARAM, name));
 
@@ -85,6 +86,7 @@ public class CreateDishFormSubmitCommand implements Command {
         String categoryName = request.getParameter(DISH_CATEGORY_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_CATEGORY_NAME_JSP_PARAM, categoryName));
 
+
         Dish dish = new Dish();
         dish.setName(name);
         dish.setCost(bigDecimalCost);
@@ -93,6 +95,7 @@ public class CreateDishFormSubmitCommand implements Command {
         dishCategory.setCategoryName(categoryName);
         dish.setDishCategory(dishCategory);
         setDishPicture(request, dish);
+
 
         return validateFields(request, dish);
     }

@@ -17,7 +17,7 @@
 
     <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
         <input type="hidden"
-               name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+               name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
 
         <h5 class="title is-5">

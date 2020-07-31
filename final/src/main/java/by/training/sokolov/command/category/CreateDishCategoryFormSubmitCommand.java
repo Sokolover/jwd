@@ -62,6 +62,7 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
 
                 String message = "This category is already exist";
                 request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
                 LOGGER.error(message);
 
                 return true;

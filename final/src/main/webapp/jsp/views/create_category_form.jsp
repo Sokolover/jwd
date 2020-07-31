@@ -27,7 +27,7 @@
     </h5>
 
     <form action="${pageContext.request.contextPath}/" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                value="${CommandType.CREATE_DISH_CATEGORY_FORM_SUBMIT}">
         <div class="">
             <div class="control field">

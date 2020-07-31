@@ -15,13 +15,13 @@
 
         <c:if test="${currentPage != 1}">
             <a class="pagination-previous button is-light secondary"
-               href="?${CommonAppConstants.QUERY_PAGE_PARAM}=${currentPage - 1}"><fmt:message
+               href="?${CommonAppConstants.QUERY_PARAM_PAGE}=${currentPage - 1}"><fmt:message
                     key="app.pagination.previous"/></a>
         </c:if>
 
         <c:if test="${currentPage lt numberOfPages}">
             <a class="pagination-next button is-light secondary"
-               href="?${CommonAppConstants.QUERY_PAGE_PARAM}=${currentPage + 1}"><fmt:message
+               href="?${CommonAppConstants.QUERY_PARAM_PAGE}=${currentPage + 1}"><fmt:message
                     key="app.pagination.next"/></a>
         </c:if>
 
@@ -34,7 +34,7 @@
                     </c:when>
                     <c:otherwise>
                         <li><a class="pagination-link button is-light secondary"
-                               href="?${CommonAppConstants.QUERY_PAGE_PARAM}=${i}">${i}</a>
+                               href="?${CommonAppConstants.QUERY_PARAM_PAGE}=${i}">${i}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>

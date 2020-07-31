@@ -18,7 +18,7 @@
     <div class="feedbackContainer">
 
         <form action="${pageContext.request.contextPath}/menu" method="post" class="feedbackArea">
-            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.CREATE_DISH_FEEDBACK_FORM_SUBMIT}">
             <div class="field">
                 <label>

@@ -1,15 +1,12 @@
 package by.training.sokolov.command.dish;
 
 import by.training.sokolov.command.Command;
-import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
-import by.training.sokolov.util.JspUtil;
 import by.training.sokolov.util.PictureEncodingUtil;
-import by.training.sokolov.validation.BeanValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -160,19 +157,5 @@ public class UpdateDishFormSubmitCommand implements Command {
             String message = "Dish picture hasn't been uploaded";
             LOGGER.info(message);
         }
-    }
-
-    private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
-
-        request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-        LOGGER.error(message);
-
-        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
-
-        jspUtil.setCategoriesAttribute(request);
-        jspUtil.setDishAttributeByDishParam(request);
-
-        return UPDATE_DISH_FORM_JSP;
     }
 }

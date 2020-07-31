@@ -48,7 +48,7 @@ public class RegisterUserSubmitCommand implements Command {
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_EMAIL_JSP_PARAM, email));
 
         String password = request.getParameter(USER_PASSWORD_JSP_PARAM);
-        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, password));
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PASSWORD_JSP_PARAM, "..."));
 
         String phoneNumber = request.getParameter(USER_PHONE_NUMBER_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_PHONE_NUMBER_JSP_PARAM, phoneNumber));
@@ -82,7 +82,7 @@ public class RegisterUserSubmitCommand implements Command {
 
             List<User> users = userService.findAll();
             /*
-            todo сделать get by email и by name запрос с чуствительностью к регистру
+            todo МОЖЕТ БЫТЬ сделать get by email и by name запрос с чуствительностью к регистру
              вместо этого поиска циклами.
              */
             for (User user : users) {

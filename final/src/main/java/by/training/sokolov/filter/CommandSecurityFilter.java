@@ -29,7 +29,7 @@ public class CommandSecurityFilter implements Filter {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         SecurityContext securityContext = SecurityContext.getInstance();
-        String command = servletRequest.getParameter(QUERY_COMMAND_PARAM);
+        String command = servletRequest.getParameter(QUERY_PARAM_COMMAND);
 
         Optional<CommandType> commandType = CommandType.of(command);
 

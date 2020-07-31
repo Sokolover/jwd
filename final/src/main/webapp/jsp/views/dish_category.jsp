@@ -57,7 +57,7 @@
             <%--            </c:choose>--%>
 
             <c:forEach items="${categoryList}" var="category">
-                <input type="checkbox" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+                <input type="checkbox" name="${CommonAppConstants.QUERY_PARAM_CATEGORY}"
                        value="${category.categoryName}"/>
                 ${category.categoryName}
             </c:forEach>
@@ -68,7 +68,7 @@
         </form>
 
         <form action="${pageContext.request.contextPath}/menu" method="get">
-            <input type="hidden" name="${CommonAppConstants.QUERY_CATEGORY_PARAM}"
+            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_CATEGORY}"
                    value="all">
             <fmt:message var="all" key="button.category.reset"/>
             <input class="button is-light secondary" type="submit" value="${all}"/>

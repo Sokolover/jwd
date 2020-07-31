@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.COOKIE_NAME_LANG;
+import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_PARAM_COOKIE_NAME_LANG;
 
 @WebFilter(urlPatterns = "/*", filterName = "lang_filter")
 public class LangFilter implements Filter {
@@ -27,24 +27,24 @@ public class LangFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         if (request instanceof HttpServletRequest) {
-            String lang = request.getParameter(COOKIE_NAME_LANG);
+            String lang = request.getParameter(QUERY_PARAM_COOKIE_NAME_LANG);
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             Cookie langCookie;
             LangEnum langEnum = LangEnum.fromString(lang);
 
             if (langEnum != LangEnum.DEFAULT) {
-                langCookie = new Cookie(COOKIE_NAME_LANG, langEnum.getValue());
+                langCookie = new Cookie(QUERY_PARAM_COOKIE_NAME_LANG, langEnum.getValue());
                 LOGGER.info("New language cookie created");
             } else {
                 Optional<Cookie[]> cookies = Optional.ofNullable(httpRequest.getCookies());
                 langCookie = cookies.map(Stream::of)
                         .orElse(Stream.empty())
-                        .filter(cookie -> cookie.getName().equalsIgnoreCase(COOKIE_NAME_LANG))
+                        .filter(cookie -> cookie.getName().equalsIgnoreCase(QUERY_PARAM_COOKIE_NAME_LANG))
                         .findFirst()
-                        .orElse(new Cookie(COOKIE_NAME_LANG, LangEnum.ENGLISH.getValue()));
+                        .orElse(new Cookie(QUERY_PARAM_COOKIE_NAME_LANG, LangEnum.ENGLISH.getValue()));
             }
             langCookie.setPath(httpRequest.getContextPath());
-            httpRequest.setAttribute(COOKIE_NAME_LANG, lang);
+            httpRequest.setAttribute(QUERY_PARAM_COOKIE_NAME_LANG, lang);
             ((HttpServletResponse) response).addCookie(langCookie);
             LOGGER.info("Set language to existing lang cookie");
         }

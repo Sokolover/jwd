@@ -21,7 +21,7 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}" value="${CommandType.LOGIN_USER_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.LOGIN_USER_SUBMIT}">
         <div class="">
             <div class="control field">
                 <label class="label">

@@ -68,7 +68,7 @@
                         </div>
 
                         <form action="${pageContext.request.contextPath}/order_basket" method="post">
-                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"
+                            <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                                    value="${CommandType.DELETE_DISH_FROM_ORDER}">
                             <input type="hidden" name="orderItem.id" value="${orderItem.id}">
                             <div class="control">

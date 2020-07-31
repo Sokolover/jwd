@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_CATEGORY_PARAM;
+import static by.training.sokolov.core.constants.CommonAppConstants.QUERY_PARAM_CATEGORY;
 
 public final class CategoryNameUtil {
 
@@ -21,7 +21,7 @@ public final class CategoryNameUtil {
         Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
-            if (QUERY_CATEGORY_PARAM.equals(paramName)) {
+            if (QUERY_PARAM_CATEGORY.equals(paramName)) {
                 return createCategoryListFromParameters(request, paramName);
             }
         }
