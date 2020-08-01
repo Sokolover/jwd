@@ -17,30 +17,17 @@
                            href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.MENU_SERVLET_SWITCH}"><fmt:message
                                 key="links.dish.menu"/></a>
 
-                            <%--                        <form action="${pageContext.request.contextPath}/menu" method="get">--%>
-                            <%--                            <input type="hidden" name="${CommonAppConstants.QUERY_COMMAND_PARAM}"--%>
-                            <%--                                   value="${CommandType.DISH_MENU_DISPLAY}">--%>
-                            <%--                            <input type="hidden" name="currentPage" value="1">--%>
-                            <%--                            <button class="navbar-item button is-light secondary" type="submit" class="btn btn-primary">--%>
-                            <%--                                <fmt:message key="links.dish.menu"/>--%>
-                            <%--                            </button>--%>
-                            <%--                        </form>--%>
-
                         <a class="navbar-item button is-light secondary"
                            href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.ORDER_BASKET_SERVLET_SWITCH}"><fmt:message
                                 key="links.basket.display"/></a>
 
-<%--                        <a class="navbar-item button is-light secondary"--%>
-<%--                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_ORDER}"><fmt:message--%>
-<%--                                key="links.order.create"/></a>--%>
-
-<%--                        <a class="navbar-item button is-light secondary"--%>
-<%--                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DELETE_ORDER}"><fmt:message--%>
-<%--                                key="links.order.delete"/></a>--%>
-
                         <a class="navbar-item button is-light secondary"
                            href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.ORDER_CHECKOUT_SERVLET_SWITCH}"><fmt:message
                                 key="links.order.checkout"/></a>
+
+                        <a class="navbar-item button is-light secondary"
+                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.FILL_UP_WALLET_FORM_DISPLAY}"><fmt:message
+                                key="links.wallet.money.add"/></a>
                     </div>
 
                     <div class="navbar navBarBackground marginTop">

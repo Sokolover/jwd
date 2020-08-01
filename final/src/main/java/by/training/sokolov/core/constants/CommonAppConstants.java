@@ -49,6 +49,11 @@ public final class CommonAppConstants {
     public static final String CATEGORY_NAME_JSP_PARAM = "category.name";
     public static final String CATEGORY_LIST_JSP_ATTRIBUTE = "categoryList";
 
+
+    public static final String WALLET_CURRENT_MONEY_AMOUNT_JSP_ATTRIBUTE = "walletCurrentMoneyAmount";
+    public static final String WALLET_NEW_MONEY_AMOUNT_JSP_PARAM = "wallet.new.money.amount";
+
+
     public static final String ERROR_JSP_ATTRIBUTE = "error";
     public static final String MESSAGE_JSP_ATTRIBUTE = "message";
 

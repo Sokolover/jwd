@@ -12,6 +12,8 @@ import by.training.sokolov.command.feedback.CreateDishFeedbackFormSubmitCommand;
 import by.training.sokolov.command.order.*;
 import by.training.sokolov.command.user.LoginUserSubmitCommand;
 import by.training.sokolov.command.user.RegisterUserSubmitCommand;
+import by.training.sokolov.command.wallet.FillUpWalletFormDisplay;
+import by.training.sokolov.command.wallet.FillUpWalletFormSubmit;
 import by.training.sokolov.core.constants.CommandReturnValues;
 import by.training.sokolov.database.connection.*;
 import by.training.sokolov.entity.category.dao.DishCategoryDao;
@@ -52,6 +54,8 @@ import by.training.sokolov.entity.useraddress.dao.UserAddressDao;
 import by.training.sokolov.entity.useraddress.dao.UserAddressDaoImpl;
 import by.training.sokolov.entity.wallet.dao.WalletDao;
 import by.training.sokolov.entity.wallet.dao.WalletDaoImpl;
+import by.training.sokolov.entity.wallet.service.WalletService;
+import by.training.sokolov.entity.wallet.service.WalletServiceImpl;
 import by.training.sokolov.util.JspUtil;
 import by.training.sokolov.validation.*;
 import by.training.sokolov.validation.cost.Digits;
@@ -186,6 +190,7 @@ public class ApplicationContext {
         UserService userService = new UserServiceImpl(userAccountDao, userAddressDao, loyaltyDao, walletDao, userRoleDao);
         DishCategoryService dishCategoryService = new DishCategoryServiceImpl(dishCategoryDao);
         DishFeedbackService dishFeedbackService = new DishFeedbackServiceImpl(dishFeedbackDao);
+        WalletService walletService = new WalletServiceImpl(walletDao);
         LOGGER.info("Services initialized");
 
         //proxy of services
@@ -259,7 +264,8 @@ public class ApplicationContext {
         Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
         Command deleteDishCategoryFormSubmitCommand = new DeleteDishCategoryFormSubmitCommand(dishCategoryProxyService);
         Command deleteDishCategoryFormDisplayCommand = new DeleteDishCategoryFormDisplayCommand(dishCategoryProxyService);
-
+        Command fillUpWalletFormDisplay = new FillUpWalletFormDisplay(walletService);
+        Command fillUpWalletFormSubmit = new FillUpWalletFormSubmit(walletService);
         LOGGER.info("Commands initialized");
 
         //utils
@@ -292,9 +298,11 @@ public class ApplicationContext {
 
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_DISPLAY, ((request, response) -> CREATE_CATEGORY_FORM_JSP));
         commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_SUBMIT, createDishCategoryFormSubmitCommand);
-
         commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_DISPLAY, deleteDishCategoryFormDisplayCommand);
         commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_SUBMIT, deleteDishCategoryFormSubmitCommand);
+
+        commandFactory.registerCommand(FILL_UP_WALLET_FORM_DISPLAY, fillUpWalletFormDisplay);
+        commandFactory.registerCommand(FILL_UP_WALLET_FORM_SUBMIT, fillUpWalletFormSubmit);
 
         commandFactory.registerCommand(REGISTER_USER_SUBMIT, registerUserSubmitCommand);
         commandFactory.registerCommand(LOGIN_USER_SUBMIT, loginUserSubmitCommand);

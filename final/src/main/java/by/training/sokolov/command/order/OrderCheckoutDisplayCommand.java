@@ -43,7 +43,6 @@ public class OrderCheckoutDisplayCommand implements Command {
         UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(request.getSession().getId());
 
 
-
 //        if (Objects.isNull(currentOrder) || currentOrder.getOrderStatus() != OrderStatus.BUILD_UP) {
 //            String message = "Please create order or login (because of session timeout)";
 //            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);

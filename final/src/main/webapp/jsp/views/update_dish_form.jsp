@@ -45,8 +45,11 @@
                     <div class="control field">
                         <div class="label">
                             <fmt:message key="dish.cost"/>
-                            <input class="input" name="${CommonAppConstants.DISH_COST_JSP_PARAM}" type="text"
-                                   placeholder="${dish.cost}">
+                            <input class="input" name="${CommonAppConstants.DISH_COST_JSP_PARAM}"
+                                   type="number"
+                                   value="10"
+                                   step=".01"
+                                   min="0">
                         </div>
                     </div>
                     <div class="control field">

@@ -19,6 +19,7 @@ public final class JspName {
     public static final String CREATE_CATEGORY_FORM_JSP = "create_category_form";
     public static final String DELETE_CATEGORY_FORM_JSP = "delete_category_form";
 
+    public static final String FILL_UP_WALLET_FORM_JSP = "fill_up_wallet_form";
 
     public static final String CREATE_DISH_FORM_JSP = "create_dish_form";
     public static final String UPDATE_DISH_FORM_JSP = "update_dish_form";
