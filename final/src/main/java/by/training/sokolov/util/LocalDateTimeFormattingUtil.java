@@ -11,7 +11,7 @@ import static java.lang.String.format;
 
 public final class LocalDateTimeFormattingUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(ApplicationListener.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LocalDateTimeFormattingUtil.class.getName());
 
     private LocalDateTimeFormattingUtil() {
 

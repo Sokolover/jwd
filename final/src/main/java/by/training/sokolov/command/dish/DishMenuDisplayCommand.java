@@ -43,7 +43,8 @@ public class DishMenuDisplayCommand implements Command {
         List<String> categoryNames = CategoryNameUtil.getCategoryNamesFromRequest(request);
 
         // для удержания чекбоксов после их отправки
-//        request.setAttribute("selectedCategories", categoryNames);
+        request.setAttribute("selectedCategories", categoryNames);
+        request.setAttribute("flag", true);
 
         String currentPageString = request.getParameter(QUERY_PARAM_PAGE);
         int currentPage;

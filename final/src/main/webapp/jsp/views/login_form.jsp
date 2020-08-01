@@ -8,7 +8,7 @@
 <div class="loginContainer">
 
     <c:if test="${not empty error}">
-        <div class="container justifyCenter marginTop">
+        <div class="justifyCenter marginTop">
             <h5 class="title is-5">
                 <p class="is-danger"><c:out value="${error}"/></p>
             </h5>
@@ -16,7 +16,7 @@
     </c:if>
 
     <c:if test="${not empty message}">
-        <div class="container justifyCenter marginTop">
+        <div class="justifyCenter marginTop">
             <h5 class="title is-5">
                 <p><c:out value="${message}"/></p>
             </h5>

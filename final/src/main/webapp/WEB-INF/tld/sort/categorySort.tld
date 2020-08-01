@@ -6,13 +6,14 @@
         version="2.1">
 
     <tlib-version>1.0</tlib-version>
-    <short-name>Custom_Functions</short-name>
-    <uri>/WEB-INF/tld/format/timeFormat.tld</uri>
+    <short-name>CategorySort</short-name>
+    <uri>/WEB-INF/tld/sort/categorySort.tld</uri>
 
     <function>
-        <name>formatLocalDateTime</name>
-        <function-class>by.training.sokolov.util.LocalDateTimeFormattingUtil</function-class>
-        <function-signature>java.lang.String formatLocalDateTime(java.time.LocalDateTime, java.lang.String)
+        <name>setCheckedStates</name>
+        <function-class>by.training.sokolov.util.CheckedStateSetterUtil</function-class>
+        <function-signature>boolean setCheckedState(by.training.sokolov.entity.category.model.DishCategory,java.util.List)
         </function-signature>
     </function>
+
 </taglib>
