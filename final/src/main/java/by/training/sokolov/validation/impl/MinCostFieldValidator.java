@@ -25,8 +25,8 @@ public class MinCostFieldValidator implements FieldValidator {
                             (minCost.inclusive() && fieldValue.compareTo(annotationValue) < 0)
                                     || (!minCost.inclusive() && fieldValue.compareTo(annotationValue) <= 0)
                     ) {
-
-                        return new BrokenField(field.getName(), fieldValue, "minCost", minCost.value());
+                        String annotationArg = String.format("Min cost in field %s is %s", field.getName(), minCost.value());
+                        return new BrokenField(field.getName(), fieldValue, "minCost", annotationArg);
                     }
                 }
             } catch (IllegalAccessException e) {

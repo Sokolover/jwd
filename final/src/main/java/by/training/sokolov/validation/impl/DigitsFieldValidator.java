@@ -26,13 +26,15 @@ public class DigitsFieldValidator implements FieldValidator {
 
                         if (validateIntegerFractionDecimal(digits, fieldValueString)) {
 
-                            return new BrokenField(field.getName(), fieldValue, "digits", digits.integer(), digits.fraction());
+                            String annotationArg = String.format("Max digits in integer part of cost is %d, in fraction part is %d", digits.integer(), digits.fraction());
+                            return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
                         }
                     } else {
 
                         if (validateIntegerDecimal(digits, fieldValueString)) {
 
-                            return new BrokenField(field.getName(), fieldValue, "digits", digits.integer());
+                            String annotationArg = String.format("Max digits in integer part of cost is %d", digits.integer());
+                            return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
                         }
                     }
                 }

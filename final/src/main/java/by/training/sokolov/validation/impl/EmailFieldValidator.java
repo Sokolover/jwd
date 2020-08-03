@@ -14,15 +14,16 @@ public class EmailFieldValidator implements FieldValidator {
     public BrokenField validate(Object entity, Field field) {
 
         if (String.class.isAssignableFrom(field.getType())) {
-            Email annotation = field.getAnnotation(Email.class);
-            String regex = annotation.regex();
+            Email email = field.getAnnotation(Email.class);
+            String regex = email.regex();
             Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
             try {
                 String fieldValue = (String) field.get(entity);
                 if (fieldValue != null
                         && !fieldValue.isEmpty()
                         && !pattern.matcher(fieldValue).find()) {
-                    return new BrokenField(field.getName(), fieldValue, "email");
+                    String annotationRegexArg = "Email must have: @-character and places before @-character";
+                    return new BrokenField(field.getName(), fieldValue, "email", annotationRegexArg);
                 }
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);

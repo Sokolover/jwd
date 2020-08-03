@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
@@ -48,7 +50,7 @@ public class LoginUserSubmitCommand implements Command {
             encryptedPassword = encrypt(password);
         } catch (NoSuchAlgorithmException e) {
 
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, e.getMessage());
+            request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(e.getMessage()));
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
             LOGGER.error(e.getMessage());
 
@@ -62,7 +64,7 @@ public class LoginUserSubmitCommand implements Command {
         if (Objects.isNull(user)) {
 
             String message = "Wrong email address or password";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+            request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(message));
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
             return LOGIN_JSP;

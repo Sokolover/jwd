@@ -15,6 +15,7 @@
 <div class="checkoutContainer">
 
     <jsp:include page="command_result_message.jsp"/>
+    <jsp:include page="validation_messages.jsp"/>
 
     <%--dish table--%>
     <div class="tableContainer">
@@ -53,18 +54,20 @@
             </tbody>
         </table>
         <%--current user's money amount--%>
-        <jsp:useBean id="walletCurrentMoneyAmount" scope="request" type="java.math.BigDecimal"/>
-        <fmt:message var="walletCurrentMoneyAmountLable" key="app.message.money.amount.current"/>
-        <fmt:message var="currency" key="symbol.currency"/>
-        <h5 class="title is-5">
-            <c:out value="${walletCurrentMoneyAmountLable}: ${walletCurrentMoneyAmount} ${currency}"/>
-        </h5>
-        <%--total cost--%>
-        <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
-        <fmt:message var="orderCostString" key="order.total.cost"/>
-        <h5 class="title is-5">
-            <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
-        </h5>
+        <div class="marginTop">
+            <jsp:useBean id="walletCurrentMoneyAmount" scope="request" type="java.math.BigDecimal"/>
+            <fmt:message var="walletCurrentMoneyAmountLable" key="app.message.money.amount.current"/>
+            <fmt:message var="currency" key="symbol.currency"/>
+            <h5 class="title is-5">
+                <c:out value="${walletCurrentMoneyAmountLable}: ${walletCurrentMoneyAmount} ${currency}"/>
+            </h5>
+            <%--total cost--%>
+            <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
+            <fmt:message var="orderCostString" key="order.total.cost"/>
+            <h5 class="title is-5">
+                <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
+            </h5>
+        </div>
         <%--        <label class="checkbox">--%>
         <%--            <input type="checkbox" name="default.user.name" value="user_s">--%>
         <%--            <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>--%>

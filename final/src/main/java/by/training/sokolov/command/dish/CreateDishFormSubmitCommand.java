@@ -28,7 +28,7 @@ import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_
 import static by.training.sokolov.core.constants.JspName.CREATE_DISH_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
-import static by.training.sokolov.validation.CreateMessageUtil.createMessage;
+import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
 import static java.lang.String.format;
 
 public class CreateDishFormSubmitCommand implements Command {
@@ -117,10 +117,7 @@ public class CreateDishFormSubmitCommand implements Command {
 
         } else {
 
-            String message = createMessage(brokenFields);
-
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.error(message);
+            List<String> message = createPageMessageList(brokenFields);
 
             return createReturnAnswer(request, message);
         }
@@ -139,15 +136,25 @@ public class CreateDishFormSubmitCommand implements Command {
 
         } catch (IllegalArgumentException e) {
 
-            String message = "Dish picture hasn't been uploaded";
-            LOGGER.info(message);
-
+            LOGGER.info(String.format("%s: %s", "Dish picture hasn't been uploaded", e.getMessage()));
         }
+    }
+
+    private String createReturnAnswer(HttpServletRequest request, List<String> messages) throws SQLException, ConnectionException {
+
+        request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, messages));
+        LOGGER.error(messages);
+
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setCategoriesAttribute(request);
+
+        return CREATE_DISH_FORM_JSP;
     }
 
     private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
 
-        request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+        request.setAttribute(ERRORS_JSP_ATTRIBUTE, message);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
         LOGGER.error(message);
 

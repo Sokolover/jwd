@@ -26,6 +26,8 @@
             </c:if>
         </h5>
 
+        <jsp:include page="validation_messages.jsp"/>
+
         <div class="">
             <div class="control field">
                 <label class="label">

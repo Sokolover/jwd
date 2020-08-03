@@ -16,13 +16,16 @@ public class User implements IdentifiedRow {
 
     private Long id;
     @MinLength(5)
-    @MaxLength(20)
+    @MaxLength(30)
     private String name;
+    @NotEmpty
     @Password(regex = PASSWORD_PATTERN)
     private String password;
+    @NotEmpty
     @Email(regex = EMAIL_PATTERN)
     private String email;
     private boolean isActive;
+    @NotEmpty
     @PhoneNumber(regex = PHONE_NUMBER_PATTERN)
     private String phoneNumber;
 

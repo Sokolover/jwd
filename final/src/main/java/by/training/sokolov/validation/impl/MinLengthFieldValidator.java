@@ -18,7 +18,8 @@ public class MinLengthFieldValidator implements FieldValidator {
                 String fieldValue = (String) field.get(entity);
                 if (fieldValue != null && fieldValue.trim().length() < minLength.value()) {
 
-                    return new BrokenField(field.getName(), fieldValue, "minLength", minLength.value());
+                    String annotationArg = String.format("Min length in field %s is %d", field.getName(), minLength.value());
+                    return new BrokenField(field.getName(), fieldValue, "minLength", annotationArg);
                 }
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);

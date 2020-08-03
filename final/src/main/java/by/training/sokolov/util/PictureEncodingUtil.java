@@ -1,5 +1,6 @@
 package by.training.sokolov.util;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,15 @@ public final class PictureEncodingUtil {
         picture.write(filePath);
 
         File file = new File(filePath);
+
+//        String mimetype= new MimetypesFileTypeMap().getContentType(file);
+//        String type = mimetype.split("/")[0];
+//        if(type.equals("image"))
+//            System.out.println("It's an image");
+//        else
+//            System.out.println("It's NOT an image");
+
+
         byte[] fileContent = Files.readAllBytes(file.toPath());
         return Base64.getEncoder().encodeToString(fileContent);
     }

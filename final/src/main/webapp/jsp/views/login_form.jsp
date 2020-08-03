@@ -7,13 +7,13 @@
 
 <div class="loginContainer">
 
-    <c:if test="${not empty error}">
-        <div class="justifyCenter marginTop">
-            <h5 class="title is-5">
-                <p class="is-danger"><c:out value="${error}"/></p>
-            </h5>
-        </div>
-    </c:if>
+<%--    <c:if test="${not empty error}">--%>
+<%--        <div class="justifyCenter marginTop">--%>
+<%--            <h5 class="title is-5">--%>
+<%--                <p class="is-danger"><c:out value="${error}"/></p>--%>
+<%--            </h5>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
 
     <c:if test="${not empty message}">
         <div class="justifyCenter marginTop">
@@ -22,6 +22,8 @@
             </h5>
         </div>
     </c:if>
+
+    <jsp:include page="validation_messages.jsp"/>
 
     <h1 class="title is-1">
         <fmt:message var="login" key="app.form.login"/>

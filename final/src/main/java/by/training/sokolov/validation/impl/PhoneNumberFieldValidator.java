@@ -14,15 +14,16 @@ public class PhoneNumberFieldValidator implements FieldValidator {
     public BrokenField validate(Object entity, Field field) {
 
         if (String.class.isAssignableFrom(field.getType())) {
-            PhoneNumber annotation = field.getAnnotation(PhoneNumber.class);
-            String regex = annotation.regex();
+            PhoneNumber phoneNumber = field.getAnnotation(PhoneNumber.class);
+            String regex = phoneNumber.regex();
             Pattern pattern = Pattern.compile(regex);
             try {
                 String fieldValue = (String) field.get(entity);
                 if (fieldValue != null
-                        && fieldValue.isEmpty()
+                        && !fieldValue.isEmpty()
                         && !pattern.matcher(fieldValue).find()) {
-                    return new BrokenField(field.getName(), fieldValue, "phoneNumber");
+                    String annotationRegexArg = "Phone number must have: character '+' and 12 characters after";
+                    return new BrokenField(field.getName(), fieldValue, "phoneNumber", annotationRegexArg);
                 }
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);

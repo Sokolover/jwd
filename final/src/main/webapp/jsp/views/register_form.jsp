@@ -7,13 +7,15 @@
 
 <div class="loginContainer">
 
-    <c:if test="${not empty error}">
-        <p class="title is-5 is-danger">
-            <c:out value="${error}"/>
-        </p>
-    </c:if>
+<%--    <c:if test="${not empty error}">--%>
+<%--        <p class="title is-5 is-danger">--%>
+<%--            <c:out value="${error}"/>--%>
+<%--        </p>--%>
+<%--    </c:if>--%>
 
-<%--    <jsp:include page="command_result_message.jsp"/>--%>
+    <%--    <jsp:include page="command_result_message.jsp"/>--%>
+
+    <jsp:include page="validation_messages.jsp"/>
 
     <h1 class="title is-1">
         <fmt:message var="register" key="app.form.register"/>
@@ -21,14 +23,19 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/user_register" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.REGISTER_USER_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
+               value="${CommandType.REGISTER_USER_SUBMIT}">
         <div class="">
             <div class="control field">
                 <label class="label">
                     <fmt:message key="user.name"/>
                     <input class="input" name="${CommonAppConstants.USER_NAME_JSP_PARAM}" type="text"
-                           placeholder="Text input">
+                           placeholder="5-30 characters">
                 </label>
+            </div>
+            <div class="message is-info">
+                <fmt:message var="nameRule" key="app.message.name.rule"/>
+                <c:out value="${nameRule}"/>
             </div>
             <div class="control field">
                 <label class="label">
@@ -36,6 +43,10 @@
                     <input class="input" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password"
                            placeholder="Password input">
                 </label>
+            </div>
+            <div class="message is-info">
+                <fmt:message var="passwordRule" key="app.message.password.rule"/>
+                <c:out value="${passwordRule}"/>
             </div>
             <div class="control field">
                 <label class="label">
@@ -48,21 +59,29 @@
                 <label class="label">
                     <fmt:message key="user.email"/>
                     <input class="input" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text"
-                           placeholder="Text input">
+                           placeholder="ivan.inanov@gmail.com">
                 </label>
+            </div>
+            <div class="message is-info">
+                <fmt:message var="emailRule" key="app.message.email.rule"/>
+                <c:out value="${emailRule}"/>
             </div>
             <div class="control field">
                 <label class="label">
                     <fmt:message key="user.phoneNumber"/>
                     <input class="input" name="${CommonAppConstants.USER_PHONE_NUMBER_JSP_PARAM}" type="text"
-                           placeholder="Text input">
+                           placeholder="+375291234567">
                 </label>
+            </div>
+            <div class="message is-info">
+                <fmt:message var="phoneNumberRule" key="app.message.phoneNumber.rule"/>
+                <c:out value="${phoneNumberRule}"/>
             </div>
             <div class="control field">
                 <label class="label">
                     <fmt:message key="user.address"/>
                     <input class="input" name="${CommonAppConstants.USER_ADDRESS_JSP_PARAM}" type="text"
-                           placeholder="Text input">
+                           placeholder="Address input">
                 </label>
             </div>
         </div>

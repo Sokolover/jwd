@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.JspName.*;
@@ -47,8 +49,10 @@ todo
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
             } else {
 
-                String message = req.getParameter(QUERY_PARAM_ERROR);
-                req.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+//                String message = req.getParameter(QUERY_PARAM_ERROR);
+                String[] errorArray = req.getParameterValues(QUERY_PARAM_ERROR);
+                List<String> errorList = Arrays.asList(errorArray);
+                req.setAttribute(ERRORS_JSP_ATTRIBUTE, errorList);
                 req.setAttribute(VIEW_NAME_JSP_PARAM, REGISTER_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
             }

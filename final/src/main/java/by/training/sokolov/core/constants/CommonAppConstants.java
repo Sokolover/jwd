@@ -61,6 +61,7 @@ public final class CommonAppConstants {
 
 
     public static final String ERROR_JSP_ATTRIBUTE = "error";
+    public static final String ERRORS_JSP_ATTRIBUTE = "errors";
     public static final String MESSAGE_JSP_ATTRIBUTE = "message";
 
     public static final String QUERY_PARAM_COMMAND = "_command";
@@ -73,6 +74,7 @@ public final class CommonAppConstants {
     public static final Integer SUCCESSFULLY = 1;
     public static final Integer NOT_SUCCESSFUL = 0;
     public static final String REGISTER_REDIRECT_WITH_PARAMS_FORMAT = "%s/%s?%s=%d&%s=%s";
+    public static final String REGISTER_REDIRECT_WITH_ERROR_PARAMS_FORMAT = "%s/%s?%s=%d&%s";
     public static final String QUERY_PARAM_SUCCESS = "success";
     public static final String QUERY_PARAM_ERROR = "error";
     public static final String QUERY_PARAM_MESSAGE = "message";

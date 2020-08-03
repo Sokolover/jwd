@@ -18,7 +18,8 @@ public class NotEmptyFieldValidator implements FieldValidator {
                 Collection<?> fieldValue = (Collection<?>) field.get(entity);
 
                 if (fieldValue == null || fieldValue.isEmpty()) {
-                    return new BrokenField(field.getName(), fieldValue, "notEmpty");
+                    String annotationArg = String.format("Field %s is empty", field.getName());
+                    return new BrokenField(field.getName(), fieldValue, "notEmpty", annotationArg);
                 }
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);
@@ -28,7 +29,8 @@ public class NotEmptyFieldValidator implements FieldValidator {
                 String fieldValue = (String) field.get(entity);
 
                 if (fieldValue == null || fieldValue.isEmpty()) {
-                    return new BrokenField(field.getName(), fieldValue, "notEmpty");
+                    String annotationArg = String.format("Field %s is empty", field.getName());
+                    return new BrokenField(field.getName(), fieldValue, "notEmpty", annotationArg);
                 }
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);

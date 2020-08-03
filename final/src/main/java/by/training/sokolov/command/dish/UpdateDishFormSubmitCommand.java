@@ -78,7 +78,8 @@ public class UpdateDishFormSubmitCommand implements Command {
 
         } catch (IllegalArgumentException e) {
 
-            LOGGER.info("Dish picture hasn't been updated");
+            String message = String.format("%s: %s", "Dish picture hasn't been updated", e.getMessage());
+            LOGGER.info(message);
         }
     }
 
@@ -154,7 +155,7 @@ public class UpdateDishFormSubmitCommand implements Command {
 
         } catch (IllegalArgumentException e) {
 
-            String message = "Dish picture hasn't been uploaded";
+            String message = String.format("%s: %s", "Dish picture hasn't been uploaded", e.getMessage());
             LOGGER.info(message);
         }
     }

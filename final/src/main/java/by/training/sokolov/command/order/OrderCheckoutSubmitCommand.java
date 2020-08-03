@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
@@ -27,7 +28,7 @@ import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_
 import static by.training.sokolov.core.constants.JspName.ORDER_CHECKOUT_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.*;
 import static by.training.sokolov.entity.order.constants.OrderStatus.SUBMITTED;
-import static by.training.sokolov.validation.CreateMessageUtil.createMessage;
+import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
 
@@ -116,14 +117,14 @@ public class OrderCheckoutSubmitCommand implements Command {
             String message = "Order accepted";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
             LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-            return COMMAND_RESULT_MESSAGE_JSP;
 
+            return COMMAND_RESULT_MESSAGE_JSP;
         } else {
 
-            String message = createMessage(brokenFields);
+            List<String> messages = createPageMessageList(brokenFields);
 
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-            LOGGER.error(message);
+            request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
+            LOGGER.error(messages);
 
             return ORDER_CHECKOUT_FORM_JSP;
         }
@@ -147,7 +148,7 @@ public class OrderCheckoutSubmitCommand implements Command {
         if (totalOrderCost.compareTo(wallet.getMoneyAmount()) > 0) {
 
             String message = "Not enough money in account";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+            request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(message));
             LOGGER.error(message);
 
             return false;
