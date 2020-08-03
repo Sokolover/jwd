@@ -21,6 +21,7 @@
 <%--    </h5>--%>
 
     <jsp:include page="command_result_message.jsp"/>
+    <jsp:include page="validation_messages.jsp"/>
 
 <%--    <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>--%>
     <div class="feedbackContainer">

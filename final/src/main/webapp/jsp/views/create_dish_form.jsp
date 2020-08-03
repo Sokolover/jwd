@@ -20,11 +20,17 @@
                name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                value="${CommandType.CREATE_DISH_FORM_SUBMIT}">
 
-        <h5 class="title is-5">
-            <c:if test="${not empty error}">
-                <p class="is-danger"><c:out value="${error}"/></p>
-            </c:if>
-        </h5>
+<%--        <c:if test="${not empty error}">--%>
+<%--            <fmt:message var="errorLable" key="app.message.error"/>--%>
+<%--            <div class="justifyCenter marginTop message is-danger">--%>
+<%--                <div class="message-header">--%>
+<%--                    <p><c:out value="${errorLable}"/></p>--%>
+<%--                </div>--%>
+<%--                <div class="message-body">--%>
+<%--                    <c:out value="${error}"/>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </c:if>--%>
 
         <jsp:include page="validation_messages.jsp"/>
 

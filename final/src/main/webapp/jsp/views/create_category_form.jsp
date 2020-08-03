@@ -15,11 +15,7 @@
 
 <div class="loginContainer">
 
-    <c:if test="${not empty error}">
-        <p class="title is-5 is-danger">
-            <c:out value="${error}"/>
-        </p>
-    </c:if>
+    <jsp:include page="validation_messages.jsp"/>
 
     <h5 class="title is-5">
         <fmt:message var="createCategory" key="app.form.create.category"/>

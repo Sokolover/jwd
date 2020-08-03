@@ -1,12 +1,17 @@
 package by.training.sokolov.command.dish;
 
 import by.training.sokolov.command.Command;
+import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
+import by.training.sokolov.util.JspUtil;
 import by.training.sokolov.util.PictureEncodingUtil;
+import by.training.sokolov.validation.BeanValidator;
+import by.training.sokolov.validation.BrokenField;
+import by.training.sokolov.validation.ValidationResult;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,10 +24,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
-import static by.training.sokolov.core.constants.JspName.UPDATE_DISH_FORM_JSP;
+import static by.training.sokolov.core.constants.JspName.*;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
+import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
@@ -32,10 +37,12 @@ public class UpdateDishFormSubmitCommand implements Command {
 
     private final DishService dishService;
     private final DishCategoryService dishCategoryService;
+    private final BeanValidator validator;
 
-    public UpdateDishFormSubmitCommand(DishService dishService, DishCategoryService dishCategoryService) {
+    public UpdateDishFormSubmitCommand(DishService dishService, DishCategoryService dishCategoryService, BeanValidator validator) {
         this.dishService = dishService;
         this.dishCategoryService = dishCategoryService;
+        this.validator = validator;
     }
 
     @Override
@@ -56,13 +63,25 @@ public class UpdateDishFormSubmitCommand implements Command {
         updateDishCategory(request, dish);
         updateDishPicture(request, dish);
 
-        dishService.update(dish);
+        ValidationResult validationResult = validator.validate(dish);
+        List<BrokenField> brokenFields = validationResult.getBrokenFields();
 
-        String message = "Your dish has been updated!";
-        request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+        if (brokenFields.isEmpty()) {
 
-        return COMMAND_RESULT_MESSAGE_JSP;
+            dishService.update(dish);
+
+            String message = "Your dish has been updated!";
+            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+
+            return COMMAND_RESULT_MESSAGE_JSP;
+
+        } else {
+
+            List<String> message = createPageMessageList(brokenFields);
+
+            return createReturnAnswer(request, message);
+        }
     }
 
     private void updateDishPicture(HttpServletRequest request, Dish dish) throws IOException, ServletException {
@@ -158,5 +177,18 @@ public class UpdateDishFormSubmitCommand implements Command {
             String message = String.format("%s: %s", "Dish picture hasn't been uploaded", e.getMessage());
             LOGGER.info(message);
         }
+    }
+
+    private String createReturnAnswer(HttpServletRequest request, List<String> messages) throws SQLException, ConnectionException {
+
+        request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, messages));
+        LOGGER.error(messages);
+
+        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
+        jspUtil.setCategoriesAttribute(request);
+        jspUtil.setDishAttributeByDishParam(request);
+
+        return UPDATE_DISH_FORM_JSP;
     }
 }

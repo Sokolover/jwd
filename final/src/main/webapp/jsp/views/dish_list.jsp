@@ -14,7 +14,6 @@
 <div class="dishPage">
 
     <jsp:include page="dish_category.jsp"/>
-
     <jsp:include page="command_result_message.jsp"/>
 
     <div class="dishContainer">

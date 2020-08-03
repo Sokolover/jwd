@@ -259,9 +259,9 @@ public class ApplicationContext {
         Command createDishFormDisplayCommand = new CreateDishFormDisplayCommand(dishCategoryProxyService);
         Command createDishFormSubmitCommand = new CreateDishFormSubmitCommand(dishProxyService, dishCategoryService, beanValidator);
         Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
-        Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService);
+        Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService, beanValidator);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
-        Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService);
+        Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService, beanValidator);
         Command deleteDishCategoryFormSubmitCommand = new DeleteDishCategoryFormSubmitCommand(dishCategoryProxyService);
         Command deleteDishCategoryFormDisplayCommand = new DeleteDishCategoryFormDisplayCommand(dishCategoryProxyService);
         Command fillUpWalletFormDisplay = new FillUpWalletFormDisplay(walletService);

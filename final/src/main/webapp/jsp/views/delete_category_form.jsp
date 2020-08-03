@@ -15,9 +15,15 @@
 <div class="loginContainer">
 
     <c:if test="${not empty error}">
-        <p class="title is-5 is-danger">
-            <c:out value="${error}"/>
-        </p>
+        <fmt:message var="errorLable" key="app.message.error"/>
+        <div class="justifyCenter marginTop message is-danger">
+            <div class="message-header">
+                <p><c:out value="${errorLable}"/></p>
+            </div>
+            <div class="message-body">
+                <c:out value="${error}"/>
+            </div>
+        </div>
     </c:if>
 
     <h5 class="title is-5">

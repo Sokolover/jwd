@@ -3,10 +3,7 @@ package by.training.sokolov.entity.order.model;
 import by.training.sokolov.core.dao.IdentifiedRow;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
 import by.training.sokolov.entity.order.constants.OrderStatus;
-import by.training.sokolov.validation.MaxLength;
-import by.training.sokolov.validation.MinLength;
-import by.training.sokolov.validation.PhoneNumber;
-import by.training.sokolov.validation.ValidBean;
+import by.training.sokolov.validation.*;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +20,7 @@ public class UserOrder implements IdentifiedRow {
     @MinLength(5)
     @MaxLength(20)
     private String customerName;
+    @NotEmpty
     @PhoneNumber(regex = PHONE_NUMBER_PATTERN)
     private String customerPhoneNumber;
 

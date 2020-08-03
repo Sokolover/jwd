@@ -15,13 +15,13 @@
 <%--        </div>--%>
 <%--    </c:if>--%>
 
-    <c:if test="${not empty message}">
-        <div class="justifyCenter marginTop">
-            <h5 class="title is-5">
-                <p><c:out value="${message}"/></p>
-            </h5>
-        </div>
-    </c:if>
+<%--    <c:if test="${not empty message}">--%>
+<%--        <div class="justifyCenter marginTop">--%>
+<%--            <h5 class="title is-5">--%>
+<%--                <p><c:out value="${message}"/></p>--%>
+<%--            </h5>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
 
     <jsp:include page="validation_messages.jsp"/>
 

@@ -14,17 +14,19 @@
 
 <div class="loginContainer">
 
-    <c:if test="${not empty error}">
-        <div class="title is-5 is-danger">
-            <c:out value="${error}"/>
-        </div>
-    </c:if>
+<%--    <c:if test="${not empty error}">--%>
+<%--        <div class="title is-5 is-danger">--%>
+<%--            <c:out value="${error}"/>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
 
-    <c:if test="${not empty message}">
-        <div class="title is-5">
-            <c:out value="${message}"/>
-        </div>
-    </c:if>
+<%--    <c:if test="${not empty message}">--%>
+<%--        <div class="title is-5">--%>
+<%--            <c:out value="${message}"/>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
+
+    <jsp:include page="command_result_message.jsp"/>
 
     <h5 class="title is-5">
         <fmt:message var="moneyAdd" key="app.form.money.add"/>
