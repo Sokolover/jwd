@@ -27,7 +27,7 @@ public class FillUpWalletFormDisplay implements Command {
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
 
-        WalletCommandUtil.setCurrentMoneyAmountToRequest(request);
+        WalletCommandUtil.setCurrentWalletMoneyAmountToRequest(request);
 
         return FILL_UP_WALLET_FORM_JSP;
     }

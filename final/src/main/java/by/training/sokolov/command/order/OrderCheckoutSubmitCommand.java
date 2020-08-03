@@ -6,6 +6,8 @@ import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.user.model.User;
+import by.training.sokolov.entity.wallet.model.Wallet;
+import by.training.sokolov.entity.wallet.service.WalletService;
 import by.training.sokolov.validation.BeanValidator;
 import by.training.sokolov.validation.BrokenField;
 import by.training.sokolov.validation.ValidationResult;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,10 +39,13 @@ public class OrderCheckoutSubmitCommand implements Command {
 
     private final UserOrderService userOrderService;
     private final BeanValidator validator;
+    private final WalletService walletService;
 
-    public OrderCheckoutSubmitCommand(UserOrderService userOrderService, BeanValidator validator) {
+
+    public OrderCheckoutSubmitCommand(UserOrderService userOrderService, BeanValidator validator, WalletService walletService) {
         this.userOrderService = userOrderService;
         this.validator = validator;
+        this.walletService = walletService;
     }
 
     @Override
@@ -49,6 +55,19 @@ public class OrderCheckoutSubmitCommand implements Command {
         UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);
         User user = SecurityContext.getInstance().getCurrentUser(sessionId);
 
+        String paymentMethod = request.getParameter(PAYMENT_METHOD_JSP_PARAM);
+        LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, PAYMENT_METHOD_JSP_PARAM, paymentMethod));
+
+        if (nonNull(paymentMethod) && paymentMethod.equals(PAYMENT_FROM_ACCOUNT_JSP_PARAM)) {
+
+            if (isUserPossibleToPay(request, currentOrder, user)) {
+
+                payFromAccount(currentOrder, user);
+            } else {
+
+                return ORDER_CHECKOUT_FORM_JSP;
+            }
+        }
 
         String customerName = request.getParameter(DEFAULT_USER_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DEFAULT_USER_NAME_JSP_PARAM, customerName));
@@ -58,7 +77,6 @@ public class OrderCheckoutSubmitCommand implements Command {
 
         String customerUsersAddress = request.getParameter(DEFAULT_ORDER_ADDRESS_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DEFAULT_ORDER_ADDRESS_JSP_PARAM, customerUsersAddress));
-
 
         if (nonNull(customerName)) {
             currentOrder.setCustomerName(user.getName());
@@ -110,6 +128,32 @@ public class OrderCheckoutSubmitCommand implements Command {
             return ORDER_CHECKOUT_FORM_JSP;
         }
 
+    }
+
+    private void payFromAccount(UserOrder currentOrder, User user) throws ConnectionException, SQLException {
+
+        BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
+        BigDecimal usersWalletMoneyAmount = user.getWallet().getMoneyAmount();
+        BigDecimal newMoneyAmount = usersWalletMoneyAmount.subtract(orderCost);
+        user.getWallet().setMoneyAmount(newMoneyAmount);
+        walletService.update(user.getWallet());
+    }
+
+    private boolean isUserPossibleToPay(HttpServletRequest request, UserOrder currentOrder, User user) throws ConnectionException, SQLException {
+
+        BigDecimal totalOrderCost = userOrderService.getOrderCost(currentOrder);
+        Wallet wallet = user.getWallet();
+
+        if (totalOrderCost.compareTo(wallet.getMoneyAmount()) > 0) {
+
+            String message = "Not enough money in account";
+            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
+            LOGGER.error(message);
+
+            return false;
+        }
+
+        return true;
     }
 
     private void setTimeOfDelivery(HttpServletRequest request, UserOrder currentOrder) {

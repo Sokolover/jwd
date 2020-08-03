@@ -14,7 +14,7 @@ public final class WalletCommandUtil {
 
     private static final Logger LOGGER = Logger.getLogger(WalletCommandUtil.class.getName());
 
-    static void setCurrentMoneyAmountToRequest(HttpServletRequest request) {
+    public static void setCurrentWalletMoneyAmountToRequest(HttpServletRequest request) {
 
         String sessionId = request.getSession().getId();
         User user = SecurityContext.getInstance().getCurrentUser(sessionId);

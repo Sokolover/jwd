@@ -52,14 +52,25 @@
             </c:forEach>
             </tbody>
         </table>
+        <%--current user's money amount--%>
+        <jsp:useBean id="walletCurrentMoneyAmount" scope="request" type="java.math.BigDecimal"/>
+        <fmt:message var="walletCurrentMoneyAmountLable" key="app.message.money.amount.current"/>
+        <fmt:message var="currency" key="symbol.currency"/>
+        <h5 class="title is-5">
+            <c:out value="${walletCurrentMoneyAmountLable}: ${walletCurrentMoneyAmount} ${currency}"/>
+        </h5>
         <%--total cost--%>
         <jsp:useBean id="totalCost" scope="request" type="java.math.BigDecimal"/>
-        <c:set var="totalCost" value="${totalCost}"/>
-        <fmt:message var="orderCostString" key="order.cost"/>
-        <fmt:message var="currency" key="symbol.currency"/>
+        <fmt:message var="orderCostString" key="order.total.cost"/>
         <h5 class="title is-5">
             <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
         </h5>
+        <%--        <label class="checkbox">--%>
+        <%--            <input type="checkbox" name="default.user.name" value="user_s">--%>
+        <%--            <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>--%>
+        <%--            <c:out value="${sendUserName}"/>--%>
+        <%--        </label>--%>
+
     </div>
 
     <div class="infoContainer">
@@ -68,6 +79,26 @@
 
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+            <%--            <input type="hidden" name="${CommonAppConstants.TOTAL_ORDER_COST_JSP_PARAM}"--%>
+            <%--                   value="${totalCost}">--%>
+
+            <div>
+                <label class="radio">
+                    <input type="radio"
+                           name="${CommonAppConstants.PAYMENT_METHOD_JSP_PARAM}"
+                           class="radio"
+                           value="${CommonAppConstants.PAYMENT_FROM_ACCOUNT_JSP_PARAM}">
+                    <fmt:message key="order.pay.fromAccount"/>
+                </label>
+                <label class="radio">
+                    <input type="radio"
+                           name="${CommonAppConstants.PAYMENT_METHOD_JSP_PARAM}"
+                           class="radio"
+                           checked
+                           value="${CommonAppConstants.PAYMENT_ON_DELIVERY_JSP_PARAM}">
+                    <fmt:message key="order.pay.onDelivery"/>
+                </label>
+            </div>
 
             <div class="contactInfoContent">
 
@@ -80,10 +111,9 @@
                     <div class="control field">
                         <label class="label">
                             <fmt:message key="customer.name"/>
-                            <input class="input" id="user.name" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
+                            <input class="input" name="${CommonAppConstants.USER_NAME_JSP_PARAM}"
                                    type="text">
                         </label>
-
                     </div>
 
                     <div class="control field">
@@ -95,13 +125,14 @@
                     </div>
 
                     <label class="checkbox">
-                        <input type="checkbox" name="default.user.name" value="user_s">
+                        <input type="checkbox" name="${CommonAppConstants.DEFAULT_USER_NAME_JSP_PARAM}" value="user_s">
                         <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>
                         <c:out value="${sendUserName}"/>
                     </label>
 
                     <label class="checkbox">
-                        <input type="checkbox" name="default.user.phoneNumber" value="user_s">
+                        <input type="checkbox" name="${CommonAppConstants.DEFAULT_USER_PHONE_NUMBER_JSP_PARAM}"
+                               value="user_s">
                         <fmt:message var="sendUserPhoneNumber" key="lable.checkbox.sendUserPhoneNumber"/>
                         <c:out value="${sendUserPhoneNumber}"/>
                     </label>
@@ -117,7 +148,7 @@
                                 <jsp:useBean id="timeList" scope="request" type="java.util.List"/>
                                 <c:forEach items="${timeList}" var="time">
                                     <option value="${time}">
-                                            ${f:formatLocalDateTime(time, 'MM.dd HH:mm')}
+                                            ${f:formatLocalDateTime(time, 'dd.MM HH:mm')}
                                     </option>
                                 </c:forEach>
                             </select>
@@ -184,7 +215,7 @@
                     </div>
 
                     <label class="checkbox">
-                        <input type="checkbox" name="default.order.address" value="user_s">
+                        <input type="checkbox" name="${CommonAppConstants.DEFAULT_USER_NAME_JSP_PARAM}" value="user_s">
                         <fmt:message var="sendUserAddress" key="lable.checkbox.sendUserAddress"/>
                         <c:out value="${sendUserAddress}"/>
                     </label>

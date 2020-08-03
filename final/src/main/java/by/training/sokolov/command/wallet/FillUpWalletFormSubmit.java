@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
 import static by.training.sokolov.core.constants.JspName.FILL_UP_WALLET_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
@@ -63,7 +62,7 @@ public class FillUpWalletFormSubmit implements Command {
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
 
-        WalletCommandUtil.setCurrentMoneyAmountToRequest(request);
+        WalletCommandUtil.setCurrentWalletMoneyAmountToRequest(request);
 
         return FILL_UP_WALLET_FORM_JSP;
     }

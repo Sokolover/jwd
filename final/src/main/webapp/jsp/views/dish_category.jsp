@@ -19,7 +19,7 @@
 
     <div class="categoryAddContainer">
         <form action="${pageContext.request.contextPath}/menu" method="get">
-            <jsp:useBean id="selectedCategories" scope="request" type="java.util.List"/>
+<%--            <jsp:useBean id="selectedCategories" scope="request" type="java.util.List"/>--%>
             <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
             <c:choose>
                 <c:when test="${not empty selectedCategories}">

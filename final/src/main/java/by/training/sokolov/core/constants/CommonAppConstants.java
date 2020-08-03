@@ -26,6 +26,7 @@ public final class CommonAppConstants {
     public static final String ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE = "order.address.floor";
 
     public static final String TOTAL_ORDER_COST_JSP_ATTRIBUTE = "totalCost";
+    public static final String TOTAL_ORDER_COST_JSP_PARAM = "order.total.cost";
     public static final String TIME_LIST_JSP_ATTRIBUTE = "timeList";
 
     public static final String DEFAULT_USER_NAME_JSP_PARAM = "default.user.name";
@@ -52,6 +53,11 @@ public final class CommonAppConstants {
 
     public static final String WALLET_CURRENT_MONEY_AMOUNT_JSP_ATTRIBUTE = "walletCurrentMoneyAmount";
     public static final String WALLET_NEW_MONEY_AMOUNT_JSP_PARAM = "wallet.new.money.amount";
+
+
+    public static final String PAYMENT_FROM_ACCOUNT_JSP_PARAM = "payFromAccount";
+    public static final String PAYMENT_ON_DELIVERY_JSP_PARAM = "payOnDelivery";
+    public static final String PAYMENT_METHOD_JSP_PARAM = "order.pay.method";
 
 
     public static final String ERROR_JSP_ATTRIBUTE = "error";
