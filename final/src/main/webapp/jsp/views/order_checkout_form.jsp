@@ -78,14 +78,14 @@
 
     <div class="infoContainer">
         <%--input contact info--%>
-        <form action="${pageContext.request.contextPath}/order_checkout" method="post">
+        <form class="checkoutForm" action="${pageContext.request.contextPath}/order_checkout" method="post">
 
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.SUBMIT_ORDER_CHECKOUT_COMMAND}">
             <%--            <input type="hidden" name="${CommonAppConstants.TOTAL_ORDER_COST_JSP_PARAM}"--%>
             <%--                   value="${totalCost}">--%>
 
-            <div>
+            <div class="paymentRadio">
                 <label class="radio">
                     <input type="radio"
                            name="${CommonAppConstants.PAYMENT_METHOD_JSP_PARAM}"
