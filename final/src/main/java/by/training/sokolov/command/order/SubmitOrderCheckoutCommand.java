@@ -32,9 +32,9 @@ import static by.training.sokolov.validation.CreateMessageUtil.createPageMessage
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
 
-public class OrderCheckoutSubmitCommand implements Command {
+public class SubmitOrderCheckoutCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderCheckoutSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitOrderCheckoutCommand.class.getName());
     private static final String USERS_PARAM_TO_CURRENT_ORDER = "User's [%s] has been set to current order";
     private static final String CUSTOM_PARAM_TO_CURRENT_ORDER = "Custom [%s] has been set to current order";
 
@@ -43,7 +43,7 @@ public class OrderCheckoutSubmitCommand implements Command {
     private final WalletService walletService;
 
 
-    public OrderCheckoutSubmitCommand(UserOrderService userOrderService, BeanValidator validator, WalletService walletService) {
+    public SubmitOrderCheckoutCommand(UserOrderService userOrderService, BeanValidator validator, WalletService walletService) {
         this.userOrderService = userOrderService;
         this.validator = validator;
         this.walletService = walletService;
@@ -116,7 +116,7 @@ public class OrderCheckoutSubmitCommand implements Command {
 
             String message = "Order accepted";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
             return COMMAND_RESULT_MESSAGE_JSP;
         } else {

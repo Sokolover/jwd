@@ -25,14 +25,14 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
 import static java.lang.String.format;
 
-public class CreateDishCategoryFormSubmitCommand implements Command {
+public class SubmitDishCategoryCreatingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateDishCategoryFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitDishCategoryCreatingFormCommand.class.getName());
 
     private final DishCategoryService dishCategoryService;
     private final BeanValidator validator;
 
-    public CreateDishCategoryFormSubmitCommand(DishCategoryService dishCategoryService, BeanValidator validator) {
+    public SubmitDishCategoryCreatingFormCommand(DishCategoryService dishCategoryService, BeanValidator validator) {
         this.dishCategoryService = dishCategoryService;
         this.validator = validator;
     }
@@ -54,6 +54,7 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
     }
 
     private String validateFields(HttpServletRequest request, DishCategory dishCategory) throws SQLException, ConnectionException {
+
         ValidationResult validationResult = validator.validate(dishCategory);
         List<BrokenField> brokenFields = validationResult.getBrokenFields();
 
@@ -63,14 +64,14 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
 
             String message = "New category has been added to menu";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
             return COMMAND_RESULT_MESSAGE_JSP;
         } else {
 
             List<String> messages = createPageMessageList(brokenFields);
             request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, messages));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, messages));
             LOGGER.error(messages);
 
             return CREATE_CATEGORY_FORM_JSP;
@@ -87,7 +88,7 @@ public class CreateDishCategoryFormSubmitCommand implements Command {
 
                 String message = "This category is already exist";
                 request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(message));
-                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, message));
                 LOGGER.error(message);
 
                 return false;

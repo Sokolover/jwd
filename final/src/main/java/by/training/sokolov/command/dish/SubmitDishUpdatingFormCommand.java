@@ -31,15 +31,15 @@ import static by.training.sokolov.validation.CreateMessageUtil.createPageMessage
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
-public class UpdateDishFormSubmitCommand implements Command {
+public class SubmitDishUpdatingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(UpdateDishFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitDishUpdatingFormCommand.class.getName());
 
     private final DishService dishService;
     private final DishCategoryService dishCategoryService;
     private final BeanValidator validator;
 
-    public UpdateDishFormSubmitCommand(DishService dishService, DishCategoryService dishCategoryService, BeanValidator validator) {
+    public SubmitDishUpdatingFormCommand(DishService dishService, DishCategoryService dishCategoryService, BeanValidator validator) {
         this.dishService = dishService;
         this.dishCategoryService = dishCategoryService;
         this.validator = validator;
@@ -72,7 +72,7 @@ public class UpdateDishFormSubmitCommand implements Command {
 
             String message = "Your dish has been updated!";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
             return COMMAND_RESULT_MESSAGE_JSP;
 
@@ -182,7 +182,7 @@ public class UpdateDishFormSubmitCommand implements Command {
     private String createReturnAnswer(HttpServletRequest request, List<String> messages) throws SQLException, ConnectionException {
 
         request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, messages));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, messages));
         LOGGER.error(messages);
 
         JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);

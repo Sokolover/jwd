@@ -33,7 +33,7 @@
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-               value="${CommandType.DELETE_DISH_CATEGORY_FORM_SUBMIT}">
+               value="${CommandType.SUBMIT_DISH_CATEGORY_DELETING_FORM_COMMAND}">
         <div class="select field">
             <select name="${CommonAppConstants.DISH_CATEGORY_NAME_JSP_PARAM}">
                 <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>

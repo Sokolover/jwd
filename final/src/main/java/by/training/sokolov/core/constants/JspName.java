@@ -10,7 +10,7 @@ public final class JspName {
     public static final String LOGIN_JSP = "login_form";
     public static final String REGISTER_JSP = "register_form";
 
-    public static final String DISH_LIST_JSP = "dish_list";
+    public static final String DISH_MENU_JSP = "dish_menu";
     public static final String ORDER_ITEM_LIST_JSP = "order_item_list";
 
     public static final String ORDER_CHECKOUT_FORM_JSP = "order_checkout_form";

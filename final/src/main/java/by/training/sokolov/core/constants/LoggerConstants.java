@@ -4,10 +4,7 @@ public final class LoggerConstants {
 
     public static final String FROM_JSP_ATTR_SET_TO_CURRENT_ORDER_MESSAGE = "[%s] from jsp attributes has been set to current order; order id = [%d]";
 
-    /*todo
-            добавить в ATTRIBUTE_SET_TO_JSP_MESSAGE значение которое ставиться
-     */
-    public static final String ATTRIBUTE_SET_TO_JSP_MESSAGE = "[%s] attribute has been set to jsp";
+    public static final String ATTRIBUTE_SET_TO_JSP_MESSAGE = "[%s] attribute with value [%s] has been set to jsp";
     public static final String PARAM_GOT_FROM_JSP_MESSAGE = "[%s] param with value [%s] has been got from jsp";
 
     public static final String CLASS_INVOKED_METHOD_FOR_ENTITY_MESSAGE = "%s called %s method for %s";

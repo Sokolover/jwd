@@ -43,7 +43,7 @@
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-               value="${CommandType.FILL_UP_WALLET_FORM_SUBMIT}">
+               value="${CommandType.SUBMIT_FILLING_UP_WALLET_FORM_COMMAND}">
         <div class="control field">
             <label class="label">
                 <input class="input"

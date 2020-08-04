@@ -26,14 +26,14 @@ import static by.training.sokolov.core.constants.JspName.ORDER_CHECKOUT_FORM_JSP
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class OrderCheckoutDisplayCommand implements Command {
+public class DisplayOrderCheckoutCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderCheckoutDisplayCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DisplayOrderCheckoutCommand.class.getName());
 
     private final OrderItemService orderItemService;
     private final UserOrderService userOrderService;
 
-    public OrderCheckoutDisplayCommand(OrderItemService orderItemService, UserOrderService userOrderService) {
+    public DisplayOrderCheckoutCommand(OrderItemService orderItemService, UserOrderService userOrderService) {
         this.orderItemService = orderItemService;
         this.userOrderService = userOrderService;
     }
@@ -54,15 +54,15 @@ public class OrderCheckoutDisplayCommand implements Command {
         }
 
         request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems.toString()));
 
         BigDecimal orderCost = userOrderService.getOrderCost(currentOrder);
         request.setAttribute(TOTAL_ORDER_COST_JSP_ATTRIBUTE, orderCost);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, TOTAL_ORDER_COST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, TOTAL_ORDER_COST_JSP_ATTRIBUTE, orderCost));
 
         List<LocalDateTime> localDateTimeList = TimeOfDeliveryGeneratorUtil.findTimeVariants();
         request.setAttribute(TIME_LIST_JSP_ATTRIBUTE, localDateTimeList);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, TIME_LIST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, TIME_LIST_JSP_ATTRIBUTE, localDateTimeList.toString()));
 
         return ORDER_CHECKOUT_FORM_JSP;
     }

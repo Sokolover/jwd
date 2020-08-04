@@ -23,15 +23,15 @@ import static by.training.sokolov.core.constants.JspName.ORDER_ITEM_LIST_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class OrderItemListDisplayCommand implements Command {
+public class DisplayOrderItemListCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderItemListDisplayCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DisplayOrderItemListCommand.class.getName());
 
     private final UserOrderService userOrderService;
     private final OrderItemService orderItemService;
     private final DishCategoryService dishCategoryService;
 
-    public OrderItemListDisplayCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
+    public DisplayOrderItemListCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
         this.userOrderService = userOrderService;
         this.orderItemService = orderItemService;
         this.dishCategoryService = dishCategoryService;
@@ -52,7 +52,7 @@ public class OrderItemListDisplayCommand implements Command {
 
             List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(currentOrder.getId());
             request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE, orderItems.toString()));
             LOGGER.info("All found items will be shown");
 
             return ORDER_ITEM_LIST_JSP;
@@ -68,7 +68,7 @@ public class OrderItemListDisplayCommand implements Command {
         }
 
         request.setAttribute(ORDER_ITEM_LIST_JSP_ATTRIBUTE, filteredOrderItems);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ORDER_ITEM_LIST_JSP_ATTRIBUTE, filteredOrderItems.toString()));
         LOGGER.info("Filtered items will be shown");
 
         return ORDER_ITEM_LIST_JSP;

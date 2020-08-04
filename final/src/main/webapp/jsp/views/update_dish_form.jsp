@@ -30,7 +30,7 @@
               enctype="multipart/form-data">
             <input type="hidden"
                    name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                   value="${CommandType.UPDATE_DISH_FORM_SUBMIT}">
+                   value="${CommandType.SUBMIT_DISH_UPDATING_FORM_COMMAND}">
             <input type="hidden"
                    name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                    value="${dish.id}">

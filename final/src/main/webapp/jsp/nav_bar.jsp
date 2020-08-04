@@ -26,24 +26,24 @@
                                 key="links.order.checkout"/></a>
 
                         <a class="navbar-item button is-light secondary"
-                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.FILL_UP_WALLET_FORM_DISPLAY}"><fmt:message
+                           href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DISPLAY_FILLING_UP_WALLET_FORM_COMMAND}"><fmt:message
                                 key="links.wallet.money.add"/></a>
                     </div>
 
                     <div class="navbar navBarBackground marginTop">
-                        <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY, sessionId)}">
+                        <c:if test="${securityContext.canExecute(CommandType.DISPLAY_DISH_CATEGORY_CREATING_FORM_COMMAND, sessionId)}">
                             <a class="navbar-item button is-light secondary"
-                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
+                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DISPLAY_DISH_CATEGORY_CREATING_FORM_COMMAND}"><fmt:message
                                     key="links.category.create"/></a>
                         </c:if>
-                        <c:if test="${securityContext.canExecute(CommandType.DELETE_DISH_CATEGORY_FORM_DISPLAY, sessionId)}">
+                        <c:if test="${securityContext.canExecute(CommandType.DISPLAY_DISH_CATEGORY_DELETING_FORM_COMMAND, sessionId)}">
                             <a class="navbar-item button is-light secondary"
-                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DELETE_DISH_CATEGORY_FORM_DISPLAY}"><fmt:message
+                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DISPLAY_DISH_CATEGORY_DELETING_FORM_COMMAND}"><fmt:message
                                     key="links.category.delete"/></a>
                         </c:if>
-                        <c:if test="${securityContext.canExecute(CommandType.CREATE_DISH_FORM_DISPLAY, sessionId)}">
+                        <c:if test="${securityContext.canExecute(CommandType.DISPLAY_DISH_CREATING_FORM_COMMAND, sessionId)}">
                             <a class="navbar-item button is-light secondary"
-                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.CREATE_DISH_FORM_DISPLAY}"><fmt:message
+                               href="?${CommonAppConstants.QUERY_PARAM_COMMAND}=${CommandType.DISPLAY_DISH_CREATING_FORM_COMMAND}"><fmt:message
                                     key="links.dish.create"/></a>
                         </c:if>
                     </div>

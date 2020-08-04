@@ -23,15 +23,15 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
-public class OrderItemAddCommand implements Command {
+public class AddOrderItemCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderItemAddCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AddOrderItemCommand.class.getName());
 
     private final OrderItemService orderItemService;
     private final DishService dishService;
     private final UserOrderService userOrderService;
 
-    public OrderItemAddCommand(OrderItemService orderItemService, DishService dishService, UserOrderService userOrderService) {
+    public AddOrderItemCommand(OrderItemService orderItemService, DishService dishService, UserOrderService userOrderService) {
         this.orderItemService = orderItemService;
         this.dishService = dishService;
         this.userOrderService = userOrderService;
@@ -57,13 +57,13 @@ public class OrderItemAddCommand implements Command {
             addItemToOrder(request, currentUserOrderId);
             String message = "New item added to order";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         } else {
 
             String message = "This item is already in the order. If you want to change dish amount - delete correspond item and add it one more time";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
         }
 
         return ORDER_ITEM_LIST_JSP;

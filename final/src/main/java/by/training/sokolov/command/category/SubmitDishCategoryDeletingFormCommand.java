@@ -15,13 +15,13 @@ import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_T
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class DeleteDishCategoryFormSubmitCommand implements Command {
+public class SubmitDishCategoryDeletingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(DeleteDishCategoryFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitDishCategoryDeletingFormCommand.class.getName());
 
     private final DishCategoryService dishCategoryService;
 
-    public DeleteDishCategoryFormSubmitCommand(DishCategoryService dishCategoryService) {
+    public SubmitDishCategoryDeletingFormCommand(DishCategoryService dishCategoryService) {
         this.dishCategoryService = dishCategoryService;
     }
 
@@ -35,7 +35,7 @@ public class DeleteDishCategoryFormSubmitCommand implements Command {
 
         String message = "Dish category has been deleted from menu";
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }

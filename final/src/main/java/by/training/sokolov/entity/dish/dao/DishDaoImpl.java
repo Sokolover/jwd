@@ -1,10 +1,10 @@
 package by.training.sokolov.entity.dish.dao;
 
-import by.training.sokolov.core.constants.DatabaseTableNames;
 import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.database.connection.ConnectionManager;
+import by.training.sokolov.entity.category.dao.DishCategoryTableConstants;
 import by.training.sokolov.entity.dish.model.Dish;
 import org.apache.log4j.Logger;
 
@@ -28,15 +28,13 @@ import static java.lang.String.format;
 public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class.getName());
-/*
-todo исправить здесь и проверить где ещё нужны параметризированные запросы!
- */
+
     private static final String SELECT_BY_DISH_CATEGORY_QUERY = "" +
             "SELECT {0}.*\n" +
             "FROM {0},\n" +
-            "     {1}\n" +
-            "WHERE {0}.dish_category_id = {1}.id\n" +
-            "AND {1}.category_name = ?";
+            "     {2}\n" +
+            "WHERE {0}.{1} = {2}.{3}\n" +
+            "AND {2}.{4} = ?";
     private static final String SELECT_ALL_LIMIT_QUERY = "SELECT * FROM {0} LIMIT ?, ?";
 
     private static ConnectionManager connectionManager;
@@ -129,7 +127,8 @@ todo исправить здесь и проверить где ещё нужн�
 
         List<Dish> result = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection()) {
-            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_QUERY, DISH_TABLE_NAME, DatabaseTableNames.DISH_CATEGORY);
+            String sql = MessageFormat.format(SELECT_BY_DISH_CATEGORY_QUERY, DISH_TABLE_NAME, DISH_CATEGORY_ID,
+                    DishCategoryTableConstants.DISH_CATEGORY_TABLE_NAME, DishCategoryTableConstants.ID, DishCategoryTableConstants.CATEGORY_NAME);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, categoryName);
                 ResultSet resultSet = statement.executeQuery();

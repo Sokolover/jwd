@@ -23,13 +23,13 @@ import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
-public class CreateDishFeedbackFormSubmitCommand implements Command {
+public class SubmitDishFeedbackCreatingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateDishFeedbackFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitDishFeedbackCreatingFormCommand.class.getName());
 
     private final DishFeedbackService dishFeedbackService;
 
-    public CreateDishFeedbackFormSubmitCommand(DishFeedbackService dishFeedbackService) {
+    public SubmitDishFeedbackCreatingFormCommand(DishFeedbackService dishFeedbackService) {
         this.dishFeedbackService = dishFeedbackService;
     }
 
@@ -64,7 +64,7 @@ public class CreateDishFeedbackFormSubmitCommand implements Command {
 
         LOGGER.info(message);
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }

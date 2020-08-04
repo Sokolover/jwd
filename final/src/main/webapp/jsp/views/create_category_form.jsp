@@ -24,7 +24,7 @@
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-               value="${CommandType.CREATE_DISH_CATEGORY_FORM_SUBMIT}">
+               value="${CommandType.SUBMIT_DISH_CATEGORY_CREATING_FORM_COMMAND}">
         <div class="control field">
             <label class="label">
                 <input class="input" name="${CommonAppConstants.CATEGORY_NAME_JSP_PARAM}"

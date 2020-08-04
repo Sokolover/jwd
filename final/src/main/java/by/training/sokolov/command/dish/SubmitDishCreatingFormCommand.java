@@ -4,7 +4,6 @@ import by.training.sokolov.command.Command;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
 import by.training.sokolov.entity.category.model.DishCategory;
-import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.dish.model.Dish;
 import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.util.JspUtil;
@@ -21,6 +20,7 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
@@ -31,24 +31,21 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
 import static java.lang.String.format;
 
-public class CreateDishFormSubmitCommand implements Command {
+public class SubmitDishCreatingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateDishFormSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitDishCreatingFormCommand.class.getName());
 
     private final DishService dishService;
-    //    private final DishCategoryService dishCategoryService;
     private final BeanValidator validator;
 
-    public CreateDishFormSubmitCommand(DishService dishService, DishCategoryService dishCategoryService, BeanValidator validator) {
+    public SubmitDishCreatingFormCommand(DishService dishService, BeanValidator validator) {
         this.dishService = dishService;
-//        this.dishCategoryService = dishCategoryService;
         this.validator = validator;
     }
 
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
-
 
         String name = request.getParameter(DISH_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_NAME_JSP_PARAM, name));
@@ -63,7 +60,7 @@ public class CreateDishFormSubmitCommand implements Command {
                 request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
                 LOGGER.error(message);
 
-                return createReturnAnswer(request, message);
+                return createReturnAnswer(request, Collections.singletonList(message));
             }
         }
 
@@ -77,7 +74,7 @@ public class CreateDishFormSubmitCommand implements Command {
         } catch (NumberFormatException e) {
 
             String message = "Invalid cost format or empty cost field";
-            return createReturnAnswer(request, message);
+            return createReturnAnswer(request, Collections.singletonList(message));
         }
 
         String description = request.getParameter(DISH_DESCRIPTION_JSP_PARAM);
@@ -111,7 +108,7 @@ public class CreateDishFormSubmitCommand implements Command {
 
             String message = "Your dish has been created and added to menu";
             request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
             return COMMAND_RESULT_MESSAGE_JSP;
 
@@ -143,20 +140,8 @@ public class CreateDishFormSubmitCommand implements Command {
     private String createReturnAnswer(HttpServletRequest request, List<String> messages) throws SQLException, ConnectionException {
 
         request.setAttribute(ERRORS_JSP_ATTRIBUTE, messages);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, messages));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, messages));
         LOGGER.error(messages);
-
-        JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
-        jspUtil.setCategoriesAttribute(request);
-
-        return CREATE_DISH_FORM_JSP;
-    }
-
-    private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
-
-        request.setAttribute(ERRORS_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
-        LOGGER.error(message);
 
         JspUtil jspUtil = ApplicationContext.getInstance().getBean(JspUtil.class);
         jspUtil.setCategoriesAttribute(request);

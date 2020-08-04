@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.DISH_ID_JSP_PARAM;
 import static by.training.sokolov.core.constants.CommonAppConstants.MESSAGE_JSP_ATTRIBUTE;
-import static by.training.sokolov.core.constants.JspName.DISH_LIST_JSP;
+import static by.training.sokolov.core.constants.JspName.DISH_MENU_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.Long.parseLong;
@@ -37,9 +37,9 @@ public class DeleteDishCommand implements Command {
 
         String message = "Dish has been deleted from menu";
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
-        return DISH_LIST_JSP;
+        return DISH_MENU_JSP;
     }
 
 }

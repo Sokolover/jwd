@@ -19,7 +19,7 @@
 
         <form action="${pageContext.request.contextPath}/menu" method="post" class="feedbackArea">
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                   value="${CommandType.CREATE_DISH_FEEDBACK_FORM_SUBMIT}">
+                   value="${CommandType.SUBMIT_DISH_FEEDBACK_CREATING_FORM_COMMAND}">
             <div class="field">
                 <label>
                     <c:set var="minRating" value="1"/>

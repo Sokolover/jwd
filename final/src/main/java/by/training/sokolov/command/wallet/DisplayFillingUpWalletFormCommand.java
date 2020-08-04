@@ -14,13 +14,13 @@ import java.sql.SQLException;
 import static by.training.sokolov.core.constants.JspName.FILL_UP_WALLET_FORM_JSP;
 import static java.lang.String.format;
 
-public class FillUpWalletFormDisplay implements Command {
+public class DisplayFillingUpWalletFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(FillUpWalletFormDisplay.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DisplayFillingUpWalletFormCommand.class.getName());
 
     private final WalletService walletService;
 
-    public FillUpWalletFormDisplay(WalletService walletService) {
+    public DisplayFillingUpWalletFormCommand(WalletService walletService) {
         this.walletService = walletService;
     }
 

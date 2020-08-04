@@ -24,6 +24,7 @@
 <%--    </c:if>--%>
 
     <jsp:include page="validation_messages.jsp"/>
+    <jsp:include page="command_result_message.jsp"/>
 
     <h1 class="title is-1">
         <fmt:message var="login" key="app.form.login"/>
@@ -31,7 +32,7 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.LOGIN_USER_SUBMIT}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.SUBMIT_USER_LOGIN_COMMAND}">
         <div class="">
             <div class="control field">
                 <label class="label">

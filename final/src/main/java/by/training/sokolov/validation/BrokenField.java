@@ -5,9 +5,6 @@ public class BrokenField {
     private final String fieldName;
     private final Object fieldValue;
     private final String violatedRule;
-    /*
-    todo добавить violated rule value где будет описание ограничения
-     */
     private final Object[] args;
 
     public BrokenField(String fieldName, Object fieldValue, String violatedRule, Object... args) {

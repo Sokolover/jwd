@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -25,13 +24,13 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
 import static java.lang.String.format;
 
-public class LoginUserSubmitCommand implements Command {
+public class SubmitUserLoginCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(LoginUserSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitUserLoginCommand.class.getName());
 
     private final UserService userService;
 
-    public LoginUserSubmitCommand(UserService userService) {
+    public SubmitUserLoginCommand(UserService userService) {
         this.userService = userService;
     }
 
@@ -51,7 +50,7 @@ public class LoginUserSubmitCommand implements Command {
         } catch (NoSuchAlgorithmException e) {
 
             request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(e.getMessage()));
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, e.getMessage()));
             LOGGER.error(e.getMessage());
 
             return LOGIN_JSP;
@@ -65,7 +64,7 @@ public class LoginUserSubmitCommand implements Command {
 
             String message = "Wrong email address or password";
             request.setAttribute(ERRORS_JSP_ATTRIBUTE, Collections.singletonList(message));
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERRORS_JSP_ATTRIBUTE, message));
 
             return LOGIN_JSP;
         }
@@ -76,7 +75,7 @@ public class LoginUserSubmitCommand implements Command {
 
         String message = "You have logged in successfully";
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_ID_JSP_PARAM));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         return COMMAND_RESULT_MESSAGE_JSP;
     }

@@ -52,7 +52,7 @@ public class OrderCheckoutServlet extends HttpServlet {
 //            case CREATE_CATEGORY_FORM_JSP:
             case ORDER_CHECKOUT_FORM_JSP:
             case DEFAULT_JSP:
-                String commandName = String.valueOf(CommandType.CHECKOUT_ORDER_FORM_DISPLAY);
+                String commandName = String.valueOf(CommandType.DISPLAY_ORDER_CHECKOUT_COMMAND);
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
                 req.setAttribute(VIEW_NAME_JSP_PARAM, commandResult);

@@ -27,15 +27,15 @@ import static by.training.sokolov.util.Md5EncryptingUtil.encrypt;
 import static by.training.sokolov.validation.CreateMessageUtil.createUrlMessage;
 import static java.lang.String.format;
 
-public class RegisterUserSubmitCommand implements Command {
+public class SubmitUserRegisterCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(RegisterUserSubmitCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitUserRegisterCommand.class.getName());
 
 
     private final UserService userService;
     private final BeanValidator validator;
 
-    public RegisterUserSubmitCommand(UserService userService, BeanValidator validator) {
+    public SubmitUserRegisterCommand(UserService userService, BeanValidator validator) {
         this.userService = userService;
         this.validator = validator;
     }
@@ -84,7 +84,7 @@ public class RegisterUserSubmitCommand implements Command {
             } catch (NoSuchAlgorithmException e) {
 
                 request.setAttribute(ERROR_JSP_ATTRIBUTE, e.getMessage());
-                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, e.getMessage()));
+                LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERROR_JSP_ATTRIBUTE, e.getMessage()));
                 LOGGER.error(e.getMessage());
 
                 int status = NOT_SUCCESSFUL;
@@ -97,16 +97,16 @@ public class RegisterUserSubmitCommand implements Command {
 
             List<User> users = userService.findAll();
             /*
-            todo МОЖЕТ БЫТЬ сделать get by email и by name запрос с чуствительностью к регистру
+            todo МОЖЕТ БЫТЬ сделать get by email и by name запрос
              вместо этого поиска циклами.
              */
             for (User user : users) {
 
-                if (isUserName(request, response, name, user)) {
+                if (isUserNameRegistered(request, response, name, user)) {
                     return REGISTER_JSP;
                 }
 
-                if (isUserEmail(request, response, email, user)) {
+                if (isUserEmailRegistered(request, response, email, user)) {
                     return REGISTER_JSP;
                 }
             }
@@ -122,8 +122,6 @@ public class RegisterUserSubmitCommand implements Command {
             userService.register(newUser);
 
             String message = "You have been registered successfully";
-            request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-            LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
             LOGGER.info(message);
 
             int status = SUCCESSFULLY;
@@ -134,9 +132,7 @@ public class RegisterUserSubmitCommand implements Command {
         } else {
 
             String message = createUrlMessage(brokenFields);
-
-//            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-//            LOGGER.error(message);
+            LOGGER.error(message);
 
             int status = NOT_SUCCESSFUL;
             String formatRedirectUrl = format(REGISTER_REDIRECT_WITH_ERROR_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, message);
@@ -147,36 +143,34 @@ public class RegisterUserSubmitCommand implements Command {
 
     }
 
-    private boolean isUserName(HttpServletRequest request, HttpServletResponse response, String name, User user) throws IOException {
+    private boolean isUserNameRegistered(HttpServletRequest request, HttpServletResponse response, String name, User user) throws IOException {
 
         if (user.getName().equalsIgnoreCase(name)) {
 
             String message = "User with this name has been registered";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
 
             int status = NOT_SUCCESSFUL;
             response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
-    private boolean isUserEmail(HttpServletRequest request, HttpServletResponse response, String email, User user) throws IOException {
+    private boolean isUserEmailRegistered(HttpServletRequest request, HttpServletResponse response, String email, User user) throws IOException {
 
         if (user.getEmail().equalsIgnoreCase(email)) {
 
             String message = "User with this email has been registered";
-            request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
             LOGGER.error(message);
 
             int status = NOT_SUCCESSFUL;
             response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 }

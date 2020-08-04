@@ -49,7 +49,7 @@ public class OrderBasketServlet extends HttpServlet {
                 break;
             case DEFAULT_JSP:
             case ORDER_ITEM_LIST_JSP:
-                String commandName = String.valueOf(CommandType.ORDER_ITEM_LIST_DISPLAY);
+                String commandName = String.valueOf(CommandType.DISPLAY_ORDER_ITEM_LIST_COMMAND);
                 command = commandFactory.getCommand(commandName);
                 String commandResult = command.apply(req, resp);
                 req.setAttribute(VIEW_NAME_JSP_PARAM, commandResult);

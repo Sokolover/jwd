@@ -35,12 +35,7 @@ public class DisplayRegisterServlet extends HttpServlet {
 
         try {
             int success = Integer.parseInt(req.getParameter(QUERY_PARAM_SUCCESS));
-/*
-todo
-        req.setAttribute(VIEW_NAME_JSP_PARAM, COMMAND_RESULT_MESSAGE_JSP);
-        представить как req.setAttribute(VIEW_NAME_JSP_PARAM, LOGIN_JSP); т.е. предложение залогинится
-        С ИНФОРМАЦИЕЙ ЧТО ЗАРЕГЕСТРИРОВАН УСПЕШНО
- */
+
             if (success == SUCCESSFULLY) {
 
                 String message = req.getParameter(QUERY_PARAM_MESSAGE);
@@ -49,7 +44,6 @@ todo
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
             } else {
 
-//                String message = req.getParameter(QUERY_PARAM_ERROR);
                 String[] errorArray = req.getParameterValues(QUERY_PARAM_ERROR);
                 List<String> errorList = Arrays.asList(errorArray);
                 req.setAttribute(ERRORS_JSP_ATTRIBUTE, errorList);

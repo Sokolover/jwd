@@ -3,8 +3,6 @@ package by.training.sokolov.command.dish;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
-import by.training.sokolov.entity.category.service.DishCategoryService;
-import by.training.sokolov.entity.dish.service.DishService;
 import by.training.sokolov.util.JspUtil;
 import org.apache.log4j.Logger;
 
@@ -16,16 +14,12 @@ import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.JspName.UPDATE_DISH_FORM_JSP;
 
-public class UpdateDishFormDisplayCommand implements Command {
+public class DisplayDishUpdatingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(UpdateDishFormDisplayCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DisplayDishUpdatingFormCommand.class.getName());
 
-    private final DishCategoryService dishCategoryService;
-    private final DishService dishService;
+    public DisplayDishUpdatingFormCommand() {
 
-    public UpdateDishFormDisplayCommand(DishCategoryService dishCategoryService, DishService dishService) {
-        this.dishCategoryService = dishCategoryService;
-        this.dishService = dishService;
     }
 
     @Override

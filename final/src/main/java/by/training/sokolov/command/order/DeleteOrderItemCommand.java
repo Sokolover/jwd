@@ -17,13 +17,13 @@ import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
-public class OrderItemDeleteCommand implements Command {
+public class DeleteOrderItemCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderItemDeleteCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DeleteOrderItemCommand.class.getName());
 
     private final OrderItemService orderItemService;
 
-    public OrderItemDeleteCommand(OrderItemService orderItemService) {
+    public DeleteOrderItemCommand(OrderItemService orderItemService) {
         this.orderItemService = orderItemService;
     }
 
@@ -37,7 +37,7 @@ public class OrderItemDeleteCommand implements Command {
 
         String message = "Item has been deleted from order";
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         return ORDER_ITEM_LIST_JSP;
     }

@@ -81,7 +81,7 @@
         <form action="${pageContext.request.contextPath}/order_checkout" method="post">
 
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                   value="${CommandType.CHECKOUT_ORDER_FORM_SUBMIT}">
+                   value="${CommandType.SUBMIT_ORDER_CHECKOUT_COMMAND}">
             <%--            <input type="hidden" name="${CommonAppConstants.TOTAL_ORDER_COST_JSP_PARAM}"--%>
             <%--                   value="${totalCost}">--%>
 

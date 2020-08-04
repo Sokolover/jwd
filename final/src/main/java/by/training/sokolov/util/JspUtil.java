@@ -31,10 +31,6 @@ public class JspUtil {
         this.dishCategoryService = dishCategoryService;
     }
 
-   /*
-    todo сделать для этого класса связку а ApplicationContext
-     */
-
     public void setDishAttributeByDishParam(HttpServletRequest request) throws SQLException, ConnectionException {
 
         String dishId = request.getParameter(DISH_ID_JSP_PARAM);
@@ -46,13 +42,13 @@ public class JspUtil {
         Dish dish = dishService.getById(parseLong(dishId));
 
         request.setAttribute(DISH_JSP_ATTRIBUTE, dish);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, DISH_JSP_ATTRIBUTE, dish.toString()));
     }
 
     public void setCategoriesAttribute(HttpServletRequest request) throws SQLException, ConnectionException {
 
         List<DishCategory> categories = dishCategoryService.findAll();
         request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, categories);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, CATEGORY_LIST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, CATEGORY_LIST_JSP_ATTRIBUTE, categories.toString()));
     }
 }

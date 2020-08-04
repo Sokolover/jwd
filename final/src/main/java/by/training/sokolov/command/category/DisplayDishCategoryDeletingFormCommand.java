@@ -18,13 +18,13 @@ import static by.training.sokolov.core.constants.JspName.DELETE_CATEGORY_FORM_JS
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class DeleteDishCategoryFormDisplayCommand implements Command {
+public class DisplayDishCategoryDeletingFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(DeleteDishCategoryFormDisplayCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DisplayDishCategoryDeletingFormCommand.class.getName());
 
     private final DishCategoryService dishCategoryService;
 
-    public DeleteDishCategoryFormDisplayCommand(DishCategoryService dishCategoryService) {
+    public DisplayDishCategoryDeletingFormCommand(DishCategoryService dishCategoryService) {
         this.dishCategoryService = dishCategoryService;
     }
 
@@ -33,7 +33,7 @@ public class DeleteDishCategoryFormDisplayCommand implements Command {
 
         List<DishCategory> dishCategories = dishCategoryService.findAll();
         request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, CATEGORY_LIST_JSP_ATTRIBUTE));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories.toString()));
 
         return DELETE_CATEGORY_FORM_JSP;
     }

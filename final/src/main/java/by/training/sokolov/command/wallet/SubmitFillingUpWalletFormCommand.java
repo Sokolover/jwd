@@ -21,13 +21,13 @@ import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_T
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static java.lang.String.format;
 
-public class FillUpWalletFormSubmit implements Command {
+public class SubmitFillingUpWalletFormCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(FillUpWalletFormSubmit.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmitFillingUpWalletFormCommand.class.getName());
 
     private final WalletService walletService;
 
-    public FillUpWalletFormSubmit(WalletService walletService) {
+    public SubmitFillingUpWalletFormCommand(WalletService walletService) {
         this.walletService = walletService;
     }
 
@@ -60,7 +60,7 @@ public class FillUpWalletFormSubmit implements Command {
 
         String message = "Wallet has been filled up";
         request.setAttribute(MESSAGE_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, MESSAGE_JSP_ATTRIBUTE, message));
 
         WalletCommandUtil.setCurrentWalletMoneyAmountToRequest(request);
 
@@ -70,7 +70,7 @@ public class FillUpWalletFormSubmit implements Command {
     private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
 
         request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
-        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, message));
+        LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERROR_JSP_ATTRIBUTE, message));
         LOGGER.error(message);
 
         return FILL_UP_WALLET_FORM_JSP;

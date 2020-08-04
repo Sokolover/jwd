@@ -3,17 +3,17 @@ package by.training.sokolov.context;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.command.CommandFactoryImpl;
-import by.training.sokolov.command.category.CreateDishCategoryFormSubmitCommand;
-import by.training.sokolov.command.category.DeleteDishCategoryFormDisplayCommand;
-import by.training.sokolov.command.category.DeleteDishCategoryFormSubmitCommand;
+import by.training.sokolov.command.category.SubmitDishCategoryCreatingFormCommand;
+import by.training.sokolov.command.category.DisplayDishCategoryDeletingFormCommand;
+import by.training.sokolov.command.category.SubmitDishCategoryDeletingFormCommand;
 import by.training.sokolov.command.dish.*;
-import by.training.sokolov.command.feedback.CreateDishFeedbackFormDisplayCommand;
-import by.training.sokolov.command.feedback.CreateDishFeedbackFormSubmitCommand;
+import by.training.sokolov.command.feedback.DisplayDishFeedbackCreatingFormCommand;
+import by.training.sokolov.command.feedback.SubmitDishFeedbackCreatingFormCommand;
 import by.training.sokolov.command.order.*;
-import by.training.sokolov.command.user.LoginUserSubmitCommand;
-import by.training.sokolov.command.user.RegisterUserSubmitCommand;
-import by.training.sokolov.command.wallet.FillUpWalletFormDisplay;
-import by.training.sokolov.command.wallet.FillUpWalletFormSubmit;
+import by.training.sokolov.command.user.SubmitUserLoginCommand;
+import by.training.sokolov.command.user.SubmitUserRegisterCommand;
+import by.training.sokolov.command.wallet.DisplayFillingUpWalletFormCommand;
+import by.training.sokolov.command.wallet.SubmitFillingUpWalletFormCommand;
 import by.training.sokolov.core.constants.CommandReturnValues;
 import by.training.sokolov.database.connection.*;
 import by.training.sokolov.entity.category.dao.DishCategoryDao;
@@ -246,26 +246,26 @@ public class ApplicationContext {
         LOGGER.info("Bean validator initialized");
 
         //commands
-        Command deleteDishFromOrderCommand = new OrderItemDeleteCommand(orderItemProxyService);
-        Command orderDishListDisplayCommand = new OrderItemListDisplayCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
-        Command orderItemAddCommand = new OrderItemAddCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
-        Command loginUserSubmitCommand = new LoginUserSubmitCommand(userProxyService);
-        Command registerUserSubmitCommand = new RegisterUserSubmitCommand(userProxyService, beanValidator);
-        Command dishMenuDisplayCommand = new DishMenuDisplayCommand(dishProxyService, dishCategoryProxyService);
-        Command orderCheckoutDisplayCommand = new OrderCheckoutDisplayCommand(orderItemProxyService, userOrderProxyService);
-        Command orderCheckoutSubmitCommand = new OrderCheckoutSubmitCommand(userOrderProxyService, beanValidator, walletService);
-        Command createDishFeedbackFormSubmitCommand = new CreateDishFeedbackFormSubmitCommand(dishFeedbackService);
-        Command createDishFeedbackFormDisplayCommand = new CreateDishFeedbackFormDisplayCommand(dishProxyService);
-        Command createDishFormDisplayCommand = new CreateDishFormDisplayCommand(dishCategoryProxyService);
-        Command createDishFormSubmitCommand = new CreateDishFormSubmitCommand(dishProxyService, dishCategoryService, beanValidator);
-        Command updateDishFormDisplayCommand = new UpdateDishFormDisplayCommand(dishCategoryProxyService, dishService);
-        Command updateDishFormSubmitCommand = new UpdateDishFormSubmitCommand(dishProxyService, dishCategoryProxyService, beanValidator);
+        Command deleteOrderItemCommand = new DeleteOrderItemCommand(orderItemProxyService);
+        Command displayOrderItemListCommand = new DisplayOrderItemListCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
+        Command addOrderItemCommand = new AddOrderItemCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
+        Command submitUserLoginCommand = new SubmitUserLoginCommand(userProxyService);
+        Command submitUserRegisterCommand = new SubmitUserRegisterCommand(userProxyService, beanValidator);
+        Command displayDishMenuCommand = new DisplayDishMenuCommand(dishProxyService);
+        Command displayOrderCheckoutCommand = new DisplayOrderCheckoutCommand(orderItemProxyService, userOrderProxyService);
+        Command submitOrderCheckoutCommand = new SubmitOrderCheckoutCommand(userOrderProxyService, beanValidator, walletService);
+        Command submitDishFeedbackCreatingFormCommand = new SubmitDishFeedbackCreatingFormCommand(dishFeedbackService);
+        Command displayDishFeedbackCreatingFormCommand = new DisplayDishFeedbackCreatingFormCommand(dishProxyService);
+        Command displayDishCreatingFormCommand = new DisplayDishCreatingFormCommand(dishCategoryProxyService);
+        Command submitDishCreatingFormCommand = new SubmitDishCreatingFormCommand(dishProxyService, beanValidator);
+        Command displayDishUpdatingFormCommand = new DisplayDishUpdatingFormCommand();
+        Command submitDishUpdatingFormCommand = new SubmitDishUpdatingFormCommand(dishProxyService, dishCategoryProxyService, beanValidator);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
-        Command createDishCategoryFormSubmitCommand = new CreateDishCategoryFormSubmitCommand(dishCategoryProxyService, beanValidator);
-        Command deleteDishCategoryFormSubmitCommand = new DeleteDishCategoryFormSubmitCommand(dishCategoryProxyService);
-        Command deleteDishCategoryFormDisplayCommand = new DeleteDishCategoryFormDisplayCommand(dishCategoryProxyService);
-        Command fillUpWalletFormDisplay = new FillUpWalletFormDisplay(walletService);
-        Command fillUpWalletFormSubmit = new FillUpWalletFormSubmit(walletService);
+        Command submitDishCategoryCreatingFormCommand = new SubmitDishCategoryCreatingFormCommand(dishCategoryProxyService, beanValidator);
+        Command submitDishCategoryDeletingFormCommand = new SubmitDishCategoryDeletingFormCommand(dishCategoryProxyService);
+        Command displayDishCategoryDeletingFormCommand = new DisplayDishCategoryDeletingFormCommand(dishCategoryProxyService);
+        Command displayFillingUpWalletFormCommand = new DisplayFillingUpWalletFormCommand(walletService);
+        Command submitFillingUpWalletFormCommand = new SubmitFillingUpWalletFormCommand(walletService);
         LOGGER.info("Commands initialized");
 
         //utils
@@ -281,31 +281,31 @@ public class ApplicationContext {
         commandFactory.registerCommand(ORDER_CHECKOUT_SERVLET_SWITCH, (request, response) -> ORDER_CHECKOUT_SERVLET);
         commandFactory.registerCommand(INDEX, (request, response) -> INDEX_SERVLET);
 
-        commandFactory.registerCommand(DELETE_DISH_FROM_ORDER, deleteDishFromOrderCommand);
-        commandFactory.registerCommand(ORDER_ITEM_LIST_DISPLAY, orderDishListDisplayCommand);
-        commandFactory.registerCommand(ADD_ITEM_TO_ORDER, orderItemAddCommand);
-        commandFactory.registerCommand(CHECKOUT_ORDER_FORM_DISPLAY, orderCheckoutDisplayCommand);
-        commandFactory.registerCommand(CHECKOUT_ORDER_FORM_SUBMIT, orderCheckoutSubmitCommand);
+        commandFactory.registerCommand(DELETE_ORDER_ITEM_COMMAND, deleteOrderItemCommand);
+        commandFactory.registerCommand(DISPLAY_ORDER_ITEM_LIST_COMMAND, displayOrderItemListCommand);
+        commandFactory.registerCommand(ADD_ORDER_ITEM_COMMAND, addOrderItemCommand);
+        commandFactory.registerCommand(DISPLAY_ORDER_CHECKOUT_COMMAND, displayOrderCheckoutCommand);
+        commandFactory.registerCommand(SUBMIT_ORDER_CHECKOUT_COMMAND, submitOrderCheckoutCommand);
 
-        commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_DISPLAY, createDishFeedbackFormDisplayCommand);
-        commandFactory.registerCommand(CREATE_DISH_FEEDBACK_FORM_SUBMIT, createDishFeedbackFormSubmitCommand);
-        commandFactory.registerCommand(DISH_MENU_DISPLAY, dishMenuDisplayCommand);
-        commandFactory.registerCommand(CREATE_DISH_FORM_DISPLAY, createDishFormDisplayCommand);
-        commandFactory.registerCommand(CREATE_DISH_FORM_SUBMIT, createDishFormSubmitCommand);
-        commandFactory.registerCommand(UPDATE_DISH_FORM_DISPLAY, updateDishFormDisplayCommand);
-        commandFactory.registerCommand(UPDATE_DISH_FORM_SUBMIT, updateDishFormSubmitCommand);
-        commandFactory.registerCommand(DELETE_DISH_FROM_MENU, deleteDishCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_FEEDBACK_CREATING_FORM_COMMAND, displayDishFeedbackCreatingFormCommand);
+        commandFactory.registerCommand(SUBMIT_DISH_FEEDBACK_CREATING_FORM_COMMAND, submitDishFeedbackCreatingFormCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_MENU_COMMAND, displayDishMenuCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_CREATING_FORM_COMMAND, displayDishCreatingFormCommand);
+        commandFactory.registerCommand(SUBMIT_DISH_CREATING_FORM_COMMAND, submitDishCreatingFormCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_UPDATING_FORM_COMMAND, displayDishUpdatingFormCommand);
+        commandFactory.registerCommand(SUBMIT_DISH_UPDATING_FORM_COMMAND, submitDishUpdatingFormCommand);
+        commandFactory.registerCommand(DELETE_DISH_COMMAND, deleteDishCommand);
 
-        commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_DISPLAY, ((request, response) -> CREATE_CATEGORY_FORM_JSP));
-        commandFactory.registerCommand(CREATE_DISH_CATEGORY_FORM_SUBMIT, createDishCategoryFormSubmitCommand);
-        commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_DISPLAY, deleteDishCategoryFormDisplayCommand);
-        commandFactory.registerCommand(DELETE_DISH_CATEGORY_FORM_SUBMIT, deleteDishCategoryFormSubmitCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_CATEGORY_CREATING_FORM_COMMAND, ((request, response) -> CREATE_CATEGORY_FORM_JSP));
+        commandFactory.registerCommand(SUBMIT_DISH_CATEGORY_CREATING_FORM_COMMAND, submitDishCategoryCreatingFormCommand);
+        commandFactory.registerCommand(DISPLAY_DISH_CATEGORY_DELETING_FORM_COMMAND, displayDishCategoryDeletingFormCommand);
+        commandFactory.registerCommand(SUBMIT_DISH_CATEGORY_DELETING_FORM_COMMAND, submitDishCategoryDeletingFormCommand);
 
-        commandFactory.registerCommand(FILL_UP_WALLET_FORM_DISPLAY, fillUpWalletFormDisplay);
-        commandFactory.registerCommand(FILL_UP_WALLET_FORM_SUBMIT, fillUpWalletFormSubmit);
+        commandFactory.registerCommand(DISPLAY_FILLING_UP_WALLET_FORM_COMMAND, displayFillingUpWalletFormCommand);
+        commandFactory.registerCommand(SUBMIT_FILLING_UP_WALLET_FORM_COMMAND, submitFillingUpWalletFormCommand);
 
-        commandFactory.registerCommand(REGISTER_USER_SUBMIT, registerUserSubmitCommand);
-        commandFactory.registerCommand(LOGIN_USER_SUBMIT, loginUserSubmitCommand);
+        commandFactory.registerCommand(SUBMIT_USER_REGISTER_COMMAND, submitUserRegisterCommand);
+        commandFactory.registerCommand(SUBMIT_USER_LOGIN_COMMAND, submitUserLoginCommand);
         commandFactory.registerCommand(LOGOUT, (request, response) -> {
             request.getSession().invalidate();
             SecurityContext.getInstance().logout(request.getSession().getId());

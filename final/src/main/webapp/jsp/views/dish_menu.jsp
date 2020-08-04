@@ -49,7 +49,7 @@
                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                    value="${dish.id}">
                             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                                   value="${CommandType.ADD_ITEM_TO_ORDER}">
+                                   value="${CommandType.ADD_ORDER_ITEM_COMMAND}">
 
                             <div class="betweenContainer alignItemsCenter">
                                 <div class="dishAmount">
@@ -81,7 +81,7 @@
                                         <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                value="${dish.id}">
                                         <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                                               value="${CommandType.CREATE_DISH_FEEDBACK_FORM_DISPLAY}">
+                                               value="${CommandType.DISPLAY_DISH_FEEDBACK_CREATING_FORM_COMMAND}">
                                         <fmt:message var="writeFeedback" key="button.feedback.write"/>
                                         <input class="button is-light is-small is-rounded" type="submit"
                                                value="${writeFeedback}">
@@ -91,14 +91,14 @@
 
                             <jsp:useBean id="securityContext" scope="application"
                                          class="by.training.sokolov.context.SecurityContext"/>
-                            <c:if test="${securityContext.canExecute(CommandType.UPDATE_DISH_FORM_DISPLAY, sessionId)}">
+                            <c:if test="${securityContext.canExecute(CommandType.DISPLAY_DISH_UPDATING_FORM_COMMAND, sessionId)}">
                                 <form action="${pageContext.request.contextPath}/menu" method="post">
                                     <div class="control is-centered">
                                         <label class="label">
                                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                    value="${dish.id}">
                                             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                                                   value="${CommandType.UPDATE_DISH_FORM_DISPLAY}">
+                                                   value="${CommandType.DISPLAY_DISH_UPDATING_FORM_COMMAND}">
                                             <fmt:message var="updateDish" key="button.dish.update"/>
                                             <input class="button is-light is-small is-rounded" type="submit"
                                                    value="${updateDish}">
@@ -107,14 +107,14 @@
                                 </form>
                             </c:if>
 
-                            <c:if test="${securityContext.canExecute(CommandType.DELETE_DISH_FROM_MENU, sessionId)}">
+                            <c:if test="${securityContext.canExecute(CommandType.DELETE_DISH_COMMAND, sessionId)}">
                                 <form action="${pageContext.request.contextPath}/menu" method="post">
                                     <div class="control is-centered">
                                         <label class="label">
                                             <input type="hidden" name="${CommonAppConstants.DISH_ID_JSP_PARAM}"
                                                    value="${dish.id}">
                                             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
-                                                   value="${CommandType.DELETE_DISH_FROM_MENU}">
+                                                   value="${CommandType.DELETE_DISH_COMMAND}">
                                             <fmt:message var="delete" key="button.dish.delete"/>
                                             <input class="button is-light is-small is-rounded" type="submit"
                                                    value="${delete}">
