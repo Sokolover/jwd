@@ -18,8 +18,7 @@
     </p>
 
     <div class="categoryAddContainer">
-        <form action="${pageContext.request.contextPath}/menu" method="get">
-<%--            <jsp:useBean id="selectedCategories" scope="request" type="java.util.List"/>--%>
+        <form action="" method="get">
             <jsp:useBean id="categoryList" scope="request" type="java.util.List"/>
             <c:choose>
                 <c:when test="${not empty selectedCategories}">
@@ -53,7 +52,7 @@
             <input class="button is-light secondary" type="submit" value="${ok}"/>
         </form>
 
-        <form action="${pageContext.request.contextPath}/menu" method="get">
+        <form action="" method="get">
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_CATEGORY}"
                    value="all">
             <fmt:message var="all" key="button.category.reset"/>

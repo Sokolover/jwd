@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
@@ -23,8 +22,8 @@ public class JspUtil {
 
     private static final Logger LOGGER = Logger.getLogger(JspUtil.class.getName());
 
-   private final DishCategoryService dishCategoryService;
-   private final DishService dishService;
+    private final DishCategoryService dishCategoryService;
+    private final DishService dishService;
 
     public JspUtil(DishService dishService, DishCategoryService dishCategoryService) {
         this.dishService = dishService;
@@ -34,7 +33,7 @@ public class JspUtil {
     public void setDishAttributeByDishParam(HttpServletRequest request) throws SQLException, ConnectionException {
 
         String dishId = request.getParameter(DISH_ID_JSP_PARAM);
-        if(isNull(dishId)){
+        if (isNull(dishId)) {
             return;
         }
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_ID_JSP_PARAM, dishId));

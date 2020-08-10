@@ -7,22 +7,6 @@
 
 <div class="loginContainer">
 
-<%--    <c:if test="${not empty error}">--%>
-<%--        <div class="justifyCenter marginTop">--%>
-<%--            <h5 class="title is-5">--%>
-<%--                <p class="is-danger"><c:out value="${error}"/></p>--%>
-<%--            </h5>--%>
-<%--        </div>--%>
-<%--    </c:if>--%>
-
-<%--    <c:if test="${not empty message}">--%>
-<%--        <div class="justifyCenter marginTop">--%>
-<%--            <h5 class="title is-5">--%>
-<%--                <p><c:out value="${message}"/></p>--%>
-<%--            </h5>--%>
-<%--        </div>--%>
-<%--    </c:if>--%>
-
     <jsp:include page="validation_messages.jsp"/>
     <jsp:include page="command_result_message.jsp"/>
 
@@ -32,22 +16,24 @@
     </h1>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}" value="${CommandType.SUBMIT_USER_LOGIN_COMMAND}">
+        <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
+               value="${CommandType.SUBMIT_USER_LOGIN_COMMAND}">
         <div class="">
             <div class="control field">
                 <label class="label">
                     <fmt:message key="user.email"/>
-                    <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}"
-                           type="text" value="qwerty7@m.com">
-                    <%--                        <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text">--%>
+                    <%--                    <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}"--%>
+                    <%--                           type="text" value="qwerty7@m.com">--%>
+                    <input class="input" id="user.email" name="${CommonAppConstants.USER_EMAIL_JSP_PARAM}" type="text">
                 </label>
             </div>
             <div class="control field">
                 <label class="label">
                     <fmt:message key="user.password"/>
+                    <%--                    <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}"--%>
+                    <%--                           type="password" value="Qwerty777">--%>
                     <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}"
-                           type="password" value="Qwerty777">
-                    <%--                        <input class="input" id="user.password" name="${CommonAppConstants.USER_PASSWORD_JSP_PARAM}" type="password">--%>
+                           type="password">
                 </label>
             </div>
         </div>

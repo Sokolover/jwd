@@ -14,18 +14,11 @@
 
 <div class="container feedbackPageContainer">
 
-<%--    <h5 class="title is-5">--%>
-<%--        <c:if test="${not empty error}">--%>
-<%--            <p class="is-danger"><c:out value="${error}"/></p>--%>
-<%--        </c:if>--%>
-<%--    </h5>--%>
-
     <jsp:include page="command_result_message.jsp"/>
     <jsp:include page="validation_messages.jsp"/>
 
-<%--    <jsp:useBean id="dish" scope="request" type="by.training.sokolov.entity.dish.model.Dish"/>--%>
     <div class="feedbackContainer">
-<%--        <form class="feedbackArea" action="${pageContext.request.contextPath}/menu" method="post"--%>
+        <%--        <form class="feedbackArea" action="${pageContext.request.contextPath}/menu" method="post"--%>
         <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post"
               enctype="multipart/form-data">
             <input type="hidden"
@@ -48,7 +41,7 @@
                             <fmt:message key="dish.cost"/>
                             <input class="input" name="${CommonAppConstants.DISH_COST_JSP_PARAM}"
                                    type="number"
-                                   value="10"
+                                   value="${dish.cost}"
                                    step=".01"
                                    min="0">
                         </div>
@@ -63,7 +56,7 @@
                     <div class="file field">
                         <label class="file-label">
                             <input class="file-input" type="file"
-                                   name="${CommonAppConstants.DISH_PICTURE_JSP_PARAM}" />
+                                   name="${CommonAppConstants.DISH_PICTURE_JSP_PARAM}"/>
                             <span class="file-cta">
                             <span class="file-label"><fmt:message key="app.choose.dish.picture"/></span>
                         </span>

@@ -1,6 +1,5 @@
 package by.training.sokolov.util;
 
-import by.training.sokolov.listener.ApplicationListener;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;

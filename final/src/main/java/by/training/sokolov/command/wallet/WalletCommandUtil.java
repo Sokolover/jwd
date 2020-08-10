@@ -5,7 +5,6 @@ import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.math.BigDecimal;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.WALLET_CURRENT_MONEY_AMOUNT_JSP_ATTRIBUTE;
@@ -16,7 +15,7 @@ public final class WalletCommandUtil {
 
     private static final Logger LOGGER = Logger.getLogger(WalletCommandUtil.class.getName());
 
-    private WalletCommandUtil(){
+    private WalletCommandUtil() {
 
     }
 

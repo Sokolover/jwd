@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static java.lang.String.format;
 import static java.util.Objects.nonNull;
 
 public class SecurityContext {

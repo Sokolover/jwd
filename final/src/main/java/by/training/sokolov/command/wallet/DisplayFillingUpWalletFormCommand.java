@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.JspName.FILL_UP_WALLET_FORM_JSP;
-import static java.lang.String.format;
 
 public class DisplayFillingUpWalletFormCommand implements Command {
 
@@ -31,7 +30,6 @@ public class DisplayFillingUpWalletFormCommand implements Command {
 
         return FILL_UP_WALLET_FORM_JSP;
     }
-
 
 
 }

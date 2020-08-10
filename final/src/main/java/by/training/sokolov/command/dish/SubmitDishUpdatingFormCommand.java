@@ -24,7 +24,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
-import static by.training.sokolov.core.constants.JspName.*;
+import static by.training.sokolov.core.constants.JspName.COMMAND_RESULT_MESSAGE_JSP;
+import static by.training.sokolov.core.constants.JspName.UPDATE_DISH_FORM_JSP;
 import static by.training.sokolov.core.constants.LoggerConstants.ATTRIBUTE_SET_TO_JSP_MESSAGE;
 import static by.training.sokolov.core.constants.LoggerConstants.PARAM_GOT_FROM_JSP_MESSAGE;
 import static by.training.sokolov.validation.CreateMessageUtil.createPageMessageList;
@@ -52,8 +53,6 @@ public class SubmitDishUpdatingFormCommand implements Command {
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_ID_JSP_PARAM, dishIdString));
 
         Dish dish = dishService.getById(parseLong(dishIdString));
-
-        setDishPicture(request, dish);
 
         updateDishName(request, dish);
         if (!updateDishCost(request, dish)) {
@@ -98,6 +97,24 @@ public class SubmitDishUpdatingFormCommand implements Command {
         } catch (IllegalArgumentException e) {
 
             String message = String.format("%s: %s", "Dish picture hasn't been updated", e.getMessage());
+            LOGGER.info(message);
+        }
+    }
+
+    private void setDishPicture(HttpServletRequest request, Dish dish) throws IOException, ServletException, ConnectionException, SQLException {
+
+        Part picture = request.getPart(DISH_PICTURE_JSP_PARAM);
+
+        try {
+
+            String stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
+            dish.setPicture(stringPicture);
+            LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_PICTURE_JSP_PARAM, stringPicture.substring(0, 20)));
+            LOGGER.info("Dish picture has been uploaded");
+
+        } catch (IllegalArgumentException e) {
+
+            String message = String.format("%s: %s", "Dish picture hasn't been uploaded", e.getMessage());
             LOGGER.info(message);
         }
     }
@@ -158,24 +175,6 @@ public class SubmitDishUpdatingFormCommand implements Command {
         if (!name.trim().isEmpty()) {
 
             dish.setName(name);
-        }
-    }
-
-    private void setDishPicture(HttpServletRequest request, Dish dish) throws IOException, ServletException, ConnectionException, SQLException {
-
-        Part picture = request.getPart(DISH_PICTURE_JSP_PARAM);
-
-        try {
-
-            String stringPicture = PictureEncodingUtil.getPictureEncoded(picture);
-            dish.setPicture(stringPicture);
-            LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, DISH_PICTURE_JSP_PARAM, stringPicture.substring(0, 20)));
-            LOGGER.info("Dish picture has been uploaded");
-
-        } catch (IllegalArgumentException e) {
-
-            String message = String.format("%s: %s", "Dish picture hasn't been uploaded", e.getMessage());
-            LOGGER.info(message);
         }
     }
 

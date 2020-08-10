@@ -68,12 +68,6 @@
                 <c:out value="${orderCostString}: ${totalCost} ${currency}"/>
             </h5>
         </div>
-        <%--        <label class="checkbox">--%>
-        <%--            <input type="checkbox" name="default.user.name" value="user_s">--%>
-        <%--            <fmt:message var="sendUserName" key="lable.checkbox.sendUserName"/>--%>
-        <%--            <c:out value="${sendUserName}"/>--%>
-        <%--        </label>--%>
-
     </div>
 
     <div class="infoContainer">
@@ -82,8 +76,6 @@
 
             <input type="hidden" name="${CommonAppConstants.QUERY_PARAM_COMMAND}"
                    value="${CommandType.SUBMIT_ORDER_CHECKOUT_COMMAND}">
-            <%--            <input type="hidden" name="${CommonAppConstants.TOTAL_ORDER_COST_JSP_PARAM}"--%>
-            <%--                   value="${totalCost}">--%>
 
             <div class="paymentRadio">
                 <label class="radio">

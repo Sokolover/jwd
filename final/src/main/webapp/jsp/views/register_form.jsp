@@ -7,14 +7,6 @@
 
 <div class="loginContainer">
 
-<%--    <c:if test="${not empty error}">--%>
-<%--        <p class="title is-5 is-danger">--%>
-<%--            <c:out value="${error}"/>--%>
-<%--        </p>--%>
-<%--    </c:if>--%>
-
-    <%--    <jsp:include page="command_result_message.jsp"/>--%>
-
     <jsp:include page="validation_messages.jsp"/>
 
     <h1 class="title is-1">

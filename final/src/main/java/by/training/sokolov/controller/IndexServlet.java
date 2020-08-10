@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static by.training.sokolov.core.constants.CommandReturnValues.LOGOUT_RESULT;
 import static by.training.sokolov.core.constants.CommonAppConstants.VIEW_NAME_JSP_PARAM;
-import static by.training.sokolov.core.constants.JspName.*;
+import static by.training.sokolov.core.constants.JspName.MAIN_LAYOUT_JSP;
 import static by.training.sokolov.core.constants.ServletName.*;
 
 @MultipartConfig
