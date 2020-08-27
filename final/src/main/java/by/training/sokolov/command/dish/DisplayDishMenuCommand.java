@@ -45,9 +45,9 @@ public class DisplayDishMenuCommand implements Command {
 
             return displayAllDishes(request);
         }
-/*
-TODO ПАГИНАЦИЯ на фильтрованные блюда
- */
+        /*
+        TODO ПАГИНАЦИЯ на фильтрованные блюда
+         */
         return displayFilteredDishes(request, categoryNames);
     }
 
