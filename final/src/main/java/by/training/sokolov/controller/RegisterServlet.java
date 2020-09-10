@@ -45,9 +45,10 @@ public class RegisterServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath());
                 break;
             case DEFAULT_JSP:
-            default:
                 req.setAttribute(VIEW_NAME_JSP_PARAM, REGISTER_JSP);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
+                break;
+            default:
                 break;
         }
     }
