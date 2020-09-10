@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 
 import static junit.framework.TestCase.assertTrue;
 
-public class RegexTest {
+class RegexTest {
 
     @Test
-    public void shouldVerifyPhoneNumber() {
+    void shouldVerifyPhoneNumber() {
 
         Pattern pattern2 = Pattern.compile("^\\+\\d{12}$");
         Matcher matcher = pattern2.matcher("+375297577197");

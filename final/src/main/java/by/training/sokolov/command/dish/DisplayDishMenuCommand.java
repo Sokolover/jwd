@@ -45,9 +45,7 @@ public class DisplayDishMenuCommand implements Command {
 
             return displayAllDishes(request);
         }
-        /*
-        TODO ПАГИНАЦИЯ на фильтрованные блюда
-         */
+
         return displayFilteredDishes(request, categoryNames);
     }
 
@@ -106,7 +104,6 @@ public class DisplayDishMenuCommand implements Command {
         int rows = dishService.getNumberOfRows();
         int numberOfPages = rows / RECORDS_PER_PAGE;
         if (numberOfPages % RECORDS_PER_PAGE > 0) {
-
             numberOfPages++;
         }
         return numberOfPages;

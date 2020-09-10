@@ -12,7 +12,5 @@ public interface UserService extends GenericService<User> {
 
     User login(String email, String password) throws ConnectionException, SQLException;
 
-    User getByName(String name) throws ConnectionException, SQLException;
-
     User getByEmail(String email) throws ConnectionException, SQLException;
 }

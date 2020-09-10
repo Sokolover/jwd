@@ -2,6 +2,10 @@ package by.training.sokolov.core.constants;
 
 public final class CommonAppConstants {
 
+    private CommonAppConstants() {
+
+    }
+
     public static final String USER_LOGGED_IN_JSP_PARAM = "userLoggedIn";
     public static final String VIEW_NAME_JSP_PARAM = "viewName";
     public static final String SESSION_ID_JSP_PARAM = "sessionId";
@@ -26,7 +30,6 @@ public final class CommonAppConstants {
     public static final String ORDER_ADDRESS_FLOOR_NUMBER_JSP_ATTRIBUTE = "order.address.floor";
 
     public static final String TOTAL_ORDER_COST_JSP_ATTRIBUTE = "totalCost";
-    public static final String TOTAL_ORDER_COST_JSP_PARAM = "order.total.cost";
     public static final String TIME_LIST_JSP_ATTRIBUTE = "timeList";
 
     public static final String DEFAULT_USER_NAME_JSP_PARAM = "default.user.name";
@@ -73,7 +76,7 @@ public final class CommonAppConstants {
     public static final String REDIRECT_FORMAT = "%s/%s";
 
     public static final Integer SUCCESSFULLY = 1;
-    public static final Integer NOT_SUCCESSFUL = 0;
+    public static final Integer UNSUCCESSFULLY = 0;
     public static final String REGISTER_REDIRECT_WITH_PARAMS_FORMAT = "%s/%s?%s=%d&%s=%s";
     public static final String REGISTER_REDIRECT_WITH_ERROR_PARAMS_FORMAT = "%s/%s?%s=%d&%s";
     public static final String QUERY_PARAM_SUCCESS = "success";

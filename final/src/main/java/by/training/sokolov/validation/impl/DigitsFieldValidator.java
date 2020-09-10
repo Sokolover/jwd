@@ -20,27 +20,36 @@ public class DigitsFieldValidator implements FieldValidator {
                 BigDecimal fieldValue = (BigDecimal) field.get(entity);
 
                 if (fieldValue != null) {
-                    String fieldValueString = fieldValue.toString();
-
-                    if (fieldValueString.split("\\.").length == 2) {
-
-                        if (validateIntegerFractionDecimal(digits, fieldValueString)) {
-
-                            String annotationArg = String.format("Max digits in integer part of cost is %d, in fraction part is %d", digits.integer(), digits.fraction());
-                            return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
-                        }
-                    } else {
-
-                        if (validateIntegerDecimal(digits, fieldValueString)) {
-
-                            String annotationArg = String.format("Max digits in integer part of cost is %d", digits.integer());
-                            return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
-                        }
+                    BrokenField annotationArg = findBrokenFields(field, digits, fieldValue);
+                    if (annotationArg != null) {
+                        return annotationArg;
                     }
                 }
 
             } catch (IllegalAccessException e) {
                 throw new ValidationException(e);
+            }
+        }
+        return null;
+    }
+
+    private BrokenField findBrokenFields(Field field, Digits digits, BigDecimal fieldValue) {
+
+        String fieldValueString = fieldValue.toString();
+
+        if (fieldValueString.split("\\.").length == 2) {
+
+            if (validateIntegerFractionDecimal(digits, fieldValueString)) {
+
+                String annotationArg = String.format("Max digits in integer part of cost is %d, in fraction part is %d", digits.integer(), digits.fraction());
+                return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
+            }
+        } else {
+
+            if (validateIntegerDecimal(digits, fieldValueString)) {
+
+                String annotationArg = String.format("Max digits in integer part of cost is %d", digits.integer());
+                return new BrokenField(field.getName(), fieldValue, "digits", annotationArg);
             }
         }
         return null;

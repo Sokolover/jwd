@@ -11,6 +11,10 @@ public final class Md5EncryptingUtil {
 
     private static final Logger LOGGER = Logger.getLogger(Md5EncryptingUtil.class.getName());
 
+    private Md5EncryptingUtil() {
+
+    }
+
     public static String encrypt(String password) throws NoSuchAlgorithmException {
 
         String md5 = "MD5";

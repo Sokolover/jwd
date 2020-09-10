@@ -14,7 +14,6 @@ public class OrderItem implements IdentifiedRow {
     private Long userOrderId;
 
     public OrderItem() {
-
         this.dish = new Dish();
     }
 

@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Base64;
 
-public class DishServiceMysqlDatabaseTest {
+class DishServiceMysqlDatabaseTest {
 
     private static final Logger LOGGER = Logger.getLogger(DishServiceMysqlDatabaseTest.class.getName());
     private static DishService dishService;
@@ -28,7 +28,7 @@ public class DishServiceMysqlDatabaseTest {
     }
 
     @Test
-    public void shouldUpdateDishPictureWithoutExceptions1() throws SQLException, IOException, ConnectionException {
+    void shouldUpdateDishPictureWithoutExceptions1() throws SQLException, IOException, ConnectionException {
 
         long dishId = 1L;
         String dishName = "Pizza pepperoni";
@@ -41,7 +41,7 @@ public class DishServiceMysqlDatabaseTest {
     }
 
     @Test
-    public void shouldUpdateDishPictureWithoutExceptions2() throws SQLException, IOException, ConnectionException {
+    void shouldUpdateDishPictureWithoutExceptions2() throws SQLException, IOException, ConnectionException {
 
         long dishId = 2L;
         String dishName = "Cheeseburger with bacon";
@@ -54,7 +54,7 @@ public class DishServiceMysqlDatabaseTest {
     }
 
     @Test
-    public void shouldUpdateDishPictureWithoutExceptions3() throws SQLException, IOException, ConnectionException {
+    void shouldUpdateDishPictureWithoutExceptions3() throws SQLException, IOException, ConnectionException {
 
         long dishId = 18L;
         String dishName = "Soup kharcho";

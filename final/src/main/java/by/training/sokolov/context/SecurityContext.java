@@ -46,7 +46,7 @@ public class SecurityContext {
         userMap.put(sessionId, user);
     }
 
-    public void logout(String sessionId) {
+    void logout(String sessionId) {
 
         userMap.remove(sessionId);
     }
@@ -54,7 +54,6 @@ public class SecurityContext {
     public User getCurrentUser(String sessionId) {
 
         if (nonNull(sessionId)) {
-//            LOGGER.info(format("Got user from user map, session Id = [%s]", sessionId));
             return userMap.get(sessionId);
         } else {
             LOGGER.error("session Id is NULL, haven't got any user");

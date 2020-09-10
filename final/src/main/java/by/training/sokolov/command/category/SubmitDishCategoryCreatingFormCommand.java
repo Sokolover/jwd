@@ -9,10 +9,8 @@ import by.training.sokolov.validation.BrokenField;
 import by.training.sokolov.validation.ValidationResult;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +36,7 @@ public class SubmitDishCategoryCreatingFormCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String categoryName = request.getParameter(CATEGORY_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, CATEGORY_NAME_JSP_PARAM, categoryName));

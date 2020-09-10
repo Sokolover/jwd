@@ -1,13 +1,10 @@
 package by.training.sokolov.database.connection;
 
-import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionManagerImpl implements ConnectionManager {
 
-    private static final Logger LOGGER = Logger.getLogger(ConnectionManagerImpl.class.getName());
     private final ConnectionPool connectionPool;
     private final TransactionManager transactionManager;
 
@@ -17,7 +14,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
     }
 
     @Override
-    public Connection getConnection() throws ConnectionException, SQLException {
+    public Connection getConnection() throws SQLException {
         if (transactionManager.isEmpty()) {
             return connectionPool.getConnection();
         } else {

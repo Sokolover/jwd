@@ -6,10 +6,8 @@ import by.training.sokolov.entity.category.model.DishCategory;
 import by.training.sokolov.entity.category.service.DishCategoryService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class DisplayDishCategoryDeletingFormCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         List<DishCategory> dishCategories = dishCategoryService.findAll();
         request.setAttribute(CATEGORY_LIST_JSP_ATTRIBUTE, dishCategories);

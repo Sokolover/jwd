@@ -10,10 +10,8 @@ import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import by.training.sokolov.util.TimeOfDeliveryGeneratorUtil;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -39,7 +37,7 @@ public class DisplayOrderCheckoutCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(request.getSession().getId());
 

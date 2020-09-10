@@ -7,10 +7,10 @@ import java.security.NoSuchAlgorithmException;
 
 import static org.junit.Assert.assertEquals;
 
-public class Md5EncryptingUtilTest {
+class Md5EncryptingUtilTest {
 
     @Test
-    public void shouldEncryptPassword() throws NoSuchAlgorithmException {
+    void shouldEncryptPassword() throws NoSuchAlgorithmException {
         String hash = "FBD5FC9D0373D3BD981AB6E6905279DD";
         String password = "Qwerty3@123";
         String encryptResult = Md5EncryptingUtil.encrypt(password);

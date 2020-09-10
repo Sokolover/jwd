@@ -11,10 +11,6 @@ public class UserRole implements IdentifiedRow {
 
     }
 
-    public UserRole(String roleName) {
-        this.roleName = roleName;
-    }
-
     @Override
     public String toString() {
         return "UserRole{" +

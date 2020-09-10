@@ -14,13 +14,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserAccountDaoMysqlDatabaseTest {
+class UserAccountDaoMysqlDatabaseTest {
 
     private static final Logger LOGGER = Logger.getLogger(UserAccountDaoMysqlDatabaseTest.class.getName());
     private static UserAccountDao userAccountDao;
 
     @BeforeAll
-    public static void initContext() {
+    static void initContext() {
 
         ApplicationContext.initialize();
         ApplicationContext applicationContext = ApplicationContext.getInstance();
@@ -28,7 +28,7 @@ public class UserAccountDaoMysqlDatabaseTest {
     }
 
     @Test
-    public void shouldFindAllUsers() throws ConnectionException, SQLException {
+    void shouldFindAllUsers() throws ConnectionException, SQLException {
 
         List<User> all = userAccountDao.findAll();
         for (User user : all) {
@@ -38,7 +38,7 @@ public class UserAccountDaoMysqlDatabaseTest {
     }
 
     @Test
-    public void shouldGetUserByName() throws ConnectionException, SQLException {
+    void shouldGetUserByName() throws ConnectionException, SQLException {
 
         String name = "qwerty";
         User user = userAccountDao.getByName(name);

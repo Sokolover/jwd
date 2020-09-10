@@ -13,10 +13,8 @@ import by.training.sokolov.validation.BrokenField;
 import by.training.sokolov.validation.ValidationResult;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -42,7 +40,6 @@ public class SubmitOrderCheckoutCommand implements Command {
     private final BeanValidator validator;
     private final WalletService walletService;
 
-
     public SubmitOrderCheckoutCommand(UserOrderService userOrderService, BeanValidator validator, WalletService walletService) {
         this.userOrderService = userOrderService;
         this.validator = validator;
@@ -50,7 +47,7 @@ public class SubmitOrderCheckoutCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);

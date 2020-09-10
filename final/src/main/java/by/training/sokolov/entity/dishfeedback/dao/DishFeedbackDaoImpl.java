@@ -27,7 +27,6 @@ public class DishFeedbackDaoImpl extends GenericDao<DishFeedback> implements Dis
 
     private static final Logger LOGGER = Logger.getLogger(DishFeedbackDaoImpl.class.getName());
 
-
     private static final String SELECT_FEEDBACK_BY_USER_ID_AND_DISH_ID = "" +
             "SELECT *\n" +
             "FROM {0}\n" +

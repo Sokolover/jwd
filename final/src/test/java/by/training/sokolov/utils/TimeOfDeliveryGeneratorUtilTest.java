@@ -14,7 +14,7 @@ import java.util.List;
 import static by.training.sokolov.util.TimeConstants.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TimeOfDeliveryGeneratorUtilTest {
+class TimeOfDeliveryGeneratorUtilTest {
 
     private static final LocalDateTime t8_00 = LocalDateTime.parse(LocalDate.now() + "T" + "08:00");
     private static final LocalDateTime _08_59 = LocalDateTime.parse(LocalDate.now() + "T" + "08:59");
@@ -25,8 +25,7 @@ public class TimeOfDeliveryGeneratorUtilTest {
     private static final LocalDateTime _00_00 = LocalDateTime.parse(LocalDate.now() + "T" + TIME_00_00_AM);
     private static final LocalDateTime _23_59 = LocalDateTime.parse(LocalDate.now() + "T" + TIME_23_59_PM);
 
-
-    public static List<LocalDateTime> timeCalculator(LocalDateTime currentTimeTruncatedToMinutes) {
+    static void timeCalculator(LocalDateTime currentTimeTruncatedToMinutes) {
 
         System.out.println("time = " + currentTimeTruncatedToMinutes);
 
@@ -74,8 +73,6 @@ public class TimeOfDeliveryGeneratorUtilTest {
         for (LocalDateTime localTime : result) {
             System.out.println(localTime);
         }
-
-        return result;
     }
 
     private static List<LocalDateTime> getTimeVariantsList(LocalDateTime timeVariant, LocalDateTime lastTimeOfDelivery) {
@@ -116,75 +113,75 @@ public class TimeOfDeliveryGeneratorUtilTest {
     }
 
     @Test
-    public void time_8_00() {
+    void time_8_00() {
         timeCalculator(t8_00);
     }
 
     @Test
-    public void time_9_00() {
+    void time_9_00() {
         timeCalculator(_09_00);
     }
 
     @Test
-    public void time_15_00() {
+    void time_15_00() {
         timeCalculator(t15_00);
     }
 
     @Test
-    public void time_15_29() {
+    void time_15_29() {
         timeCalculator(t15_00.plusMinutes(29));
     }
 
     @Test
-    public void time_15_30() {
+    void time_15_30() {
         timeCalculator(t15_00.plusMinutes(30));
     }
 
     @Test
-    public void time_15_31() {
+    void time_15_31() {
         timeCalculator(t15_00.plusMinutes(31));
     }
 
     @Test
-    public void time_22_29() {
+    void time_22_29() {
         timeCalculator(_23_00.minusMinutes(31));
     }
 
     @Test
-    public void time_22_30() {
+    void time_22_30() {
         timeCalculator(_23_00.minusMinutes(30));
     }
 
     @Test
-    public void time_22_31() {
+    void time_22_31() {
         timeCalculator(_23_00.minusMinutes(29));
     }
 
     @Test
     @Order(1)
-    public void time_23_00() {
+    void time_23_00() {
         timeCalculator(_23_00);
     }
 
     @Test
     @Order(3)
-    public void time_23_59() {
+    void time_23_59() {
         timeCalculator(_23_59.minusMinutes(0));
     }
 
     @Test
     @Order(2)
-    public void time_23_01() {
+    void time_23_01() {
         timeCalculator(_23_00.plusMinutes(1));
     }
 
     @Test
-    public void time_00_00() {
+    void time_00_00() {
         timeCalculator(_00_00);
     }
 
     @Test
-    public void time_00_01() {
+    void time_00_01() {
         timeCalculator(_00_00.plusMinutes(1));
     }
 }

@@ -7,10 +7,6 @@ public class Loyalty implements IdentifiedRow {
     private Long id;
     private Integer pointsAmount;
 
-    public Loyalty() {
-
-    }
-
     @Override
     public String toString() {
         return "LoyaltyPoints{" +

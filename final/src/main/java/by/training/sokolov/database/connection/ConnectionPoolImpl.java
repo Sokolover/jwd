@@ -23,7 +23,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private static final Logger LOGGER = Logger.getLogger(ConnectionPoolImpl.class.getName());
     private static final Lock connectionLockStatic = new ReentrantLock();
     private static Map<String, String> properties;
-    private static int POOL_CAPACITY;
+    private static int poolCapacity;
     private static ConnectionPool basicConnectionPool;
     private final Lock connectionLock = new ReentrantLock();
     private final Condition emptyPool = connectionLock.newCondition();
@@ -36,12 +36,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
         properties = getProperties();
         registerDriver();
 
-        POOL_CAPACITY = Integer.parseInt(properties.get(PropertyName.POOL_CAPACITY));
+        poolCapacity = Integer.parseInt(properties.get(PropertyName.POOL_CAPACITY));
 
-        availableConnections = new ArrayBlockingQueue<>(POOL_CAPACITY);
-        usedConnections = new ArrayBlockingQueue<>(POOL_CAPACITY);
+        availableConnections = new ArrayBlockingQueue<>(poolCapacity);
+        usedConnections = new ArrayBlockingQueue<>(poolCapacity);
 
-        for (int i = 0; i < POOL_CAPACITY; i++) {
+        for (int i = 0; i < poolCapacity; i++) {
             availableConnections.add(createConnection());
         }
     }
@@ -104,7 +104,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         Connection proxyConnection = null;
         try {
 
-            if (availableConnections.isEmpty() && usedConnections.size() == POOL_CAPACITY) {
+            if (availableConnections.isEmpty() && usedConnections.size() == poolCapacity) {
                 try {
                     emptyPool.await();
                 } catch (InterruptedException e) {
@@ -113,7 +113,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 }
             }
 
-            if (availableConnections.isEmpty() && usedConnections.size() < POOL_CAPACITY) {
+            if (availableConnections.isEmpty() && usedConnections.size() < poolCapacity) {
                 String url = properties.get(URL);
                 String username = properties.get(USERNAME);
                 String password = properties.get(PASSWORD);
@@ -139,8 +139,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     public void releaseConnection(Connection connection) {
         try {
             connectionLock.lock();
-            if (availableConnections.size() >= POOL_CAPACITY) {
-//                LOGGER.info("Available connections maximum was reached");
+            if (availableConnections.size() >= poolCapacity) {
                 return;
             }
             usedConnections.remove(connection);

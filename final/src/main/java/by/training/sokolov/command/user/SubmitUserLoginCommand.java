@@ -7,10 +7,8 @@ import by.training.sokolov.entity.user.model.User;
 import by.training.sokolov.entity.user.service.UserService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -35,7 +33,7 @@ public class SubmitUserLoginCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String email = request.getParameter(USER_EMAIL_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_EMAIL_JSP_PARAM, email));

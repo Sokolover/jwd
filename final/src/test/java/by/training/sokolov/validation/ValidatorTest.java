@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class ValidatorTest {
+class ValidatorTest {
 
     private static final Logger LOGGER = Logger.getLogger(ValidatorTest.class.getName());
     private static BeanValidator beanValidator;
@@ -23,7 +23,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void shouldFailValidationOnEmailField() {
+    void shouldFailValidationOnEmailField() {
 
         User user = new User();
         user.setName("Ivanov Ivan");
@@ -43,7 +43,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void shouldFailValidationOnNameField() {
+    void shouldFailValidationOnNameField() {
 
         User user = new User();
         user.setName("Ivan");
@@ -63,7 +63,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void shouldFailValidationOnPasswordField() {
+    void shouldFailValidationOnPasswordField() {
 
         User user = new User();
         user.setName("Ivanov Ivan");
@@ -83,7 +83,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void shouldFailValidationOnPhoneNumberField() {
+    void shouldFailValidationOnPhoneNumberField() {
 
         User user = new User();
         user.setName("Ivanov Ivan");

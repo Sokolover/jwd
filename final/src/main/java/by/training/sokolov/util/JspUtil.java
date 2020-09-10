@@ -30,7 +30,7 @@ public class JspUtil {
         this.dishCategoryService = dishCategoryService;
     }
 
-    public void setDishAttributeByDishParam(HttpServletRequest request) throws SQLException, ConnectionException {
+    public void setDishAttributeByDishIdParam(HttpServletRequest request) throws SQLException, ConnectionException {
 
         String dishId = request.getParameter(DISH_ID_JSP_PARAM);
         if (isNull(dishId)) {

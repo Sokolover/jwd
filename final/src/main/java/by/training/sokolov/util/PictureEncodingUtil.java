@@ -11,6 +11,10 @@ import static java.util.Objects.isNull;
 
 public final class PictureEncodingUtil {
 
+    private PictureEncodingUtil() {
+
+    }
+
     public static String getPictureEncoded(Part picture) throws IOException {
 
         String fileName = getFileName(picture);

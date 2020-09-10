@@ -10,10 +10,8 @@ import by.training.sokolov.entity.orderitem.model.OrderItem;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
@@ -37,12 +35,8 @@ public class AddOrderItemCommand implements Command {
         this.userOrderService = userOrderService;
     }
 
-    /*
-        нельзя добавлять блюдо в заказ если оно уже есть в заказе, можно только удалить
-        OrderItem и добавить новый
-     */
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String sessionId = request.getSession().getId();
         UserOrder currentOrder = userOrderService.getBuildingUpUserOrder(sessionId);

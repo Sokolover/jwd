@@ -6,7 +6,6 @@ import by.training.sokolov.command.CommandType;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.util.CommandUtil;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +23,6 @@ import static by.training.sokolov.core.constants.ServletName.*;
 public class MenuServlet extends HttpServlet {
 
     private static final long serialVersionUID = 3075146766217683919L;
-
-    private static final Logger LOGGER = Logger.getLogger(MenuServlet.class.getName());
     private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
@@ -56,11 +53,6 @@ public class MenuServlet extends HttpServlet {
                 req.setAttribute(VIEW_NAME_JSP_PARAM, commandResult);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);
                 break;
-            //            case COMMAND_RESULT_MESSAGE_JSP:
-//            case DISH_CREATE_FEEDBACK_JSP:
-//            case DISH_CREATE_FORM_JSP:
-//            case DISH_UPDATE_FORM_JSP:
-//            case CATEGORY_CREATE_FORM_JSP:
             default:
                 req.setAttribute(VIEW_NAME_JSP_PARAM, viewName);
                 req.getRequestDispatcher(MAIN_LAYOUT_JSP).forward(req, resp);

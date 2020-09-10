@@ -2,9 +2,12 @@ package by.training.sokolov.core.constants;
 
 public final class JspName {
 
+    private JspName() {
+
+    }
+
     public static final String MAIN_LAYOUT_JSP = "/jsp/main_layout.jsp";
 
-    public static final String ERROR_MESSAGE_JSP = "error_message";
     public static final String COMMAND_RESULT_MESSAGE_JSP = "command_result_message";
 
     public static final String LOGIN_JSP = "login_form";

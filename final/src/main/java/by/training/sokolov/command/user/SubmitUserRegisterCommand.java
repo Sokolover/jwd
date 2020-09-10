@@ -9,7 +9,6 @@ import by.training.sokolov.validation.BrokenField;
 import by.training.sokolov.validation.ValidationResult;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,7 +30,6 @@ public class SubmitUserRegisterCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(SubmitUserRegisterCommand.class.getName());
 
-
     private final UserService userService;
     private final BeanValidator validator;
 
@@ -41,7 +39,7 @@ public class SubmitUserRegisterCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ConnectionException {
 
         String name = request.getParameter(USER_NAME_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_NAME_JSP_PARAM, name));
@@ -57,7 +55,7 @@ public class SubmitUserRegisterCommand implements Command {
 
         if (passwordConfirm.trim().isEmpty() || !password.equals(passwordConfirm)) {
             String message = "You haven't confirmed password correctly";
-            int status = NOT_SUCCESSFUL;
+            int status = UNSUCCESSFULLY;
             response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
             return REGISTER_JSP;
         }
@@ -87,7 +85,7 @@ public class SubmitUserRegisterCommand implements Command {
                 LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERROR_JSP_ATTRIBUTE, e.getMessage()));
                 LOGGER.error(e.getMessage());
 
-                int status = NOT_SUCCESSFUL;
+                int status = UNSUCCESSFULLY;
                 response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, e.getMessage()));
 
                 return REGISTER_JSP;
@@ -96,10 +94,7 @@ public class SubmitUserRegisterCommand implements Command {
             newUser.setPassword(encryptedPassword);
 
             List<User> users = userService.findAll();
-            /*
-            todo МОЖЕТ БЫТЬ сделать get by email и by name запрос
-             вместо этого поиска циклами.
-             */
+
             for (User user : users) {
 
                 if (isUserNameRegistered(request, response, name, user)) {
@@ -110,10 +105,6 @@ public class SubmitUserRegisterCommand implements Command {
                     return REGISTER_JSP;
                 }
             }
-
-            /*
-            todo валидация на адрес.
-             */
 
             String address = request.getParameter(USER_ADDRESS_JSP_PARAM);
             LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, USER_ADDRESS_JSP_PARAM, address));
@@ -134,7 +125,7 @@ public class SubmitUserRegisterCommand implements Command {
             String message = createUrlMessage(brokenFields);
             LOGGER.error(message);
 
-            int status = NOT_SUCCESSFUL;
+            int status = UNSUCCESSFULLY;
             String formatRedirectUrl = format(REGISTER_REDIRECT_WITH_ERROR_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, message);
             response.sendRedirect(formatRedirectUrl);
 
@@ -150,7 +141,7 @@ public class SubmitUserRegisterCommand implements Command {
             String message = "User with this name has been registered";
             LOGGER.error(message);
 
-            int status = NOT_SUCCESSFUL;
+            int status = UNSUCCESSFULLY;
             response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
             return true;
@@ -165,7 +156,7 @@ public class SubmitUserRegisterCommand implements Command {
             String message = "User with this email has been registered";
             LOGGER.error(message);
 
-            int status = NOT_SUCCESSFUL;
+            int status = UNSUCCESSFULLY;
             response.sendRedirect(format(REGISTER_REDIRECT_WITH_PARAMS_FORMAT, request.getContextPath(), DISPLAY_REGISTER_SERVLET, QUERY_PARAM_SUCCESS, status, QUERY_PARAM_ERROR, message));
 
             return true;

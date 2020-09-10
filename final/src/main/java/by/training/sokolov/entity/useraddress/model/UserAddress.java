@@ -7,10 +7,6 @@ public class UserAddress implements IdentifiedRow {
     private Long id;
     private String fullAddress;
 
-    public UserAddress() {
-
-    }
-
     @Override
     public String toString() {
         return "Address{" +

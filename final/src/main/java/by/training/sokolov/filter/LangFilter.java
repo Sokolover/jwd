@@ -19,7 +19,7 @@ public class LangFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(LangFilter.class.getName());
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

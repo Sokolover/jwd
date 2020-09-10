@@ -10,10 +10,6 @@ public class DishFeedback implements IdentifiedRow {
     private Long userId;
     private Long dishId;
 
-    public DishFeedback() {
-
-    }
-
     @Override
     public Long getId() {
         return id;

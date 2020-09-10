@@ -38,8 +38,6 @@ import by.training.sokolov.entity.order.dao.UserOrderDao;
 import by.training.sokolov.entity.order.dao.UserOrderDaoImpl;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.order.service.UserOrderServiceImpl;
-import by.training.sokolov.entity.orderfeedback.dao.OrderFeedbackDao;
-import by.training.sokolov.entity.orderfeedback.dao.OrderFeedbackDaoImpl;
 import by.training.sokolov.entity.orderitem.dao.OrderItemDao;
 import by.training.sokolov.entity.orderitem.dao.OrderItemDaoImpl;
 import by.training.sokolov.entity.orderitem.service.OrderItemService;
@@ -154,7 +152,7 @@ public class ApplicationContext {
         };
     }
 
-    static <T> T createProxy(ClassLoader classLoader, InvocationHandler handler, Class<T>... toBeProxied) {
+    private static <T> T createProxy(ClassLoader classLoader, InvocationHandler handler, Class<T>... toBeProxied) {
         LOGGER.info(String.format("Create a proxy of %s", toBeProxied));
         return (T) Proxy.newProxyInstance(classLoader, toBeProxied, handler);
     }
@@ -174,7 +172,6 @@ public class ApplicationContext {
         DishFeedbackDao dishFeedbackDao = new DishFeedbackDaoImpl(connectionManager);
         LoyaltyDao loyaltyDao = new LoyaltyDaoImpl(connectionManager);
         UserOrderDao userOrderDao = new UserOrderDaoImpl(connectionManager);
-        OrderFeedbackDao orderFeedbackDao = new OrderFeedbackDaoImpl(connectionManager);
         OrderItemDao orderItemDao = new OrderItemDaoImpl(connectionManager);
         UserRoleDao userRoleDao = new UserRoleDaoImpl(connectionManager);
         UserAccountDao userAccountDao = new UserAccountDaoImpl(connectionManager);
@@ -214,20 +211,10 @@ public class ApplicationContext {
         UserService userProxyService = createProxy
                 (getClass().getClassLoader(), userServiceHandler, UserService.class);
 
-        InvocationHandler dishCategoryServiceHandler = createTransactionalInvocationHandler
-                (transactionManager, dishCategoryService);
-        DishCategoryService dishCategoryProxyService = createProxy
-                (getClass().getClassLoader(), dishCategoryServiceHandler, DishCategoryService.class);
-
         InvocationHandler deliveryAddressServiceHandler = createTransactionalInvocationHandler
                 (transactionManager, deliveryAddressService);
         DeliveryAddressService deliveryAddressProxyService = createProxy
                 (getClass().getClassLoader(), deliveryAddressServiceHandler, DeliveryAddressService.class);
-
-        InvocationHandler dishFeedbackServiceHandler = createTransactionalInvocationHandler
-                (transactionManager, dishFeedbackService);
-        DishFeedbackService dishFeedbackServiceProxyService = createProxy
-                (getClass().getClassLoader(), dishFeedbackServiceHandler, DishFeedbackService.class);
 
         LOGGER.info("Proxy of services initialized");
 
@@ -247,7 +234,7 @@ public class ApplicationContext {
 
         //commands
         Command deleteOrderItemCommand = new DeleteOrderItemCommand(orderItemProxyService);
-        Command displayOrderItemListCommand = new DisplayOrderItemListCommand(userOrderProxyService, orderItemProxyService, dishCategoryProxyService);
+        Command displayOrderItemListCommand = new DisplayOrderItemListCommand(userOrderProxyService, orderItemProxyService);
         Command addOrderItemCommand = new AddOrderItemCommand(orderItemProxyService, dishProxyService, userOrderProxyService);
         Command submitUserLoginCommand = new SubmitUserLoginCommand(userProxyService);
         Command submitUserRegisterCommand = new SubmitUserRegisterCommand(userProxyService, beanValidator);
@@ -255,21 +242,21 @@ public class ApplicationContext {
         Command displayOrderCheckoutCommand = new DisplayOrderCheckoutCommand(orderItemProxyService, userOrderProxyService);
         Command submitOrderCheckoutCommand = new SubmitOrderCheckoutCommand(userOrderProxyService, beanValidator, walletService);
         Command submitDishFeedbackCreatingFormCommand = new SubmitDishFeedbackCreatingFormCommand(dishFeedbackService);
-        Command displayDishFeedbackCreatingFormCommand = new DisplayDishFeedbackCreatingFormCommand(dishProxyService);
-        Command displayDishCreatingFormCommand = new DisplayDishCreatingFormCommand(dishCategoryProxyService);
+        Command displayDishFeedbackCreatingFormCommand = new DisplayDishFeedbackCreatingFormCommand();
+        Command displayDishCreatingFormCommand = new DisplayDishCreatingFormCommand();
         Command submitDishCreatingFormCommand = new SubmitDishCreatingFormCommand(dishProxyService, beanValidator);
         Command displayDishUpdatingFormCommand = new DisplayDishUpdatingFormCommand();
-        Command submitDishUpdatingFormCommand = new SubmitDishUpdatingFormCommand(dishProxyService, dishCategoryProxyService, beanValidator);
+        Command submitDishUpdatingFormCommand = new SubmitDishUpdatingFormCommand(dishProxyService, dishCategoryService, beanValidator);
         Command deleteDishCommand = new DeleteDishCommand(dishProxyService);
-        Command submitDishCategoryCreatingFormCommand = new SubmitDishCategoryCreatingFormCommand(dishCategoryProxyService, beanValidator);
-        Command submitDishCategoryDeletingFormCommand = new SubmitDishCategoryDeletingFormCommand(dishCategoryProxyService);
-        Command displayDishCategoryDeletingFormCommand = new DisplayDishCategoryDeletingFormCommand(dishCategoryProxyService);
-        Command displayFillingUpWalletFormCommand = new DisplayFillingUpWalletFormCommand(walletService);
+        Command submitDishCategoryCreatingFormCommand = new SubmitDishCategoryCreatingFormCommand(dishCategoryService, beanValidator);
+        Command submitDishCategoryDeletingFormCommand = new SubmitDishCategoryDeletingFormCommand(dishCategoryService);
+        Command displayDishCategoryDeletingFormCommand = new DisplayDishCategoryDeletingFormCommand(dishCategoryService);
+        Command displayFillingUpWalletFormCommand = new DisplayFillingUpWalletFormCommand();
         Command submitFillingUpWalletFormCommand = new SubmitFillingUpWalletFormCommand(walletService);
         LOGGER.info("Commands initialized");
 
         //utils
-        JspUtil jspUtil = new JspUtil(dishProxyService, dishCategoryProxyService);
+        JspUtil jspUtil = new JspUtil(dishProxyService, dishCategoryService);
 
         //commandFactory
         CommandFactory commandFactory = new CommandFactoryImpl();
@@ -321,8 +308,8 @@ public class ApplicationContext {
         beans.put(DeliveryAddressService.class, deliveryAddressProxyService);
         beans.put(UserOrderService.class, userOrderProxyService);
         beans.put(UserService.class, userProxyService);
-        beans.put(DishCategoryService.class, dishCategoryProxyService);
-        beans.put(DishFeedbackService.class, dishFeedbackServiceHandler);
+        beans.put(DishCategoryService.class, dishCategoryService);
+        beans.put(DishFeedbackService.class, dishFeedbackService);
 
         beans.put(UserAccountDao.class, userAccountDao);
         beans.put(BeanValidator.class, beanValidator);
@@ -348,11 +335,4 @@ public class ApplicationContext {
 
         return (T) this.beans.get(clazz);
     }
-
-    public <T> boolean removeBean(T bean) {
-
-        Object removedBean = this.beans.remove(bean);
-        return bean.equals(removedBean);
-    }
-
 }

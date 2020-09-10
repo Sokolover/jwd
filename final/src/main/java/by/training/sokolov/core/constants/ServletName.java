@@ -2,6 +2,10 @@ package by.training.sokolov.core.constants;
 
 public final class ServletName {
 
+    private ServletName() {
+
+    }
+
     public static final String INDEX_SERVLET = "index";
     public static final String LOGIN_SERVLET = "login";
     public static final String USER_REGISTER_SERVLET = "user_register";

@@ -9,10 +9,6 @@ public class Wallet implements IdentifiedRow {
     private Long id;
     private BigDecimal moneyAmount;
 
-    public Wallet() {
-
-    }
-
     @Override
     public String toString() {
         return "Wallet{" +

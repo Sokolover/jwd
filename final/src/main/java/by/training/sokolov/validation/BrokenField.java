@@ -14,19 +14,19 @@ public class BrokenField {
         this.args = args;
     }
 
-    public String getFieldName() {
+    String getFieldName() {
         return fieldName;
     }
 
-    public Object getFieldValue() {
+    Object getFieldValue() {
         return fieldValue;
     }
 
-    public String getViolatedRule() {
+    String getViolatedRule() {
         return violatedRule;
     }
 
-    public Object[] getArgs() {
+    Object[] getArgs() {
         return args;
     }
 }

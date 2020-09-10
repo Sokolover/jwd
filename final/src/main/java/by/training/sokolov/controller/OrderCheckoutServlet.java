@@ -6,7 +6,6 @@ import by.training.sokolov.command.CommandType;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.util.CommandUtil;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +23,6 @@ import static by.training.sokolov.core.constants.ServletName.*;
 public class OrderCheckoutServlet extends HttpServlet {
 
     private static final long serialVersionUID = -8741776007076420891L;
-
-    private static final Logger LOGGER = Logger.getLogger(OrderCheckoutServlet.class.getName());
     private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
@@ -47,9 +44,6 @@ public class OrderCheckoutServlet extends HttpServlet {
             case LOGOUT_RESULT:
                 resp.sendRedirect(req.getContextPath());
                 break;
-//            case COMMAND_RESULT_MESSAGE_JSP:
-//            case CREATE_DISH_FORM_JSP:
-//            case CREATE_CATEGORY_FORM_JSP:
             case ORDER_CHECKOUT_FORM_JSP:
             case DEFAULT_JSP:
                 String commandName = String.valueOf(CommandType.DISPLAY_ORDER_CHECKOUT_COMMAND);

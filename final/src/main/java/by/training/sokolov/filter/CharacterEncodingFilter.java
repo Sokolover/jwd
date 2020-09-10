@@ -13,7 +13,7 @@ public class CharacterEncodingFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(CharacterEncodingFilter.class.getName());
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

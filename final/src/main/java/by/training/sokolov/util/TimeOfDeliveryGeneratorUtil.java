@@ -9,6 +9,9 @@ import static by.training.sokolov.util.TimeConstants.*;
 
 public final class TimeOfDeliveryGeneratorUtil {
 
+    private TimeOfDeliveryGeneratorUtil() {
+    }
+
     public static List<LocalDateTime> findTimeVariants() {
 
         LocalDateTime currentTimeTruncatedToMinutes = LocalDateTime

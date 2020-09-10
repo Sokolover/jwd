@@ -18,7 +18,6 @@
     <jsp:include page="validation_messages.jsp"/>
 
     <div class="feedbackContainer">
-        <%--        <form class="feedbackArea" action="${pageContext.request.contextPath}/menu" method="post"--%>
         <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post"
               enctype="multipart/form-data">
             <input type="hidden"

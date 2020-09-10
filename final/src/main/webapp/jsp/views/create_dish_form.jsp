@@ -14,7 +14,6 @@
 
 <div class="container createDishContainer">
 
-
     <form class="feedbackArea" action="${pageContext.request.contextPath}/" method="post" enctype="multipart/form-data">
         <input type="hidden"
                name="${CommonAppConstants.QUERY_PARAM_COMMAND}"

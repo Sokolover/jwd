@@ -13,6 +13,10 @@ public final class CreateMessageUtil {
 
     private static final Logger LOGGER = Logger.getLogger(CreateMessageUtil.class.getName());
 
+    private CreateMessageUtil() {
+
+    }
+
     public static String createUrlMessage(List<BrokenField> brokenFields) {
 
         StringBuilder message = new StringBuilder();
@@ -39,24 +43,6 @@ public final class CreateMessageUtil {
 
             LOGGER.error(e.getMessage());
             return e.getMessage();
-        }
-
-        return new String(message);
-    }
-
-    public static String createPageMessage(List<BrokenField> brokenFields) {
-
-        StringBuilder message = new StringBuilder();
-        message.append("Invalid input in next field(s): ");
-
-        for (int i = 0; i < brokenFields.size(); i++) {
-
-            if (i == brokenFields.size() - 1) {
-                message.append(brokenFields.get(i).getFieldName());
-                break;
-            }
-            message.append(brokenFields.get(i).getFieldName());
-            message.append(", ");
         }
 
         return new String(message);

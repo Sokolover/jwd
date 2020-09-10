@@ -5,7 +5,6 @@ import by.training.sokolov.command.CommandFactory;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.context.SecurityContext;
 import by.training.sokolov.util.CommandUtil;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,14 +22,10 @@ import static by.training.sokolov.core.constants.ServletName.*;
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1845229810562352696L;
-
-    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private final CommandFactory commandFactory = ApplicationContext.getInstance().getBean(CommandFactory.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        FormServletUtil.formServletProcess(req, resp, commandFactory, LOGIN_JSP);
 
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
         Command command = commandFactory.getCommand(commandFromRequest);

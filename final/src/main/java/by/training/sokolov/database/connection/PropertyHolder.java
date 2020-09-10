@@ -16,6 +16,10 @@ final class PropertyHolder {
     private static final Logger LOGGER = Logger.getLogger(PropertyHolder.class.getName());
     private static Map<String, String> dataBaseProperties;
 
+    private PropertyHolder() {
+
+    }
+
     static Map<String, String> getProperties() {
         if (dataBaseProperties == null) {
             loadProperties();

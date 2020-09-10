@@ -3,7 +3,6 @@ package by.training.sokolov.command.order;
 import by.training.sokolov.command.Command;
 import by.training.sokolov.context.ApplicationContext;
 import by.training.sokolov.database.connection.ConnectionException;
-import by.training.sokolov.entity.category.service.DishCategoryService;
 import by.training.sokolov.entity.order.model.UserOrder;
 import by.training.sokolov.entity.order.service.UserOrderService;
 import by.training.sokolov.entity.orderitem.model.OrderItem;
@@ -29,12 +28,10 @@ public class DisplayOrderItemListCommand implements Command {
 
     private final UserOrderService userOrderService;
     private final OrderItemService orderItemService;
-    private final DishCategoryService dishCategoryService;
 
-    public DisplayOrderItemListCommand(UserOrderService userOrderService, OrderItemService orderItemService, DishCategoryService dishCategoryService) {
+    public DisplayOrderItemListCommand(UserOrderService userOrderService, OrderItemService orderItemService) {
         this.userOrderService = userOrderService;
         this.orderItemService = orderItemService;
-        this.dishCategoryService = dishCategoryService;
     }
 
     @Override

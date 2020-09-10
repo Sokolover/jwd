@@ -4,7 +4,6 @@ import by.training.sokolov.database.connection.ConnectionPool;
 import by.training.sokolov.database.connection.ConnectionPoolImpl;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ConnectionPoolImplTest {
+class ConnectionPoolImplTest {
 
 // 1. getting a connection when the pool is empty gives you a connection
 // 2. getting a connection when a connection has already been got and not released gives you another, different connection
@@ -29,7 +28,7 @@ public class ConnectionPoolImplTest {
     //    getting a connection when the pool is empty gives you a connection
     @Test
     @Order(1)
-    public void shouldProvideConnectionWhenPoolEmpty() throws SQLException {
+    void shouldProvideConnectionWhenPoolEmpty() {
 
         LOGGER.info("1");
         try {
@@ -44,7 +43,7 @@ public class ConnectionPoolImplTest {
     //    getting a connection when a connection has already been got and not released gives you another, different connection
     @Test
     @Order(2)
-    public void shouldProvideDifferentConnectionWhenAlreadyGotConnectionAndNotReleased() throws SQLException {
+    void shouldProvideDifferentConnectionWhenAlreadyGotConnectionAndNotReleased() {
 
         LOGGER.info("2");
         try {
@@ -60,7 +59,7 @@ public class ConnectionPoolImplTest {
     //    releasing a connection doesn't throw any exception
     @Test
     @Order(3)
-    public void shouldReleaseConnectionWithoutException() {
+    void shouldReleaseConnectionWithoutException() {
 
         LOGGER.info("3");
         try {
@@ -73,9 +72,4 @@ public class ConnectionPoolImplTest {
         connectionPool.releaseConnection(connection2);
     }
 
-    @Before
-    public void shutDownConnectionPool() throws SQLException {
-
-        connectionPool.shutdown();
-    }
 }

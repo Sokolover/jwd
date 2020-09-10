@@ -4,7 +4,6 @@ import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.deliveryaddress.model.DeliveryAddress;
-import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,13 +15,8 @@ import static by.training.sokolov.entity.deliveryaddress.dao.DeliveryAddressTabl
 
 public class DeliveryAddressDaoImpl extends GenericDao<DeliveryAddress> implements DeliveryAddressDao {
 
-    private static final Logger LOGGER = Logger.getLogger(DeliveryAddressDaoImpl.class.getName());
-
-    private final ConnectionManager connectionManager;
-
     public DeliveryAddressDaoImpl(ConnectionManager connectionManager) {
         super(DELIVERY_ADDRESS_TABLE_NAME, getDeliveryAddressRowMapper(), connectionManager);
-        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<DeliveryAddress> getDeliveryAddressRowMapper() {

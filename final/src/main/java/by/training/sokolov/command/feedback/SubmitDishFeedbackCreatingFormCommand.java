@@ -8,10 +8,8 @@ import by.training.sokolov.entity.dishfeedback.service.DishFeedbackService;
 import by.training.sokolov.entity.user.model.User;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static by.training.sokolov.core.constants.CommonAppConstants.*;
@@ -34,7 +32,7 @@ public class SubmitDishFeedbackCreatingFormCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String rating = request.getParameter(FEEDBACK_RATING_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, FEEDBACK_RATING_JSP_PARAM, rating));

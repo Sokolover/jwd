@@ -16,11 +16,8 @@ import static by.training.sokolov.entity.orderfeedback.dao.OrderFeedbackTableCon
 
 public class OrderFeedbackDaoImpl extends GenericDao<OrderFeedback> implements OrderFeedbackDao {
 
-    private final ConnectionManager connectionManager;
-
     public OrderFeedbackDaoImpl(ConnectionManager connectionManager) {
         super(ORDER_FEEDBACK_TABLE_NAME, getOrderFeedbackRowMapper(), connectionManager);
-        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<OrderFeedback> getOrderFeedbackRowMapper() {

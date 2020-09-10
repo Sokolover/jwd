@@ -4,29 +4,19 @@ import by.training.sokolov.core.dao.GenericDao;
 import by.training.sokolov.core.dao.IdentifiedRowMapper;
 import by.training.sokolov.database.connection.ConnectionManager;
 import by.training.sokolov.entity.loyalty.model.Loyalty;
-import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static by.training.sokolov.entity.loyalty.dao.LoyaltyTableConstants.*;
 
 public class LoyaltyDaoImpl extends GenericDao<Loyalty> implements LoyaltyDao {
 
-    private static final Logger LOGGER = Logger.getLogger(LoyaltyDaoImpl.class.getName());
-
-    private final Lock connectionLock = new ReentrantLock();
-
-    private final ConnectionManager connectionManager;
-
     public LoyaltyDaoImpl(ConnectionManager connectionManager) {
         super(LOYALTY_TABLE_NAME, getLoyaltyRowMapper(), connectionManager);
-        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Loyalty> getLoyaltyRowMapper() {

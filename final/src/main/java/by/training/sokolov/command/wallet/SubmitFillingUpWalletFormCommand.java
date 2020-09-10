@@ -8,10 +8,8 @@ import by.training.sokolov.entity.wallet.model.Wallet;
 import by.training.sokolov.entity.wallet.service.WalletService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
@@ -32,7 +30,7 @@ public class SubmitFillingUpWalletFormCommand implements Command {
     }
 
     @Override
-    public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ConnectionException {
+    public String process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ConnectionException {
 
         String moneyAmount = request.getParameter(WALLET_NEW_MONEY_AMOUNT_JSP_PARAM);
         LOGGER.info(format(PARAM_GOT_FROM_JSP_MESSAGE, WALLET_NEW_MONEY_AMOUNT_JSP_PARAM, moneyAmount));
@@ -67,7 +65,7 @@ public class SubmitFillingUpWalletFormCommand implements Command {
         return FILL_UP_WALLET_FORM_JSP;
     }
 
-    private String createReturnAnswer(HttpServletRequest request, String message) throws SQLException, ConnectionException {
+    private String createReturnAnswer(HttpServletRequest request, String message) {
 
         request.setAttribute(ERROR_JSP_ATTRIBUTE, message);
         LOGGER.info(format(ATTRIBUTE_SET_TO_JSP_MESSAGE, ERROR_JSP_ATTRIBUTE, message));

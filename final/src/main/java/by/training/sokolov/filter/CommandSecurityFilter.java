@@ -20,7 +20,7 @@ public class CommandSecurityFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(CommandSecurityFilter.class.getName());
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -38,7 +38,6 @@ public class CommandSecurityFilter implements Filter {
         } else if (!commandType.isPresent()) {
             chain.doFilter(request, response);
         } else {
-//            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath());
             securityContext.setSecurityAttributes((HttpServletRequest) request);
             String message = "Forbidden to execute command";
             request.setAttribute(ERROR_JSP_ATTRIBUTE, message);

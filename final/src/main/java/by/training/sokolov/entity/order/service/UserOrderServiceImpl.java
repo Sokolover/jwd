@@ -113,9 +113,6 @@ public class UserOrderServiceImpl extends GenericServiceImpl<UserOrder> implemen
 
         List<OrderItem> orderItems = orderItemService.findAllItemsByOrderId(order.getId());
 
-        /*
-        todo сделать поле стоимость ордера в таблице юзер_ордер вместо этого поиска!
-         */
         BigDecimal orderCost = new BigDecimal(0);
         for (OrderItem orderItem : orderItems) {
             orderCost = orderCost.add(orderItem.getItemCost());

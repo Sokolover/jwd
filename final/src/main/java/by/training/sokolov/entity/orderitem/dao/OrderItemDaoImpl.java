@@ -67,7 +67,7 @@ public class OrderItemDaoImpl extends GenericDao<OrderItem> implements OrderItem
         return new IdentifiedRowMapper<OrderItem>() {
 
             @Override
-            public OrderItem map(ResultSet resultSet) throws SQLException, IOException {
+            public OrderItem map(ResultSet resultSet) throws SQLException {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setId(resultSet.getLong(ID));
                 orderItem.setDishAmount(resultSet.getInt(DISH_AMOUNT));

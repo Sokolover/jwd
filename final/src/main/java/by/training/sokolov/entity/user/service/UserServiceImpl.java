@@ -119,19 +119,6 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
 
     @Transactional
     @Override
-    public User getByName(String name) throws ConnectionException, SQLException {
-
-        User user = userAccountDao.getByName(name);
-        if (Objects.isNull(user)) {
-            return null;
-        }
-        this.getUserAttributes(user);
-
-        return user;
-    }
-
-    @Transactional
-    @Override
     public User getByEmail(String email) throws ConnectionException, SQLException {
 
         User user = userAccountDao.getByEmail(email);

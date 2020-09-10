@@ -42,7 +42,7 @@ public class DishDaoImpl extends GenericDao<Dish> implements DishDao {
 
     public DishDaoImpl(ConnectionManager connectionManager) {
         super(DISH_TABLE_NAME, getDishRowMapper(), connectionManager);
-        DishDaoImpl.connectionManager = connectionManager;
+        this.connectionManager = connectionManager;
     }
 
     private static IdentifiedRowMapper<Dish> getDishRowMapper() {
