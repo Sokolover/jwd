@@ -14,9 +14,9 @@ public enum LangEnum {
 
     public static LangEnum fromString(String name) {
         final LangEnum[] values = LangEnum.values();
-        for (LangEnum gemEnumElement : values) {
-            if (gemEnumElement.value.equalsIgnoreCase(name) || gemEnumElement.name().equalsIgnoreCase(name)) {
-                return gemEnumElement;
+        for (LangEnum enumElement : values) {
+            if (enumElement.value.equalsIgnoreCase(name) || enumElement.name().equalsIgnoreCase(name)) {
+                return enumElement;
             }
         }
         return DEFAULT;

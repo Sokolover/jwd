@@ -33,7 +33,6 @@ public class SecurityContext {
 
             properties.load(propertyStream);
             LOGGER.info("Security properties have been loaded successfully");
-            LOGGER.info("Security context initialized");
         } catch (IOException e) {
 
             LOGGER.error("Failed to read security properties" + e.getMessage());

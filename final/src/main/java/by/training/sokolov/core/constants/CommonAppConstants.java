@@ -9,7 +9,7 @@ public final class CommonAppConstants {
     public static final String USER_LOGGED_IN_JSP_PARAM = "userLoggedIn";
     public static final String VIEW_NAME_JSP_PARAM = "viewName";
     public static final String SESSION_ID_JSP_PARAM = "sessionId";
-    public static final String SECURITY_CONTEXT_JSP_PARAM = "securityContext";
+    public static final String SECURITY_CONTEXT_ATTRIBUTE = "securityContext";
 
     public static final String FEEDBACK_RATING_JSP_PARAM = "feedback.rating";
     public static final String FEEDBACK_TEXT_JSP_PARAM = "feedback.text";

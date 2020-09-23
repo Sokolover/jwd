@@ -47,7 +47,6 @@ public class CommandSecurityFilter implements Filter {
         }
 
         LOGGER.info("Command security filter done");
-
     }
 
     @Override

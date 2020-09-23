@@ -32,7 +32,12 @@ public class IndexServlet extends HttpServlet {
         String commandFromRequest = CommandUtil.getCommandFromRequest(req);
         Command command = commandFactory.getCommand(commandFromRequest);
         String viewName = command.apply(req, resp);
-
+/*
+todo
+    1. При удалении категории предупреждать что надо удалить эту категорию из всех блюд
+    2. При отправки запроса /menu&_page=4 или _page=-1 или _page=a выбрасывается exception
+    3. При добавлении блюда в корзину оставаться на той же странице, на которой блюдо находилось
+ */
         SecurityContext.getInstance().setSecurityAttributes(req);
 
         switch (viewName) {

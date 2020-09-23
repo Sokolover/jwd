@@ -134,11 +134,11 @@ public class ApplicationContext {
             if (method.isAnnotationPresent(Transactional.class)
                     || declaredMethod.isAnnotationPresent(Transactional.class)) {
                 transactionManager.begin();
-                LOGGER.info("Transaction has began");
+                LOGGER.info("Transaction has begun");
                 try {
                     Object result = method.invoke(service, args);
                     transactionManager.commit();
-                    LOGGER.info("Transaction has been commit");
+                    LOGGER.info("Transaction has been committed");
                     return result;
                 } catch (Exception e) {
                     LOGGER.error(e.getMessage());
