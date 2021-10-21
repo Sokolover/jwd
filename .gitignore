@@ -17,9 +17,9 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 out/
-.idea/
 .idea_modules/
 *.iml
 *.ipr
 *.iws
 *.log
+/.idea/**
